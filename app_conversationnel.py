@@ -179,9 +179,11 @@ OUTIL_EXPORT = {
         "1) lignes : pour exporter une liste que TU as construite toi-même "
         "(typiquement des suggestions d'acquisition trouvées par web_search). "
         "Fournis une liste d'objets, chacun avec les mêmes champs (ex. titre, "
-        "auteur, editeur, isbn, prix, annee, source). N'utilise CETTE option "
-        "QUE pour des données venant réellement d'un résultat de web_search -- "
-        "jamais de titres inventés.\n"
+        "auteur, editeur, prix_estime, source). L'ISBN n'est PAS nécessaire "
+        "pour une liste de suggestions -- ne le cherche pas, ne bloque jamais "
+        "l'export en son absence. N'utilise CETTE option QUE pour des données "
+        "venant réellement d'un résultat de web_search -- jamais de titres "
+        "inventés.\n"
         "2) sql : pour exporter ce qui EST dans notre fonds (résultat d'une "
         "requête SELECT). Sans aucun argument : exporte le fonds complet.\n"
         "N'utilise jamais sql pour répondre à une demande de titres absents "
@@ -244,7 +246,9 @@ def ajouter_suggestion_acquisition(titre, demandeur, auteur=None, editeur=None, 
         conn.close()
         return json.dumps({"statut": "ok", "info": f"« {titre} » ajouté à la liste de {demandeur}."})
     except Exception as e:
-        return json.dumps({"erreur": str(e)})
+        import traceback
+        st.session_state["derniere_erreur_technique"] = traceback.format_exc()
+        return json.dumps({"erreur": f"{type(e).__name__}: {e}"})
 
 
 OUTIL_SUGGESTION = {
@@ -287,6 +291,12 @@ contient QUE le fonds réel d'Arcachon -- elle ne contient aucune information
 sur d'autres médiathèques, ni sur des titres que la médiathèque ne possède
 pas.
 
+Si un outil renvoie un champ "erreur" : ne le reformule JAMAIS vaguement
+("une erreur technique est survenue"). Cite le texte exact de cette erreur
+à l'utilisateur -- c'est souvent un problème de configuration (jeton ou
+secret manquant) que seul un humain peut corriger, et une reformulation
+vague l'empêche de comprendre quoi corriger.
+
 Pour les questions sur le fonds (titre, auteur, prêts, désherbage, séries
 incomplètes...) : utilise executer_requete_sql.
 
@@ -295,13 +305,30 @@ ne peut te dire que ce que la médiathèque possède déjà -- elle ne connaît
 aucun titre extérieur. Pour proposer de vrais titres à acquérir :
   1. Interroge d'abord la base pour savoir ce qui existe déjà dans la
      catégorie/tranche d'âge demandée (pour ne jamais suggérer un doublon).
-  2. Utilise ensuite web_search pour trouver de vrais titres actuels du
-     marché (nouveautés, succès en librairie, sélections professionnelles)
-     correspondant à la demande, avec leurs vrais prix.
-  3. Croise les deux : ne propose que des titres confirmés par la recherche
-     web et absents du résultat de la requête SQL. Cite tes sources.
-Ne propose jamais de titre dont tu n'es pas sûr à 100% qu'il vient bien d'un
-résultat de recherche web réel.
+  2. Utilise web_search avec plusieurs requêtes ciblées si besoin (ex.
+     "meilleurs albums 3-6 ans 2026", "sélection Ricochet albums",
+     "coup de cœur album jeunesse nouveauté", nom d'une collection connue +
+     "nouveautés") pour trouver de VRAIS titres actuels qui apparaissent
+     réellement dans les résultats de recherche -- jamais des titres que tu
+     "connais" de mémoire, même s'ils existent vraiment : l'origine doit
+     être un résultat de recherche de CETTE conversation.
+  3. AUCUN ISBN n'est nécessaire pour une liste de suggestions -- ne le
+     cherche jamais, ne le mentionne jamais comme un manque ou un obstacle.
+  4. Pour le prix : un budget prévisionnel n'exige pas un prix exact par
+     titre. Si tu n'as pas trouvé de prix précis pour un titre donné, donne
+     un prix moyen réaliste pour ce type d'ouvrage (cherché ou déduit des
+     résultats web obtenus) et indique-le comme estimation -- ne refuse pas
+     de répondre simplement parce que le prix exact ou l'ISBN manquent.
+  5. Croise avec la base : ne propose que des titres absents du résultat
+     SQL. Cite tes sources (sites consultés).
+La seule chose à ne jamais inventer, c'est le TITRE lui-même -- il doit
+venir d'un vrai résultat de recherche de cette conversation, jamais de ta
+mémoire générale, même validée après coup. Si une recherche web ne donne
+rien d'utile, reformule la requête et cherche encore (plusieurs requêtes
+différentes valent mieux qu'une seule) avant de conclure que tu ne peux pas
+répondre. Un prix estimé/moyen, clairement présenté comme tel, est
+acceptable et même attendu pour ce genre de demande -- l'ISBN n'est jamais
+un prérequis ni un motif de refus.
 
 Pour les SUGGESTIONS DE LECTURE ("si on a aimé X, que lui conseiller dans
 notre fonds ?") :
@@ -595,3 +622,11 @@ with st.sidebar:
                         else:
                             st.error("Une erreur s'est produite.")
                         st.code(sortie, language=None)
+
+    if st.session_state.get("derniere_erreur_technique"):
+        st.divider()
+        with st.expander("🔧 Dernière erreur technique", expanded=True):
+            st.code(st.session_state["derniere_erreur_technique"], language=None)
+            if st.button("Effacer"):
+                del st.session_state["derniere_erreur_technique"]
+                st.rerun()
