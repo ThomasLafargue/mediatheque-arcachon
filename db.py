@@ -96,11 +96,27 @@ class _LigneAdaptee:
         return repr(dict(zip(self._colonnes, self._valeurs)))
 
 
+import concurrent.futures
+
+_executeur_global = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+DELAI_MAX_SECONDES = 30  # au-delà, on considère que c'est bloqué, pas juste lent
+
+
+def _appeler_avec_delai_max(fonction, *args, **kwargs):
+    """Exécute un appel potentiellement bloquant avec une limite de temps
+    stricte -- sans ça, une connexion qui ne répond plus (ni erreur, ni
+    succès) bloquerait le script indéfiniment et silencieusement, sans
+    qu'aucun message n'apparaisse jamais dans le journal."""
+    futur = _executeur_global.submit(fonction, *args, **kwargs)
+    return futur.result(timeout=DELAI_MAX_SECONDES)
+
+
 class _CurseurTurso:
     """Enveloppe légère autour du curseur réel de 'libsql' -- son interface
     est déjà très proche de sqlite3 (DB-API), donc peu de traduction à faire.
     Reconnecte automatiquement si le flux Turso a expiré (scripts qui
-    tournent plusieurs heures/jours sans interruption)."""
+    tournent plusieurs heures/jours sans interruption), avec une limite de
+    temps stricte à chaque tentative pour ne jamais bloquer en silence."""
     def __init__(self, curseur_reel, connexion):
         self._curseur = curseur_reel
         self._connexion = connexion
@@ -108,7 +124,7 @@ class _CurseurTurso:
     def execute(self, sql, params=()):
         valeurs = list(params) if params else []
         try:
-            self._curseur.execute(sql, valeurs)
+            _appeler_avec_delai_max(self._curseur.execute, sql, valeurs)
         except Exception:
             # Le flux Turso peut expirer sur une connexion ouverte trop
             # longtemps -- on reconnecte et on retente, jusqu'à 3 fois,
@@ -119,7 +135,7 @@ class _CurseurTurso:
                 try:
                     self._connexion._reconnecter()
                     self._curseur = self._connexion._conn.cursor()
-                    self._curseur.execute(sql, valeurs)
+                    _appeler_avec_delai_max(self._curseur.execute, sql, valeurs)
                     derniere_erreur = None
                     break
                 except Exception as e:
@@ -168,7 +184,9 @@ class _ConnexionTurso:
 
     def _reconnecter(self):
         import libsql
-        self._conn = libsql.connect(database=self._url, auth_token=self._auth_token)
+        self._conn = _appeler_avec_delai_max(
+            libsql.connect, database=self._url, auth_token=self._auth_token
+        )
 
     def cursor(self):
         return _CurseurTurso(self._conn.cursor(), self)
@@ -195,6 +213,14 @@ def connect(fichier_db_local=None):
     if MODE_EN_LIGNE:
         return _ConnexionTurso(TURSO_URL, TURSO_TOKEN)
     return _connect_local(fichier_db_local)
+
+
+def connect_avec_jeton(url, auth_token):
+    """Connexion Turso explicite avec un jeton précis, sans passer par la
+    détection automatique via variables d'environnement -- utile quand un
+    jeton différent du jeton par défaut est nécessaire (ex: un jeton
+    d'écriture dédié, distinct du jeton lecture-seule utilisé ailleurs)."""
+    return _ConnexionTurso(url, auth_token)
 
 
 # Compatibilité avec le code existant qui fait parfois `sqlite3.Row` --
