@@ -80,7 +80,11 @@ OUTIL_SQL = {
         "statut_exemplaire, prix, nb_prets_titre_reseau (prêts du titre sur tout le réseau "
         "COBAS), nb_prets_cet_exemplaire (prêts de cette copie précise à Arcachon), "
         "dernier_pret_titre_reseau, dernier_pret_cet_exemplaire, resume. "
-        "Autres tables disponibles si besoin : frequentation (date, nb_entrees). "
+        "Autres tables disponibles si besoin : frequentation (date, nb_entrees) ; "
+        "suggestion_acquisition -- ATTENTION, nom exact SANS 's' à 'suggestion' -- "
+        "(id, titre, demandeur, auteur, editeur, isbn, prix, motif, source, statut, "
+        "date_ajout) pour consulter les suggestions déjà ajoutées, y compris "
+        "filtrées par demandeur (WHERE demandeur = '...'). "
         "Toujours préférer nb_prets_cet_exemplaire pour des questions sur le fonds "
         "d'Arcachon spécifiquement. Limite automatique à 500 lignes par requête."
     ),
@@ -237,6 +241,15 @@ def ajouter_suggestion_acquisition(titre, demandeur, auteur=None, editeur=None, 
             conn.commit()
         except Exception:
             pass
+        try:  # vue de compatibilité -- le nom "naturel" en français est au
+            # pluriel ("liste de suggestions"), donc le modèle le devine
+            # parfois ainsi malgré la table réelle au singulier. Plutôt que
+            # de compter sur un texte d'instruction pour éviter l'erreur à
+            # chaque fois, les deux noms fonctionnent désormais tous les deux.
+            conn.execute("CREATE VIEW IF NOT EXISTS suggestions_acquisition AS SELECT * FROM suggestion_acquisition")
+            conn.commit()
+        except Exception:
+            pass
         conn.execute(
             "INSERT INTO suggestion_acquisition (titre, demandeur, auteur, editeur, isbn, prix, motif, source) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -277,6 +290,51 @@ OUTIL_SUGGESTION = {
             "source": {"type": "string", "description": "D'où vient l'info (ex. URL trouvée par web_search)"},
         },
         "required": ["titre", "demandeur"],
+    },
+}
+
+
+def supprimer_suggestion_acquisition(id):
+    """Supprime UNE ligne précise de la liste de suggestions, par son id.
+    Trouve d'abord l'id via executer_requete_sql avant d'appeler ceci --
+    l'opération est strictement limitée à cette suppression précise par id,
+    jamais une suppression arbitraire (pas de WHERE libre)."""
+    jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+    if not jeton_ecriture:
+        return json.dumps({"erreur": "Fonction non configurée (TURSO_AUTH_TOKEN_ECRITURE manquant)."})
+    try:
+        conn = db.connect_avec_jeton(db.TURSO_URL, jeton_ecriture) if db.MODE_EN_LIGNE else db.connect(FICHIER_DB)
+        cur = conn.cursor()
+        cur.execute("SELECT titre FROM suggestion_acquisition WHERE id = ?", (id,))
+        ligne = cur.fetchone()
+        if not ligne:
+            conn.close()
+            return json.dumps({"erreur": f"Aucune suggestion avec l'id {id}."})
+        titre = ligne[0]
+        conn.execute("DELETE FROM suggestion_acquisition WHERE id = ?", (id,))
+        conn.commit()
+        conn.close()
+        return json.dumps({"statut": "ok", "info": f"« {titre} » (id {id}) supprimé de la liste."})
+    except Exception as e:
+        import traceback
+        st.session_state["derniere_erreur_technique"] = traceback.format_exc()
+        return json.dumps({"erreur": f"{type(e).__name__}: {e}"})
+
+
+OUTIL_SUPPRESSION_SUGGESTION = {
+    "name": "supprimer_suggestion_acquisition",
+    "description": (
+        "Supprime UNE suggestion précise de la liste, par son id. Utilise "
+        "executer_requete_sql d'abord pour trouver l'id exact (ex. SELECT id, "
+        "titre FROM suggestion_acquisition WHERE titre LIKE '%...%') avant "
+        "d'appeler cet outil -- ne devine jamais un id. Si plusieurs lignes "
+        "correspondent (doublon), demande confirmation avant de supprimer, "
+        "ou précise laquelle (la plus récente sauf indication contraire)."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {"id": {"type": "integer", "description": "L'id exact de la ligne à supprimer"}},
+        "required": ["id"],
     },
 }
 
@@ -364,6 +422,12 @@ consulter ou l'exporter pour une personne en particulier ("montre-moi/
 exporte la liste de Marjorie"), filtre avec WHERE demandeur = '...' dans
 executer_requete_sql ou generer_export_excel.
 
+Si on te demande de SUPPRIMER/RETIRER une suggestion de la liste : trouve
+d'abord son id exact via executer_requete_sql (jamais en devinant), puis
+utilise supprimer_suggestion_acquisition avec cet id. En cas de doublon,
+précise lequel tu supprimes (le plus ancien sauf indication contraire) ou
+demande confirmation si l'utilisateur n'a pas précisé.
+
 Pour exporter en Excel des suggestions venant de web_search : utilise
 generer_export_excel avec le paramètre lignes (jamais sql, qui ne peut
 interroger que notre propre fonds et ne peut donc jamais contenir de titres
@@ -392,7 +456,7 @@ def repondre(historique_existant, question, cle_api):
     historique = list(historique_existant)
     historique.append({"role": "user", "content": question})
     client = Anthropic(api_key=cle_api)
-    outils = [OUTIL_SQL, OUTIL_EXPORT, OUTIL_SUGGESTION,
+    outils = [OUTIL_SQL, OUTIL_EXPORT, OUTIL_SUGGESTION, OUTIL_SUPPRESSION_SUGGESTION,
               {"type": "web_search_20250305", "name": "web_search", "max_uses": 5}]
     while True:
         reponse = client.messages.create(
@@ -426,6 +490,8 @@ def repondre(historique_existant, question, cle_api):
                     })
             elif bloc.name == "ajouter_suggestion_acquisition":
                 resultat = ajouter_suggestion_acquisition(**bloc.input)
+            elif bloc.name == "supprimer_suggestion_acquisition":
+                resultat = supprimer_suggestion_acquisition(**bloc.input)
             else:
                 resultat = json.dumps({"erreur": "outil inconnu"})
             resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
