@@ -15,6 +15,10 @@ Lancement local :
 import os
 import re
 import json
+import io
+import sys
+import tempfile
+import datetime
 import sqlite3
 import streamlit as st
 
@@ -87,12 +91,102 @@ OUTIL_SQL = {
     },
 }
 
+COLONNES_EXPORT_PAR_DEFAUT = [
+    ("isbn", "ISBN / EAN"), ("titre", "Titre"), ("serie", "Série"), ("tome", "Tome"),
+    ("auteur", "Auteur"), ("illustrateur", "Illustrateur"), ("editeur", "Éditeur"),
+    ("annee", "Année"), ("type", "Type"), ("categorie", "Catégorie"), ("genre", "Genre"),
+    ("public", "Public"), ("age_recommande", "Âge conseillé"), ("cote", "Cote"),
+    ("code_barres", "Code-barres"), ("statut_exemplaire", "Statut"), ("prix", "Prix (€)"),
+    ("nb_prets_cet_exemplaire", "Prêts (Arcachon)"), ("dernier_pret_cet_exemplaire", "Dernier prêt"),
+]
+
+
+def generer_excel_bytes(sql=None):
+    """Construit un export xlsx en mémoire. Sans sql : fonds complet. Avec sql :
+    export filtré selon la demande de l'utilisateur (mêmes garde-fous SELECT-only
+    qu'executer_requete_sql)."""
+    sql_finale = (sql or "SELECT * FROM vue_inventaire").strip().rstrip(';')
+    if not re.match(r'^\s*SELECT\b', sql_finale, re.IGNORECASE):
+        return None, 0, "Seules les requêtes SELECT sont autorisées pour un export."
+    if MOTS_INTERDITS.search(sql_finale):
+        return None, 0, "Mot-clé non autorisé dans cette requête d'export."
+
+    conn = db.connect(FICHIER_DB)
+    conn.row_factory = sqlite3.Row if not db.MODE_EN_LIGNE else db.Row
+    cur = conn.cursor()
+    cur.execute(f"SELECT * FROM ({sql_finale}) LIMIT 100000")
+    lignes = cur.fetchall()
+    conn.close()
+
+    if not lignes:
+        return None, 0, "Aucune ligne ne correspond à cet export."
+
+    colonnes_presentes = list(lignes[0].keys())
+    noms_par_defaut = {c for c, _ in COLONNES_EXPORT_PAR_DEFAUT}
+    if noms_par_defaut.issubset(set(colonnes_presentes)):
+        colonnes = [(c, l) for c, l in COLONNES_EXPORT_PAR_DEFAUT if c in colonnes_presentes]
+    else:
+        colonnes = [(c, c) for c in colonnes_presentes]
+
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Border, Side
+    from openpyxl.utils import get_column_letter
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Export"
+    thin = Side(style="thin", color="D9E2F0")
+    bordure = Border(left=thin, right=thin, top=thin, bottom=thin)
+
+    for c, (cle, libelle) in enumerate(colonnes, 1):
+        cellule = ws.cell(row=1, column=c, value=libelle)
+        cellule.font = Font(name="Arial", size=10, bold=True, color="FFFFFF")
+        cellule.fill = PatternFill("solid", fgColor="2E4A7A")
+        cellule.border = bordure
+        ws.column_dimensions[get_column_letter(c)].width = 18
+
+    for i, ligne in enumerate(lignes, start=2):
+        for c, (cle, libelle) in enumerate(colonnes, 1):
+            cellule = ws.cell(row=i, column=c, value=ligne[cle])
+            cellule.font = Font(name="Arial", size=9.5)
+            cellule.border = bordure
+
+    ws.freeze_panes = "A2"
+    tampon = io.BytesIO()
+    wb.save(tampon)
+    tampon.seek(0)
+    return tampon.getvalue(), len(lignes), None
+
+
+OUTIL_EXPORT = {
+    "name": "generer_export_excel",
+    "description": (
+        "Génère un fichier Excel téléchargeable. Utilise cet outil dès que "
+        "l'utilisateur demande un export, un tableau, un fichier Excel/xlsx, ou "
+        "veut 'télécharger' une liste. Sans argument sql : exporte le fonds "
+        "complet avec toutes les colonnes utiles. Avec sql : exporte uniquement "
+        "le résultat de cette requête SELECT (ex. seulement les mangas, ou les "
+        "livres jamais prêtés) -- reprends les mêmes colonnes que celles "
+        "décrites pour executer_requete_sql."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "sql": {"type": "string", "description": "Requête SELECT optionnelle pour filtrer l'export"}
+        },
+    },
+}
+
 PROMPT_SYSTEME = """Tu es l'assistant de la section jeunesse de la Médiathèque d'Arcachon.
 Tu réponds aux questions sur le fonds en interrogeant la base via l'outil
 executer_requete_sql -- jamais en inventant une réponse à partir de tes
 connaissances générales sur les livres. Si une question porte sur un titre,
 un auteur, des statistiques de prêt, du désherbage, des acquisitions, des
 séries incomplètes, etc., construis la requête SQL adaptée et appelle l'outil.
+Si l'utilisateur demande un export, un tableau, ou un fichier Excel à
+télécharger, utilise l'outil generer_export_excel (avec ou sans filtre selon
+la demande) -- ne décris jamais son contenu en table dans le texte, le bouton
+de téléchargement apparaîtra automatiquement après ta réponse.
 Réponds de façon concise, en français, avec les chiffres exacts retournés
 par la base. Si une requête ne retourne rien, dis-le clairement plutôt que
 de deviner. N'utilise jamais d'autre source que la base de données."""
@@ -105,7 +199,7 @@ def repondre(messages, cle_api):
             model="claude-sonnet-4-6",
             max_tokens=2000,
             system=PROMPT_SYSTEME,
-            tools=[OUTIL_SQL],
+            tools=[OUTIL_SQL, OUTIL_EXPORT],
             messages=messages,
         )
         if reponse.stop_reason != "tool_use":
@@ -115,12 +209,82 @@ def repondre(messages, cle_api):
         messages.append({"role": "assistant", "content": reponse.content})
         resultats_outils = []
         for bloc in reponse.content:
-            if bloc.type == "tool_use":
+            if bloc.type != "tool_use":
+                continue
+            if bloc.name == "executer_requete_sql":
                 resultat = executer_requete_sql(bloc.input.get("sql", ""))
-                resultats_outils.append({
-                    "type": "tool_result", "tool_use_id": bloc.id, "content": resultat,
-                })
+            elif bloc.name == "generer_export_excel":
+                contenu, n_lignes, erreur = generer_excel_bytes(bloc.input.get("sql"))
+                if erreur:
+                    resultat = json.dumps({"erreur": erreur})
+                else:
+                    st.session_state["export_xlsx_pret"] = contenu
+                    st.session_state["export_xlsx_lignes"] = n_lignes
+                    resultat = json.dumps({
+                        "statut": "ok", "lignes": n_lignes,
+                        "info": "Fichier généré -- un bouton de téléchargement va apparaître juste sous ta réponse.",
+                    })
+            else:
+                resultat = json.dumps({"erreur": "outil inconnu"})
+            resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
         messages.append({"role": "user", "content": resultats_outils})
+
+
+# ----------------------------------------------------------------------------
+# Dépôt de fichier -- enrichissement direct depuis l'interface, RÉSERVÉ à
+# l'équipe (derrière le mot de passe si configuré). Utilise un jeton
+# d'écriture séparé du jeton lecture-seule employé pour le chat : le chat
+# reste strictement en lecture quoi qu'il arrive, même si cette fonction a
+# un problème.
+# ----------------------------------------------------------------------------
+def deviner_type_fichier(nom):
+    ext = os.path.splitext(nom)[1].lower()
+    if ext == '.mrc':
+        return 'catalogue'
+    if ext in ('.xlsx', '.xls'):
+        return 'statistiques'
+    if ext == '.csv':
+        return 'frequentation'
+    return None
+
+
+def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
+    suffixe = os.path.splitext(fichier_televerse.name)[1]
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffixe) as tmp:
+        tmp.write(fichier_televerse.getvalue())
+        chemin_tmp = tmp.name
+
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import actualiser_catalogue
+    import actualiser_statistiques
+    import actualiser_frequentation
+
+    connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
+    ancien_connect = db.connect
+    db.connect = lambda *a, **k: connexion_ecriture  # bascule temporaire sur le jeton d'écriture
+
+    tampon_sortie = io.StringIO()
+    ancien_stdout = sys.stdout
+    sys.stdout = tampon_sortie
+    try:
+        t = deviner_type_fichier(fichier_televerse.name)
+        sys.argv = ['x', chemin_tmp]
+        if t == 'catalogue':
+            actualiser_catalogue.main()
+        elif t == 'statistiques':
+            actualiser_statistiques.main()
+        elif t == 'frequentation':
+            actualiser_frequentation.main()
+        else:
+            return False, "Type de fichier non reconnu (.mrc, .xlsx/.xls ou .csv attendu)."
+        return True, tampon_sortie.getvalue()
+    except Exception as e:
+        return False, f"{tampon_sortie.getvalue()}\n\nErreur : {e}"
+    finally:
+        sys.stdout = ancien_stdout
+        db.connect = ancien_connect
+        connexion_ecriture.close()
+        os.remove(chemin_tmp)
 
 
 # ----------------------------------------------------------------------------
@@ -172,6 +336,16 @@ if question:
             except Exception as e:
                 texte = f"Erreur : {e}"
         st.markdown(texte)
+        if st.session_state.get("export_xlsx_pret"):
+            n_lignes = st.session_state.get("export_xlsx_lignes", 0)
+            st.download_button(
+                f"📥 Télécharger le fichier Excel ({n_lignes} lignes)",
+                data=st.session_state["export_xlsx_pret"],
+                file_name=f"export_mediatheque_arcachon_{datetime.date.today().isoformat()}.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            )
+            del st.session_state["export_xlsx_pret"]
+            del st.session_state["export_xlsx_lignes"]
 
     st.session_state.messages_affiches.append({"role": "assistant", "content": texte})
 
@@ -192,3 +366,22 @@ with st.sidebar:
         st.session_state.messages_affiches = []
         st.session_state.messages_api = []
         st.rerun()
+
+    st.divider()
+    with st.expander("📤 Mettre à jour le fonds"):
+        jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+        if not jeton_ecriture:
+            st.caption("Non configuré -- ajoute TURSO_AUTH_TOKEN_ECRITURE dans les secrets pour activer cette fonction.")
+        else:
+            st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
+            fichier_depose = st.file_uploader("Déposer un fichier", type=['mrc', 'xlsx', 'xls', 'csv'], key="depot")
+            if fichier_depose and st.button("Traiter ce fichier"):
+                with st.spinner("Traitement en cours..."):
+                    succes, sortie = traiter_fichier_depose(fichier_depose, db.TURSO_URL, jeton_ecriture)
+                if succes:
+                    st.success("Fichier traité.")
+                else:
+                    st.error("Une erreur s'est produite.")
+                st.code(sortie, language=None)
+                st.caption("Rappel : la qualification par recherche internet (catégorie/genre "
+                           "pour les nouveaux livres) se fait toujours séparément, sur ton Mac.")
