@@ -101,10 +101,19 @@ COLONNES_EXPORT_PAR_DEFAUT = [
 ]
 
 
-def generer_excel_bytes(sql=None):
-    """Construit un export xlsx en mémoire. Sans sql : fonds complet. Avec sql :
-    export filtré selon la demande de l'utilisateur (mêmes garde-fous SELECT-only
-    qu'executer_requete_sql)."""
+def generer_excel_bytes(sql=None, lignes_fournies=None):
+    """Construit un export xlsx en mémoire.
+    - lignes_fournies : liste de dicts construite par Claude lui-même (ex.
+      suggestions d'acquisition trouvées par recherche web) -- utilisée en
+      priorité si fournie.
+    - sql : sinon, requête sur notre base (mêmes garde-fous SELECT-only
+      qu'executer_requete_sql). Sans aucun des deux : fonds complet."""
+    if lignes_fournies:
+        lignes = lignes_fournies
+        colonnes_presentes = list(lignes[0].keys())
+        colonnes = [(c, c.replace('_', ' ').capitalize()) for c in colonnes_presentes]
+        return _ecrire_xlsx(lignes, colonnes, acces_par_cle=True)
+
     sql_finale = (sql or "SELECT * FROM vue_inventaire").strip().rstrip(';')
     if not re.match(r'^\s*SELECT\b', sql_finale, re.IGNORECASE):
         return None, 0, "Seules les requêtes SELECT sont autorisées pour un export."
@@ -128,6 +137,10 @@ def generer_excel_bytes(sql=None):
     else:
         colonnes = [(c, c) for c in colonnes_presentes]
 
+    return _ecrire_xlsx(lignes, colonnes, acces_par_cle=True)
+
+
+def _ecrire_xlsx(lignes, colonnes, acces_par_cle=True):
     from openpyxl import Workbook
     from openpyxl.styles import Font, PatternFill, Border, Side
     from openpyxl.utils import get_column_letter
@@ -147,7 +160,8 @@ def generer_excel_bytes(sql=None):
 
     for i, ligne in enumerate(lignes, start=2):
         for c, (cle, libelle) in enumerate(colonnes, 1):
-            cellule = ws.cell(row=i, column=c, value=ligne[cle])
+            valeur = ligne.get(cle) if isinstance(ligne, dict) else ligne[cle]
+            cellule = ws.cell(row=i, column=c, value=valeur)
             cellule.font = Font(name="Arial", size=9.5)
             cellule.border = bordure
 
@@ -161,52 +175,211 @@ def generer_excel_bytes(sql=None):
 OUTIL_EXPORT = {
     "name": "generer_export_excel",
     "description": (
-        "Génère un fichier Excel téléchargeable. Utilise cet outil dès que "
-        "l'utilisateur demande un export, un tableau, un fichier Excel/xlsx, ou "
-        "veut 'télécharger' une liste. Sans argument sql : exporte le fonds "
-        "complet avec toutes les colonnes utiles. Avec sql : exporte uniquement "
-        "le résultat de cette requête SELECT (ex. seulement les mangas, ou les "
-        "livres jamais prêtés) -- reprends les mêmes colonnes que celles "
-        "décrites pour executer_requete_sql."
+        "Génère un fichier Excel téléchargeable, de deux façons possibles :\n"
+        "1) lignes : pour exporter une liste que TU as construite toi-même "
+        "(typiquement des suggestions d'acquisition trouvées par web_search). "
+        "Fournis une liste d'objets, chacun avec les mêmes champs (ex. titre, "
+        "auteur, editeur, isbn, prix, annee, source). N'utilise CETTE option "
+        "QUE pour des données venant réellement d'un résultat de web_search -- "
+        "jamais de titres inventés.\n"
+        "2) sql : pour exporter ce qui EST dans notre fonds (résultat d'une "
+        "requête SELECT). Sans aucun argument : exporte le fonds complet.\n"
+        "N'utilise jamais sql pour répondre à une demande de titres absents "
+        "du fonds -- utilise lignes avec des résultats de web_search à la "
+        "place, ou dis clairement que tu ne peux pas produire cet export."
     ),
     "input_schema": {
         "type": "object",
         "properties": {
-            "sql": {"type": "string", "description": "Requête SELECT optionnelle pour filtrer l'export"}
+            "sql": {"type": "string", "description": "Requête SELECT sur notre base (ce qu'on possède déjà)"},
+            "lignes": {
+                "type": "array",
+                "description": "Liste d'objets à exporter directement (ex. suggestions trouvées par web_search)",
+                "items": {"type": "object"},
+            },
         },
     },
 }
 
+
+def ajouter_suggestion_acquisition(titre, demandeur, auteur=None, editeur=None, isbn=None,
+                                    prix=None, motif=None, source=None):
+    """Ajoute une ligne dans une liste de suggestions persistante (table
+    suggestion_acquisition), consultable et exportable à tout moment via
+    executer_requete_sql / generer_export_excel, y compris filtrée par
+    demandeur. Nécessite le jeton d'écriture (TURSO_AUTH_TOKEN_ECRITURE) --
+    l'opération est strictement limitée à cet ajout précis, jamais une
+    écriture arbitraire."""
+    jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+    if not jeton_ecriture:
+        return json.dumps({"erreur": "Fonction non configurée (TURSO_AUTH_TOKEN_ECRITURE manquant)."})
+    try:
+        conn = db.connect_avec_jeton(db.TURSO_URL, jeton_ecriture) if db.MODE_EN_LIGNE else db.connect(FICHIER_DB)
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS suggestion_acquisition (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                titre TEXT NOT NULL,
+                demandeur TEXT,
+                auteur TEXT,
+                editeur TEXT,
+                isbn TEXT,
+                prix REAL,
+                motif TEXT,
+                source TEXT,
+                statut TEXT NOT NULL DEFAULT 'à étudier',
+                date_ajout TEXT NOT NULL DEFAULT (datetime('now'))
+            )
+        """)
+        try:  # migration silencieuse si la table existait déjà sans cette colonne
+            conn.execute("ALTER TABLE suggestion_acquisition ADD COLUMN demandeur TEXT")
+            conn.commit()
+        except Exception:
+            pass
+        conn.execute(
+            "INSERT INTO suggestion_acquisition (titre, demandeur, auteur, editeur, isbn, prix, motif, source) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (titre, demandeur, auteur, editeur, isbn, prix, motif, source),
+        )
+        conn.commit()
+        conn.close()
+        return json.dumps({"statut": "ok", "info": f"« {titre} » ajouté à la liste de {demandeur}."})
+    except Exception as e:
+        return json.dumps({"erreur": str(e)})
+
+
+OUTIL_SUGGESTION = {
+    "name": "ajouter_suggestion_acquisition",
+    "description": (
+        "Ajoute un titre à une liste de suggestions d'acquisition PERSISTANTE, "
+        "rattachée à une personne (demandeur). Utilise cet outil quand on te "
+        "demande d'ajouter/noter/mettre un titre dans une liste de suggestions "
+        "-- ne dis jamais que tu ne peux pas le faire, tu en es capable. Si la "
+        "demande ne précise pas pour qui (quel demandeur), demande-le avant "
+        "d'ajouter. Vérifie d'abord que le titre n'est pas déjà dans le fonds "
+        "(executer_requete_sql) avant de l'ajouter. Pour consulter ou exporter "
+        "la liste d'une personne en particulier, utilise executer_requete_sql "
+        "ou generer_export_excel avec un filtre WHERE demandeur = '...'."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "titre": {"type": "string"},
+            "demandeur": {"type": "string", "description": "Qui fait cette suggestion (prénom de l'agent)"},
+            "auteur": {"type": "string"},
+            "editeur": {"type": "string"},
+            "isbn": {"type": "string"},
+            "prix": {"type": "number"},
+            "motif": {"type": "string", "description": "Raison de la suggestion (ex. demande usager)"},
+            "source": {"type": "string", "description": "D'où vient l'info (ex. URL trouvée par web_search)"},
+        },
+        "required": ["titre", "demandeur"],
+    },
+}
+
 PROMPT_SYSTEME = """Tu es l'assistant de la section jeunesse de la Médiathèque d'Arcachon.
-Tu réponds aux questions sur le fonds en interrogeant la base via l'outil
-executer_requete_sql -- jamais en inventant une réponse à partir de tes
-connaissances générales sur les livres. Si une question porte sur un titre,
-un auteur, des statistiques de prêt, du désherbage, des acquisitions, des
-séries incomplètes, etc., construis la requête SQL adaptée et appelle l'outil.
+
+RÈGLE ABSOLUE, NON NÉGOCIABLE : chaque titre, prix, ISBN ou chiffre de prêt que
+tu donnes doit venir d'un résultat RÉEL d'outil (executer_requete_sql ou
+web_search) -- jamais de tes connaissances générales, même plausibles. Si une
+information n'a pas été retournée par un outil, ne l'invente pas : dis
+explicitement que tu ne l'as pas trouvée plutôt que de deviner. La base ne
+contient QUE le fonds réel d'Arcachon -- elle ne contient aucune information
+sur d'autres médiathèques, ni sur des titres que la médiathèque ne possède
+pas.
+
+Pour les questions sur le fonds (titre, auteur, prêts, désherbage, séries
+incomplètes...) : utilise executer_requete_sql.
+
+Pour les SUGGESTIONS D'ACQUISITION (proposer des titres à acheter) : la base
+ne peut te dire que ce que la médiathèque possède déjà -- elle ne connaît
+aucun titre extérieur. Pour proposer de vrais titres à acquérir :
+  1. Interroge d'abord la base pour savoir ce qui existe déjà dans la
+     catégorie/tranche d'âge demandée (pour ne jamais suggérer un doublon).
+  2. Utilise ensuite web_search pour trouver de vrais titres actuels du
+     marché (nouveautés, succès en librairie, sélections professionnelles)
+     correspondant à la demande, avec leurs vrais prix.
+  3. Croise les deux : ne propose que des titres confirmés par la recherche
+     web et absents du résultat de la requête SQL. Cite tes sources.
+Ne propose jamais de titre dont tu n'es pas sûr à 100% qu'il vient bien d'un
+résultat de recherche web réel.
+
+Pour les SUGGESTIONS DE LECTURE ("si on a aimé X, que lui conseiller dans
+notre fonds ?") :
+  1. Cherche d'abord X dans notre fonds (executer_requete_sql, par titre) :
+     s'il y est, son genre/categorie/mots_cles/resume réels sont la
+     meilleure base de comparaison -- utilise-les directement.
+  2. Si X n'est pas dans notre fonds, ou pour mieux cerner ses thèmes,
+     utilise web_search pour savoir de quoi parle X (genre, thèmes,
+     tranche d'âge, ambiance, auteurs comparables).
+  3. Interroge ensuite notre fonds pour trouver de vrais titres que NOUS
+     POSSÉDONS PHYSIQUEMENT, partageant un genre/categorie/mots_cles/public
+     réellement proche -- ce sont les seules suggestions valables.
+N'affirme jamais qu'un livre de notre fonds "ressemble" à X sans t'appuyer
+sur une vraie correspondance (genre, mots_cles, thème) trouvée par un outil.
+Précise toujours sa cote et sa disponibilité actuelle (statut_exemplaire).
+
+INTERDICTION ABSOLUE DE SUBSTITUTION : si l'utilisateur demande des titres
+qu'on N'A PAS, ne réponds JAMAIS à la place avec des titres qu'on A DÉJÀ
+(même si c'est une suggestion pertinente comme "racheter un exemplaire d'un
+titre sous-emprunté ici mais populaire ailleurs") sans le dire EXPLICITEMENT
+en toutes lettres au début de ta réponse ("Je n'ai pas pu chercher de
+nouveaux titres, voici une autre piste : ..."). Changer de question sans le
+signaler est pire que de refuser.
+
+Si on te demande d'AJOUTER/NOTER un titre dans une liste de suggestions
+(par exemple une demande d'un usager pour un livre absent du fonds) :
+utilise ajouter_suggestion_acquisition -- tu en es capable, ne dis jamais
+le contraire. Cette liste est rattachée à une personne (demandeur) : si la
+demande ne précise pas qui (ex. "ajoute à la liste de Marjorie"), demande
+qui avant d'ajouter. Vérifie d'abord via executer_requete_sql que le titre
+n'est pas déjà dans le fonds. Cette liste est persistante : pour la
+consulter ou l'exporter pour une personne en particulier ("montre-moi/
+exporte la liste de Marjorie"), filtre avec WHERE demandeur = '...' dans
+executer_requete_sql ou generer_export_excel.
+
+Pour exporter en Excel des suggestions venant de web_search : utilise
+generer_export_excel avec le paramètre lignes (jamais sql, qui ne peut
+interroger que notre propre fonds et ne peut donc jamais contenir de titres
+absents de la base).
+
 Si l'utilisateur demande un export, un tableau, ou un fichier Excel à
-télécharger, utilise l'outil generer_export_excel (avec ou sans filtre selon
-la demande) -- ne décris jamais son contenu en table dans le texte, le bouton
-de téléchargement apparaîtra automatiquement après ta réponse.
+télécharger sur ce qui EST dans le fonds : utilise generer_export_excel avec
+sql -- ne décris jamais son contenu en table dans le texte, le bouton de
+téléchargement apparaît automatiquement après ta réponse.
+
 Réponds de façon concise, en français, avec les chiffres exacts retournés
-par la base. Si une requête ne retourne rien, dis-le clairement plutôt que
-de deviner. N'utilise jamais d'autre source que la base de données."""
+par les outils. Si un outil ne retourne rien, dis-le clairement plutôt que
+de deviner."""
 
 
-def repondre(messages, cle_api):
+def repondre(historique_existant, question, cle_api):
+    """Travaille sur une COPIE de l'historique, jamais sur la liste
+    st.session_state.messages_api directement. Si une nouvelle question
+    arrive pendant qu'une réponse précédente est encore en cours (plusieurs
+    recherches web qui prennent du temps), Streamlit peut abandonner
+    l'exécution en cours en plein milieu -- sans cette précaution, l'objet
+    partagé resterait alors à moitié écrit (un tool_use sans son
+    tool_result), et toute la conversation deviendrait invalide. En
+    travaillant sur une copie et en ne renvoyant le résultat qu'à la toute
+    fin, un abandon en cours de route ne laisse plus aucune trace."""
+    historique = list(historique_existant)
+    historique.append({"role": "user", "content": question})
     client = Anthropic(api_key=cle_api)
+    outils = [OUTIL_SQL, OUTIL_EXPORT, OUTIL_SUGGESTION,
+              {"type": "web_search_20250305", "name": "web_search", "max_uses": 5}]
     while True:
         reponse = client.messages.create(
             model="claude-sonnet-4-6",
             max_tokens=2000,
             system=PROMPT_SYSTEME,
-            tools=[OUTIL_SQL, OUTIL_EXPORT],
-            messages=messages,
+            tools=outils,
+            messages=historique,
         )
+        historique.append({"role": "assistant", "content": reponse.content})
         if reponse.stop_reason != "tool_use":
             texte = "".join(b.text for b in reponse.content if b.type == "text")
-            return texte, messages
+            return texte, historique
 
-        messages.append({"role": "assistant", "content": reponse.content})
         resultats_outils = []
         for bloc in reponse.content:
             if bloc.type != "tool_use":
@@ -214,7 +387,7 @@ def repondre(messages, cle_api):
             if bloc.name == "executer_requete_sql":
                 resultat = executer_requete_sql(bloc.input.get("sql", ""))
             elif bloc.name == "generer_export_excel":
-                contenu, n_lignes, erreur = generer_excel_bytes(bloc.input.get("sql"))
+                contenu, n_lignes, erreur = generer_excel_bytes(bloc.input.get("sql"), bloc.input.get("lignes"))
                 if erreur:
                     resultat = json.dumps({"erreur": erreur})
                 else:
@@ -224,10 +397,12 @@ def repondre(messages, cle_api):
                         "statut": "ok", "lignes": n_lignes,
                         "info": "Fichier généré -- un bouton de téléchargement va apparaître juste sous ta réponse.",
                     })
+            elif bloc.name == "ajouter_suggestion_acquisition":
+                resultat = ajouter_suggestion_acquisition(**bloc.input)
             else:
                 resultat = json.dumps({"erreur": "outil inconnu"})
             resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
-        messages.append({"role": "user", "content": resultats_outils})
+        historique.append({"role": "user", "content": resultats_outils})
 
 
 # ----------------------------------------------------------------------------
@@ -350,14 +525,13 @@ if question:
     with st.chat_message("user"):
         st.markdown(question)
 
-    st.session_state.messages_api.append({"role": "user", "content": question})
-
     with st.chat_message("assistant"):
         with st.spinner("Interrogation de la base..."):
             try:
-                texte, st.session_state.messages_api = repondre(st.session_state.messages_api, cle_api)
+                texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
+                st.session_state.messages_api = nouvel_historique  # commit uniquement sur succès complet
             except Exception as e:
-                texte = f"Erreur : {e}"
+                texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
         st.markdown(texte)
         if st.session_state.get("export_xlsx_pret"):
             n_lignes = st.session_state.get("export_xlsx_lignes", 0)
