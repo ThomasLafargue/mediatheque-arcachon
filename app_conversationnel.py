@@ -248,6 +248,12 @@ def deviner_type_fichier(nom):
     return None
 
 
+# Chaque ISBN qualifié est enregistré immédiatement (pas en un seul bloc à
+# la fin) : même si la session Streamlit venait à être interrompue en cours
+# de route, rien n'est perdu -- il suffit de redéposer le fichier, ou la
+# tâche de fond sur le Mac prend le relais automatiquement pour le reste.
+
+
 def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
     suffixe = os.path.splitext(fichier_televerse.name)[1]
     with tempfile.NamedTemporaryFile(delete=False, suffix=suffixe) as tmp:
@@ -258,6 +264,7 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
     import actualiser_catalogue
     import actualiser_statistiques
     import actualiser_frequentation
+    import lancer_enrichissement
 
     connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
     ancien_connect = db.connect
@@ -277,6 +284,22 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
             actualiser_frequentation.main()
         else:
             return False, "Type de fichier non reconnu (.mrc, .xlsx/.xls ou .csv attendu)."
+
+        # Qualification automatique par recherche internet, sans plafond
+        cur = connexion_ecriture.cursor()
+        cur.execute("SELECT identifiant FROM notice WHERE type_document='LIVRE' AND categorie IS NULL ORDER BY identifiant")
+        a_traiter = [r[0] for r in cur.fetchall()]
+        if a_traiter:
+            print(f"\nQualification automatique par recherche internet ({len(a_traiter)} ISBN)...")
+            chemin_liste = chemin_tmp + "_isbn.txt"
+            with open(chemin_liste, "w", encoding="utf-8") as f:
+                f.write("\n".join(a_traiter) + "\n")
+            sys.argv = ['lancer_enrichissement.py', chemin_liste]
+            lancer_enrichissement.main()
+            os.remove(chemin_liste)
+        else:
+            print("\nRien à qualifier par recherche internet pour cet import.")
+
         return True, tampon_sortie.getvalue()
     except Exception as e:
         return False, f"{tampon_sortie.getvalue()}\n\nErreur : {e}"
@@ -298,7 +321,7 @@ if not cle_api:
     st.error("Clé API Anthropic manquante -- à configurer dans les secrets de l'application.")
     st.stop()
 
-mot_de_passe_requis = st.secrets.get("MOT_DE_PASSE", "")
+mot_de_passe_requis = st.secrets.get("MOT_DE_PASSE", "")  # accès au chat, pour les agents
 if mot_de_passe_requis:
     if "authentifie" not in st.session_state:
         st.session_state.authentifie = False
@@ -369,19 +392,32 @@ with st.sidebar:
 
     st.divider()
     with st.expander("📤 Mettre à jour le fonds"):
-        jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
-        if not jeton_ecriture:
-            st.caption("Non configuré -- ajoute TURSO_AUTH_TOKEN_ECRITURE dans les secrets pour activer cette fonction.")
+        mot_de_passe_import = st.secrets.get("MOT_DE_PASSE_IMPORT", "")
+        if not mot_de_passe_import:
+            st.caption("Non configuré -- ajoute MOT_DE_PASSE_IMPORT dans les secrets pour activer cette fonction.")
         else:
-            st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
-            fichier_depose = st.file_uploader("Déposer un fichier", type=['mrc', 'xlsx', 'xls', 'csv'], key="depot")
-            if fichier_depose and st.button("Traiter ce fichier"):
-                with st.spinner("Traitement en cours..."):
-                    succes, sortie = traiter_fichier_depose(fichier_depose, db.TURSO_URL, jeton_ecriture)
-                if succes:
-                    st.success("Fichier traité.")
+            if "import_authentifie" not in st.session_state:
+                st.session_state.import_authentifie = False
+            if not st.session_state.import_authentifie:
+                saisie_import = st.text_input("Mot de passe import", type="password", key="mdp_import")
+                if saisie_import:
+                    if saisie_import == mot_de_passe_import:
+                        st.session_state.import_authentifie = True
+                        st.rerun()
+                    else:
+                        st.error("Mot de passe incorrect.")
+            else:
+                jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+                if not jeton_ecriture:
+                    st.caption("TURSO_AUTH_TOKEN_ECRITURE manquant dans les secrets.")
                 else:
-                    st.error("Une erreur s'est produite.")
-                st.code(sortie, language=None)
-                st.caption("Rappel : la qualification par recherche internet (catégorie/genre "
-                           "pour les nouveaux livres) se fait toujours séparément, sur ton Mac.")
+                    st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
+                    fichier_depose = st.file_uploader("Déposer un fichier", type=['mrc', 'xlsx', 'xls', 'csv'], key="depot")
+                    if fichier_depose and st.button("Traiter ce fichier"):
+                        with st.spinner("Traitement en cours (peut prendre plusieurs minutes)..."):
+                            succes, sortie = traiter_fichier_depose(fichier_depose, db.TURSO_URL, jeton_ecriture)
+                        if succes:
+                            st.success("Fichier traité.")
+                        else:
+                            st.error("Une erreur s'est produite.")
+                        st.code(sortie, language=None)
