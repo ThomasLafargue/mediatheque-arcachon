@@ -1,0 +1,4 @@
+streamlit>=1.38
+anthropic>=0.40
+libsql>=0.1.11
+certifi
