@@ -839,12 +839,45 @@ Exemples de requêtes utiles :
 
 ── SUGGESTIONS D'ACQUISITION ─────────────────────────
 1. Interroge la base pour ce qui existe déjà (éviter les doublons).
-2. web_search avec plusieurs sources variées (Fnac, Decitre, LesLibraires.fr,
-   Mollat, Ricochet-jeunes.org, Pépites/BnF, prix littéraires, festivals).
-   Jamais de titres de mémoire. Prix estimé acceptable, ISBN non requis.
+2. web_search avec plusieurs sources variées. Jamais de titres de mémoire.
+   Prix estimé acceptable, ISBN non requis.
 3. Vise 80-100% du budget indiqué -- plusieurs recherches si nécessaire.
 Titres trouvés → generer_export_excel avec paramètre lignes (pas sql).
 Pour ajouter à une liste : ajouter_suggestion_acquisition (avec demandeur).
+
+   SOURCES PRIORITAIRES — utilise-les systématiquement selon le contexte.
+   3 recherches bien ciblées valent mieux que 10 recherches génériques.
+
+   Toujours utiles (fond de recherche permanent) :
+   • LesLibraires.fr, Babelio, Fnac, Decitre, Mollat, Livres Hebdo
+   • Ricochet-jeunes.org (jeunesse), BDfugue / BDnet (BD), Manga News
+
+   Rentrée littéraire (août-septembre) :
+   • "rentrée littéraire 2026 sélection Livres Hebdo"
+   • "rentrée littéraire 2026 France Inter livres"
+   • "Fnac rentrée littéraire 2026 romans"
+   • "rentrée littéraire 2026 jeunesse sélection"
+
+   Noël / cadeaux (octobre-décembre) :
+   • "idées cadeaux livres Noël 2026 jeunesse"
+   • "sélection livres Noël 2026 Fnac"
+   • "beaux livres Noël 2026 nouveautés"
+   • "albums cadeaux jeunesse Noël 2026"
+
+   Halloween / frissons (octobre) :
+   • "livres Halloween jeunesse 2026"
+   • "romans frissons enfants sélection"
+   • "albums peur jeunesse nouveautés"
+
+   Prix littéraires (toute l'année) :
+   • "Prix Goncourt 2026", "Prix Renaudot 2026", "Prix Médicis 2026"
+   • "Prix Sorcières 2026", "Prix Landerneau 2026"
+   • "Prix Révélation Livre jeunesse 2026"
+   • "Prix Libbylit 2026", "Prix Tam-Tam 2026"
+
+   Printemps / lectures d'été (avril-juin) :
+   • "sélection lectures été 2026 jeunesse"
+   • "prix littéraires printemps 2026 romans"
 
 ── DÉSHERBAGE ────────────────────────────────────────
 Pour identifier des candidats au pilon (peu/pas empruntés, anciens, périmés...) :
@@ -925,6 +958,7 @@ def repondre(historique_existant, question, cle_api):
     historique = list(historique_existant)
     historique.append({"role": "user", "content": question})
     client = Anthropic(api_key=cle_api)
+
     outils = [
         OUTIL_SQL, OUTIL_EXPORT, OUTIL_RAPPORT,
         OUTIL_SUGGESTION, OUTIL_SUPPRESSION_SUGGESTION,
