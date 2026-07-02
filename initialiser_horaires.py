@@ -55,11 +55,12 @@ horaires = [
     ("annee", 9, 12, 0, "10:00", "18:00", 0, "Lundi — agents uniquement, fermé au public"),
 ]
 
-conn.executemany("""
-    INSERT INTO horaires_ouverture
-    (periode, mois_debut, mois_fin, jour_semaine, heure_ouverture, heure_fermeture, ouvert_public, note)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-""", horaires)
+for h in horaires:
+    conn.execute("""
+        INSERT INTO horaires_ouverture
+        (periode, mois_debut, mois_fin, jour_semaine, heure_ouverture, heure_fermeture, ouvert_public, note)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """, h)
 conn.commit()
 
 print(f"Table horaires_ouverture créée avec {len(horaires)} règles.")
