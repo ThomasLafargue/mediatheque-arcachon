@@ -75,7 +75,7 @@ COBAS_VERS_GENRE = {
     'Fantastique': 'Fantastique', 'Fantasy': 'Fantastique',
     'Historique': 'Historique',
     'Comédie': 'Humour', 'Humour': 'Humour',
-    'Sentimental': 'Amour',
+    'Sentimental': 'Amour / Romance',
     'Action, Aventure': 'Aventure',
     'Epouvante': 'Frissons',
     'Cuisine': 'Activités', 'Jardinage, Bricolage': 'Activités', 'Loisirs créatifs': 'Activités',
@@ -84,6 +84,15 @@ COBAS_VERS_GENRE = {
     'Philosophie, Psychologie': 'Philo', 'Sciences sociales': 'Société',
     'Géographie': 'Géographie', 'Récits de voyage': 'Géographie', 'Guides touristiques': 'Géographie',
     'Arts': 'Arts',
+    # BD — distinction Comics / Romans graphiques préservée comme genre
+    'Comics': 'Comics',
+    'Romans graphiques': 'Roman graphique',
+    # Nouveaux genres découverts dans le .mrc
+    'Terroir': 'Terroir',
+    'Nouvelles': 'Nouvelles',
+    'Récits de vie': 'Récits de vie',
+    'Belles lettres': 'Littérature',
+    'Western': 'Western',
 }
 
 
@@ -447,6 +456,8 @@ def main():
 
     inseres, mis_a_jour, ignores = 0, 0, 0
     deja_vus_ce_fichier = set()
+    lot_size = 500
+    compteur = 0
 
     for n in notices:
         ident = n['identifiant']
@@ -504,15 +515,20 @@ def main():
             if ident.startswith('CB:'):
                 print(f"  ⚠ Notice sans EAN acceptée (id substitut {ident}) : {n['titre']!r} — à corriger dans Decalog")
 
+        compteur += 1
+        if compteur % lot_size == 0:
+            conn.commit()
+            print(f"  {compteur}/{len(notices)} notices traitées...", end='\r', flush=True)
+
     conn.commit()
-    # Compter les notices entrées sans EAN cette session
     n_sans_ean = sum(1 for n in notices if (n.get('identifiant') or '').startswith('CB:'))
     print(f"\nNotices : {inseres} nouvelles, {mis_a_jour} mises à jour, {ignores} ignorées (sans identifiant/doublon)")
     if n_sans_ean:
         print(f"  dont {n_sans_ean} sans EAN Decalog (identifiant CB: substitut) — liste ci-dessus")
 
-    # --- Exemplaires : upsert par code-barres, sans jamais toucher prix/prêts ---
+    # --- Exemplaires : upsert par lots ---
     inseres_ex, maj_ex, ignores_ex = 0, 0, 0
+    compteur_ex = 0
     for ex in exemplaires:
         ident = ex['identifiant']
         cb = (ex.get('code_barres') or '').strip() or None
@@ -532,6 +548,10 @@ def main():
               ex.get('site'), ex.get('public_vise'), ex.get('support')))
         if cur.rowcount:
             inseres_ex += 1
+        compteur_ex += 1
+        if compteur_ex % lot_size == 0:
+            conn.commit()
+            print(f"  {compteur_ex}/{len(exemplaires)} exemplaires traités...", end='\r', flush=True)
 
     conn.commit()
     print(f"Exemplaires : {inseres_ex} insérés/mis à jour, {ignores_ex} ignorés (sans code-barres/notice)")
