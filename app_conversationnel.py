@@ -836,6 +836,37 @@ Pour "manque-t-il des tomes dans les BD jeunesse ?" ou toute série :
 3. Attention : certains écarts sont normaux (hors-série, double tome...) --
    le signaler en précisant quels numéros semblent absents.
 
+⚠️ RÈGLE ABSOLUE — TOMES MANQUANTS ≠ TOMES À COMMANDER :
+Un tome absent de notre base ne signifie PAS qu'il est absent du fonds physique.
+Il peut être présent dans Decalog avec un ISBN malformé, un titre légèrement différent,
+ou un numéro de tome non renseigné.
+NE JAMAIS suggérer directement une acquisition sur la seule base d'un trou de numérotation.
+Notre base est une copie imparfaite de Decalog — vérification humaine obligatoire.
+
+LOGIQUE DE DIAGNOSTIC pour chaque série avec trous :
+Après avoir trouvé les tomes manquants, exécuter cette requête complémentaire :
+  SELECT COUNT(*) as nb_fiches_suspectes
+  FROM notice
+  WHERE serie = '[nom_serie]'
+  AND (identifiant LIKE 'CB:%' OR tome IS NULL OR tome = '')
+
+Puis croiser :
+• Si nb_fiches_suspectes >= nb_tomes_manquants :
+  → Formuler : "La série [X] semble complète MAIS [N] fiche(s) sont mal renseignées
+    dans Decalog (ISBN manquant ou numéro de tome absent) — à corriger dans Decalog."
+  → NE PAS suggérer d'achat.
+
+• Si nb_fiches_suspectes > 0 mais < nb_tomes_manquants :
+  → Formuler : "[N] fiche(s) suspecte(s) dans Decalog pourraient correspondre à certains
+    tomes manquants — vérifier avant commande. Les autres tomes sont probablement absents."
+
+• Si nb_fiches_suspectes = 0 :
+  → Formuler : "Aucune fiche suspecte détectée — les tomes [X,Y,Z] semblent réellement
+    absents du fonds. À confirmer dans Decalog avant commande."
+
+Toujours conclure par : "Vérification dans Decalog par titre + numéro de tome +
+code-barres obligatoire avant toute décision d'achat."
+
 ── DÉTECTION D'ERREURS DECALOG ────────────────────────────
 Signaler proactivement dans les réponses :
 • Série trouvée en deux orthographes (accent/sans accent) → doublon Decalog
