@@ -50,11 +50,18 @@ FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventair
 # deviné. Vocabulaire aligné sur celui déjà utilisé dans la base.
 # ----------------------------------------------------------------------------
 COBAS_VERS_CATEGORIE = {
+    # Livres
     'Bandes dessinées': 'BD', 'Comics': 'BD', 'Romans graphiques': 'BD',
     'Mangas': 'Manga',
     'Albums': 'Album', 'Albums tout petits': 'Album', 'Albums sans texte': 'Album',
+    'Pop-up': 'Album', 'Livres jeux': 'Album',
     'Premières lectures': 'Première lecture',
     'Contes': 'Conte / Poésie', 'Poésie': 'Conte / Poésie', 'Comptines': 'Conte / Poésie',
+    'Gros caractères': 'Gros caractères',
+    'Textes lus': 'Textes lus',
+    'Romans illustrés': 'Roman illustré',
+    'Fonds local': 'Fonds local',
+    # Documentaires (tous regroupés sous Documentaire sauf exceptions)
     'Histoire': 'Documentaire', 'Géographie': 'Documentaire',
     'Biographies et autobiographies': 'Documentaire', 'Arts': 'Documentaire',
     'Sciences de la nature': 'Documentaire', 'Sciences sociales': 'Documentaire',
@@ -66,34 +73,116 @@ COBAS_VERS_CATEGORIE = {
     'Développement durable': 'Documentaire', 'Formation, Orientation': 'Documentaire',
     'Transports': 'Documentaire', 'Guides touristiques': 'Documentaire',
     'Récits de voyage': 'Documentaire', 'Éducation': 'Documentaire',
+    # DVD — distinctions films préservées
+    'Films d\'animation': 'Film d\'animation',
+    'Films documentaires': 'Film documentaire',
+    'Drame': 'Film',
+    'Comédie': 'Film',
+    'Action, Aventure': 'Film',
+    'Séries TV': 'Film',
+    # Jeux — toutes les sous-catégories
+    'Jeux de règles': 'Jeu', 'Jeux symboliques': 'Jeu', 'Jeux d\'assemblage': 'Jeu',
+    'Jeux d\'exercice': 'Jeu', 'Jeux de société': 'Jeu', 'Jouets': 'Jeu',
+    # Jeux vidéo — catégorie distincte
+    'Jeux vidéo': 'Jeu vidéo',
+    # Musique
+    'Musique classique': 'CD', 'Rock et variétés internationales': 'CD',
+    'Jazz': 'CD', 'Chanson francophone': 'CD', 'Chanson pour enfants': 'CD',
+    'Musiques du monde': 'CD', 'Hip Hop, Rap': 'CD', 'Bandes originales': 'CD',
+    'Rhythm and blues, Soul': 'CD', 'Blues': 'CD', 'Reggae': 'CD',
+    'Musiques électroniques': 'CD', 'Musiques fonctionnelles': 'CD',
+    'Musiques d\'influences afro-américaines': 'CD',
 }
 # 'Romans' n'est pas dans ce dict : ado vs jeunesse dépend du public, géré à part.
 
 COBAS_VERS_GENRE = {
+    # Littérature
     'Policier': 'Policier', 'Polar': 'Policier', 'Thriller': 'Policier', 'Romans noirs': 'Policier',
     'Science-fiction': 'Science-fiction',
     'Fantastique': 'Fantastique', 'Fantasy': 'Fantastique',
-    'Historique': 'Historique',
+    'Historique': 'Historique', 'Histoire': 'Histoire',
     'Comédie': 'Humour', 'Humour': 'Humour',
     'Sentimental': 'Amour / Romance',
     'Action, Aventure': 'Aventure',
     'Epouvante': 'Frissons',
-    'Cuisine': 'Activités', 'Jardinage, Bricolage': 'Activités', 'Loisirs créatifs': 'Activités',
+    'Biographies et autobiographies': 'Biographie',
+    'Récits de vie': 'Récits de vie',
+    'Nouvelles': 'Nouvelles',
+    'Belles lettres': 'Littérature',
+    'Essais': 'Essai',
+    'Théâtre': 'Théâtre',
+    'Western': 'Western',
+    'Terroir': 'Terroir',
+    # BD
+    'Comics': 'Comics',
+    'Romans graphiques': 'Roman graphique',
+    # Documentaire
+    'Cuisine': 'Cuisine', 'Jardinage, Bricolage': 'Activités', 'Loisirs créatifs': 'Activités',
     'Sports et loisirs': 'Sport',
     'Sciences de la nature': 'Nature', 'Sciences et mathématiques': 'Sciences',
     'Philosophie, Psychologie': 'Philo', 'Sciences sociales': 'Société',
     'Géographie': 'Géographie', 'Récits de voyage': 'Géographie', 'Guides touristiques': 'Géographie',
     'Arts': 'Arts',
-    # BD — distinction Comics / Romans graphiques préservée comme genre
-    'Comics': 'Comics',
-    'Romans graphiques': 'Roman graphique',
-    # Nouveaux genres découverts dans le .mrc
-    'Terroir': 'Terroir',
-    'Nouvelles': 'Nouvelles',
-    'Récits de vie': 'Récits de vie',
-    'Belles lettres': 'Littérature',
-    'Western': 'Western',
+    'Santé': 'Santé', 'Politique': 'Politique', 'Economie': 'Economie',
+    'Informatique, Information': 'Informatique', 'Langues': 'Langues',
+    'Droit': 'Droit', 'Religion': 'Religion',
+    # DVD — genres films
+    'Drame': 'Drame',
+    'Films d\'animation': 'Animation',
+    'Films documentaires': 'Documentaire',
+    # Musique — genres musicaux
+    'Musique classique': 'Classique',
+    'Rock et variétés internationales': 'Rock',
+    'Jazz': 'Jazz',
+    'Chanson francophone': 'Chanson',
+    'Chanson pour enfants': 'Chanson pour enfants',
+    'Musiques du monde': 'Musiques du monde',
+    'Hip Hop, Rap': 'Hip Hop',
+    'Bandes originales': 'Bandes originales',
+    # Jeux — genres jeux
+    'Jeux de règles': 'Jeux de règles',
+    'Jeux symboliques': 'Jeux symboliques',
+    'Jeux d\'assemblage': 'Jeux d\'assemblage',
+    'Jeux d\'exercice': 'Jeux d\'exercice',
+    'Jeux de société': 'Jeux de société',
 }
+
+# Métadonnées ESAR pour les jeux (champ 686 avec \x1f2 ESAR ou Age/Nb joueurs)
+# Extraites séparément et stockées dans des colonnes dédiées.
+ESAR_AGE_PREFIX = 'Age des joueurs'
+ESAR_NB_MAX = 'Nombre de joueurs maximum'
+ESAR_NB_MIN = 'Nombre de joueurs minimum'
+ESAR_DUREE = 'Durée moyenne de la partie'
+
+
+def extraire_metadonnees_esar(cobas_raw_list):
+    """Extrait les métadonnées ESAR (âge, nb joueurs, durée) depuis les
+    valeurs brutes du champ 686. Retourne un dict avec les clés
+    age_joueurs, nb_joueurs_min, nb_joueurs_max, duree_partie."""
+    meta = {'age_joueurs': None, 'nb_joueurs_min': None,
+            'nb_joueurs_max': None, 'duree_partie': None}
+    for raw in cobas_raw_list:
+        if not raw:
+            continue
+        raw_str = raw if isinstance(raw, str) else raw.decode('utf-8', errors='replace')
+        parts = raw_str.split('\x1f')
+        code = libelle = systeme = ''
+        for p in parts:
+            if p.startswith('a'): code = p[1:]
+            elif p.startswith('l'): libelle = p[1:]
+            elif p.startswith('2'): systeme = p[1:]
+        if ESAR_AGE_PREFIX in systeme or 'Age des joueurs' in libelle:
+            meta['age_joueurs'] = libelle or code
+        elif ESAR_NB_MAX in systeme or 'Nombre de joueurs maximum' in libelle:
+            try: meta['nb_joueurs_max'] = int(code)
+            except (ValueError, TypeError): pass
+        elif ESAR_NB_MIN in systeme or 'Nombre de joueurs minimum' in libelle:
+            try: meta['nb_joueurs_min'] = int(code)
+            except (ValueError, TypeError): pass
+        elif ESAR_DUREE in systeme or 'Durée moyenne' in libelle:
+            meta['duree_partie'] = libelle or code
+    return meta
+
 
 
 def deriver_categorie_genre(cobas_valeurs, public_vise):
@@ -179,6 +268,7 @@ def parser_mrc(chemin):
         ean_073 = isbn_010 = None
         serie_461 = tome_461 = date_461 = None
         cobas_valeurs = []
+        cobas_raw_686 = []  # toutes les valeurs brutes 686 pour extraction ESAR
         mots_cles = []
         dewey = dewey_libelle = None
         description_physique = None
@@ -252,6 +342,7 @@ def parser_mrc(chemin):
                         date_461 = val
             elif tag == '686':
                 lib = scheme = None
+                cobas_raw_686.append(raw)  # conserver pour extraction ESAR
                 for code, val in subs:
                     if code == 'l':
                         lib = val
@@ -323,6 +414,7 @@ def parser_mrc(chemin):
         titre_final = titre_partie or titre
         public_hint = next((e['public_vise'] for e in exemplaires_locaux if e.get('public_vise')), None)
         categorie_decalog, genre_decalog = deriver_categorie_genre(cobas_valeurs, public_hint)
+        esar = extraire_metadonnees_esar(cobas_raw_686)
 
         notices.append({
             'identifiant': identifiant, 'type_document': type_document,
@@ -336,6 +428,10 @@ def parser_mrc(chemin):
             'mots_cles': ' | '.join(mots_cles) if mots_cles else None,
             'description_physique': description_physique,
             'age_recommande': age_recommande,
+            'age_joueurs': esar['age_joueurs'],
+            'nb_joueurs_min': esar['nb_joueurs_min'],
+            'nb_joueurs_max': esar['nb_joueurs_max'],
+            'duree_partie': esar['duree_partie'],
         })
         for ex in exemplaires_locaux:
             ex['identifiant'] = identifiant
@@ -444,6 +540,15 @@ def main():
     conn.execute("PRAGMA foreign_keys = ON;")
     cur = conn.cursor()
 
+    # Migration silencieuse — ajout des colonnes ESAR si elles n'existent pas encore
+    for col, typ in [('age_joueurs', 'TEXT'), ('nb_joueurs_min', 'INTEGER'),
+                     ('nb_joueurs_max', 'INTEGER'), ('duree_partie', 'TEXT')]:
+        try:
+            cur.execute(f"ALTER TABLE notice ADD COLUMN {col} {typ}")
+            conn.commit()
+        except Exception:
+            pass  # colonne déjà présente
+
     date_fichier = extraire_date_fichier(args.fichier_mrc)
     verifier_et_enregistrer_date(cur, date_fichier)
     conn.commit()
@@ -489,13 +594,18 @@ def main():
                     dewey = COALESCE(dewey, ?), dewey_libelle = COALESCE(dewey_libelle, ?),
                     mots_cles = COALESCE(mots_cles, ?),
                     description_physique = COALESCE(description_physique, ?),
-                    age_recommande = COALESCE(age_recommande, ?)
+                    age_recommande = COALESCE(age_recommande, ?),
+                    age_joueurs = COALESCE(age_joueurs, ?),
+                    nb_joueurs_min = COALESCE(nb_joueurs_min, ?),
+                    nb_joueurs_max = COALESCE(nb_joueurs_max, ?),
+                    duree_partie = COALESCE(duree_partie, ?)
                 WHERE identifiant = ?
             """, (n['titre'], serie_finale, n['tome'], editeur_final, n['date_publication'],
                   n['resume'], n['image_url'], n['categorie_decalog'], n['genre_decalog'],
                   n['public_hint'], n['illustrateur'], n['traducteur'], n['dewey'],
                   n['dewey_libelle'], n['mots_cles'], n['description_physique'],
-                  n['age_recommande'], ident))
+                  n['age_recommande'], n['age_joueurs'], n['nb_joueurs_min'],
+                  n['nb_joueurs_max'], n['duree_partie'], ident))
             mis_a_jour += 1
         else:
             cur.execute("""
@@ -503,13 +613,15 @@ def main():
                                      createurs, createurs_secondaires, traducteur, editeur,
                                      date_publication, resume, image_url, categorie, genre,
                                      public_vise, dewey, dewey_libelle, mots_cles,
-                                     description_physique, age_recommande)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                     description_physique, age_recommande,
+                                     age_joueurs, nb_joueurs_min, nb_joueurs_max, duree_partie)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (ident, n['type_document'], n['titre'], serie_finale, n['tome'],
                   n['auteur'], n['illustrateur'], n['traducteur'], editeur_final,
                   n['date_publication'], n['resume'], n['image_url'], n['categorie_decalog'],
                   n['genre_decalog'], n['public_hint'], n['dewey'], n['dewey_libelle'],
-                  n['mots_cles'], n['description_physique'], n['age_recommande']))
+                  n['mots_cles'], n['description_physique'], n['age_recommande'],
+                  n['age_joueurs'], n['nb_joueurs_min'], n['nb_joueurs_max'], n['duree_partie']))
             identifiants_existants.add(ident)
             inseres += 1
             if ident.startswith('CB:'):
