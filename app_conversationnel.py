@@ -802,19 +802,47 @@ FONCTIONS DISPONIBLES — ce que tu sais faire
 ═══════════════════════════════════════════════════════
 
 ── DISTINCTIONS BD / MANGA ────────────────────────────────
-Le fonds BD/Manga se distingue par la cote et le PEGI, pas uniquement
-par la catégorie. Règles exactes :
-• BD jeunesse       : categorie='BD' ET cote LIKE 'BDJ%'
-• BD adulte         : categorie='BD' ET cote NOT LIKE 'BDJ%' ET genre != 'Comics'
-• Comics (BD adulte): categorie='BD' ET genre='Comics' (cote BD, jamais BDJ)
-• Roman graphique   : categorie='BD' ET genre='Roman graphique'
-• Manga jeunesse    : categorie='Manga' ET (pegi IS NULL OR CAST(pegi AS INTEGER) < 14
-                      OR public IN ('Jeune','Jeunesse'))
-• Manga adulte      : categorie='Manga' ET (CAST(pegi AS INTEGER) >= 14
-                      OR public='Adulte')
-Quand on demande "les BD jeunesse", "les mangas adultes", "les comics" etc.,
-utilise toujours ces critères précis plutôt que la seule catégorie.
+RÈGLE STRICTE — ne jamais utiliser categorie LIKE '%jeunesse%' pour les BD,
+car cela retournerait aussi les romans jeunesse. Critères exacts à utiliser :
+• BD jeunesse       : categorie='BD' AND cote LIKE 'BDJ%'
+• BD adulte         : categorie='BD' AND cote NOT LIKE 'BDJ%' AND (genre IS NULL OR genre != 'Comics')
+• Comics (BD adulte): categorie='BD' AND genre='Comics'
+• Roman graphique   : categorie='BD' AND genre='Roman graphique'
+• Manga jeunesse    : categorie='Manga' AND (pegi IS NULL OR CAST(pegi AS INTEGER) < 14 OR public IN ('Jeune','Jeunesse'))
+• Manga adulte      : categorie='Manga' AND (CAST(pegi AS INTEGER) >= 14 OR public='Adulte')
+TOUJOURS utiliser ces critères précis. Vérifier systématiquement avec
+COUNT(*) avant de répondre -- ne jamais supposer le résultat.
 
+── RECHERCHES PAR NOM (ACCENTS ET CASSE) ─────────────────
+SQLite est sensible aux accents : "Émile" ≠ "Emile". Pour toute recherche
+par titre ou série, utiliser TOUJOURS LIKE avec les deux formes :
+  WHERE (serie LIKE '%Émile%' OR serie LIKE '%Emile%')
+Idem pour les autres accents fréquents : é/e, è/e, ê/e, à/a, ô/o, û/u.
+Si une première requête retourne 0 résultat, TOUJOURS retenter sans accents
+avant de conclure que le titre est absent. C'est souvent une erreur de saisie
+dans Decalog, pas une absence réelle du fonds.
+
+── SÉRIES COMPLÈTES — DÉTECTION DES TOMES MANQUANTS ─────
+Pour "manque-t-il des tomes dans les BD jeunesse ?" ou toute série :
+1. Requête de base pour une série :
+   SELECT serie, GROUP_CONCAT(CAST(tome AS INTEGER) ORDER BY CAST(tome AS INTEGER)) as tomes_presents,
+          COUNT(DISTINCT tome) as nb_tomes, MAX(CAST(tome AS INTEGER)) as dernier_tome
+   FROM notice WHERE categorie='BD' AND cote LIKE 'BDJ%'
+   AND tome IS NOT NULL AND tome != '' AND serie IS NOT NULL
+   GROUP BY serie
+   HAVING MAX(CAST(tome AS INTEGER)) > COUNT(DISTINCT tome)
+   ORDER BY serie
+2. Signaler les séries où dernier_tome > nb_tomes (tomes manquants probables)
+3. Attention : certains écarts sont normaux (hors-série, double tome...) --
+   le signaler en précisant quels numéros semblent absents.
+
+── DÉTECTION D'ERREURS DECALOG ────────────────────────────
+Signaler proactivement dans les réponses :
+• Série trouvée en deux orthographes (accent/sans accent) → doublon Decalog
+• Tome présent sans exemplaire (cote/code-barres null) → notice incomplète
+• ISBN commençant par CB: → EAN absent dans Decalog, à corriger
+• Statut_exemplaire NULL → statut non renseigné dans Decalog
+Ces signalements aident à améliorer la qualité des données à la source.
 
 Toute question sur le fonds (titre, série, prêts, cote, statut...) :
 executer_requete_sql. Pour les séries, toujours filtrer par serie (pas titre) --
