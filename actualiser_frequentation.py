@@ -33,25 +33,30 @@ def main():
         reader = csv.DictReader(f, delimiter=';')
         rows = list(reader)
 
-    if not rows or 'DATE' not in rows[0] or 'IN' not in rows[0]:
-        print("⚠ Colonnes attendues introuvables (DATE, IN) -- vérifie le format du fichier.")
+    if not rows or ('DATE' not in rows[0] and 'Date' not in rows[0]):
+        print("⚠ Colonnes attendues introuvables (DATE/Date) -- vérifie le format du fichier.")
         sys.exit(1)
+
+    # Support deux formats : ancien (DATE, IN, HOUR) et nouveau (Date, Entrées, Heure)
+    col_date   = 'DATE'   if 'DATE'   in rows[0] else 'Date'
+    col_entree = 'IN'     if 'IN'     in rows[0] else 'Entrées'
+    col_heure  = 'HOUR'   if 'HOUR'   in rows[0] else 'Heure'
 
     par_jour = defaultdict(int)
     par_heure = defaultdict(int)  # clé : (date, heure_arrondie)
 
     for r in rows:
-        if not r.get('IN') or not r.get('DATE'):
+        if not r.get(col_entree) or not r.get(col_date):
             continue
         try:
-            entrees = int(r['IN'])
+            entrees = int(r[col_entree])
             if entrees <= 0:
                 continue
-            date = r['DATE']
+            date = r[col_date]
             par_jour[date] += entrees
 
             # Heure arrondie à l'heure (ex: "14:25" → "14:00")
-            heure_brute = r.get('HOUR', '')
+            heure_brute = r.get(col_heure, '')
             if heure_brute and ':' in heure_brute:
                 h = heure_brute.split(':')[0].zfill(2)
                 heure = f"{h}:00"
