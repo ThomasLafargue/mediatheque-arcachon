@@ -1,4 +1,7 @@
-streamlit>=1.38
-anthropic>=0.40
-libsql>=0.1.11
-certifi
+anthropic
+streamlit
+libsql-client
+openpyxl
+requests
+beautifulsoup4
+python-dotenv
