@@ -33,8 +33,22 @@ for _cle in ("TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN"):
     except Exception:
         pass  # pas de secrets.toml en local -- db.py se rabat sur .env / sqlite local
 
+# Clé Google Books depuis secrets Streamlit Cloud
+try:
+    if "GOOGLE_BOOKS_API_KEY" in st.secrets:
+        os.environ["GOOGLE_BOOKS_API_KEY"] = st.secrets["GOOGLE_BOOKS_API_KEY"]
+except Exception:
+    pass
+
 import db
 from anthropic import Anthropic
+
+# Sources API bibliographiques (BnF SRU, Google Books, COBAS portail)
+try:
+    from sources_api import chercher_cobas_statut_isbn, enrichir_par_api
+    SOURCES_API_OK = True
+except ImportError:
+    SOURCES_API_OK = False
 
 FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventaire.db")
 
@@ -736,6 +750,42 @@ def journaliser_requete(question, sql_executees, nb_recherches_web, a_exporte, a
         pass  # le journal est un outil d'observabilité, jamais un point de blocage
 
 
+
+
+# ─────────────────────── COBAS PORTAIL — DISPONIBILITÉ TEMPS RÉEL ──────────
+
+def verifier_disponibilite_cobas(isbn: str) -> str:
+    """Interroge le portail public COBAS pour vérifier la disponibilité en temps réel."""
+    if not SOURCES_API_OK:
+        return json.dumps({"erreur": "Module sources_api non disponible."})
+    try:
+        resultat = chercher_cobas_statut_isbn(isbn)
+        if not resultat:
+            return json.dumps({"erreur": "Portail COBAS inaccessible."})
+        return json.dumps(resultat, ensure_ascii=False)
+    except Exception as e:
+        return json.dumps({"erreur": str(e)})
+
+
+OUTIL_COBAS = {
+    "name": "verifier_disponibilite_cobas",
+    "description": (
+        "Interroge le portail public COBAS en temps réel pour vérifier si un document "
+        "est disponible, en prêt, réservé ou en transit. "
+        "Utilise cet outil quand l'agent demande si un livre est disponible MAINTENANT, "
+        "ou veut savoir dans quelle médiathèque COBAS il se trouve. "
+        "NE PAS utiliser pour l'enrichissement de masse — uniquement à la demande."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "isbn": {"type": "string", "description": "ISBN ou EAN-13 du document (sans tirets)"}
+        },
+        "required": ["isbn"],
+    },
+}
+
+
 PROMPT_SYSTEME = """Tu es l'assistant de la section jeunesse de la Médiathèque d'Arcachon.
 
 RÈGLE ABSOLUE, NON NÉGOCIABLE : chaque titre, prix, ISBN ou chiffre de prêt que
@@ -1073,6 +1123,21 @@ en filtrant sur genre, mots_cles, public, statut_exemplaire (pour ne sélectionn
 que les disponibles si demandé), puis generer_export_excel pour la liste imprimable.
 Ajoute toujours la cote pour faciliter le travail en rayon.
 
+── DISPONIBILITÉ TEMPS RÉEL (PORTAIL COBAS) ──────────
+Pour toute question du type "est-ce que [titre] est disponible maintenant ?"
+ou "peut-on emprunter [livre] aujourd'hui ?" ou "est-il en prêt ?" :
+1. Chercher d'abord l'ISBN dans notre base :
+   SELECT identifiant FROM notice WHERE titre LIKE '%mot_cle%'
+2. Appeler verifier_disponibilite_cobas(isbn) avec l'ISBN trouvé
+3. Interpréter le résultat :
+   • dans_le_fonds=True + statuts=['Disponible'] → "disponible en médiathèque"
+   • dans_le_fonds=True + statuts=['En prêt'] → "actuellement en prêt"
+   • dans_le_fonds=True + statuts=[] → "au fonds mais statut inconnu — vérifier en médiathèque"
+   • dans_le_fonds=False → "ne figure pas dans le catalogue COBAS"
+   • sites : liste les médiathèques COBAS qui possèdent le document
+NE PAS appeler cet outil pour l'enrichissement de masse — uniquement
+à la demande explicite d'un agent sur un titre précis.
+
 ── SUGGESTIONS DE LECTURE ────────────────────────────
 "Si un usager a aimé X, quoi lui proposer ?" :
 1. Cherche X dans notre fonds (genre/mots_cles/resume réels = meilleure base).
@@ -1139,6 +1204,7 @@ def repondre(historique_existant, question, cle_api):
         OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
+        OUTIL_COBAS,
         {"type": "web_search_20250305", "name": "web_search", "max_uses": 10},
     ]
 
@@ -1214,6 +1280,8 @@ def repondre(historique_existant, question, cle_api):
                 elif bloc.name == "supprimer_desherbage_effectue":
                     a_modifie_suggestions = True
                     resultat = supprimer_desherbage_effectue(**bloc.input)
+                elif bloc.name == "verifier_disponibilite_cobas":
+                    resultat = verifier_disponibilite_cobas(**bloc.input)
                 else:
                     resultat = json.dumps({"erreur": "outil inconnu"})
                 resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
