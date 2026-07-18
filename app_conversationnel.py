@@ -990,9 +990,10 @@ Exemples : "Série très empruntée au réseau (DecaScore), tome absent de notre
 Ne jamais laisser le motif vide ou générique ("bon livre", "intéressant").
 
 ILLUSTRATIONS — pour chaque titre suggéré à l'acquisition, afficher la
-couverture via Open Library en markdown, en utilisant l'ISBN trouvé :
+couverture via Geobib (bibliothèques françaises) en markdown :
+  ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
+Si Geobib ne retourne rien, tenter Open Library en fallback :
   ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
-Si l'ISBN n'est pas trouvé, ne pas afficher d'image.
 Placer l'image juste avant ou après le titre dans la réponse.
 
 ISBN OBLIGATOIRE — pour chaque titre suggéré, toujours chercher l'ISBN via
@@ -1045,7 +1046,9 @@ La décision finale est TOUJOURS humaine : l'outil ne décide jamais du retrait.
 ILLUSTRATIONS — pour chaque titre proposé au désherbage, afficher la
 couverture si elle est disponible en base (colonne image_url) :
   ![Titre](image_url)
-Si image_url est NULL ou vide, tenter Open Library avec l'ISBN :
+Si image_url est NULL ou vide, utiliser Geobib avec l'ISBN :
+  ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
+En dernier recours, Open Library :
   ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
 Placer l'image juste avant ou après le titre dans la réponse.
 
