@@ -989,6 +989,12 @@ Exemples : "Série très empruntée au réseau (DecaScore), tome absent de notre
 / "Nouveauté rentrée littéraire 2026, thème peu couvert en jeunesse chez nous"
 Ne jamais laisser le motif vide ou générique ("bon livre", "intéressant").
 
+ILLUSTRATIONS — pour chaque titre suggéré à l'acquisition, afficher la
+couverture via Open Library en markdown, en utilisant l'ISBN trouvé :
+  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
+Si l'ISBN n'est pas trouvé, ne pas afficher d'image.
+Placer l'image juste avant ou après le titre dans la réponse.
+
 ISBN OBLIGATOIRE — pour chaque titre suggéré, toujours chercher l'ISBN via
 web_search avant d'appeler ajouter_suggestion_acquisition. L'ISBN permet
 d'exporter la liste directement dans ORB pour préparer les commandes.
@@ -1035,6 +1041,13 @@ executer_requete_sql sur vue_inventaire (nb_prets_cet_exemplaire, dernier_pret,
 annee, type, categorie). Pour ajouter à la liste de désherbage d'un agent :
 ajouter_suggestion_desherbage -- inclure toujours nb_prets et dernier_pret réels.
 La décision finale est TOUJOURS humaine : l'outil ne décide jamais du retrait.
+
+ILLUSTRATIONS — pour chaque titre proposé au désherbage, afficher la
+couverture si elle est disponible en base (colonne image_url) :
+  ![Titre](image_url)
+Si image_url est NULL ou vide, tenter Open Library avec l'ISBN :
+  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
+Placer l'image juste avant ou après le titre dans la réponse.
 
 JUSTIFICATION OBLIGATOIRE — pour chaque titre proposé au désherbage, renseigner
 le champ motif avec une phrase factuelle basée sur les données réelles.
