@@ -1499,11 +1499,19 @@ with st.sidebar:
                     if fichier_depose and st.button("Traiter ce fichier"):
                         with st.spinner("Traitement en cours (peut prendre plusieurs minutes)..."):
                             succes, sortie = traiter_fichier_depose(fichier_depose, db.TURSO_URL, jeton_ecriture)
+                        st.session_state['import_result'] = (succes, sortie)
+                        st.rerun()
+
+                    if 'import_result' in st.session_state:
+                        succes, sortie = st.session_state['import_result']
                         if succes:
-                            st.success("Fichier traité.")
+                            st.success("✅ Fichier traité avec succès.")
                         else:
-                            st.error("Une erreur s'est produite.")
+                            st.error("❌ Une erreur s'est produite.")
                         st.code(sortie, language=None)
+                        if st.button("Effacer le résultat"):
+                            del st.session_state['import_result']
+                            st.rerun()
 
     if st.session_state.get("derniere_erreur_technique"):
         st.divider()
