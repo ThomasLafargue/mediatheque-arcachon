@@ -13,7 +13,6 @@ Lancement local :
 """
 
 import os
-import time
 import re
 import json
 import io
@@ -1572,10 +1571,16 @@ with st.sidebar:
                     # Affichage état en cours si un import tourne
                     import_en_cours = st.session_state.get('_import_etat')
                     if import_en_cours and not import_en_cours.get('done'):
-                        st.info(f"⏳ {import_en_cours.get('status', 'En cours...')}")
-                        if import_en_cours.get('log'):
-                            lignes = import_en_cours['log'].strip().split('\n')
-                            st.caption('\n'.join(lignes[-8:]))
+                        log = import_en_cours.get('log', '')
+                        # Extraire la progression depuis le log
+                        import re as _re
+                        matches = _re.findall(r'(\d+)/(\d+)\s+traités', log)
+                        if matches:
+                            actuel, total = int(matches[-1][0]), int(matches[-1][1])
+                            pct = actuel / total if total > 0 else 0
+                            st.progress(pct, text=f"⏳ {actuel:,} / {total:,} traités ({int(pct*100)}%)")
+                        else:
+                            st.info(f"⏳ {import_en_cours.get('status', 'En cours...')}")
                         time.sleep(3)
                         st.rerun()
                     elif import_en_cours and import_en_cours.get('done'):
