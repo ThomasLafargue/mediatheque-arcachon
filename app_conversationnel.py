@@ -1126,15 +1126,22 @@ Ajoute toujours la cote pour faciliter le travail en rayon.
 ── DISPONIBILITÉ TEMPS RÉEL (PORTAIL COBAS) ──────────
 Pour toute question du type "est-ce que [titre] est disponible maintenant ?"
 ou "peut-on emprunter [livre] aujourd'hui ?" ou "est-il en prêt ?" :
-1. Chercher d'abord l'ISBN dans notre base :
+1. Chercher l'ISBN dans notre base :
    SELECT identifiant FROM notice WHERE titre LIKE '%mot_cle%'
-2. Appeler verifier_disponibilite_cobas(isbn) avec l'ISBN trouvé
+   AND identifiant NOT LIKE 'CB:%'
+2. Appeler verifier_disponibilite_cobas(isbn) avec chaque ISBN trouvé
 3. Interpréter le résultat :
    • dans_le_fonds=True + statuts=['Disponible'] → "disponible en médiathèque"
    • dans_le_fonds=True + statuts=['En prêt'] → "actuellement en prêt"
-   • dans_le_fonds=True + statuts=[] → "au fonds mais statut inconnu — vérifier en médiathèque"
-   • dans_le_fonds=False → "ne figure pas dans le catalogue COBAS"
+   • dans_le_fonds=True + statuts=[] → "présent au catalogue COBAS — statut
+     exact non lisible (données JavaScript) — vérifier dans Decalog"
+   • dans_le_fonds=False → cet ISBN précis n'a pas remonté sur le portail —
+     cela peut être dû à un ISBN différent selon l'édition, PAS forcément
+     une absence du fonds. NE PAS conclure que le livre est absent.
    • sites : liste les médiathèques COBAS qui possèdent le document
+4. Si tous les ISBN retournent dans_le_fonds=False, signaler que la vérification
+   temps réel n'a pas pu confirmer la présence, et inviter à vérifier dans Decalog.
+   NE PAS dire "absent du fonds COBAS" — dire "non confirmé via le portail".
 NE PAS appeler cet outil pour l'enrichissement de masse — uniquement
 à la demande explicite d'un agent sur un titre précis.
 

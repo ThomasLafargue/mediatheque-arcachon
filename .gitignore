@@ -1,3 +1,19 @@
-.env
+*.mrc
+*.xlsx
+*.xls
+*.csv
+*.pdf
+*.docx
+*.numbers
+*.zip
+*.pyc
+__pycache__/
+.DS_Store
 inventaire.db
-*.log
+journal_recherche_initiale.log
+journal_*.csv
+liste_isbn_*.txt
+_stock_initial_complet.txt
+export-eppk*
+Fonds Arcachon*
+exportDecaScore*
