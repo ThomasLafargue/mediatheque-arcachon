@@ -1390,7 +1390,8 @@ traiter_fichier.main()
         proc = _subprocess.Popen(
             [sys.executable, '-c', script],
             stdout=log_f, stderr=log_f,
-            cwd=app_dir
+            cwd=app_dir,
+            start_new_session=True  # Détache du groupe de process Streamlit
         )
 
     # Sauvegarder PID + chemin log sur disque
