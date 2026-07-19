@@ -1325,10 +1325,11 @@ def deviner_type_fichier(nom):
 
 
 def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
-    suffixe = os.path.splitext(fichier_televerse.name)[1]
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffixe) as tmp:
+    import tempfile as _tempfile
+    dossier_tmp = _tempfile.mkdtemp()
+    chemin_tmp = os.path.join(dossier_tmp, fichier_televerse.name)
+    with open(chemin_tmp, 'wb') as tmp:
         tmp.write(fichier_televerse.getvalue())
-        chemin_tmp = tmp.name
 
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import actualiser_catalogue
@@ -1386,7 +1387,11 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
         sys.stdout = ancien_stdout
         db.connect = ancien_connect
         connexion_ecriture.close()
-        os.remove(chemin_tmp)
+        try:
+            os.remove(chemin_tmp)
+            os.rmdir(dossier_tmp)
+        except Exception:
+            pass
 
 
 # ----------------------------------------------------------------------------
