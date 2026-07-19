@@ -1326,27 +1326,57 @@ def deviner_type_fichier(nom):
 
 
 
-def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture, etat):
+
+
+CHEMIN_ETAT_IMPORT = '/tmp/mediatheque_import_state.json'
+
+def _sauver_etat_import(pid, chemin_log):
+    """Sauvegarde l'état de l'import sur disque pour survivre aux resets de session."""
+    import json as _json
+    with open(CHEMIN_ETAT_IMPORT, 'w') as f:
+        _json.dump({'pid': pid, 'chemin_log': chemin_log}, f)
+
+def _lire_etat_import():
+    """Lit l'état d'import depuis le disque."""
+    import json as _json
+    try:
+        with open(CHEMIN_ETAT_IMPORT) as f:
+            return _json.load(f)
+    except Exception:
+        return None
+
+def _pid_tourne(pid):
+    """Vérifie si un processus tourne encore."""
+    try:
+        os.kill(pid, 0)
+        return True
+    except (ProcessLookupError, PermissionError):
+        return False
+
+def _supprimer_etat_import():
+    try:
+        os.remove(CHEMIN_ETAT_IMPORT)
+    except Exception:
+        pass
+
+
+def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture):
     """
     Lance l'import complet dans un subprocess séparé.
-    Évite les conflits libsql/Rust cross-thread.
-    etat : dict partagé {'log': str, 'status': str, 'done': bool, 'succes': bool}
+    Persiste le PID et le log sur disque pour survivre aux resets de session Streamlit.
     """
     import tempfile as _tempfile
     import subprocess as _subprocess
-    import threading as _threading
 
     dossier_tmp = _tempfile.mkdtemp()
     chemin_fichier = os.path.join(dossier_tmp, fichier_nom)
     chemin_log = os.path.join(dossier_tmp, 'import.log')
 
-    try:
-        with open(chemin_fichier, 'wb') as f:
-            f.write(fichier_bytes)
+    with open(chemin_fichier, 'wb') as f:
+        f.write(fichier_bytes)
 
-        # Script Python autonome à exécuter en subprocess
-        app_dir = os.path.dirname(os.path.abspath(__file__))
-        script = f"""
+    app_dir = os.path.dirname(os.path.abspath(__file__))
+    script = f"""
 import os, sys
 os.environ["TURSO_DATABASE_URL"] = {repr(url_turso)}
 os.environ["TURSO_AUTH_TOKEN"] = {repr(jeton_ecriture)}
@@ -1356,60 +1386,17 @@ import traiter_fichier
 traiter_fichier.main()
 """
 
-        etat['status'] = '📂 Import en cours...'
+    with open(chemin_log, 'w', encoding='utf-8') as log_f:
+        proc = _subprocess.Popen(
+            [sys.executable, '-c', script],
+            stdout=log_f, stderr=log_f,
+            cwd=app_dir
+        )
 
-        # Lancer le subprocess avec redirection stdout/stderr vers le log
-        with open(chemin_log, 'w', encoding='utf-8') as log_f:
-            proc = _subprocess.Popen(
-                [sys.executable, '-c', script],
-                stdout=log_f, stderr=log_f,
-                cwd=app_dir
-            )
+    # Sauvegarder PID + chemin log sur disque
+    _sauver_etat_import(proc.pid, chemin_log)
+    return proc.pid, chemin_log
 
-        # Thread léger pour lire le log en temps réel (pas de libsql ici)
-        def lire_log():
-            while proc.poll() is None:
-                try:
-                    with open(chemin_log, encoding='utf-8') as f:
-                        contenu = f.read()
-                    if contenu:
-                        etat['log'] = contenu
-                        # Mettre à jour le statut depuis le contenu
-                        lignes = [l for l in contenu.split('\n') if l.strip()]
-                        if lignes:
-                            derniere = lignes[-1][:80]
-                            etat['status'] = f'⏳ {derniere}'
-                except Exception:
-                    pass
-                time.sleep(2)
-
-        _threading.Thread(target=lire_log, daemon=True).start()
-
-        # Attendre la fin du subprocess
-        proc.wait()
-
-        # Lire le log final
-        try:
-            with open(chemin_log, encoding='utf-8') as f:
-                etat['log'] = f.read()
-        except Exception:
-            pass
-
-        etat['succes'] = proc.returncode == 0
-
-    except Exception as e:
-        etat['log'] = f"Erreur : {e}"
-        etat['succes'] = False
-    finally:
-        try:
-            os.remove(chemin_fichier)
-            if os.path.exists(chemin_log):
-                os.remove(chemin_log)
-            os.rmdir(dossier_tmp)
-        except Exception:
-            pass
-        etat['done'] = True
-        etat['status'] = '✅ Import terminé' if etat.get('succes') else '❌ Erreur'
 
 
 def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
@@ -1569,30 +1556,45 @@ with st.sidebar:
                 else:
                     st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
 
-                    # Affichage état en cours si un import tourne
-                    import_en_cours = st.session_state.get('_import_etat')
-                    if import_en_cours and not import_en_cours.get('done'):
-                        log = import_en_cours.get('log', '')
-                        # Extraire la progression depuis le log
-                        import re as _re
-                        matches = _re.findall(r'(\d+)/(\d+)\s+traités', log)
-                        if matches:
-                            actuel, total = int(matches[-1][0]), int(matches[-1][1])
-                            pct = actuel / total if total > 0 else 0
-                            st.progress(pct, text=f"⏳ {actuel:,} / {total:,} traités ({int(pct*100)}%)")
-                        else:
-                            st.info("⏳ Import en cours...")
-                        time.sleep(3)
-                        st.rerun()
-                    elif import_en_cours and import_en_cours.get('done'):
-                        if import_en_cours.get('succes'):
-                            st.success("✅ Import terminé avec succès.")
-                        else:
-                            st.error("❌ Une erreur s'est produite.")
-                        st.code(import_en_cours.get('log', ''), language=None)
-                        if st.button("Effacer le résultat"):
-                            del st.session_state['_import_etat']
+                    # Vérifier si un import tourne (depuis le disque, résistant aux resets)
+                    etat_disque = _lire_etat_import()
+                    if etat_disque:
+                        pid = etat_disque['pid']
+                        chemin_log = etat_disque['chemin_log']
+                        if _pid_tourne(pid):
+                            # Subprocess en cours — lire le log et afficher la progression
+                            log = ''
+                            try:
+                                with open(chemin_log, encoding='utf-8') as f:
+                                    log = f.read()
+                            except Exception:
+                                pass
+                            import re as _re
+                            matches = _re.findall(r'(\d+)/(\d+)\s+traités', log)
+                            if matches:
+                                actuel, total = int(matches[-1][0]), int(matches[-1][1])
+                                pct = actuel / total if total > 0 else 0
+                                st.progress(pct, text=f"⏳ {actuel:,} / {total:,} traités ({int(pct*100)}%)")
+                            else:
+                                st.info("⏳ Import en cours...")
+                            time.sleep(3)
                             st.rerun()
+                        else:
+                            # Subprocess terminé — afficher le résultat
+                            log = ''
+                            try:
+                                with open(chemin_log, encoding='utf-8') as f:
+                                    log = f.read()
+                            except Exception:
+                                pass
+                            if log:
+                                st.success("✅ Import terminé.")
+                                st.code(log, language=None)
+                            else:
+                                st.warning("Import terminé (log vide).")
+                            if st.button("Effacer"):
+                                _supprimer_etat_import()
+                                st.rerun()
                     else:
                         fichier_depose = st.file_uploader(
                             "Déposer un fichier",
@@ -1600,21 +1602,12 @@ with st.sidebar:
                             key="depot"
                         )
                         if fichier_depose and st.button("Traiter ce fichier"):
-                            import threading
-                            etat = {'log': '', 'status': 'Démarrage...', 'done': False, 'succes': False}
-                            st.session_state['_import_etat'] = etat
-                            thread = threading.Thread(
-                                target=lancer_import_background,
-                                args=(
-                                    fichier_depose.getvalue(),
-                                    fichier_depose.name,
-                                    db.TURSO_URL,
-                                    jeton_ecriture,
-                                    etat
-                                ),
-                                daemon=True
+                            lancer_import_background(
+                                fichier_depose.getvalue(),
+                                fichier_depose.name,
+                                db.TURSO_URL,
+                                jeton_ecriture,
                             )
-                            thread.start()
                             st.rerun()
 
     if st.session_state.get("derniere_erreur_technique"):
