@@ -13,7 +13,6 @@ Lancement local :
 """
 
 import os
-import time
 import re
 import json
 import io
@@ -1328,104 +1327,88 @@ def deviner_type_fichier(nom):
 
 def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture, etat):
     """
-    Lance l'import complet en background thread.
+    Lance l'import complet dans un subprocess séparé.
+    Évite les conflits libsql/Rust cross-thread.
     etat : dict partagé {'log': str, 'status': str, 'done': bool, 'succes': bool}
     """
-    import tempfile as _tempfile, threading as _threading
+    import tempfile as _tempfile
+    import subprocess as _subprocess
+    import threading as _threading
 
     dossier_tmp = _tempfile.mkdtemp()
-    chemin_tmp = os.path.join(dossier_tmp, fichier_nom)
+    chemin_fichier = os.path.join(dossier_tmp, fichier_nom)
+    chemin_log = os.path.join(dossier_tmp, 'import.log')
+
     try:
-        with open(chemin_tmp, 'wb') as f:
+        with open(chemin_fichier, 'wb') as f:
             f.write(fichier_bytes)
 
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import actualiser_catalogue, actualiser_statistiques, actualiser_frequentation
-        import lancer_enrichissement
+        # Script Python autonome à exécuter en subprocess
+        app_dir = os.path.dirname(os.path.abspath(__file__))
+        script = f"""
+import os, sys
+os.environ["TURSO_DATABASE_URL"] = {repr(url_turso)}
+os.environ["TURSO_AUTH_TOKEN"] = {repr(jeton_ecriture)}
+sys.path.insert(0, {repr(app_dir)})
+sys.argv = ['traiter_fichier.py', {repr(chemin_fichier)}]
+import traiter_fichier
+traiter_fichier.main()
+"""
 
-        connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
-        ancien_connect = db.connect
-        db.connect = lambda *a, **k: connexion_ecriture
+        etat['status'] = '📂 Import en cours...'
 
-        tampon = io.StringIO()
-        ancien_stdout = sys.stdout
-        sys.stdout = tampon
+        # Lancer le subprocess avec redirection stdout/stderr vers le log
+        with open(chemin_log, 'w', encoding='utf-8') as log_f:
+            proc = _subprocess.Popen(
+                [sys.executable, '-c', script],
+                stdout=log_f, stderr=log_f,
+                cwd=app_dir
+            )
 
-        try:
-            t = deviner_type_fichier(fichier_nom)
-            sys.argv = ['x', chemin_tmp]
-
-            if t == 'catalogue':
-                etat['status'] = '📂 Import catalogue en cours...'
-                actualiser_catalogue.main()
-                etat['log'] = tampon.getvalue()
-                etat['status'] = '📊 Rapport de synthèse...'
-                db.connect = lambda *a, **k: connexion_ecriture
-                print("\n" + "─" * 60)
-                print("RAPPORT DE SYNTHÈSE")
-                print("─" * 60)
-                print(generer_rapport_import())
-                print("─" * 60)
-            elif t == 'statistiques':
-                etat['status'] = '📈 Import prêts EPPK en cours...'
-                actualiser_statistiques.main()
-            elif t == 'frequentation':
-                etat['status'] = '🏛️ Import fréquentation en cours...'
-                actualiser_frequentation.main()
-            else:
-                etat['log'] = "Type de fichier non reconnu."
-                etat['succes'] = False
-                etat['done'] = True
-                return
-
-            etat['log'] = tampon.getvalue()
-
-            # Enrichissement des nouvelles notices uniquement
-            cur = connexion_ecriture.cursor()
-            cur.execute("""
-                SELECT identifiant FROM notice
-                WHERE date_enrichissement IS NULL
-                AND identifiant NOT LIKE 'CB:%'
-            """)
-            a_traiter = [r[0] for r in cur.fetchall()]
-
-            if a_traiter:
-                etat['status'] = f'🔍 Enrichissement de {len(a_traiter)} nouvelle(s) notice(s)...'
-                chemin_liste = chemin_tmp + "_isbn.txt"
-                with open(chemin_liste, "w", encoding="utf-8") as f:
-                    f.write("\n".join(a_traiter) + "\n")
-                sys.argv = ['lancer_enrichissement.py', chemin_liste]
-                lancer_enrichissement.main()
-                etat['log'] += "\n" + tampon.getvalue()
+        # Thread léger pour lire le log en temps réel (pas de libsql ici)
+        def lire_log():
+            while proc.poll() is None:
                 try:
-                    os.remove(chemin_liste)
+                    with open(chemin_log, encoding='utf-8') as f:
+                        contenu = f.read()
+                    if contenu:
+                        etat['log'] = contenu
+                        # Mettre à jour le statut depuis le contenu
+                        lignes = [l for l in contenu.split('\n') if l.strip()]
+                        if lignes:
+                            derniere = lignes[-1][:80]
+                            etat['status'] = f'⏳ {derniere}'
                 except Exception:
                     pass
-            else:
-                print("\nAucune nouvelle notice à enrichir.")
-                etat['log'] = tampon.getvalue()
+                time.sleep(2)
 
-            etat['succes'] = True
+        _threading.Thread(target=lire_log, daemon=True).start()
 
-        except Exception as e:
-            etat['log'] = tampon.getvalue() + f"\n\nErreur : {e}"
-            etat['succes'] = False
-        finally:
-            sys.stdout = ancien_stdout
-            db.connect = ancien_connect
-            connexion_ecriture.close()
+        # Attendre la fin du subprocess
+        proc.wait()
+
+        # Lire le log final
+        try:
+            with open(chemin_log, encoding='utf-8') as f:
+                etat['log'] = f.read()
+        except Exception:
+            pass
+
+        etat['succes'] = proc.returncode == 0
 
     except Exception as e:
         etat['log'] = f"Erreur : {e}"
         etat['succes'] = False
     finally:
         try:
-            os.remove(chemin_tmp)
+            os.remove(chemin_fichier)
+            if os.path.exists(chemin_log):
+                os.remove(chemin_log)
             os.rmdir(dossier_tmp)
         except Exception:
             pass
         etat['done'] = True
-        etat['status'] = '✅ Terminé' if etat.get('succes') else '❌ Erreur'
+        etat['status'] = '✅ Import terminé' if etat.get('succes') else '❌ Erreur'
 
 
 def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
