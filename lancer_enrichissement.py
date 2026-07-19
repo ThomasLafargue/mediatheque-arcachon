@@ -30,6 +30,11 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from moteur_recherche import chercher_isbn  # noqa: E402
+try:
+    from sources_api import enrichir_par_api
+    API_OK = True
+except ImportError:
+    API_OK = False
 
 FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventaire.db")
 
@@ -124,11 +129,27 @@ def main():
 
         categorie_hint = deviner_categorie(None, public_vise_actuel)
 
-        try:
-            res = chercher_isbn(isbn, categorie_hint)
-        except Exception as e:
-            print(f"  [{i}/{len(isbns)}] {isbn} -> erreur ({e})")
-            continue
+        res = None
+        if API_OK:
+            try:
+                api_data = enrichir_par_api(isbn)
+                if api_data and api_data.get('resume'):
+                    res = {'statut': 'trouve', 'type': None,
+                           'genre': api_data.get('genre'),
+                           'public': api_data.get('public_vise'),
+                           'pegi': None, 'illustrateur': None, 'collection': None,
+                           'resume': api_data.get('resume'),
+                           '_image_url': api_data.get('image_url'),
+                           '_mots_cles': api_data.get('mots_cles'),
+                           '_dewey': api_data.get('dewey')}
+            except Exception:
+                pass
+        if res is None:
+            try:
+                res = chercher_isbn(isbn, categorie_hint)
+            except Exception as e:
+                print(f"  [{i}/{len(isbns)}] {isbn} -> erreur ({e})")
+                continue
 
         traites += 1
         if res.get("statut") == "trouvé":
@@ -160,6 +181,12 @@ def main():
             params = (datetime.datetime.now().isoformat(), isbn)
 
         ok = executer_avec_reprise(sql, params)
+        if ok and res.get('statut') in ('trouvé', 'trouve'):
+            img, mc, dw = res.get('_image_url'), res.get('_mots_cles'), res.get('_dewey')
+            if img or mc or dw:
+                executer_avec_reprise(
+                    "UPDATE notice SET image_url=COALESCE(image_url,?), mots_cles=COALESCE(mots_cles,?), dewey=COALESCE(dewey,?) WHERE identifiant=?",
+                    (img, mc, dw, isbn))
         if not ok:
             print(f"  [{i}/{len(isbns)}] {isbn} -> écriture impossible malgré les tentatives, "
                   f"sera repris automatiquement lors d'une prochaine exécution")
