@@ -1324,7 +1324,111 @@ def deviner_type_fichier(nom):
 # tâche de fond sur le Mac prend le relais automatiquement pour le reste.
 
 
+
+def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture, etat):
+    """
+    Lance l'import complet en background thread.
+    etat : dict partagé {'log': str, 'status': str, 'done': bool, 'succes': bool}
+    """
+    import tempfile as _tempfile, threading as _threading
+
+    dossier_tmp = _tempfile.mkdtemp()
+    chemin_tmp = os.path.join(dossier_tmp, fichier_nom)
+    try:
+        with open(chemin_tmp, 'wb') as f:
+            f.write(fichier_bytes)
+
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import actualiser_catalogue, actualiser_statistiques, actualiser_frequentation
+        import lancer_enrichissement
+
+        connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
+        ancien_connect = db.connect
+        db.connect = lambda *a, **k: connexion_ecriture
+
+        tampon = io.StringIO()
+        ancien_stdout = sys.stdout
+        sys.stdout = tampon
+
+        try:
+            t = deviner_type_fichier(fichier_nom)
+            sys.argv = ['x', chemin_tmp]
+
+            if t == 'catalogue':
+                etat['status'] = '📂 Import catalogue en cours...'
+                actualiser_catalogue.main()
+                etat['log'] = tampon.getvalue()
+                etat['status'] = '📊 Rapport de synthèse...'
+                db.connect = lambda *a, **k: connexion_ecriture
+                print("\n" + "─" * 60)
+                print("RAPPORT DE SYNTHÈSE")
+                print("─" * 60)
+                print(generer_rapport_import())
+                print("─" * 60)
+            elif t == 'statistiques':
+                etat['status'] = '📈 Import prêts EPPK en cours...'
+                actualiser_statistiques.main()
+            elif t == 'frequentation':
+                etat['status'] = '🏛️ Import fréquentation en cours...'
+                actualiser_frequentation.main()
+            else:
+                etat['log'] = "Type de fichier non reconnu."
+                etat['succes'] = False
+                etat['done'] = True
+                return
+
+            etat['log'] = tampon.getvalue()
+
+            # Enrichissement des nouvelles notices uniquement
+            cur = connexion_ecriture.cursor()
+            cur.execute("""
+                SELECT identifiant FROM notice
+                WHERE date_enrichissement IS NULL
+                AND identifiant NOT LIKE 'CB:%'
+            """)
+            a_traiter = [r[0] for r in cur.fetchall()]
+
+            if a_traiter:
+                etat['status'] = f'🔍 Enrichissement de {len(a_traiter)} nouvelle(s) notice(s)...'
+                chemin_liste = chemin_tmp + "_isbn.txt"
+                with open(chemin_liste, "w", encoding="utf-8") as f:
+                    f.write("\n".join(a_traiter) + "\n")
+                sys.argv = ['lancer_enrichissement.py', chemin_liste]
+                lancer_enrichissement.main()
+                etat['log'] += "\n" + tampon.getvalue()
+                try:
+                    os.remove(chemin_liste)
+                except Exception:
+                    pass
+            else:
+                print("\nAucune nouvelle notice à enrichir.")
+                etat['log'] = tampon.getvalue()
+
+            etat['succes'] = True
+
+        except Exception as e:
+            etat['log'] = tampon.getvalue() + f"\n\nErreur : {e}"
+            etat['succes'] = False
+        finally:
+            sys.stdout = ancien_stdout
+            db.connect = ancien_connect
+            connexion_ecriture.close()
+
+    except Exception as e:
+        etat['log'] = f"Erreur : {e}"
+        etat['succes'] = False
+    finally:
+        try:
+            os.remove(chemin_tmp)
+            os.rmdir(dossier_tmp)
+        except Exception:
+            pass
+        etat['done'] = True
+        etat['status'] = '✅ Terminé' if etat.get('succes') else '❌ Erreur'
+
+
 def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
+    """Version synchrone conservée pour compatibilité."""
     import tempfile as _tempfile
     dossier_tmp = _tempfile.mkdtemp()
     chemin_tmp = os.path.join(dossier_tmp, fichier_televerse.name)
@@ -1339,7 +1443,7 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
 
     connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
     ancien_connect = db.connect
-    db.connect = lambda *a, **k: connexion_ecriture  # bascule temporaire sur le jeton d'écriture
+    db.connect = lambda *a, **k: connexion_ecriture
 
     tampon_sortie = io.StringIO()
     ancien_stdout = sys.stdout
@@ -1356,30 +1460,14 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
         else:
             return False, "Type de fichier non reconnu (.mrc, .xlsx/.xls ou .csv attendu)."
 
-        # Qualification automatique par recherche internet, sans plafond
-        cur = connexion_ecriture.cursor()
-        cur.execute("SELECT identifiant FROM notice WHERE type_document='LIVRE' AND categorie IS NULL ORDER BY identifiant")
-        a_traiter = [r[0] for r in cur.fetchall()]
-        if a_traiter:
-            print(f"\nQualification automatique par recherche internet ({len(a_traiter)} ISBN)...")
-            chemin_liste = chemin_tmp + "_isbn.txt"
-            with open(chemin_liste, "w", encoding="utf-8") as f:
-                f.write("\n".join(a_traiter) + "\n")
-            sys.argv = ['lancer_enrichissement.py', chemin_liste]
-            lancer_enrichissement.main()
-            os.remove(chemin_liste)
-        else:
-            print("\nRien à qualifier par recherche internet pour cet import.")
-
-        # Rapport de synthèse automatique après chaque import catalogue
         if t == 'catalogue':
             print("\n" + "─" * 60)
             print("RAPPORT DE SYNTHÈSE")
             print("─" * 60)
-            db.connect = lambda *a, **k: connexion_ecriture  # garder la connexion d'écriture active
+            db.connect = lambda *a, **k: connexion_ecriture
             print(generer_rapport_import())
             print("─" * 60)
-
+        print("\n✓ Import terminé.")
         return True, tampon_sortie.getvalue()
     except Exception as e:
         return False, f"{tampon_sortie.getvalue()}\n\nErreur : {e}"
@@ -1495,22 +1583,47 @@ with st.sidebar:
                     st.caption("TURSO_AUTH_TOKEN_ECRITURE manquant dans les secrets.")
                 else:
                     st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
-                    fichier_depose = st.file_uploader("Déposer un fichier", type=['mrc', 'xlsx', 'xls', 'csv'], key="depot")
-                    if fichier_depose and st.button("Traiter ce fichier"):
-                        with st.spinner("Traitement en cours (peut prendre plusieurs minutes)..."):
-                            succes, sortie = traiter_fichier_depose(fichier_depose, db.TURSO_URL, jeton_ecriture)
-                        st.session_state['import_result'] = (succes, sortie)
-                        st.rerun()
 
-                    if 'import_result' in st.session_state:
-                        succes, sortie = st.session_state['import_result']
-                        if succes:
-                            st.success("✅ Fichier traité avec succès.")
+                    # Affichage état en cours si un import tourne
+                    import_en_cours = st.session_state.get('_import_etat')
+                    if import_en_cours and not import_en_cours.get('done'):
+                        st.info(f"⏳ {import_en_cours.get('status', 'En cours...')}")
+                        if import_en_cours.get('log'):
+                            lignes = import_en_cours['log'].strip().split('\n')
+                            st.caption('\n'.join(lignes[-8:]))
+                        time.sleep(3)
+                        st.rerun()
+                    elif import_en_cours and import_en_cours.get('done'):
+                        if import_en_cours.get('succes'):
+                            st.success("✅ Import terminé avec succès.")
                         else:
                             st.error("❌ Une erreur s'est produite.")
-                        st.code(sortie, language=None)
+                        st.code(import_en_cours.get('log', ''), language=None)
                         if st.button("Effacer le résultat"):
-                            del st.session_state['import_result']
+                            del st.session_state['_import_etat']
+                            st.rerun()
+                    else:
+                        fichier_depose = st.file_uploader(
+                            "Déposer un fichier",
+                            type=['mrc', 'xlsx', 'xls', 'csv'],
+                            key="depot"
+                        )
+                        if fichier_depose and st.button("Traiter ce fichier"):
+                            import threading
+                            etat = {'log': '', 'status': 'Démarrage...', 'done': False, 'succes': False}
+                            st.session_state['_import_etat'] = etat
+                            thread = threading.Thread(
+                                target=lancer_import_background,
+                                args=(
+                                    fichier_depose.getvalue(),
+                                    fichier_depose.name,
+                                    db.TURSO_URL,
+                                    jeton_ecriture,
+                                    etat
+                                ),
+                                daemon=True
+                            )
+                            thread.start()
                             st.rerun()
 
     if st.session_state.get("derniere_erreur_technique"):
