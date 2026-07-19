@@ -13,6 +13,7 @@ Lancement local :
 """
 
 import os
+import time
 import re
 import json
 import io
