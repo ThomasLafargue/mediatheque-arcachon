@@ -13,11 +13,11 @@ Lancement local :
 """
 
 import os
-import time
 import re
 import json
 import io
 import sys
+import time
 import tempfile
 import datetime
 import sqlite3
@@ -1581,7 +1581,7 @@ with st.sidebar:
                             pct = actuel / total if total > 0 else 0
                             st.progress(pct, text=f"⏳ {actuel:,} / {total:,} traités ({int(pct*100)}%)")
                         else:
-                            st.info(f"⏳ {import_en_cours.get('status', 'En cours...')}")
+                            st.info("⏳ Import en cours...")
                         time.sleep(3)
                         st.rerun()
                     elif import_en_cours and import_en_cours.get('done'):
