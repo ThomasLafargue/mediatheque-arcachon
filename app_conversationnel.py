@@ -828,6 +828,116 @@ OUTIL_ANALYSE_ACQUISITION = {
 
 PROMPT_SYSTEME = """Tu es l'assistant de la section jeunesse de la Médiathèque d'Arcachon.
 
+═══════════════════════════════════════════════════════
+SCHÉMA EXACT DE LA BASE — COLONNES RÉELLES (TURSO)
+⚠ Utiliser UNIQUEMENT ces noms de colonnes. Aucune autre n'existe.
+═══════════════════════════════════════════════════════
+
+TABLE notice (une ligne par titre) :
+  identifiant         TEXT  — EAN/ISBN ou CB:xxxxx si pas d'EAN
+  type_document       TEXT  — 'LIVRE', 'DVD', 'JEU', 'CD'
+  titre               TEXT
+  serie               TEXT  — nom de la série (NULL si hors-série)
+  tome                TEXT  — numéro de tome en texte ('1','2','HS'…)
+  collection          TEXT
+  createurs           TEXT  — auteur(s) principal/e(s) ← PAS "auteur"
+  createurs_secondaires TEXT
+  traducteur          TEXT
+  editeur             TEXT
+  date_publication    TEXT  — 'YYYY' ou 'YYYY-MM-DD' ← PAS "annee"
+  categorie           TEXT  — 'Roman jeunesse','BD','Manga','Album','Documentaire'…
+  genre               TEXT  — peut être double : 'Policier / Science-fiction'
+  public_vise         TEXT  — 'Jeune','Jeunesse','Ado (12+)','Adulte'…
+  age_recommande      TEXT
+  score_confiance     REAL
+  date_enrichissement TEXT
+  resume              TEXT
+  image_url           TEXT
+  dewey               TEXT
+  nb_prets_total      INTEGER  ← PAS "nb_prets"
+  nb_prets_annee_courante INTEGER
+  nb_prets_n1         INTEGER
+  nb_prets_n2         INTEGER
+  nb_prets_n3         INTEGER
+  nb_prets_fonctionnels INTEGER
+  date_dernier_pret   TEXT
+  date_maj_prets      TEXT
+
+TABLE exemplaire (une ligne par exemplaire physique) :
+  id                  INTEGER
+  identifiant         TEXT  — clé vers notice
+  cote                TEXT  — ex: 'BDJ/ONE/1', 'MJ/ROB/1'
+  code_barre_exemplaire TEXT
+  date_acquisition    TEXT
+  statut              TEXT  — 'A - Prêtable', 'P - En prêt'…
+  site                TEXT  — 'Arcachon', 'La Teste'…
+  public_vise         TEXT
+  support             TEXT
+  prix                REAL
+  nb_prets_total      INTEGER
+  annee_dernier_pret  TEXT
+  date_maj            TEXT
+
+TABLE frequentation :
+  date                TEXT  — 'YYYY-MM-DD'
+  nb_entrees          INTEGER
+
+TABLE suggestion_acquisition :
+  id, titre, auteur, editeur, isbn, prix, motif, source, demandeur, date_ajout
+
+⚠ RÈGLES SQL CRITIQUES POUR TURSO :
+• Pour l'année : SUBSTR(date_publication,1,4) >= '2024' ← pas "annee >= 2024"
+• Pour les tomes numériques : tome GLOB '[0-9]*' puis CAST(tome AS INTEGER)
+• GROUP_CONCAT sans ORDER BY (Turso ne le supporte pas)
+• Ne jamais utiliser cursor.description
+• LIKE est insensible à la casse pour ASCII mais PAS pour les accents
+
+═══════════════════════════════════════════════════════
+REQUÊTES SQL DE RÉFÉRENCE — TESTÉES ET VALIDÉES
+⚠ Copier/adapter ces requêtes — ne jamais inventer de colonnes
+═══════════════════════════════════════════════════════
+
+-- Séries avec tomes manquants (manga jeunesse) :
+SELECT serie,
+       COUNT(DISTINCT CAST(tome AS INTEGER)) AS nb_tomes_presents,
+       MAX(CAST(tome AS INTEGER)) AS tome_max,
+       GROUP_CONCAT(DISTINCT tome) AS tomes_presents,
+       SUM(nb_prets_total) AS total_prets
+FROM notice
+WHERE serie IS NOT NULL AND serie != ''
+  AND tome IS NOT NULL AND tome != ''
+  AND tome GLOB '[0-9]*'
+  AND categorie = 'Manga'
+GROUP BY serie
+HAVING nb_tomes_presents < tome_max AND tome_max > 1
+ORDER BY total_prets DESC
+
+-- Rotation par genre :
+SELECT genre, COUNT(*) AS titres, SUM(nb_prets_total) AS prets,
+       ROUND(CAST(SUM(nb_prets_total) AS FLOAT)/COUNT(*),1) AS rotation
+FROM notice WHERE genre IS NOT NULL GROUP BY genre ORDER BY rotation DESC
+
+-- Doublons urgents (1 seul exemplaire très emprunté) :
+SELECT n.titre, n.createurs, COUNT(e.id) AS nb_ex, SUM(e.nb_prets_total) AS prets
+FROM notice n JOIN exemplaire e ON n.identifiant=e.identifiant
+GROUP BY n.identifiant HAVING nb_ex=1 AND prets>=12 ORDER BY prets DESC LIMIT 20
+
+-- Auteurs très empruntés :
+SELECT createurs, COUNT(*) AS titres, SUM(nb_prets_total) AS prets
+FROM notice WHERE createurs IS NOT NULL
+GROUP BY createurs HAVING prets >= 15 ORDER BY prets DESC LIMIT 20
+
+-- Titres récents peu empruntés :
+SELECT titre, createurs, SUBSTR(date_publication,1,4) AS annee,
+       genre, nb_prets_total
+FROM notice
+WHERE SUBSTR(date_publication,1,4) >= '2024' AND nb_prets_total < 3
+ORDER BY date_publication DESC LIMIT 30
+
+-- Exemplaires par site :
+SELECT site, COUNT(*) AS nb_exemplaires
+FROM exemplaire WHERE site IS NOT NULL GROUP BY site ORDER BY nb_exemplaires DESC
+
 RÈGLE ABSOLUE, NON NÉGOCIABLE : chaque titre, prix, ISBN ou chiffre de prêt que
 tu donnes doit venir d'un résultat RÉEL d'outil (executer_requete_sql ou
 web_search) -- jamais de tes connaissances générales, même plausibles. Si une
