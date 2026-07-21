@@ -1083,8 +1083,8 @@ Exemples :
 Ne jamais laisser le motif vide ou générique.
 
 ILLUSTRATIONS — pour chaque titre, afficher la couverture :
-  ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
-Fallback Open Library : ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
+  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-L.jpg)
+Fallback BnF : ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
 
 ISBN OBLIGATOIRE — chercher l'ISBN avant d'appeler ajouter_suggestion_acquisition.
 Requête : "isbn [titre] [auteur] site:fnac.com OR site:decitre.fr"
@@ -1320,8 +1320,8 @@ La décision finale est TOUJOURS humaine : l'outil ne décide jamais du retrait.
 ILLUSTRATIONS — pour chaque titre proposé au désherbage, afficher la
 couverture si elle est disponible en base (colonne image_url) :
   ![Titre](image_url)
-Si image_url est NULL ou vide, utiliser Geobib avec l'ISBN :
-  ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
+Si image_url est NULL ou vide, utiliser Open Library avec l'ISBN :
+  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-L.jpg)
 En dernier recours, Open Library :
   ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
 Placer l'image juste avant ou après le titre dans la réponse.
