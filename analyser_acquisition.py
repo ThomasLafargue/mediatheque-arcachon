@@ -168,20 +168,50 @@ REQUETES_SIGNAUX = {
 }
 
 
+def _colonnes_depuis_sql(sql):
+    """Extrait les noms de colonnes/alias depuis une clause SELECT (compatible Turso)."""
+    import re as _re
+    m = _re.search(r'SELECT\s+(.*?)\s+FROM\b', sql.strip(), _re.DOTALL | _re.IGNORECASE)
+    if not m:
+        return []
+    select_clause = m.group(1)
+    # Découper par virgule en respectant les parenthèses
+    parts, depth, current = [], 0, ''
+    for ch in select_clause:
+        if ch == '(': depth += 1; current += ch
+        elif ch == ')': depth -= 1; current += ch
+        elif ch == ',' and depth == 0: parts.append(current.strip()); current = ''
+        else: current += ch
+    if current.strip():
+        parts.append(current.strip())
+    cols = []
+    for part in parts:
+        alias = _re.search(r'\bAS\s+(\w+)\s*$', part, _re.IGNORECASE)
+        if alias:
+            cols.append(alias.group(1))
+        else:
+            words = _re.findall(r'\b(\w+)\b', part)
+            cols.append(words[-1] if words else f'col{len(cols)}')
+    return cols
+
+
 def analyser_signaux_internes(conn):
     """
     Exécute les requêtes d'analyse et retourne un dict avec les résultats.
-    conn : connexion db.py active
+    conn : connexion db.py active (compatible Turso — pas de cursor.description)
     """
     resultats = {}
     for nom, sql in REQUETES_SIGNAUX.items():
         try:
-            cur = conn.execute(sql.strip())
-            cols = [d[0] for d in cur.description] if cur.description else []
-            rows = cur.fetchall()
+            rows = conn.execute(sql.strip()).fetchall()
+            cols = _colonnes_depuis_sql(sql)
+            if cols and rows:
+                lignes = [dict(zip(cols, row)) for row in rows]
+            else:
+                lignes = [list(row) for row in rows]
             resultats[nom] = {
                 'colonnes': cols,
-                'lignes': [dict(zip(cols, row)) for row in rows],
+                'lignes': lignes,
                 'nb': len(rows),
             }
         except Exception as e:
