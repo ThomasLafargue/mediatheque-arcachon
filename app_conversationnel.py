@@ -1950,14 +1950,6 @@ with st.sidebar:
     except Exception:
         st.write("Base indisponible.")
 
-    # Alertes compactes
-    alertes = get_alertes()
-    if alertes:
-        st.divider()
-        st.caption("⚠️ **Alertes**")
-        for a in alertes[:5]:
-            st.caption(a)
-
     st.divider()
     if st.button("Nouvelle conversation"):
         st.session_state.messages_affiches = []
