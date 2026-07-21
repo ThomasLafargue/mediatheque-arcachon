@@ -51,6 +51,13 @@ try:
 except ImportError:
     SOURCES_API_OK = False
 
+# Analyse des besoins d'acquisition (signaux internes + météo + démographie)
+try:
+    from analyser_acquisition import analyser_besoins, PROFIL_ARCACHON
+    ANALYSE_ACQUISITION_OK = True
+except ImportError:
+    ANALYSE_ACQUISITION_OK = False
+
 FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventaire.db")
 
 st.set_page_config(page_title="Médiathèque d'Arcachon — Assistant fonds", page_icon="📚", layout="wide")
@@ -787,6 +794,38 @@ OUTIL_COBAS = {
 }
 
 
+
+def lancer_analyse_acquisition() -> str:
+    """Analyse complète des besoins d'acquisition : signaux internes + météo + démographie."""
+    if not ANALYSE_ACQUISITION_OK:
+        return json.dumps({"erreur": "Module analyser_acquisition non disponible."})
+    try:
+        conn = db.connect()
+        rapport = analyser_besoins(conn, avec_meteo=True)
+        return rapport
+    except Exception as e:
+        return json.dumps({"erreur": str(e)})
+
+
+OUTIL_ANALYSE_ACQUISITION = {
+    "name": "lancer_analyse_acquisition",
+    "description": (
+        "Lance une analyse complète des besoins d'acquisition en croisant : "
+        "(1) les signaux internes du fonds (genres à forte rotation, doublons nécessaires, "
+        "séries incomplètes, auteurs manquants, public sous-servi), "
+        "(2) la corrélation météo/fréquentation (open-meteo.com), "
+        "(3) le profil démographique d'Arcachon. "
+        "Appeler cet outil AVANT de faire des suggestions d'acquisition stratégiques "
+        "pour orienter les recommandations sur les vrais besoins du fonds."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {},
+        "required": [],
+    },
+}
+
+
 PROMPT_SYSTEME = """Tu es l'assistant de la section jeunesse de la Médiathèque d'Arcachon.
 
 RÈGLE ABSOLUE, NON NÉGOCIABLE : chaque titre, prix, ISBN ou chiffre de prêt que
@@ -1008,84 +1047,268 @@ Exemples de requêtes utiles :
 ── SUGGESTIONS D'ACQUISITION ─────────────────────────
 ⚠ CE SONT DES DOCUMENTS ABSENTS DU FONDS — vérification OBLIGATOIRE.
 
+ÉTAPE 0 — ANALYSE DES BESOINS (pour toute demande stratégique)
+Pour les demandes de suggestions d'acquisition non triviales (pas juste "un livre
+sur les dinosaures"), appeler d'abord lancer_analyse_acquisition() pour obtenir :
+- Les genres/catégories à forte rotation (vrais besoins)
+- Les doublons urgents (exemplaires uniques surcharges)
+- Les séries incomplètes
+- Le profil démographique d'Arcachon
+- La corrélation météo/fréquentation
+Utiliser ce rapport pour orienter les suggestions AVANT de faire des recherches web.
+
 ÉTAPE 1 — VÉRIFICATION D'ABSENCE (TOUJOURS, SANS EXCEPTION)
 Avant de suggérer ou d'ajouter UN SEUL titre, vérifier qu'il n'est pas déjà
-dans notre fonds via executer_requete_sql :
+dans notre fonds :
   SELECT titre, serie, tome, identifiant, statut_exemplaire FROM notice
   WHERE (titre LIKE '%mot_cle%' OR serie LIKE '%mot_cle%')
-⚠ DISTINCTION CRITIQUE :
-• Un document ABSENT du fonds = aucune notice, aucun exemplaire dans notre base.
-  → Peut être suggéré à l'acquisition.
-• Un document EN PRÊT ou INDISPONIBLE = il existe dans notre fonds mais est
-  sorti, réservé ou en transit. Il EST dans notre collection.
-  → NE PAS suggérer à l'acquisition. Signaler qu'il est au fonds mais non
-  disponible actuellement.
-Ne jamais confondre "indisponible" et "absent". Un livre emprunté n'est pas
-un livre à acheter.
-Vérifier aussi les CB: : un titre sans EAN peut exister sous CB: même si
-absent de la recherche ISBN. Retenter avec le titre exact si 0 résultat.
-Ne JAMAIS suggérer un titre sans avoir exécuté cette vérification.
+⚠ DISTINCTION CRITIQUE — ne JAMAIS confondre :
+• Document ABSENT = aucune notice dans notre base → peut être suggéré
+• Document EN PRÊT / INDISPONIBLE = il existe mais est sorti → NE PAS suggérer,
+  signaler qu'il est au fonds mais non disponible
+Vérifier aussi les CB: (titres sans EAN). Retenter avec titre exact si 0 résultat.
 
-ÉTAPE 2 — RECHERCHE WEB
-Uniquement après confirmation d'absence. web_search avec plusieurs sources
-variées. Jamais de titres de mémoire. Vise 80-100% du budget indiqué.
-Titres trouvés → generer_export_excel avec paramètre lignes (pas sql).
-Pour ajouter à une liste : ajouter_suggestion_acquisition (avec demandeur).
+ÉTAPE 2 — RECHERCHE WEB MULTI-SOURCES
+Uniquement après confirmation d'absence. Minimum 3 sources différentes.
+Jamais de titres de mémoire. Vise 80-100% du budget indiqué.
+Titres trouvés → generer_export_excel ou ajouter_suggestion_acquisition.
 
-JUSTIFICATION OBLIGATOIRE — pour chaque titre suggéré, renseigner le champ
-motif avec une phrase factuelle expliquant POURQUOI ce titre est pertinent.
-Exemples : "Série très empruntée au réseau (DecaScore), tome absent de notre fonds"
-/ "Prix Sorcières 2026, genre bien représenté dans nos prêts"
-/ "Demande usager répétée, auteur présent au fonds mais ce titre manquant"
-/ "Nouveauté rentrée littéraire 2026, thème peu couvert en jeunesse chez nous"
-Ne jamais laisser le motif vide ou générique ("bon livre", "intéressant").
+JUSTIFICATION OBLIGATOIRE — pour chaque titre, renseigner le champ motif :
+Exemples :
+"Genre BD jeunesse : rotation 8,3 prêts/titre dans notre fonds, série absente"
+"Prix Sorcières 2026, auteur déjà bien emprunté chez nous (12 prêts)"
+"Doublon justifié : 1 seul exemplaire, 18 prêts sur 3 ans"
+"Profil Arcachon : senior cultivé, biographie auteur classique"
+"Été Arcachon : guide Bassin d'Arcachon, thème porteur en saison"
+Ne jamais laisser le motif vide ou générique.
 
-ILLUSTRATIONS — pour chaque titre suggéré à l'acquisition, afficher la
-couverture via Geobib (bibliothèques françaises) en markdown :
+ILLUSTRATIONS — pour chaque titre, afficher la couverture :
   ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
-Si Geobib ne retourne rien, tenter Open Library en fallback :
-  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
-Placer l'image juste avant ou après le titre dans la réponse.
+Fallback Open Library : ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
 
-ISBN OBLIGATOIRE — pour chaque titre suggéré, toujours chercher l'ISBN via
-web_search avant d'appeler ajouter_suggestion_acquisition. L'ISBN permet
-d'exporter la liste directement dans ORB pour préparer les commandes.
-Requête type : "isbn [titre] [auteur] site:fnac.com OR site:decitre.fr"
-Si l'ISBN n'est pas trouvé, l'indiquer explicitement dans le motif.
+ISBN OBLIGATOIRE — chercher l'ISBN avant d'appeler ajouter_suggestion_acquisition.
+Requête : "isbn [titre] [auteur] site:fnac.com OR site:decitre.fr"
 
-   SOURCES PRIORITAIRES — utilise-les systématiquement selon le contexte.
-   3 recherches bien ciblées valent mieux que 10 recherches génériques.
+────────────────────────────────────────────────────────
+CONTEXTE LOCAL — MAAT, Médiathèque d'Arcachon
+────────────────────────────────────────────────────────
+Arcachon est le pôle du sud Bassin d'Arcachon (~68 000 hab. COBAS).
+Le MAAT reçoit un public varié : résidents permanents, habitants du bassin,
+grands-parents avec petits-enfants, résidents secondaires bordelais/parisiens
+habitués, lycéens et collégiens. Population estivale ×5 en août.
 
-   Toujours utiles (fond de recherche permanent) :
-   • LesLibraires.fr, Babelio, Fnac, Decitre, Mollat, Livres Hebdo
-   • Ricochet-jeunes.org (jeunesse), BDfugue / BDnet (BD), Manga News
+Le vrai signal pour les acquisitions est dans notre base — prêts réels,
+rotation par genre, fréquentation — pas dans les chiffres démographiques.
 
-   Rentrée littéraire (août-septembre) :
-   • "rentrée littéraire 2026 sélection Livres Hebdo"
-   • "rentrée littéraire 2026 France Inter livres"
-   • "Fnac rentrée littéraire 2026 romans"
-   • "rentrée littéraire 2026 jeunesse sélection"
+────────────────────────────────────────────────────────
+COUVERTURE THÉMATIQUE — JEUNESSE ET ADULTES
+────────────────────────────────────────────────────────
+L'outil couvre TOUS les segments, pas uniquement la jeunesse :
 
-   Noël / cadeaux (octobre-décembre) :
-   • "idées cadeaux livres Noël 2026 jeunesse"
-   • "sélection livres Noël 2026 Fnac"
-   • "beaux livres Noël 2026 nouveautés"
-   • "albums cadeaux jeunesse Noël 2026"
+JEUNESSE :
+• Albums (0-3 ans, 3-6 ans, 6-9 ans)
+• Romans jeunesse (8-12 ans), Romans ado (12-15 ans)
+• BD jeunesse, Manga jeunesse
+• Documentaires jeunesse (nature, sciences, histoire, vie pratique)
+• Livres-jeux, imagiers, premiers lecteurs
 
-   Halloween / frissons (octobre) :
-   • "livres Halloween jeunesse 2026"
-   • "romans frissons enfants sélection"
-   • "albums peur jeunesse nouveautés"
+ADULTES :
+• Romans — littérature française et étrangère
+• Policiers / Thrillers / Noir
+• Science-Fiction / Fantasy / Fantastique
+• Biographies / Mémoires / Autobiographies
+• Essais / Documents / Politique / Société
+• Histoire / Géographie
+• Documentaires pratiques (cuisine, jardin, bricolage, santé, voyage)
+• BD adultes / Romans graphiques
+• Manga adultes / Comics / Graphic novels
+• Beaux livres / Art / Photo / Architecture
+• Grands caractères (liseuses, éditions adaptées seniors)
 
-   Prix littéraires (toute l'année) :
-   • "Prix Goncourt 2026", "Prix Renaudot 2026", "Prix Médicis 2026"
-   • "Prix Sorcières 2026", "Prix Landerneau 2026"
-   • "Prix Révélation Livre jeunesse 2026"
-   • "Prix Libbylit 2026", "Prix Tam-Tam 2026"
+────────────────────────────────────────────────────────
+PRIX LITTÉRAIRES — VEILLE PERMANENTE
+────────────────────────────────────────────────────────
+Chercher systématiquement les lauréats et sélections de l'année en cours.
 
-   Printemps / lectures d'été (avril-juin) :
-   • "sélection lectures été 2026 jeunesse"
-   • "prix littéraires printemps 2026 romans"
+JEUNESSE :
+Prix de référence (chercher chaque année) :
+• Pépites du Salon de Montreuil (novembre) — LA référence jeunesse
+• Prix Sorcières (ALSJ) — bibliothécaires spécialistes jeunesse
+• Prix des Incorruptibles — vote d'enfants lecteurs
+• Prix Landerneau Jeunesse
+• Prix Libbylit (Belgique, francophone)
+• Prix Tam-Tam (0-6 ans)
+• Prix Chronos Jeunesse (intergénérationnel)
+• Prix du Jeune Lecteur Guilde
+• Prix Livrentête (lycéens)
+• Prix Escapages (Gironde — cohérent avec notre territoire !)
+• Prix Octogone (BD/Manga jeunesse)
+• Grand Prix de l'Imaginaire jeunesse (SF/Fantastique)
+
+ADULTES :
+Prix littéraires français :
+• Prix Goncourt — le plus médiatisé
+• Prix Renaudot — souvent complémentaire du Goncourt
+• Prix Médicis (roman + essai + étranger)
+• Prix Femina (roman + étranger)
+• Prix Interallié
+• Prix de Flore
+• Prix du Roman de l'Académie française
+• Prix Orange du Livre
+• Prix Babelio
+
+Policier / Noir :
+• Prix Quai du Polar
+• Prix du Roman Noir (Cognac)
+• Prix Mystère de la Critique
+• Prix du Polar européen
+
+SF / Fantastique :
+• Grand Prix de l'Imaginaire
+• Prix Apollo
+• Prix Utopiales
+• Prix Mauvais Genres (France Inter)
+• Hugo Awards / Nebula Awards (pour traductions)
+
+BD / Comics / Manga :
+• Fauve d'Or — Festival d'Angoulême (janvier) — LE prix BD
+• Prix Fauve Polar SNCF
+• Prix Fauve de la Série
+• Prix RTL de la BD
+• Prix BD FNAC
+• Prix Octogone (manga)
+• Eisner Awards (comics US — pour traductions)
+
+Essais / Documents :
+• Prix Essai France Télévisions
+• Prix Philosophia
+• Prix du Livre Politique
+• Prix de l'Essai de l'Académie française
+
+REQUÊTES TYPE :
+"Prix Goncourt 2026 lauréat"
+"Pépites Montreuil 2025 palmarès complet"
+"Fauve d'Or Angoulême 2026 sélection"
+"Prix Sorcières 2026 liste"
+"Prix Escapages 2026 Gironde"
+"Prix Incorruptibles 2026 lauréats"
+
+────────────────────────────────────────────────────────
+ÉDITEURS À SURVEILLER PAR SEGMENT
+────────────────────────────────────────────────────────
+(Chercher leurs nouveautés systématiquement)
+
+Albums jeunesse : L'École des Loisirs, Gallimard Jeunesse, Seuil Jeunesse,
+  Didier Jeunesse, MeMo, Les Grandes Personnes, Rue de l'Échiquier Jeunesse
+
+Romans jeunesse/ado : Rageot, Bayard Jeunesse, Milan, Actes Sud Jeunesse,
+  Nathan, Sarbacane, Syros, Gulf Stream
+
+Romans adultes : Gallimard, Grasset, Seuil, Actes Sud, Albin Michel,
+  Flammarion, P.O.L, Minuit, Rivages
+
+Policier/Noir : Albin Michel, Calmann-Lévy, Fleuve Éditions,
+  Actes Noirs (Actes Sud), Série Noire (Gallimard), La Manufacture de Livres
+
+SF / Fantasy : L'Atalante, Mnémos, Bragelonne, Le Bélial', Actusf,
+  J'ai lu SF, Pocket SF
+
+BD franco-belge : Casterman, Dargaud, Dupuis, Glénat, Futuropolis,
+  Rue de Sèvres, Delcourt, Lombard, Bamboo
+
+Manga : Kana, Glénat Manga, Pika, Ki-oon, Tonkam, Kurokawa, Soleil Manga
+
+Comics / Graphic novels : Urban Comics, Panini Comics, Glénat Comics,
+  Delcourt Comics, Hi Comics
+
+Documentaires / Essais : La Découverte, Seuil, Fayard, Gallimard,
+  Autrement, Belin, Larousse, Nathan
+
+Beaux livres : Citadelles & Mazenod, Hazan, Flammarion, Taschen
+
+Grands caractères : Editions de la Loupe, Libra Diffusio, Feryane,
+  Gabelire, Pascal Galodé
+
+────────────────────────────────────────────────────────
+SOURCES WEB POUR LA VEILLE — PAR TYPE
+────────────────────────────────────────────────────────
+Jeunesse :
+• ricochet-jeunes.org — référence professionnelle, sélections critiques
+• "nouveautés jeunesse ricochet-jeunes.org [mois] [année]"
+• "sélection albums [thème] ricochet-jeunes.org"
+• CNLJ (Centre National Littérature Jeunesse, BnF)
+
+BD / Manga :
+• bedetheque.com — base de référence BD française
+• "nouveautés BD [éditeur] [mois] 2026"
+• "sorties manga juillet 2026 france ki-oon kana"
+• manga-news.com, animeland.fr, bdgest.com
+
+Romans / adultes :
+• livreshebdo.fr — professionnel du livre
+• babelio.com — avis lecteurs + classements
+• lecteurs.com, 20minutes.fr/livres
+• "sélection romans [prix] 2026"
+• "meilleures ventes livres france juillet 2026"
+
+Tous segments :
+• booknode.com — meilleures ventes françaises, dates de sortie
+• fnac.com/livres, decitre.fr/livres, amazon.fr/livres (pour les ISBN)
+• leslibraires.fr (indépendants → cohérent avec notre positionnement)
+• mollat.com (grande librairie bordelaise — proche, pertinente)
+
+────────────────────────────────────────────────────────
+CALENDRIER ÉDITORIAL ET SAISONNIER
+────────────────────────────────────────────────────────
+Janvier : Festival d'Angoulême → BD (Fauve d'Or, sélections)
+Mars : Salon du Livre de Paris → littérature générale, rencontres
+Avril-Mai : Printemps des poètes, Foire du livre de Bruxelles
+Juin-Juillet : Lectures d'été (romans de plage, guides, jeunesse vacances)
+Juillet-Août : Pic touristique Arcachon → guides, nature, enfants en vacances
+Septembre : RENTRÉE LITTÉRAIRE → 500+ romans, sélections prix
+Octobre : Salon du livre jeunesse de Saint-Paul-lès-Dax, Halloween
+Novembre : Salon de Montreuil → Pépites, sélections jeunesse
+Décembre : Cadeaux, Noël → beaux livres, albums, coffrets
+
+Requêtes saisonnières :
+Été : "lectures été 2026 sélection", "romans plage 2026", "guides bassin arcachon 2026"
+Rentrée : "rentrée littéraire 2026 sélection", "rentrée littéraire 2026 Fnac"
+Noël : "idées cadeaux livres 2026 jeunesse", "beaux livres Noël 2026"
+Angoulême : "sélection officielle Angoulême 2026", "Fauve d'Or 2026"
+Montreuil : "Pépites Montreuil 2026 palmarès", "coups de cœur jeunesse 2026"
+
+────────────────────────────────────────────────────────
+SIGNAUX INTERNES À EXPLOITER
+────────────────────────────────────────────────────────
+Quand aucun thème spécifique n'est demandé, utiliser executer_requete_sql pour
+trouver les vrais besoins :
+
+1. Genres à forte rotation (demande > offre) :
+   SELECT genre, COUNT(*) as titres, SUM(nb_prets_total) as prets,
+     ROUND(CAST(SUM(nb_prets_total) AS FLOAT)/COUNT(*),1) as rotation
+   FROM notice WHERE genre IS NOT NULL GROUP BY genre ORDER BY rotation DESC
+
+2. Doublons nécessaires (1 exemplaire très emprunté) :
+   SELECT n.titre, n.createurs AS auteur, n.identifiant, SUM(e.nb_prets_total) as prets
+   FROM notice n JOIN exemplaire e ON n.identifiant=e.identifiant
+   GROUP BY n.identifiant HAVING COUNT(e.id)=1 AND prets>=12 ORDER BY prets DESC LIMIT 15
+
+3. Séries incomplètes :
+   SELECT serie, GROUP_CONCAT(DISTINCT tome) as tomes, MAX(CAST(tome AS INTEGER)) as max_tome,
+     SUM(nb_prets) as prets_serie
+   FROM notice WHERE serie IS NOT NULL AND tome IS NOT NULL AND tome GLOB '[0-9]*'
+   GROUP BY serie HAVING COUNT(DISTINCT tome) < max_tome AND prets_serie >= 5
+   ORDER BY prets_serie DESC LIMIT 20
+
+4. Auteurs populaires avec titres manquants :
+   SELECT auteur, COUNT(*) as titres_presents, SUM(nb_prets_total) as prets_auteur
+   FROM notice WHERE createurs IS NOT NULL GROUP BY createurs
+   HAVING prets_auteur >= 20 ORDER BY prets_auteur DESC LIMIT 20
+   → Pour chacun, web_search "[auteur] bibliographie complète" pour identifier les manquants
+
+5. Thématiques sous-représentées vs prêts :
+   Analyser la distribution dewey/genre vs rotation pour détecter les lacunes
+
 
 ── DÉSHERBAGE ────────────────────────────────────────
 Pour identifier des candidats au pilon (peu/pas empruntés, anciens, périmés...) :
@@ -1191,6 +1414,7 @@ def repondre(historique_existant, question, cle_api):
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
         OUTIL_COBAS,
+        OUTIL_ANALYSE_ACQUISITION,
         {"type": "web_search_20250305", "name": "web_search", "max_uses": 10},
     ]
 
@@ -1268,6 +1492,8 @@ def repondre(historique_existant, question, cle_api):
                     resultat = supprimer_desherbage_effectue(**bloc.input)
                 elif bloc.name == "verifier_disponibilite_cobas":
                     resultat = verifier_disponibilite_cobas(**bloc.input)
+                elif bloc.name == "lancer_analyse_acquisition":
+                    resultat = lancer_analyse_acquisition()
                 else:
                     resultat = json.dumps({"erreur": "outil inconnu"})
                 resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
@@ -1434,17 +1660,233 @@ def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
 
 
 # ----------------------------------------------------------------------------
+# Fonctions tableau de bord, ROI acquisitions, export ORB, Babelio
+# ----------------------------------------------------------------------------
+
+@st.cache_data(ttl=300)
+def get_kpis():
+    """Indicateurs clés du fonds — mis en cache 5 minutes."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        notices = conn.execute("SELECT COUNT(*) FROM notice").fetchone()[0]
+        exemplaires = conn.execute("SELECT COUNT(*) FROM exemplaire").fetchone()[0]
+        enrichis = conn.execute(
+            "SELECT COUNT(*) FROM notice WHERE date_enrichissement IS NOT NULL"
+        ).fetchone()[0]
+        prets_total = conn.execute("SELECT COALESCE(SUM(nb_prets_total),0) FROM notice").fetchone()[0]
+        try:
+            frequentation = conn.execute(
+                "SELECT COALESCE(SUM(entrees),0) FROM frequentation"
+            ).fetchone()[0]
+        except Exception:
+            frequentation = 0
+        try:
+            derniere_maj = conn.execute(
+                "SELECT MAX(date_maj) FROM exemplaire"
+            ).fetchone()[0]
+        except Exception:
+            derniere_maj = None
+        conn.close()
+        return {
+            'notices': notices,
+            'exemplaires': exemplaires,
+            'enrichis': enrichis,
+            'taux_enrichissement': round(enrichis * 100 / notices) if notices else 0,
+            'prets_total': prets_total,
+            'frequentation': frequentation,
+            'derniere_maj': derniere_maj,
+        }
+    except Exception as e:
+        return {'erreur': str(e)}
+
+
+@st.cache_data(ttl=300)
+def get_frequentation_mensuelle():
+    """Fréquentation mensuelle sur 18 mois."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        rows = conn.execute("""
+            SELECT SUBSTR(date_iso,1,7) as mois, SUM(entrees) as total
+            FROM frequentation
+            WHERE date_iso >= DATE('now', '-18 months')
+            GROUP BY mois ORDER BY mois
+        """).fetchall()
+        conn.close()
+        return {r[0]: r[1] for r in rows}
+    except Exception:
+        return {}
+
+
+@st.cache_data(ttl=300)
+def get_rotation_genres():
+    """Rotation par genre (prêts / nb titres)."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        rows = conn.execute("""
+            SELECT genre, COUNT(*) as titres, SUM(nb_prets_total) as prets,
+                   ROUND(CAST(SUM(nb_prets_total) AS FLOAT)/COUNT(*),1) as rotation
+            FROM notice
+            WHERE genre IS NOT NULL AND genre != '' AND nb_prets_total > 0
+            GROUP BY genre HAVING titres >= 3
+            ORDER BY rotation DESC LIMIT 20
+        """).fetchall()
+        conn.close()
+        return [{'genre': r[0], 'titres': r[1], 'prets': r[2], 'rotation': r[3]} for r in rows]
+    except Exception:
+        return []
+
+
+@st.cache_data(ttl=300)
+def get_top_titres(n=25):
+    """Top N titres les plus empruntés."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        rows = conn.execute(f"""
+            SELECT titre, createurs AS auteur, genre, public_vise, nb_prets_total AS nb_prets, identifiant,
+                   (SELECT COUNT(*) FROM exemplaire WHERE identifiant=n.identifiant) as nb_ex
+            FROM notice n
+            ORDER BY nb_prets DESC LIMIT {n}
+        """).fetchall()
+        conn.close()
+        return [{'titre': r[0], 'auteur': r[1], 'genre': r[2],
+                 'public': r[3], 'prets': r[4], 'isbn': r[5], 'nb_ex': r[6]} for r in rows]
+    except Exception:
+        return []
+
+
+@st.cache_data(ttl=300)
+def get_roi_acquisitions():
+    """Retour sur investissement des acquisitions récentes (2023+)."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        rows = conn.execute("""
+            SELECT titre, createurs AS auteur, genre, public_vise, SUBSTR(date_publication,1,4) AS annee, nb_prets_total AS nb_prets, identifiant,
+                   CASE
+                     WHEN nb_prets = 0 THEN 'Jamais emprunté'
+                     WHEN nb_prets < 3 THEN 'Peu emprunté (<3)'
+                     WHEN nb_prets < 10 THEN 'Moyen (3-9)'
+                     WHEN nb_prets < 20 THEN 'Bon (10-19)'
+                     ELSE 'Excellent (20+)'
+                   END as categorie_roi
+            FROM notice
+            WHERE SUBSTR(date_publication,1,4) >= '2023' AND type_document = 'LIVRE'
+            ORDER BY nb_prets ASC
+        """).fetchall()
+        conn.close()
+        resultats = [{'titre': r[0], 'auteur': r[1], 'genre': r[2],
+                      'public': r[3], 'annee': r[4], 'prets': r[5],
+                      'isbn': r[6], 'roi': r[7]} for r in rows]
+        # Distribution
+        distrib = {}
+        for r in resultats:
+            distrib[r['roi']] = distrib.get(r['roi'], 0) + 1
+        return {'titres': resultats, 'distribution': distrib}
+    except Exception:
+        return {'titres': [], 'distribution': {}}
+
+
+@st.cache_data(ttl=60)
+def get_suggestions_acquisition_liste():
+    """Liste des suggestions d'acquisition en attente."""
+    try:
+        conn = db.connect(FICHIER_DB)
+        rows = conn.execute("""
+            SELECT id, titre, auteur, editeur, isbn, prix, motif, source, demandeur,
+                   date_ajout
+            FROM suggestion_acquisition ORDER BY date_ajout DESC
+        """).fetchall()
+        conn.close()
+        return [{'id': r[0], 'titre': r[1], 'auteur': r[2], 'editeur': r[3],
+                 'isbn': r[4], 'prix': r[5], 'motif': r[6], 'source': r[7],
+                 'demandeur': r[8], 'date': r[9]} for r in rows]
+    except Exception:
+        return []
+
+
+@st.cache_data(ttl=300)
+def get_alertes():
+    """Alertes actives : doublons nécessaires, séries incomplètes."""
+    alertes = []
+    try:
+        conn = db.connect(FICHIER_DB)
+        # Doublons urgents
+        doublons = conn.execute("""
+            SELECT n.titre, SUM(e.nb_prets_total) as prets
+            FROM notice n JOIN exemplaire e ON n.identifiant=e.identifiant
+            GROUP BY n.identifiant HAVING COUNT(e.id)=1 AND prets>=15
+            ORDER BY prets DESC LIMIT 5
+        """).fetchall()
+        for d in doublons:
+            alertes.append(f"📚 Doublon urgent : **{d[0]}** ({d[1]} prêts, 1 seul exemplaire)")
+
+        # Séries incomplètes
+        series = conn.execute("""
+            SELECT serie, COUNT(DISTINCT tome) as presents, MAX(CAST(tome AS INTEGER)) as max_tome,
+                   SUM(nb_prets_total) as prets
+            FROM notice WHERE serie IS NOT NULL AND tome IS NOT NULL AND tome GLOB '[0-9]*'
+            GROUP BY serie HAVING presents < max_tome AND max_tome > 1 AND prets >= 10
+            ORDER BY prets DESC LIMIT 5
+        """).fetchall()
+        for s in series:
+            alertes.append(f"📖 Série incomplète : **{s[0]}** ({s[1]}/{s[2]} tomes, {s[3]} prêts)")
+
+        conn.close()
+    except Exception:
+        pass
+    return alertes
+
+
+def exporter_suggestions_orb(suggestions):
+    """Export CSV au format ORB (EAN;Titre;Auteur;Editeur;Prix;Quantite;Motif)."""
+    import io, csv as csv_module
+    buf = io.StringIO()
+    writer = csv_module.writer(buf, delimiter=';', quoting=csv_module.QUOTE_ALL)
+    writer.writerow(['EAN', 'Titre', 'Auteur', 'Editeur', 'Prix TTC', 'Quantite', 'Motif'])
+    for s in suggestions:
+        writer.writerow([
+            s.get('isbn') or '',
+            s.get('titre') or '',
+            s.get('auteur') or '',
+            s.get('editeur') or '',
+            s.get('prix') or '',
+            1,
+            s.get('motif') or '',
+        ])
+    return buf.getvalue().encode('utf-8-sig')  # BOM UTF-8 pour Excel
+
+
+def chercher_note_babelio(isbn):
+    """Récupère la note Babelio d'un livre par ISBN (scraping simple)."""
+    try:
+        url = f"https://www.babelio.com/recherche/?Recherche={isbn}&type=isbn"
+        r = requests.get(url, headers=HEADERS, timeout=(5, 10))
+        if r.status_code != 200:
+            return None
+        from bs4 import BeautifulSoup as _BS
+        soup = _BS(r.text, 'html.parser')
+        # Note globale
+        note_el = soup.find(class_=re.compile(r'(note|rating|score)', re.I))
+        if note_el:
+            note_text = note_el.get_text(strip=True)
+            note_match = re.search(r'(\d+[.,]\d+)', note_text)
+            if note_match:
+                return float(note_match.group(1).replace(',', '.'))
+        return None
+    except Exception:
+        return None
+
+
 # Interface
 # ----------------------------------------------------------------------------
 st.title("📚 Médiathèque d'Arcachon — Assistant du fonds")
-st.caption("Pose une question sur le fonds, en langage naturel. Les réponses viennent toujours de la base, jamais d'une supposition.")
+st.caption("Médiathèque d'Arcachon — réseau COBAS")
 
 cle_api = st.secrets.get("ANTHROPIC_API_KEY", os.environ.get("ANTHROPIC_API_KEY", ""))
 if not cle_api:
     st.error("Clé API Anthropic manquante -- à configurer dans les secrets de l'application.")
     st.stop()
 
-mot_de_passe_requis = st.secrets.get("MOT_DE_PASSE", "")  # accès au chat, pour les agents
+mot_de_passe_requis = st.secrets.get("MOT_DE_PASSE", "")
 if mot_de_passe_requis:
     if "authentifie" not in st.session_state:
         st.session_state.authentifie = False
@@ -1458,42 +1900,216 @@ if mot_de_passe_requis:
                 st.error("Mot de passe incorrect.")
         st.stop()
 
-if "messages_affiches" not in st.session_state:
-    st.session_state.messages_affiches = []
-if "messages_api" not in st.session_state:
-    st.session_state.messages_api = []
+# ── ONGLETS ──────────────────────────────────────────────────────────────────
+tab_chat, tab_dashboard, tab_acquisitions = st.tabs(
+    ["💬 Chat", "📊 Tableau de bord", "📚 Acquisitions"]
+)
 
-for msg in st.session_state.messages_affiches:
-    with st.chat_message(msg["role"]):
-        st.markdown(msg["content"])
+# ── ONGLET CHAT ──────────────────────────────────────────────────────────────
+with tab_chat:
+    if "messages_affiches" not in st.session_state:
+        st.session_state.messages_affiches = []
+    if "messages_api" not in st.session_state:
+        st.session_state.messages_api = []
 
-question = st.chat_input("Quels mangas n'avons-nous jamais prêtés ?")
-if question:
-    st.session_state.messages_affiches.append({"role": "user", "content": question})
-    with st.chat_message("user"):
-        st.markdown(question)
+    for msg in st.session_state.messages_affiches:
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
 
-    with st.chat_message("assistant"):
-        with st.spinner("Interrogation de la base..."):
-            try:
-                texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
-                st.session_state.messages_api = nouvel_historique  # commit uniquement sur succès complet
-            except Exception as e:
-                texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
-        st.markdown(texte)
-        if st.session_state.get("export_xlsx_pret"):
-            n_lignes = st.session_state.get("export_xlsx_lignes", 0)
+    question = st.chat_input("Quels mangas n'avons-nous jamais prêtés ?")
+    if question:
+        st.session_state.messages_affiches.append({"role": "user", "content": question})
+        with st.chat_message("user"):
+            st.markdown(question)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Interrogation de la base..."):
+                try:
+                    texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
+                    st.session_state.messages_api = nouvel_historique
+                except Exception as e:
+                    texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
+            st.markdown(texte)
+            if st.session_state.get("export_xlsx_pret"):
+                n_lignes = st.session_state.get("export_xlsx_lignes", 0)
+                st.download_button(
+                    f"📥 Télécharger le fichier Excel ({n_lignes} lignes)",
+                    data=st.session_state["export_xlsx_pret"],
+                    file_name=f"export_mediatheque_arcachon_{datetime.date.today().isoformat()}.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+                del st.session_state["export_xlsx_pret"]
+                del st.session_state["export_xlsx_lignes"]
+
+        st.session_state.messages_affiches.append({"role": "assistant", "content": texte})
+
+# ── ONGLET TABLEAU DE BORD ───────────────────────────────────────────────────
+with tab_dashboard:
+    st.subheader("État du fonds")
+
+    kpis = get_kpis()
+    if 'erreur' in kpis:
+        st.error(f"Base indisponible : {kpis['erreur']}")
+    else:
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Notices", f"{kpis['notices']:,}".replace(",", " "))
+        col2.metric("Exemplaires", f"{kpis['exemplaires']:,}".replace(",", " "))
+        col3.metric("Enrichies", f"{kpis['taux_enrichissement']}%")
+        col4.metric("Prêts total", f"{kpis['prets_total']:,}".replace(",", " "))
+
+        if kpis.get('frequentation'):
+            st.metric("Fréquentation cumulée", f"{kpis['frequentation']:,}".replace(",", " ") + " entrées")
+
+        if kpis.get('derniere_maj'):
+            st.caption(f"Dernière mise à jour Decalog : {str(kpis['derniere_maj'])[:10]}")
+
+    # Alertes
+    alertes = get_alertes()
+    if alertes:
+        st.divider()
+        st.subheader("⚠️ Alertes")
+        for a in alertes:
+            st.warning(a)
+
+    # Fréquentation mensuelle
+    st.divider()
+    st.subheader("Fréquentation mensuelle (18 mois)")
+    freq = get_frequentation_mensuelle()
+    if freq:
+        st.bar_chart(freq, color="#4A90D9")
+    else:
+        st.caption("Données de fréquentation non disponibles.")
+
+    # Rotation par genre
+    st.divider()
+    st.subheader("Rotation par genre (prêts / titre)")
+    genres = get_rotation_genres()
+    if genres:
+        data_genres = {g['genre']: g['rotation'] for g in genres[:15]}
+        st.bar_chart(data_genres, color="#E8864A")
+        with st.expander("Tableau complet"):
+            st.dataframe(
+                [{"Genre": g['genre'], "Titres": g['titres'],
+                  "Prêts": g['prets'], "Rotation": g['rotation']} for g in genres],
+                use_container_width=True
+            )
+    else:
+        st.caption("Données de genre non disponibles.")
+
+    # Top titres
+    st.divider()
+    st.subheader("Top 25 titres les plus empruntés")
+    top = get_top_titres(25)
+    if top:
+        st.dataframe(
+            [{"Rang": i+1, "Titre": t['titre'], "Auteur": t['auteur'],
+              "Genre": t['genre'], "Public": t['public'],
+              "Prêts": t['prets'], "Exemplaires": t['nb_ex']}
+             for i, t in enumerate(top)],
+            use_container_width=True
+        )
+    else:
+        st.caption("Données non disponibles.")
+
+# ── ONGLET ACQUISITIONS ──────────────────────────────────────────────────────
+with tab_acquisitions:
+
+    # Suggestions en attente
+    st.subheader("📋 Suggestions d'acquisition")
+    suggestions = get_suggestions_acquisition_liste()
+    if suggestions:
+        st.caption(f"{len(suggestions)} titre(s) en liste d'attente")
+        st.dataframe(
+            [{"Titre": s['titre'], "Auteur": s['auteur'], "Éditeur": s['editeur'],
+              "ISBN": s['isbn'], "Prix": s['prix'], "Motif": s['motif'],
+              "Source": s['source'], "Demandeur": s['demandeur'], "Date": s['date']}
+             for s in suggestions],
+            use_container_width=True
+        )
+        # Export ORB
+        csv_orb = exporter_suggestions_orb(suggestions)
+        st.download_button(
+            "📥 Exporter pour ORB (CSV)",
+            data=csv_orb,
+            file_name=f"commande_orb_{datetime.date.today().isoformat()}.csv",
+            mime="text/csv",
+        )
+        # Export Excel générique
+        try:
+            import openpyxl as _openpyxl
+            from io import BytesIO as _BytesIO
+            wb = _openpyxl.Workbook()
+            ws = wb.active
+            ws.title = "Suggestions acquisition"
+            cols = ["Titre", "Auteur", "Éditeur", "ISBN", "Prix", "Motif", "Source", "Demandeur", "Date"]
+            ws.append(cols)
+            for s in suggestions:
+                ws.append([s['titre'], s['auteur'], s['editeur'], s['isbn'],
+                            s['prix'], s['motif'], s['source'], s['demandeur'], s['date']])
+            buf_xl = _BytesIO()
+            wb.save(buf_xl)
             st.download_button(
-                f"📥 Télécharger le fichier Excel ({n_lignes} lignes)",
-                data=st.session_state["export_xlsx_pret"],
-                file_name=f"export_mediatheque_arcachon_{datetime.date.today().isoformat()}.xlsx",
+                "📥 Exporter Excel",
+                data=buf_xl.getvalue(),
+                file_name=f"suggestions_acquisition_{datetime.date.today().isoformat()}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
-            del st.session_state["export_xlsx_pret"]
-            del st.session_state["export_xlsx_lignes"]
+        except Exception:
+            pass
+    else:
+        st.info("Aucune suggestion d'acquisition en attente. Demande au chat d'en générer !")
 
-    st.session_state.messages_affiches.append({"role": "assistant", "content": texte})
+    # ROI acquisitions
+    st.divider()
+    st.subheader("📈 ROI acquisitions 2023+")
+    st.caption("Retour sur investissement des livres acquis depuis 2023.")
+    roi = get_roi_acquisitions()
+    distrib = roi.get('distribution', {})
+    if distrib:
+        ordre = ['Jamais emprunté', 'Peu emprunté (<3)', 'Moyen (3-9)', 'Bon (10-19)', 'Excellent (20+)']
+        data_roi = {k: distrib.get(k, 0) for k in ordre if k in distrib}
+        st.bar_chart(data_roi, color="#5AAF6A")
 
+        total_roi = sum(distrib.values())
+        jamais = distrib.get('Jamais emprunté', 0)
+        peu = distrib.get('Peu emprunté (<3)', 0)
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Titres analysés", total_roi)
+        col2.metric("Jamais empruntés", jamais,
+                    delta=f"{round(jamais*100/total_roi)}%" if total_roi else None,
+                    delta_color="inverse")
+        col3.metric("Peu empruntés (<3)", peu)
+
+        with st.expander("📋 Voir les titres jamais empruntés"):
+            jamais_list = [t for t in roi['titres'] if t['roi'] == 'Jamais emprunté']
+            if jamais_list:
+                st.dataframe(
+                    [{"Titre": t['titre'], "Auteur": t['auteur'],
+                      "Genre": t['genre'], "Année": t['annee']}
+                     for t in jamais_list[:50]],
+                    use_container_width=True
+                )
+    else:
+        st.caption("Données non disponibles.")
+
+    # Profil démographique pour référence
+    st.divider()
+    st.subheader("🏖️ Profil Arcachon — référence acquisitions")
+    if ANALYSE_ACQUISITION_OK:
+        p = PROFIL_ARCACHON
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Population permanente", f"~{p['population_permanente']:,}")
+            st.metric("Pic estival", f"~{p['population_estivale_pic']:,}")
+            st.caption(f"Seniors 60+ : {p['tranches_age']['60-74 ans'] + p['tranches_age']['75 ans+']:.0f}% des résidents")
+        with col2:
+            st.caption("**Priorités adultes :**")
+            for pr in p['priorites_acquisitions']['adulte'][:5]:
+                st.caption(f"• {pr}")
+    else:
+        st.caption("Module analyser_acquisition non disponible.")
+
+# ── SIDEBAR ──────────────────────────────────────────────────────────────────
 with st.sidebar:
     st.header("Fonds Arcachon")
     try:
