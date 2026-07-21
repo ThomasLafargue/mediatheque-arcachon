@@ -1993,7 +1993,10 @@ with st.sidebar:
                             except Exception:
                                 pass
                             import re as _re
-                            matches = _re.findall(r'(\d+)/(\d+)\s+traités', log)
+                            # Patterns réels des scripts :
+                            # actualiser_catalogue.py  → "X/Y notices traitées..." ou "X/Y exemplaires traités..."
+                            # actualiser_statistiques.py → "X/Y traités..."
+                            matches = _re.findall(r'(\d+)/(\d+)\s+(?:notices?\s+)?(?:exemplaires?\s+)?traités?', log)
                             if matches:
                                 actuel, total = int(matches[-1][0]), int(matches[-1][1])
                                 pct = actuel / total if total > 0 else 0
