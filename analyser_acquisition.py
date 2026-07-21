@@ -322,15 +322,10 @@ def correlate_meteo_frequentation(conn, meteo=None):
     # Récupérer la fréquentation journalière
     try:
         rows = conn.execute(
-            "SELECT date_iso, entrees FROM frequentation ORDER BY date_iso"
+            "SELECT date, nb_entrees FROM frequentation ORDER BY date"
         ).fetchall()
     except Exception:
-        try:
-            rows = conn.execute(
-                "SELECT date, entrees FROM frequentation ORDER BY date"
-            ).fetchall()
-        except Exception:
-            return {'erreur': 'Table fréquentation non accessible'}
+        return {'erreur': 'Table fréquentation non accessible'}
 
     # Croiser avec météo
     jours_pluie = []
