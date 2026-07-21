@@ -1900,214 +1900,42 @@ if mot_de_passe_requis:
                 st.error("Mot de passe incorrect.")
         st.stop()
 
-# ── ONGLETS ──────────────────────────────────────────────────────────────────
-tab_chat, tab_dashboard, tab_acquisitions = st.tabs(
-    ["💬 Chat", "📊 Tableau de bord", "📚 Acquisitions"]
-)
+# ── CHAT ─────────────────────────────────────────────────────────────────────
+if "messages_affiches" not in st.session_state:
+    st.session_state.messages_affiches = []
+if "messages_api" not in st.session_state:
+    st.session_state.messages_api = []
 
-# ── ONGLET CHAT ──────────────────────────────────────────────────────────────
-with tab_chat:
-    if "messages_affiches" not in st.session_state:
-        st.session_state.messages_affiches = []
-    if "messages_api" not in st.session_state:
-        st.session_state.messages_api = []
+for msg in st.session_state.messages_affiches:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
 
-    for msg in st.session_state.messages_affiches:
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
+question = st.chat_input("Quels mangas n'avons-nous jamais prêtés ?")
+if question:
+    st.session_state.messages_affiches.append({"role": "user", "content": question})
+    with st.chat_message("user"):
+        st.markdown(question)
 
-    question = st.chat_input("Quels mangas n'avons-nous jamais prêtés ?")
-    if question:
-        st.session_state.messages_affiches.append({"role": "user", "content": question})
-        with st.chat_message("user"):
-            st.markdown(question)
-
-        with st.chat_message("assistant"):
-            with st.spinner("Interrogation de la base..."):
-                try:
-                    texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
-                    st.session_state.messages_api = nouvel_historique
-                except Exception as e:
-                    texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
-            st.markdown(texte)
-            if st.session_state.get("export_xlsx_pret"):
-                n_lignes = st.session_state.get("export_xlsx_lignes", 0)
-                st.download_button(
-                    f"📥 Télécharger le fichier Excel ({n_lignes} lignes)",
-                    data=st.session_state["export_xlsx_pret"],
-                    file_name=f"export_mediatheque_arcachon_{datetime.date.today().isoformat()}.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                )
-                del st.session_state["export_xlsx_pret"]
-                del st.session_state["export_xlsx_lignes"]
-
-        st.session_state.messages_affiches.append({"role": "assistant", "content": texte})
-
-# ── ONGLET TABLEAU DE BORD ───────────────────────────────────────────────────
-with tab_dashboard:
-    st.subheader("État du fonds")
-
-    kpis = get_kpis()
-    if 'erreur' in kpis:
-        st.error(f"Base indisponible : {kpis['erreur']}")
-    else:
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Notices", f"{kpis['notices']:,}".replace(",", " "))
-        col2.metric("Exemplaires", f"{kpis['exemplaires']:,}".replace(",", " "))
-        col3.metric("Enrichies", f"{kpis['taux_enrichissement']}%")
-        col4.metric("Prêts total", f"{kpis['prets_total']:,}".replace(",", " "))
-
-        if kpis.get('frequentation'):
-            st.metric("Fréquentation cumulée", f"{kpis['frequentation']:,}".replace(",", " ") + " entrées")
-
-        if kpis.get('derniere_maj'):
-            st.caption(f"Dernière mise à jour Decalog : {str(kpis['derniere_maj'])[:10]}")
-
-    # Alertes
-    alertes = get_alertes()
-    if alertes:
-        st.divider()
-        st.subheader("⚠️ Alertes")
-        for a in alertes:
-            st.warning(a)
-
-    # Fréquentation mensuelle
-    st.divider()
-    st.subheader("Fréquentation mensuelle (18 mois)")
-    freq = get_frequentation_mensuelle()
-    if freq:
-        st.bar_chart(freq, color="#4A90D9")
-    else:
-        st.caption("Données de fréquentation non disponibles.")
-
-    # Rotation par genre
-    st.divider()
-    st.subheader("Rotation par genre (prêts / titre)")
-    genres = get_rotation_genres()
-    if genres:
-        data_genres = {g['genre']: g['rotation'] for g in genres[:15]}
-        st.bar_chart(data_genres, color="#E8864A")
-        with st.expander("Tableau complet"):
-            st.dataframe(
-                [{"Genre": g['genre'], "Titres": g['titres'],
-                  "Prêts": g['prets'], "Rotation": g['rotation']} for g in genres],
-                use_container_width=True
-            )
-    else:
-        st.caption("Données de genre non disponibles.")
-
-    # Top titres
-    st.divider()
-    st.subheader("Top 25 titres les plus empruntés")
-    top = get_top_titres(25)
-    if top:
-        st.dataframe(
-            [{"Rang": i+1, "Titre": t['titre'], "Auteur": t['auteur'],
-              "Genre": t['genre'], "Public": t['public'],
-              "Prêts": t['prets'], "Exemplaires": t['nb_ex']}
-             for i, t in enumerate(top)],
-            use_container_width=True
-        )
-    else:
-        st.caption("Données non disponibles.")
-
-# ── ONGLET ACQUISITIONS ──────────────────────────────────────────────────────
-with tab_acquisitions:
-
-    # Suggestions en attente
-    st.subheader("📋 Suggestions d'acquisition")
-    suggestions = get_suggestions_acquisition_liste()
-    if suggestions:
-        st.caption(f"{len(suggestions)} titre(s) en liste d'attente")
-        st.dataframe(
-            [{"Titre": s['titre'], "Auteur": s['auteur'], "Éditeur": s['editeur'],
-              "ISBN": s['isbn'], "Prix": s['prix'], "Motif": s['motif'],
-              "Source": s['source'], "Demandeur": s['demandeur'], "Date": s['date']}
-             for s in suggestions],
-            use_container_width=True
-        )
-        # Export ORB
-        csv_orb = exporter_suggestions_orb(suggestions)
-        st.download_button(
-            "📥 Exporter pour ORB (CSV)",
-            data=csv_orb,
-            file_name=f"commande_orb_{datetime.date.today().isoformat()}.csv",
-            mime="text/csv",
-        )
-        # Export Excel générique
-        try:
-            import openpyxl as _openpyxl
-            from io import BytesIO as _BytesIO
-            wb = _openpyxl.Workbook()
-            ws = wb.active
-            ws.title = "Suggestions acquisition"
-            cols = ["Titre", "Auteur", "Éditeur", "ISBN", "Prix", "Motif", "Source", "Demandeur", "Date"]
-            ws.append(cols)
-            for s in suggestions:
-                ws.append([s['titre'], s['auteur'], s['editeur'], s['isbn'],
-                            s['prix'], s['motif'], s['source'], s['demandeur'], s['date']])
-            buf_xl = _BytesIO()
-            wb.save(buf_xl)
+    with st.chat_message("assistant"):
+        with st.spinner("Interrogation de la base..."):
+            try:
+                texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
+                st.session_state.messages_api = nouvel_historique
+            except Exception as e:
+                texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
+        st.markdown(texte)
+        if st.session_state.get("export_xlsx_pret"):
+            n_lignes = st.session_state.get("export_xlsx_lignes", 0)
             st.download_button(
-                "📥 Exporter Excel",
-                data=buf_xl.getvalue(),
-                file_name=f"suggestions_acquisition_{datetime.date.today().isoformat()}.xlsx",
+                f"📥 Télécharger le fichier Excel ({n_lignes} lignes)",
+                data=st.session_state["export_xlsx_pret"],
+                file_name=f"export_mediatheque_arcachon_{datetime.date.today().isoformat()}.xlsx",
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             )
-        except Exception:
-            pass
-    else:
-        st.info("Aucune suggestion d'acquisition en attente. Demande au chat d'en générer !")
+            del st.session_state["export_xlsx_pret"]
+            del st.session_state["export_xlsx_lignes"]
 
-    # ROI acquisitions
-    st.divider()
-    st.subheader("📈 ROI acquisitions 2023+")
-    st.caption("Retour sur investissement des livres acquis depuis 2023.")
-    roi = get_roi_acquisitions()
-    distrib = roi.get('distribution', {})
-    if distrib:
-        ordre = ['Jamais emprunté', 'Peu emprunté (<3)', 'Moyen (3-9)', 'Bon (10-19)', 'Excellent (20+)']
-        data_roi = {k: distrib.get(k, 0) for k in ordre if k in distrib}
-        st.bar_chart(data_roi, color="#5AAF6A")
-
-        total_roi = sum(distrib.values())
-        jamais = distrib.get('Jamais emprunté', 0)
-        peu = distrib.get('Peu emprunté (<3)', 0)
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Titres analysés", total_roi)
-        col2.metric("Jamais empruntés", jamais,
-                    delta=f"{round(jamais*100/total_roi)}%" if total_roi else None,
-                    delta_color="inverse")
-        col3.metric("Peu empruntés (<3)", peu)
-
-        with st.expander("📋 Voir les titres jamais empruntés"):
-            jamais_list = [t for t in roi['titres'] if t['roi'] == 'Jamais emprunté']
-            if jamais_list:
-                st.dataframe(
-                    [{"Titre": t['titre'], "Auteur": t['auteur'],
-                      "Genre": t['genre'], "Année": t['annee']}
-                     for t in jamais_list[:50]],
-                    use_container_width=True
-                )
-    else:
-        st.caption("Données non disponibles.")
-
-    # Profil démographique pour référence
-    st.divider()
-    st.subheader("🏖️ Profil Arcachon — référence acquisitions")
-    if ANALYSE_ACQUISITION_OK:
-        p = PROFIL_ARCACHON
-        col1, col2 = st.columns(2)
-        with col1:
-            st.metric("Population permanente", f"~{p['population_permanente']:,}")
-            st.metric("Pic estival", f"~{p['population_estivale_pic']:,}")
-            st.caption(f"Seniors 60+ : {p['tranches_age']['60-74 ans'] + p['tranches_age']['75 ans+']:.0f}% des résidents")
-        with col2:
-            st.caption("**Priorités adultes :**")
-            for pr in p['priorites_acquisitions']['adulte'][:5]:
-                st.caption(f"• {pr}")
-    else:
-        st.caption("Module analyser_acquisition non disponible.")
+    st.session_state.messages_affiches.append({"role": "assistant", "content": texte})
 
 # ── SIDEBAR ──────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -2121,6 +1949,14 @@ with st.sidebar:
         st.metric("Exemplaires", f"{exemplaires:,}".replace(",", " "))
     except Exception:
         st.write("Base indisponible.")
+
+    # Alertes compactes
+    alertes = get_alertes()
+    if alertes:
+        st.divider()
+        st.caption("⚠️ **Alertes**")
+        for a in alertes[:5]:
+            st.caption(a)
 
     st.divider()
     if st.button("Nouvelle conversation"):
