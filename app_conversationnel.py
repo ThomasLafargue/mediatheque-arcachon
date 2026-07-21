@@ -1082,9 +1082,9 @@ Exemples :
 "Été Arcachon : guide Bassin d'Arcachon, thème porteur en saison"
 Ne jamais laisser le motif vide ou générique.
 
-ILLUSTRATIONS — pour chaque titre, afficher la couverture :
-  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-L.jpg)
-Fallback BnF : ![Titre](https://couverture.geobib.fr/api/v1/{ISBN}/M)
+ILLUSTRATIONS — pour chaque titre, afficher la couverture via Google Books :
+  ![Titre](https://books.google.com/books/content?vid=ISBN{ISBN}&printsec=frontcover&img=1&zoom=1)
+Fallback Open Library : ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
 
 ISBN OBLIGATOIRE — chercher l'ISBN avant d'appeler ajouter_suggestion_acquisition.
 Requête : "isbn [titre] [auteur] site:fnac.com OR site:decitre.fr"
@@ -1320,8 +1320,8 @@ La décision finale est TOUJOURS humaine : l'outil ne décide jamais du retrait.
 ILLUSTRATIONS — pour chaque titre proposé au désherbage, afficher la
 couverture si elle est disponible en base (colonne image_url) :
   ![Titre](image_url)
-Si image_url est NULL ou vide, utiliser Open Library avec l'ISBN :
-  ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-L.jpg)
+Si image_url est NULL ou vide, utiliser Google Books avec l'ISBN :
+  ![Titre](https://books.google.com/books/content?vid=ISBN{ISBN}&printsec=frontcover&img=1&zoom=1)
 En dernier recours, Open Library :
   ![Titre](https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg)
 Placer l'image juste avant ou après le titre dans la réponse.
