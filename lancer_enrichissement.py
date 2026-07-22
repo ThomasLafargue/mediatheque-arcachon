@@ -3,10 +3,12 @@
 Enrichissement par lots des nouvelles notices Decalog via le moteur de
 recherche multi-sources, écrit directement dans inventaire.db.
 
-Ne réécrit JAMAIS titre / serie / tome / editeur / date_publication : ces
-champs viennent de Decalog et sont déjà fiables. Ce script ne complète que
-les champs que Decalog ne fournit pas : categorie (type), genre, public_vise
-(si encore vide), pegi, et createurs_secondaires (illustrateur).
+Ne réécrit JAMAIS titre / editeur / date_publication : ces champs viennent
+de Decalog et sont déjà fiables. Complète les champs que Decalog ne
+fournit pas : categorie (type), genre, public_vise (si encore vide), pegi,
+createurs_secondaires (illustrateur), et depuis le 2026-07-22 serie/tome
+quand ils sont vides (le moteur multi-sources les extrait déjà -- ils
+n'étaient simplement pas écrits en base jusqu'ici).
 
 Reprise automatique : chaque ISBN traité avec succès est marqué
 (date_enrichissement renseignée) — relancer ce script reprend exactement
@@ -163,6 +165,8 @@ def main():
                     createurs_secondaires = COALESCE(createurs_secondaires, ?),
                     collection = COALESCE(collection, ?),
                     resume = COALESCE(resume, ?),
+                    serie = COALESCE(serie, ?),
+                    tome = COALESCE(tome, ?),
                     score_confiance = ?,
                     nb_sources_consultees = ?,
                     date_enrichissement = ?
@@ -173,6 +177,7 @@ def main():
                 res.get("public") or None, res.get("pegi") or None,
                 res.get("illustrateur") or None, res.get("collection") or None,
                 res.get("resume") or None,
+                res.get("serie") or None, res.get("tome") or None,
                 None, None, datetime.datetime.now().isoformat(), isbn,
             )
         else:
