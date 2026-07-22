@@ -101,6 +101,18 @@ OUTIL_SQL = {
         "mots_cles, description_physique, code_barres, cote, statut_exemplaire, prix, "
         "nb_prets_titre_reseau, nb_prets_cet_exemplaire, dernier_pret_titre_reseau, "
         "dernier_pret_cet_exemplaire, resume, "
+        "champs_a_verifier_decalog -- liste (ex: 'serie,tome') des champs que "
+        "NOTRE moteur d'enrichissement (BnF + sites web) a déduits alors que "
+        "Decalog les avait laissés vides ; NULL si tout vient de Decalog ou si "
+        "rien n'a été déduit. On ne réécrit jamais Decalog directement, donc "
+        "quand cette colonne n'est pas NULL, la valeur affichée ici (serie/tome) "
+        "est correcte dans notre base mais reste fausse/vide dans Decalog tant "
+        "que le bibliothécaire ne l'y corrige pas à la main. Utiliser cette "
+        "colonne pour répondre aux questions du type 'qu'est-ce qui est mal "
+        "renseigné dans Decalog' ou 'quelles fiches dois-je corriger' : "
+        "sélectionner les notices où champs_a_verifier_decalog IS NOT NULL et "
+        "présenter, pour chacune, la valeur qu'on a trouvée (ex: tome='5') en "
+        "précisant qu'elle est absente/nulle côté Decalog. "
         "age_joueurs (ex: 'A partir de 6 ans'), nb_joueurs_min, nb_joueurs_max, "
         "duree_partie (ex: '30 minutes') -- ces 4 colonnes sont spécifiques aux jeux. "
         "HIÉRARCHIE pour regrouper ou affiner : "
@@ -862,6 +874,11 @@ TABLE notice (une ligne par titre) :
   nb_prets_fonctionnels INTEGER
   date_dernier_pret   TEXT
   date_maj_prets      TEXT
+  champs_a_verifier_decalog TEXT — champs (ex: 'serie,tome') que NOTRE moteur
+    a déduits alors que Decalog les avait laissés vides ; NULL sinon. On ne
+    réécrit jamais Decalog directement -- si non NULL, la valeur qu'on a en
+    base est fiable mais Decalog lui-même reste à corriger manuellement.
+    Utiliser pour répondre à "qu'est-ce qui est mal renseigné dans Decalog ?"
 
 TABLE exemplaire (une ligne par exemplaire physique) :
   id                  INTEGER
@@ -872,7 +889,7 @@ TABLE exemplaire (une ligne par exemplaire physique) :
   statut              TEXT  — 'A - Prêtable', 'P - En prêt'…
   site                TEXT  — 'Arcachon', 'La Teste'…
   public_vise         TEXT
-  support             TEXT
+  support              TEXT
   prix                REAL
   nb_prets_total      INTEGER
   annee_dernier_pret  TEXT
@@ -1099,7 +1116,25 @@ Signaler proactivement dans les réponses :
 • Tome présent sans exemplaire (cote/code-barres null) → notice incomplète
 • ISBN commençant par CB: → EAN absent dans Decalog, à corriger
 • Statut_exemplaire NULL → statut non renseigné dans Decalog
+• champs_a_verifier_decalog NOT NULL → notre moteur (BnF + sites web) a
+  déduit une valeur (typiquement serie/tome) que Decalog n'avait pas
+  fournie. On ne réécrit jamais les notices Decalog elles-mêmes -- ce champ
+  reste donc à corriger manuellement là-bas.
 Ces signalements aident à améliorer la qualité des données à la source.
+
+── "QU'EST-CE QUI EST MAL RENSEIGNÉ DANS DECALOG ?" ────
+Question fréquente et légitime : le bibliothécaire veut la liste précise
+des fiches à corriger DANS Decalog lui-même (pas dans notre base, qu'on ne
+réécrit jamais). Utiliser champs_a_verifier_decalog :
+  SELECT titre, serie, tome, champs_a_verifier_decalog
+  FROM notice WHERE champs_a_verifier_decalog IS NOT NULL
+  [ajouter un filtre serie/titre/categorie si la demande est ciblée]
+Pour chaque résultat, formuler explicitement lequel des deux champs est
+fiable chez nous mais vide/faux dans Decalog. Exemple de formulation à
+reproduire : "Tu as bien le tome 5 de Mortelle Adèle, mais il est mal
+renseigné dans Decalog (serie=null, tome=null)." Ne jamais présenter ces
+valeurs comme si elles venaient de Decalog -- elles viennent de notre
+moteur d'enrichissement et servent uniquement à guider la correction.
 
 Toute question sur le fonds (titre, série, prêts, cote, statut...) :
 executer_requete_sql. Pour les séries, toujours filtrer par serie (pas titre) --
