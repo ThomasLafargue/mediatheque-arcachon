@@ -148,14 +148,15 @@ id, identifiant, titre, createurs, motif, date_retrait, operateur
 
 ## APIS EXTERNES
 
-| API | URL | Auth | Statut |
+| API | URL | Auth | Statut (testé 2026-07-22 via `test_connexions.py`) |
 |-----|-----|------|--------|
-| Open-Meteo (météo archive) | `archive-api.open-meteo.com` | Aucune | ✓ Opérationnel (validé 2026-07-21 via corrélation météo) |
-| BnF SRU | `catalogue.bnf.fr/api/SRU` | Aucune | À revalider |
-| Google Books | `googleapis.com/books/v1` | Clé API | Clé présente dans `.env` local ; à revalider |
-| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ✗ Erreur 500 — abandonné |
-| Open Library (couvertures) | `covers.openlibrary.org` | Aucune | Fallback, à revalider |
-| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ⚠️ Absent du `.env` local (seuls `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `GOOGLE_BOOKS_API_KEY` y figurent) — à ajouter si l'import en écriture depuis le Mac en a besoin |
+| Turso (lecture) | — | `TURSO_AUTH_TOKEN` | ✓ Opérationnel — 44 288 notices, 44 677 exemplaires |
+| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ✗ Non testable — variable absente du `.env` local (à copier depuis les secrets Streamlit) |
+| Open-Meteo (météo archive) | `archive-api.open-meteo.com` | Aucune | ✓ Opérationnel |
+| BnF SRU | `catalogue.bnf.fr/api/SRU` | Aucune | ✓ Opérationnel |
+| Open Library (couvertures) | `covers.openlibrary.org` | Aucune | ✓ Opérationnel |
+| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ⚠️ La page d'accueil répond 200 (site relevé), mais l'échec documenté portait sur l'endpoint de récupération de couverture précis, non retesté — toujours considéré abandonné tant que l'endpoint réel n'est pas revalidé |
+| Google Books | `googleapis.com/books/v1` | Clé API | ✗ `503 Service Unavailable` reproduit deux fois (test manuel + `test_connexions.py`) — à vérifier côté Google Cloud Console (quota / statut de la clé), ne pas conclure trop vite à une simple panne passagère |
 
 ### Couvertures (ordre de priorité)
 1. Google Books : `https://books.google.com/books/content?vid=ISBN{ISBN}&printsec=frontcover&img=1&zoom=1`
@@ -221,7 +222,7 @@ token`). Cause : le token utilisé n'avait pas le scope d'écriture.
 **Corrigé** en générant un Personal Access Token classic avec le scope
 `repo` (lecture + écriture complète), remplacé dans
 `claude_desktop_config.json`, puis redémarrage de l'app. Écriture
-confirmée fonctionnelle (ce document a été poussé de cette façon).
+confirmée fonctionnelle.
 
 ### Sécurité — `.gitignore` incomplet (corrigé le 2026-07-22)
 `.env` et `.env.save` (jetons Turso, clé Google Books) n'étaient **pas**
@@ -270,6 +271,20 @@ depuis le titre par motif explicite ("tome", "T.", "vol."), UNIQUEMENT sur
 les notices où serie ET tome sont NULL — ne touche jamais une notice où
 Decalog a fourni une valeur. Dry-run par défaut, `--appliquer` pour écrire.
 Nécessite `TURSO_AUTH_TOKEN_ECRITURE` dans `.env`.
+
+### Résultat du dry-run (2026-07-22)
+- **24 546** notices LIVRE sans serie/tome renseigné par Decalog (55% du
+  fonds) — répartition dominée par Documentaire (5 806), Roman jeunesse
+  (3 094), Album (2 730), BD (1 649), et 8 612 sans catégorie.
+- **935** corrigibles automatiquement (motif "tome"/"T."/"vol." explicite
+  dans le titre) — échantillon vérifié manuellement, résultats propres.
+- **23 611** restent ambigus : en grande partie des ouvrages hors-série
+  (documentaires, albums isolés) pour lesquels l'absence de serie/tome est
+  normale, mais aussi des séries BD/Manga/Roman jeunesse numérotées sans le
+  mot "tome" dans le titre (ex: "Naruto 12") — non traitées par design
+  (trop ambigu pour une regex). Une passe IA ciblée sur ces cas serait une
+  suite possible, à faire avec prudence (risque de faux positifs plus
+  élevé qu'avec un motif explicite).
 
 ---
 
