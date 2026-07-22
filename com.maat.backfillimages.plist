@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.maat.backfillimages</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Library/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python</string>
+		<string>-u</string>
+		<string>/Users/thomaslafargue/Desktop/inventaire_isbn/service_backfill_images.py</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn</string>
+
+	<!-- Logs placés hors de ~/Desktop : launchd (pas Python) ouvre ces
+	     fichiers avant même de lancer le programme, et ~/Desktop est un
+	     dossier protégé par macOS (TCC) -- cause connue d'échec EX_CONFIG
+	     (voir com.maat.backfillserietome.plist, déjà réglé le 2026-07-22). -->
+	<key>StandardOutPath</key>
+	<string>/tmp/journal_backfill_images.log</string>
+
+	<key>StandardErrorPath</key>
+	<string>/tmp/journal_backfill_images.log</string>
+
+	<!-- Lancé immédiatement à l'installation, et à chaque connexion (login) -->
+	<key>RunAtLoad</key>
+	<true/>
+
+	<!-- Relancé automatiquement UNIQUEMENT si le process s'arrête anormalement
+	     (crash, tué, coupure réseau fatale...). Une fois le backfill vraiment
+	     terminé, service_backfill_images.py sort avec le code 0 et launchd
+	     ne le relance pas. -->
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
+
+	<key>ProcessType</key>
+	<string>Background</string>
+
+	<!-- Laisse le temps à une coupure réseau passagère de se résorber avant
+	     un redémarrage forcé par launchd -->
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+</dict>
+</plist>
