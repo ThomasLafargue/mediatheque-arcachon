@@ -13,8 +13,8 @@ semaine via import_hebdomadaire.sh, juste après le traitement du .mrc.
 
 Sélection : tout exemplaire du fonds Arcachon acquis dans les 3 derniers
 mois glissants (date_acquisition), avec une image de couverture connue.
-  - Mosaïque  : type_document = 'LIVRE' (Livre/BD/Manga/Album/Documentaire —
-    exclut nativement DVD/JEU/CD/REVUE, comme dans la version manuelle).
+  - Mosaïque  : tout type_document SAUF DVD et JEU (jeux vidéo + jeux de
+    société) -- inclut donc Livre/BD/Manga/Album/Documentaire/CD/Revue.
   - Diaporama : même base, restreinte au public Jeunesse/Ado/Tout public.
 
 Les 2 fichiers HTML sont réécrits EN PLACE (même nom de fichier à chaque
@@ -88,7 +88,7 @@ def recuperer_nouveautes(conn, date_limite, filtre_jeunesse):
                n.resume, n.image_url, e.cote, e.public_vise, e.support, e.date_acquisition
         FROM notice n
         JOIN exemplaire e ON e.identifiant = n.identifiant
-        WHERE n.type_document = 'LIVRE'
+        WHERE n.type_document NOT IN ('DVD', 'JEU')
           AND e.date_acquisition >= ?
           AND n.image_url IS NOT NULL AND n.image_url != ''
           {condition_public}
