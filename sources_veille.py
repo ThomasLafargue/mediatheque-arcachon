@@ -292,7 +292,87 @@ def chercher_booknode_ventes():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 4. BABELIO — NOTES ET AVIS SUR NOTRE FONDS
+# 4. CROQULIVRE.FR — Chroniques jeunesse qualifiées (association spécialisée,
+#    7000+ références). Contrairement aux autres sources, le site expose une
+#    API REST WordPress standard (wp-json) : plus fiable qu'un scraping HTML.
+# ─────────────────────────────────────────────────────────────────────────────
+_CROQULIVRE_CATEGORIES = {
+    'Album': 'albums',
+    'Roman': 'romans',
+    'BD': 'bd',
+    'Documentaire': 'documentaires',
+    'Livre pratique': 'livre-pratique',
+}
+_croqulivre_cache_ids = {}  # slug -> id WordPress, mis en cache pour la session
+
+
+def _croqulivre_id_categorie(slug):
+    """Résout un slug de catégorie Croqulivre en id WordPress (mis en cache)."""
+    if slug in _croqulivre_cache_ids:
+        return _croqulivre_cache_ids[slug]
+    try:
+        url = f'https://croqulivre.fr/wp-json/wp/v2/categories?slug={slug}'
+        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        r.raise_for_status()
+        data = r.json()
+        if data:
+            _croqulivre_cache_ids[slug] = data[0]['id']
+            return data[0]['id']
+    except Exception:
+        pass
+    return None
+
+
+def chercher_croqulivre(categorie=None, nb=15):
+    """
+    Récupère les dernières chroniques de Croqulivre.fr via son API REST WordPress.
+
+    categorie : 'Album' / 'Roman' / 'BD' / 'Documentaire' / 'Livre pratique' / None (tout)
+    nb        : nombre de résultats
+
+    Retourne une liste de dicts {titre, resume, date, url, source}.
+    """
+    params = f'per_page={min(nb, 50)}&_fields=title,link,date,excerpt'
+    if categorie:
+        slug = _CROQULIVRE_CATEGORIES.get(categorie)
+        if not slug:
+            return []
+        id_cat = _croqulivre_id_categorie(slug)
+        if id_cat is None:
+            return []
+        params += f'&categories={id_cat}'
+
+    try:
+        url = f'https://croqulivre.fr/wp-json/wp/v2/posts?{params}'
+        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
+        r.raise_for_status()
+        posts = r.json()
+
+        resultats = []
+        for post in posts[:nb]:
+            titre = BeautifulSoup(post.get('title', {}).get('rendered', ''), 'html.parser').get_text(strip=True)
+            if not titre:
+                continue
+            resume_html = post.get('excerpt', {}).get('rendered', '')
+            resume = BeautifulSoup(resume_html, 'html.parser').get_text(' ', strip=True)
+            resume = re.sub(r'\s+', ' ', resume).strip()
+            if len(resume) > 250:
+                resume = resume[:250].rsplit(' ', 1)[0] + '…'
+
+            resultats.append({
+                'titre': titre,
+                'resume': resume,
+                'date': post.get('date', '')[:10],
+                'url': post.get('link', ''),
+                'source': 'Croqulivre.fr',
+            })
+        return resultats
+    except Exception:
+        return []
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 5. BABELIO — NOTES ET AVIS SUR NOTRE FONDS
 # ─────────────────────────────────────────────────────────────────────────────
 def chercher_note_babelio(isbn):
     """
@@ -375,6 +455,13 @@ def chercher_nouveautes(categorie=None, nb=15):
         sorties = chercher_booknode_sorties(nb=nb)
         resultats.extend(sorties)
 
+    if categorie in (None, 'BD', 'Roman', 'Album', 'Documentaire', 'Livre pratique'):
+        # Croqulivre pour des chroniques qualifiées (association spécialisée)
+        croq_categorie = categorie if categorie in _CROQULIVRE_CATEGORIES else None
+        croq = chercher_croqulivre(categorie=croq_categorie, nb=nb)
+        resultats.extend(croq)
+        time.sleep(0.5)
+
     return resultats
 
 
@@ -401,3 +488,8 @@ if __name__ == '__main__':
     bv = chercher_booknode_ventes()
     for r in bv[:5]:
         print(f"  #{r.get('rang')} {r.get('titre', '?')}")
+
+    print("\n=== TEST Croqulivre (BD) ===")
+    cq = chercher_croqulivre(categorie='BD', nb=5)
+    for r in cq[:5]:
+        print(f"  {r.get('titre', '?')} ({r.get('date', '?')})")
