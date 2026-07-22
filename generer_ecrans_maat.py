@@ -17,14 +17,18 @@ vérifiée accessible (voir filtrer_images_valides -- certaines sources
 bloquent l'affichage direct depuis un autre site, ce qui donnait des
 tuiles/diapositives vides malgré une URL enregistrée en base).
   - Mosaïque  : tout type_document SAUF DVD, JEU (jeux vidéo + jeux de
-    société) et CD -- inclut donc Livre/BD/Manga/Album/Documentaire/Revue.
+    société), CD et AUTRE (catégorie fourre-tout non fiable -- exclue par
+    prudence le 2026-07-22 après le signalement d'un jeu de société affiché
+    malgré le filtre : probablement un exemplaire classé AUTRE plutôt que
+    JEU côté Decalog) -- inclut donc Livre/BD/Manga/Album/Documentaire/Revue.
   - Diaporama : même base, restreinte au public Jeunesse/Ado/Tout public.
 
-Constat du 2026-07-22 : la mosaïque affichait presque exclusivement de la
-jeunesse (BD/mangas très bien couverts par nos sources d'images) et aucune
-revue -- pas un bug de filtre, mais un déséquilibre de couverture d'image
-entre catégories. Voir service_backfill_images.py, dont l'ordre de
-traitement priorise désormais revues et public adulte/ado.
+Équilibrage jeunesse/adulte (2026-07-22) : la jeunesse (BD/mangas) est très
+majoritaire dans les couvertures disponibles, ce qui rendait la mosaïque
+quasi exclusivement jeunesse à l'affichage. plafonner_jeunesse() limite
+désormais la part de jeunesse à PLAFOND_RATIO_JEUNESSE fois le nombre de
+titres non-jeunesse disponibles, plutôt que d'attendre que le backfill
+rattrape l'écart sur plusieurs jours/semaines.
 
 Les 2 fichiers HTML sont réécrits EN PLACE (même nom de fichier à chaque
 fois, puisque les écrans OVH pointent vers une URL fixe) : pas de fichiers
@@ -100,7 +104,7 @@ def recuperer_nouveautes(conn, date_limite, filtre_jeunesse):
                n.resume, n.image_url, e.cote, e.public_vise, e.support, e.date_acquisition
         FROM notice n
         JOIN exemplaire e ON e.identifiant = n.identifiant
-        WHERE n.type_document NOT IN ('DVD', 'JEU', 'CD')
+        WHERE n.type_document NOT IN ('DVD', 'JEU', 'CD', 'AUTRE')
           AND e.date_acquisition >= ?
           AND n.image_url IS NOT NULL AND n.image_url != ''
           {condition_public}
@@ -162,6 +166,42 @@ def filtrer_images_valides(lignes):
     return retenues
 
 
+PLAFOND_RATIO_JEUNESSE = 2
+
+
+def plafonner_jeunesse(lignes):
+    """Limite la part de titres jeunesse dans la mosaïque à
+    PLAFOND_RATIO_JEUNESSE fois le nombre de titres non-jeunesse
+    disponibles, pour éviter qu'elle soit quasi exclusivement jeunesse
+    tant que le backfill des couvertures n'a pas rattrapé son retard sur
+    les autres publics. Garde toujours TOUS les titres non-jeunesse."""
+    non_jeunesse = [l for l in lignes if l["public_vise"] not in PUBLICS_JEUNESSE]
+    jeunesse = [l for l in lignes if l["public_vise"] in PUBLICS_JEUNESSE]
+    plafond = max(len(non_jeunesse) * PLAFOND_RATIO_JEUNESSE, 40)
+    if len(jeunesse) > plafond:
+        _log(f"Part jeunesse plafonnée : {len(jeunesse)} -> {plafond} titres "
+             f"(pour {len(non_jeunesse)} non-jeunesse disponibles).")
+        jeunesse = jeunesse[:plafond]
+    return non_jeunesse + jeunesse
+
+
+NO_CACHE_META = (
+    '<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">\n'
+    '<meta http-equiv="Pragma" content="no-cache">\n'
+    '<meta http-equiv="Expires" content="0">\n'
+)
+
+
+def _empecher_cache_navigateur(contenu):
+    """Ajoute des balises anti-cache dans le <head> si absentes, pour que
+    l'écran affiche toujours la dernière version générée au lieu d'une
+    version mise en cache par le navigateur (source de confusion : on
+    croit voir un bug de contenu alors que c'est juste une vieille page)."""
+    if "Cache-Control" in contenu:
+        return contenu
+    return contenu.replace("<head>", "<head>\n" + NO_CACHE_META, 1)
+
+
 def _ligne_objet(ligne, champ_image):
     return "  {t:%s,a:%s,y:%s,ed:%s,cote:%s,pub:%s,sup:%s,d:%s,isbn:%s,%s:%s}," % (
         _echapper_js(ligne["titre"]),
@@ -189,6 +229,7 @@ def regenerer_fichier(chemin, variable, objets):
             f"Bloc 'const {variable}=[...]' introuvable dans {chemin} -- "
             "fichier laissé intact pour ne pas le casser."
         )
+    contenu_nouveau = _empecher_cache_navigateur(contenu_nouveau)
     with open(chemin, "w", encoding="utf-8") as f:
         f.write(contenu_nouveau)
 
@@ -238,6 +279,7 @@ def main():
 
         nouveautes_mosaique = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=False)
         nouveautes_mosaique = filtrer_images_valides(nouveautes_mosaique)
+        nouveautes_mosaique = plafonner_jeunesse(nouveautes_mosaique)
         regenerer_fichier(
             FICHIER_MOSAIQUE, "BOOKS",
             [_ligne_objet(r, "extraUrl") for r in nouveautes_mosaique],
