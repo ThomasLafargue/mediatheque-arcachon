@@ -48,7 +48,8 @@ CREATE TABLE notice (
     nb_prets_n3             INTEGER,
     nb_prets_fonctionnels   INTEGER,
     date_dernier_pret       TEXT,
-    date_maj_prets          TEXT
+    date_maj_prets          TEXT,
+    champs_a_verifier_decalog TEXT
 );
 
 CREATE INDEX idx_notice_type ON notice(type_document);
@@ -143,6 +144,7 @@ SELECT
     n.traducteur AS traducteur, n.editeur AS editeur, n.date_publication AS annee,
     n.dewey AS dewey, n.dewey_libelle AS dewey_libelle, n.mots_cles AS mots_cles,
     n.description_physique AS description_physique,
+    n.champs_a_verifier_decalog AS champs_a_verifier_decalog,
     e.code_barre_exemplaire AS code_barres, e.cote AS cote, e.statut AS statut_exemplaire,
     e.prix AS prix, n.nb_prets_total AS nb_prets_titre_reseau,
     e.nb_prets_total AS nb_prets_cet_exemplaire,
