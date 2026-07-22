@@ -1,41 +1,32 @@
 #!/usr/bin/env python3
 """
 generer_ecrans_maat.py — Régénère les 2 écrans numériques (mosaïque tactile
-du hall + diaporama jeunesse) à partir des acquisitions récentes en base, et
-les envoie automatiquement sur OVH par SFTP.
+du hall + diaporama jeunesse) et les envoie automatiquement sur OVH par SFTP.
 
-Remplace la procédure manuelle mensuelle décrite dans
-"ecrans maat/resume-projet-kiosque-mediatheque.md" (export UNIMARC séparé
-envoyé à une autre conversation Claude, upload à la main via Cyberduck) :
-ce script réutilise directement la base déjà enrichie (couvertures, résumés,
-cotes...) au lieu de reparser un fichier MARC à part, et tourne chaque
-semaine via import_hebdomadaire.sh, juste après le traitement du .mrc.
+Réécrit le 2026-07-22 pour reproduire fidèlement la logique manuelle qui
+fonctionnait bien dans l'autre conversation Claude ("écrans maat"), au lieu
+de s'appuyer sur la colonne image_url de notre base (mal couverte pour les
+publics hors jeunesse). Seule différence : au lieu d'un export Decalog
+dédié envoyé à la main chaque mois, ce script lit directement le .mrc
+COMPLET déposé chaque semaine (le même que celui traité par
+import_hebdomadaire.sh) et applique EXACTEMENT le même filtrage que
+Decalog appliquait à son export -- l'automatisation ne change que la
+source du fichier, pas la logique de sélection ni de couverture.
 
-Sélection : tout exemplaire du fonds Arcachon acquis dans les FENETRE_MOIS
-derniers mois glissants (date_acquisition -- une seule fenêtre, la même
-pour tout le monde : au-delà, ce ne sont plus des "nouveautés"), avec une
-image de couverture connue ET vérifiée accessible (voir
-filtrer_images_valides -- certaines sources bloquent l'affichage direct
-depuis un autre site, ce qui donnait des tuiles/diapositives vides malgré
-une URL enregistrée en base).
-  - Mosaïque  : tout type_document SAUF DVD, JEU (jeux vidéo + jeux de
-    société), CD et AUTRE (catégorie fourre-tout non fiable -- exclue par
-    prudence le 2026-07-22 après le signalement d'un jeu de société affiché
-    malgré le filtre) -- inclut donc Livre/BD/Manga/Album/Documentaire/Revue.
-  - Diaporama : même base, restreinte au public Jeunesse/Ado/Tout public.
-
-Décision du 2026-07-22 : pas de fenêtre élargie ni de plafond artificiel
-sur la part jeunesse -- ça avait été tenté pour rééquilibrer la mosaïque
-mais ça cassait soit le volume total (pool trop petit -> doublons visibles
-à l'écran), soit le principe même de "nouveauté" (accepter des titres vieux
-de 12 mois). Le vrai déséquilibre jeunesse/adulte vient d'un manque de
-couvertures disponibles pour les autres publics -- géré par
-service_backfill_images.py, qui comble progressivement ce manque en tâche
-de fond sans qu'il faille bricoler la sélection ici.
+Sélection (identique à la procédure manuelle, voir
+"ecrans maat/resume-projet-kiosque-mediatheque.md") :
+  - Exemplaires du fonds Arcachon uniquement (zone MARC 995 $a).
+  - "Mise à l'inventaire" (995 $1) dans les FENETRE_MOIS derniers mois.
+  - Mosaïque  : type Livre / BD / Manga / Imprimé -- exclut DVD, Jeux
+    vidéo, Jeux de société ET Revues (comme le script d'origine).
+  - Diaporama : même base, restreinte au public Jeunesse/Adolescent/Tout
+    public (995 $l).
+  - Couverture : zone 856 $u (lien direct Decalog/ORB) en premier, repli
+    Open Library si absente ou invalide -- chaque URL est vérifiée
+    accessible avant d'être retenue (voir _image_accessible).
 
 Les 2 fichiers HTML sont réécrits EN PLACE (même nom de fichier à chaque
-fois, puisque les écrans OVH pointent vers une URL fixe) : pas de fichiers
-datés à nettoyer ici, contrairement aux imports hebdo classiques.
+fois, puisque les écrans OVH pointent vers une URL fixe).
 
 Upload SFTP automatique si OVH_SFTP_HOST / OVH_SFTP_USER / OVH_SFTP_PASSWORD
 sont définies dans .env -- sinon les fichiers sont simplement régénérés en
@@ -44,10 +35,13 @@ local et un message l'indique (à pousser soi-même via Cyberduck).
 Usage :
     python3 generer_ecrans_maat.py                 (génère + envoie sur OVH)
     python3 generer_ecrans_maat.py --sans-upload    (génère seulement, pour tester)
+    python3 generer_ecrans_maat.py --mrc "Liste des notices - 2026-07-19.mrc"
+                                                     (force un fichier précis)
 """
 import os
 import re
 import sys
+import glob
 import datetime
 import concurrent.futures
 import urllib.request
@@ -62,7 +56,7 @@ FENETRE_MOIS = 4
 PUBLICS_JEUNESSE = ("Jeune", "Jeunesse", "Ado (12+)", "Adolescent", "Tout public")
 
 sys.path.insert(0, DOSSIER)
-import db
+from iso2709 import parse_records, get_subfields  # noqa: E402
 
 
 def _log(message):
@@ -76,13 +70,19 @@ def _date_limite():
     mois_total = aujourd_hui.month - 1 - FENETRE_MOIS
     annee = aujourd_hui.year + mois_total // 12
     mois = mois_total % 12 + 1
-    jour = min(aujourd_hui.day, 28)  # évite les débordements de fin de mois
+    jour = min(aujourd_hui.day, 28)
     return datetime.date(annee, mois, jour).isoformat()
 
 
+def trouver_dernier_mrc():
+    """Même détection que import_hebdomadaire.sh : le .mrc hebdo le plus
+    récent déposé dans le dossier (motif avec le tiret pour ne pas
+    confondre avec un éventuel export 'Liste des notices mosaique - ...')."""
+    candidats = sorted(glob.glob(os.path.join(DOSSIER, "Liste des notices - *.mrc")))
+    return candidats[-1] if candidats else None
+
+
 def _echapper_js(valeur):
-    """Chaîne JS entre guillemets doubles, même format que celui déjà
-    utilisé dans les 2 fichiers HTML existants (const BOOKS=[{t:"...",...})."""
     if valeur is None:
         valeur = ""
     valeur = str(valeur)
@@ -91,31 +91,139 @@ def _echapper_js(valeur):
     return '"' + valeur + '"'
 
 
-COLONNES = ["identifiant", "titre", "createurs", "date_publication", "editeur",
-            "resume", "image_url", "cote", "public_vise", "support", "date_acquisition"]
+def _date_inventaire_normalisee(brut):
+    """995 $1 est en AAAAMMJJ (comme date_acquisition en base) -- on la
+    ramène en AAAA-MM-JJ pour une comparaison lexicographique fiable."""
+    if not brut or len(brut) < 8 or not brut[:8].isdigit():
+        return None
+    return f"{brut[0:4]}-{brut[4:6]}-{brut[6:8]}"
 
 
-def recuperer_nouveautes(conn, date_limite, filtre_jeunesse):
-    condition_public = ""
-    parametres = [date_limite]
-    if filtre_jeunesse:
-        placeholders = ",".join("?" for _ in PUBLICS_JEUNESSE)
-        condition_public = f" AND e.public_vise IN ({placeholders})"
-        parametres += list(PUBLICS_JEUNESSE)
-    sql = f"""
-        SELECT n.identifiant, n.titre, n.createurs, n.date_publication, n.editeur,
-               n.resume, n.image_url, e.cote, e.public_vise, e.support, e.date_acquisition
-        FROM notice n
-        JOIN exemplaire e ON e.identifiant = n.identifiant
-        WHERE n.type_document NOT IN ('DVD', 'JEU', 'CD', 'AUTRE')
-          AND e.date_acquisition >= ?
-          AND n.image_url IS NOT NULL AND n.image_url != ''
-          {condition_public}
-        GROUP BY n.identifiant
-        ORDER BY e.date_acquisition DESC
-    """
-    lignes = conn.execute(sql, parametres).fetchall()
-    return [dict(zip(COLONNES, ligne)) for ligne in lignes]
+def parser_notice(rec):
+    """Extrait d'un enregistrement MARC les champs utiles aux écrans, en
+    reprenant le même mappage de zones que actualiser_catalogue.py."""
+    titre = editeur = date_pub = resume_parts = None
+    resume_parts = []
+    contributeurs = []
+    image_856 = None
+    type_support_hint = None
+    ean_073 = isbn_010 = None
+    date_461 = None
+    exemplaires_locaux = []
+
+    for tag, raw in rec['fields']:
+        ind, subs = get_subfields(raw)
+        if tag == '073':
+            for code, val in subs:
+                if code == 'a':
+                    ean_073 = val
+        elif tag == '010':
+            for code, val in subs:
+                if code == 'a':
+                    isbn_010 = val
+        elif tag == '200':
+            for code, val in subs:
+                if code == 'a':
+                    titre = val
+        elif tag in ('700', '701', '702'):
+            d = dict(subs)
+            nom = d.get('a')
+            if nom:
+                prenom = d.get('b')
+                nom_complet = f"{nom} {prenom}".strip() if prenom else nom
+                contributeurs.append((d.get('4'), nom_complet))
+        elif tag in ('210', '214'):
+            for code, val in subs:
+                if code == 'c' and not editeur:
+                    editeur = val
+                elif code == 'd' and not date_pub:
+                    date_pub = val
+        elif tag == '330':
+            for code, val in subs:
+                if code == 'a':
+                    resume_parts.append(val)
+        elif tag == '856':
+            if any(c == '2' and v == 'Image' for c, v in subs):
+                for code, val in subs:
+                    if code == 'u':
+                        image_856 = val
+        elif tag == '461':
+            for code, val in subs:
+                if code == 'd':
+                    date_461 = val
+        elif tag == '995':
+            d = dict(subs)
+            if d.get('a') != "Médiathèque d'Arcachon":
+                continue
+            if type_support_hint is None:
+                type_support_hint = d.get('w')
+            exemplaires_locaux.append({
+                'cote': d.get('k'), 'public_vise': d.get('l'),
+                'support': d.get('w'), 'date_inventaire': d.get('1'),
+            })
+
+    if not exemplaires_locaux:
+        return None  # aucun exemplaire Arcachon sur cette notice
+
+    auteur = None
+    for role, nom in contributeurs:
+        if role == '070':
+            auteur = nom
+            break
+    if auteur is None and contributeurs:
+        auteur = contributeurs[0][1]
+
+    if date_461:
+        type_document = 'REVUE'
+    elif type_support_hint in ('CD', 'Livre-CD', 'Disque vinyle', 'Cassette'):
+        type_document = 'CD'
+    elif type_support_hint in ('DVD', 'Livre-DVD', 'Blu-ray'):
+        type_document = 'DVD'
+    elif type_support_hint == 'Jeu':
+        type_document = 'JEU'
+    elif type_support_hint in ('Imprimé', 'Livre tactile', 'Support électronique'):
+        type_document = 'LIVRE'
+    else:
+        type_document = 'AUTRE'
+
+    isbn = ean_073 or isbn_010
+    # Exemplaire Arcachon le plus récemment inventorié -- c'est cette date
+    # qui détermine si le titre est une "nouveauté" pour les écrans.
+    meilleur = max(
+        exemplaires_locaux,
+        key=lambda e: _date_inventaire_normalisee(e.get('date_inventaire')) or ''
+    )
+
+    return {
+        'isbn': isbn,
+        'titre': titre,
+        'auteur': auteur,
+        'annee': date_pub,
+        'editeur': editeur,
+        'resume': ' '.join(resume_parts) if resume_parts else None,
+        'cote': meilleur.get('cote'),
+        'public_vise': meilleur.get('public_vise'),
+        'support': meilleur.get('support'),
+        'date_inventaire': _date_inventaire_normalisee(meilleur.get('date_inventaire')),
+        'type_document': type_document,
+        'image_856': image_856,
+    }
+
+
+def charger_notices(chemin_mrc):
+    _log(f"Lecture de {os.path.basename(chemin_mrc)}...")
+    with open(chemin_mrc, "rb") as f:
+        data = f.read()
+    notices = []
+    for rec in parse_records(data):
+        try:
+            notice = parser_notice(rec)
+        except Exception:
+            continue
+        if notice and notice['isbn']:
+            notices.append(notice)
+    _log(f"{len(notices)} notices avec au moins un exemplaire Arcachon.")
+    return notices
 
 
 TIMEOUT_VALIDATION_SECONDES = 6
@@ -123,13 +231,9 @@ EN_TETES_VALIDATION = {"User-Agent": "Mozilla/5.0 (compatible; MediathequeArcach
 
 
 def _image_accessible(url):
-    """Vérifie que l'URL de couverture répond bien avec une vraie image,
-    pour éviter des tuiles/diapositives vides sur les écrans (certaines
-    sources -- pages communautaires notamment -- refusent l'affichage
-    direct depuis un autre site : 403/404 à l'appel). En cas de doute
-    (timeout, erreur réseau passagère lors de la génération) on GARDE le
-    titre plutôt que de l'exclure à tort -- seul un refus explicite du
-    serveur (403/404/410) fait tomber l'image."""
+    """Vérifie que l'URL répond bien avec une vraie image (voir
+    generer_ecrans_maat.py historique : certaines sources renvoient une
+    404/403 malgré une URL a priori correcte)."""
     if not url:
         return False
     for methode in ("HEAD", "GET"):
@@ -137,36 +241,69 @@ def _image_accessible(url):
         try:
             with urllib.request.urlopen(requete, timeout=TIMEOUT_VALIDATION_SECONDES) as reponse:
                 type_contenu = reponse.headers.get("Content-Type", "")
-                return type_contenu.startswith("image/")
+                taille = reponse.headers.get("Content-Length")
+                if not type_contenu.startswith("image/"):
+                    return False
+                # Open Library renvoie une image "introuvable" grise minuscule
+                # (~800 octets) au lieu d'une 404 -- on l'écarte explicitement.
+                if taille and int(taille) < 1000:
+                    return False
+                return True
         except urllib.error.HTTPError as e:
             if e.code in (403, 404, 410):
                 if methode == "HEAD":
-                    continue  # certains serveurs bloquent HEAD mais acceptent GET
+                    continue
                 return False
-            return True  # code HTTP inattendu (500, 429...) : incident probable, on garde
+            return True
         except Exception:
             if methode == "HEAD":
                 continue
-            return True  # échec réseau après les 2 tentatives : on garde par prudence
+            return True
     return True
 
 
-def filtrer_images_valides(lignes):
-    """Teste en parallèle toutes les URLs de couverture d'un lot et retire
-    les titres dont l'image est explicitement refusée par son serveur."""
-    urls = sorted({ligne["image_url"] for ligne in lignes if ligne["image_url"]})
-    if not urls:
-        return lignes
+def resoudre_couvertures(notices):
+    """Détermine, pour chaque notice, la meilleure URL de couverture
+    valide : zone 856 (Decalog/ORB) en priorité, repli Open Library.
+    Teste tout en parallèle pour rester rapide malgré le volume."""
+    candidats = {}
+    for n in notices:
+        liste = []
+        if n['image_856']:
+            liste.append(n['image_856'])
+        liste.append(f"https://covers.openlibrary.org/b/isbn/{n['isbn']}-M.jpg")
+        candidats[n['isbn']] = liste
+
+    toutes_urls = sorted({u for liste in candidats.values() for u in liste})
     resultats = {}
-    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executeur:
-        futurs = {executeur.submit(_image_accessible, url): url for url in urls}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=24) as executeur:
+        futurs = {executeur.submit(_image_accessible, u): u for u in toutes_urls}
         for futur in concurrent.futures.as_completed(futurs):
             resultats[futurs[futur]] = futur.result()
-    retenues = [l for l in lignes if resultats.get(l["image_url"], True)]
-    nb_retirees = len(lignes) - len(retenues)
-    if nb_retirees:
-        _log(f"{nb_retirees} couverture(s) inaccessible(s) (403/404) écartée(s) sur {len(urls)} URL testées.")
-    return retenues
+
+    couvertures = {}
+    for isbn, liste in candidats.items():
+        for u in liste:
+            if resultats.get(u):
+                couvertures[isbn] = u
+                break
+    return couvertures
+
+
+def _ligne_objet(notice, url_image, champ_image):
+    return "  {t:%s,a:%s,y:%s,ed:%s,cote:%s,pub:%s,sup:%s,d:%s,isbn:%s,%s:%s}," % (
+        _echapper_js(notice['titre']),
+        _echapper_js(notice['auteur']),
+        _echapper_js(notice['annee']),
+        _echapper_js(notice['editeur']),
+        _echapper_js(notice['cote']),
+        _echapper_js(notice['public_vise']),
+        _echapper_js(notice['support']),
+        _echapper_js(notice['resume']),
+        _echapper_js(notice['isbn']),
+        champ_image,
+        _echapper_js(url_image),
+    )
 
 
 NO_CACHE_META = (
@@ -177,29 +314,9 @@ NO_CACHE_META = (
 
 
 def _empecher_cache_navigateur(contenu):
-    """Ajoute des balises anti-cache dans le <head> si absentes, pour que
-    l'écran affiche toujours la dernière version générée au lieu d'une
-    version mise en cache par le navigateur (source de confusion : on
-    croit voir un bug de contenu alors que c'est juste une vieille page)."""
     if "Cache-Control" in contenu:
         return contenu
     return contenu.replace("<head>", "<head>\n" + NO_CACHE_META, 1)
-
-
-def _ligne_objet(ligne, champ_image):
-    return "  {t:%s,a:%s,y:%s,ed:%s,cote:%s,pub:%s,sup:%s,d:%s,isbn:%s,%s:%s}," % (
-        _echapper_js(ligne["titre"]),
-        _echapper_js(ligne["createurs"]),
-        _echapper_js(ligne["date_publication"]),
-        _echapper_js(ligne["editeur"]),
-        _echapper_js(ligne["cote"]),
-        _echapper_js(ligne["public_vise"]),
-        _echapper_js(ligne["support"]),
-        _echapper_js(ligne["resume"]),
-        _echapper_js(ligne["identifiant"]),
-        champ_image,
-        _echapper_js(ligne["image_url"]),
-    )
 
 
 def regenerer_fichier(chemin, variable, objets):
@@ -256,30 +373,45 @@ def televerser_sftp(fichiers):
 
 def main():
     sans_upload = "--sans-upload" in sys.argv
-    conn = db.connect()
-    try:
-        date_limite = _date_limite()
-        _log(f"Nouveautés depuis le {date_limite} (fenêtre de {FENETRE_MOIS} mois glissants).")
+    chemin_mrc = None
+    if "--mrc" in sys.argv:
+        chemin_mrc = sys.argv[sys.argv.index("--mrc") + 1]
+    else:
+        chemin_mrc = trouver_dernier_mrc()
 
-        nouveautes_mosaique = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=False)
-        nouveautes_mosaique = filtrer_images_valides(nouveautes_mosaique)
-        regenerer_fichier(
-            FICHIER_MOSAIQUE, "BOOKS",
-            [_ligne_objet(r, "extraUrl") for r in nouveautes_mosaique],
-        )
-        nb_non_jeunesse = sum(1 for r in nouveautes_mosaique if r["public_vise"] not in PUBLICS_JEUNESSE)
-        _log(f"Mosaïque régénérée : {len(nouveautes_mosaique)} titres "
-             f"({nb_non_jeunesse} non-jeunesse, {len(nouveautes_mosaique) - nb_non_jeunesse} jeunesse).")
+    if not chemin_mrc or not os.path.exists(chemin_mrc):
+        _log("Aucun fichier .mrc trouvé -- écrans MAAT non régénérés cette semaine.")
+        return
 
-        nouveautes_diaporama = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=True)
-        nouveautes_diaporama = filtrer_images_valides(nouveautes_diaporama)
-        regenerer_fichier(
-            FICHIER_DIAPORAMA, "SLIDES",
-            [_ligne_objet(r, "img") for r in nouveautes_diaporama],
-        )
-        _log(f"Diaporama jeunesse régénéré : {len(nouveautes_diaporama)} titres.")
-    finally:
-        conn.close()
+    date_limite = _date_limite()
+    _log(f"Nouveautés depuis le {date_limite} (fenêtre de {FENETRE_MOIS} mois glissants).")
+
+    toutes_notices = charger_notices(chemin_mrc)
+    recentes = [n for n in toutes_notices if n['date_inventaire'] and n['date_inventaire'] >= date_limite]
+    _log(f"{len(recentes)} notices Arcachon mises à l'inventaire depuis le {date_limite}.")
+
+    base_mosaique = [n for n in recentes if n['type_document'] == 'LIVRE']
+    couvertures = resoudre_couvertures(base_mosaique)
+    nouveautes_mosaique = [n for n in base_mosaique if n['isbn'] in couvertures]
+    regenerer_fichier(
+        FICHIER_MOSAIQUE, "BOOKS",
+        [_ligne_objet(n, couvertures[n['isbn']], "extraUrl") for n in nouveautes_mosaique],
+    )
+    _log(f"Mosaïque régénérée : {len(nouveautes_mosaique)} titres "
+         f"(sur {len(base_mosaique)} éligibles, {len(base_mosaique) - len(nouveautes_mosaique)} sans couverture accessible).")
+
+    base_diaporama = [n for n in base_mosaique if n['public_vise'] in PUBLICS_JEUNESSE]
+    couvertures_diaporama = {isbn: url for isbn, url in couvertures.items()
+                              if isbn in {n['isbn'] for n in base_diaporama}}
+    manquantes = [n for n in base_diaporama if n['isbn'] not in couvertures_diaporama]
+    if manquantes:
+        couvertures_diaporama.update(resoudre_couvertures(manquantes))
+    nouveautes_diaporama = [n for n in base_diaporama if n['isbn'] in couvertures_diaporama]
+    regenerer_fichier(
+        FICHIER_DIAPORAMA, "SLIDES",
+        [_ligne_objet(n, couvertures_diaporama[n['isbn']], "img") for n in nouveautes_diaporama],
+    )
+    _log(f"Diaporama jeunesse régénéré : {len(nouveautes_diaporama)} titres.")
 
     if sans_upload:
         _log("--sans-upload : envoi OVH ignoré.")
