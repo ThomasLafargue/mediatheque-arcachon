@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.maat.backfillserietome</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/usr/bin/caffeinate</string>
+		<string>-i</string>
+		<string>/bin/zsh</string>
+		<string>-l</string>
+		<string>-c</string>
+		<string>cd /Users/thomaslafargue/Desktop/inventaire_isbn &amp;&amp; exec python3 -u service_backfill_serie_tome.py</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn</string>
+
+	<key>StandardOutPath</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn/journal_backfill_serie_tome.log</string>
+
+	<key>StandardErrorPath</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn/journal_backfill_serie_tome.log</string>
+
+	<!-- Lancé immédiatement à l'installation, et à chaque connexion (login) -->
+	<key>RunAtLoad</key>
+	<true/>
+
+	<!-- Relancé automatiquement UNIQUEMENT si le process s'arrête anormalement
+	     (crash, tué, coupure réseau fatale...). Une fois le backfill vraiment
+	     terminé, service_backfill_serie_tome.py sort avec le code 0 et
+	     launchd ne le relance pas. -->
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
+
+	<key>ProcessType</key>
+	<string>Background</string>
+
+	<!-- Laisse le temps à une coupure réseau passagère de se résorber avant
+	     un redémarrage forcé par launchd -->
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+</dict>
+</plist>

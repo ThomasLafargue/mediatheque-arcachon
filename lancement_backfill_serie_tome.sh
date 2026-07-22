@@ -4,6 +4,14 @@
 # mais jamais écrits en base). Ne retraite QUE les notices encore sans
 # serie/tome -- pas tout le fonds.
 #
+# ATTENTION : ce lancement en nohup+caffeinate ne survit PAS à un
+# redémarrage macOS (mise à jour automatique, coupure de courant...). Pour
+# un run de plusieurs jours qui doit résister à ça, utiliser à la place le
+# service supervisé par launchd : voir service_backfill_serie_tome.py et
+# com.maat.backfillserietome.plist (relance automatique en cas d'arrêt
+# anormal, y compris après un redémarrage si la session est rouverte).
+# Ce script .sh reste utile pour un test ponctuel rapide ou un petit lot.
+#
 # Usage : bash lancement_backfill_serie_tome.sh
 
 DOSSIER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

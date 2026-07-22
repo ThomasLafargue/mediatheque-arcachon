@@ -302,10 +302,17 @@ Deux changements supplémentaires actés avec Thomas :
   ce qui privait ces notices de serie/tome puisque BnF/Sudoc ne les
   fournissent pas). BnF/Sudoc restent interrogés en complément pour
   dewey/mots-clés/couverture.
-- Backfill des 23 611 notices déjà enrichies avant ce fix :
-  `lancement_backfill_serie_tome.sh` régénère la liste depuis la base et
-  relance `lancer_enrichissement.py --forcer` en tâche de fond
-  (nohup + caffeinate, même schéma que `lancement_recherche_initiale.sh`).
+- Backfill des ~21 800 notices déjà enrichies avant ce fix : d'abord lancé
+  via `lancement_backfill_serie_tome.sh` (nohup + caffeinate, même schéma
+  que `lancement_recherche_initiale.sh`), puis basculé le 2026-07-22 vers
+  un service supervisé par **launchd** (`service_backfill_serie_tome.py` +
+  `com.maat.backfillserietome.plist`) après avoir identifié que le nohup
+  seul ne survit pas à un redémarrage macOS — inacceptable pour un run
+  estimé à plusieurs jours. launchd relance automatiquement le process en
+  cas d'arrêt anormal (crash, redémarrage) et régénère la liste d'ISBN
+  restants depuis la base à chaque démarrage, donc sans risque de perte ou
+  de double traitement. Il s'arrête proprement (et n'est pas relancé) une
+  fois qu'il n'y a plus aucune notice LIVRE sans serie/tome.
 
 Le fichier `.mrc`/`.xlsx`/`.csv` hebdomadaire reste la source de vérité
 pour titre/auteur/éditeur/dates/prêts/cote/code-barres — le moteur BnF +
@@ -342,3 +349,28 @@ d'acquisition : Ricochet-jeunes.org, BeDeTh-que.com, Booknode, et depuis
 le 2026-07-22 **Croqulivre.fr** (association spécialisée jeunesse, 7000+
 références) — via son API REST WordPress (`wp-json`), plus fiable qu'un
 scraping HTML.
+
+---
+
+## FONCTIONNALITÉS RETIRÉES (2026-07-22)
+
+- **Corrélation météo/fréquentation dans les suggestions d'acquisition** :
+  jugée non pertinente par Thomas pour orienter des acquisitions. Retirée
+  de `analyser_acquisition.py` (fonctions `obtenir_meteo_archive`,
+  `correlate_meteo_frequentation`, `resumer_meteo` supprimées) et de
+  `lancer_analyse_acquisition()` côté chat. La corrélation elle-même reste
+  documentée plus haut dans ce fichier comme résultat d'analyse ponctuel
+  (+15.4% de fréquentation les jours de pluie), mais n'est plus recalculée
+  ni utilisée pour les recommandations.
+- **Vérification de disponibilité en direct via le portail COBAS**
+  (`verifier_disponibilite_cobas` / `chercher_cobas_statut_isbn`) : jamais
+  testée avec succès, Thomas confirme que ce portail n'est pas exploitable
+  ainsi. Outil retiré du chat (`OUTIL_COBAS` supprimé) plutôt que de
+  proposer une fonctionnalité qui ne fonctionne pas. La disponibilité
+  reste consultable via `statut_exemplaire`, à la date du dernier import
+  hebdomadaire (pas en temps réel).
+- **`identifier_series_ambigues.py`** (classification IA des cas
+  ambigus de série/tome) : supprimé, redondant avec le fix du moteur
+  d'enrichissement existant (`lancer_enrichissement.py` + le backfill),
+  qui traite déjà ces cas via ses 11 sources plutôt qu'un classifieur
+  séparé.

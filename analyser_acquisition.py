@@ -1,10 +1,14 @@
 """
 analyser_acquisition.py — Analyse des besoins d'acquisition
 
-Trois sources d'analyse :
+Deux sources d'analyse :
 1. Signaux internes   → SQL sur notre base (auteurs manquants, genres, rotation)
-2. Météo              → Open-Meteo archive (corrélation pluie/fréquentation)
-3. Démographie locale → geo.api.gouv.fr + données INSEE Arcachon
+2. Démographie locale → geo.api.gouv.fr + données INSEE Arcachon
+
+La corrélation météo/fréquentation a été retirée le 2026-07-22 (jugée non
+pertinente pour orienter des suggestions d'acquisition) -- elle reste
+documentée dans MIGRATION_TURSO.md à titre de résultat d'analyse ponctuel,
+mais n'intervient plus dans ce rapport.
 
 Usage dans app_conversationnel.py :
     from analyser_acquisition import analyser_besoins
@@ -13,15 +17,11 @@ Usage dans app_conversationnel.py :
 
 import requests
 import json
-import datetime
-import statistics
 
 TIMEOUT = (5, 10)
 HEADERS = {'Accept': 'application/json', 'User-Agent': 'MediathequeArcachon/1.0'}
 
-# Coordonnées d'Arcachon
-LAT = 44.6608
-LON = -1.1674
+# Coordonnées d'Arcachon (utilisées uniquement par obtenir_donnees_demographiques)
 CODE_INSEE = '33009'
 
 
@@ -272,150 +272,7 @@ def resumer_signaux(signaux):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. MÉTÉO — CORRÉLATION PLUIE / FRÉQUENTATION
-# ─────────────────────────────────────────────────────────────────────────────
-
-def obtenir_meteo_archive(date_debut='2022-01-01', date_fin=None):
-    """
-    Récupère les données météo historiques d'Arcachon via Open-Meteo (gratuit).
-    Retourne dict {date: {pluie_mm, temp_max, ensoleillement_h}}
-    """
-    if date_fin is None:
-        date_fin = datetime.date.today().isoformat()
-
-    url = (
-        f"https://archive-api.open-meteo.com/v1/archive"
-        f"?latitude={LAT}&longitude={LON}"
-        f"&start_date={date_debut}&end_date={date_fin}"
-        f"&daily=precipitation_sum,temperature_2m_max,sunshine_duration"
-        f"&timezone=Europe%2FParis"
-    )
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=TIMEOUT)
-        r.raise_for_status()
-        data = r.json()['daily']
-        meteo = {}
-        for i, date in enumerate(data['time']):
-            meteo[date] = {
-                'pluie_mm': data['precipitation_sum'][i] or 0,
-                'temp_max': data['temperature_2m_max'][i] or 0,
-                'ensoleillement_h': round((data['sunshine_duration'][i] or 0) / 3600, 1),
-            }
-        return meteo
-    except Exception as e:
-        return {'erreur': str(e)}
-
-
-def correlate_meteo_frequentation(conn, meteo=None):
-    """
-    Croise les données de fréquentation avec la météo pour identifier
-    quels jours (type météo) génèrent le plus de visites.
-
-    Retourne un dict avec :
-    - correlation pluie → fréquentation
-    - corrélation chaleur → fréquentation
-    - genres préférés par temps de pluie vs beau temps
-    """
-    if meteo is None or 'erreur' in meteo:
-        return {'erreur': 'Données météo non disponibles'}
-
-    # Récupérer la fréquentation journalière
-    try:
-        rows = conn.execute(
-            "SELECT date, nb_entrees FROM frequentation ORDER BY date"
-        ).fetchall()
-    except Exception:
-        return {'erreur': 'Table fréquentation non accessible'}
-
-    # Croiser avec météo
-    jours_pluie = []
-    jours_sec = []
-    jours_chaud = []  # > 25°C
-    jours_frais = []  # < 15°C
-
-    for date_str, entrees in rows:
-        if not date_str or entrees is None:
-            continue
-        date_iso = str(date_str)[:10]
-        if date_iso not in meteo:
-            continue
-        m = meteo[date_iso]
-        entrees = int(entrees)
-
-        if m['pluie_mm'] >= 5:
-            jours_pluie.append(entrees)
-        else:
-            jours_sec.append(entrees)
-
-        if m['temp_max'] >= 25:
-            jours_chaud.append(entrees)
-        elif m['temp_max'] <= 15:
-            jours_frais.append(entrees)
-
-    resultats = {}
-
-    if jours_pluie and jours_sec:
-        moy_pluie = statistics.mean(jours_pluie)
-        moy_sec = statistics.mean(jours_sec)
-        resultats['frequentation_pluie_vs_sec'] = {
-            'moy_jours_pluie': round(moy_pluie, 1),
-            'moy_jours_sec': round(moy_sec, 1),
-            'nb_jours_pluie': len(jours_pluie),
-            'nb_jours_sec': len(jours_sec),
-            'impact': round((moy_pluie - moy_sec) / moy_sec * 100, 1),
-            'interpretation': (
-                f"Les jours de pluie attirent {round(moy_pluie)} entrées en moyenne "
-                f"vs {round(moy_sec)} par temps sec "
-                f"({'plus' if moy_pluie > moy_sec else 'moins'} de fréquentation "
-                f"de {abs(round((moy_pluie-moy_sec)/moy_sec*100))}%)"
-            )
-        }
-
-    if jours_chaud and jours_frais:
-        resultats['frequentation_chaud_vs_frais'] = {
-            'moy_jours_chauds': round(statistics.mean(jours_chaud), 1),
-            'moy_jours_frais': round(statistics.mean(jours_frais), 1),
-        }
-
-    return resultats
-
-
-def resumer_meteo(correlation):
-    """Résumé lisible de la corrélation météo/fréquentation."""
-    if 'erreur' in correlation:
-        return f"Météo : {correlation['erreur']}"
-
-    lignes = ["## CORRÉLATION MÉTÉO / FRÉQUENTATION\n"]
-    pv = correlation.get('frequentation_pluie_vs_sec', {})
-    if pv:
-        lignes.append(f"**{pv.get('interpretation', '')}**")
-        lignes.append(
-            f"Basé sur {pv.get('nb_jours_pluie', 0)} jours de pluie "
-            f"et {pv.get('nb_jours_sec', 0)} jours secs analysés."
-        )
-        if pv.get('moy_jours_pluie', 0) > pv.get('moy_jours_sec', 0):
-            lignes.append(
-                "→ **La pluie fait venir les lecteurs.** Renforcer le fonds "
-                "intérieur (lecture plaisir, BD, romans) pour ces périodes."
-            )
-        else:
-            lignes.append(
-                "→ Le beau temps n'empêche pas les visites. "
-                "Anticiper la demande estivale avec des thèmes mer/vacances/aventure."
-            )
-
-    cv = correlation.get('frequentation_chaud_vs_frais', {})
-    if cv:
-        lignes.append(
-            f"\nJours chauds (>25°C) : {cv.get('moy_jours_chauds', 0):.0f} entrées/j | "
-            f"Jours frais (<15°C) : {cv.get('moy_jours_frais', 0):.0f} entrées/j"
-        )
-
-    return "\n".join(lignes)
-
-
-# ─────────────────────────────────────────────────────────────────────────────
-# 3. DÉMOGRAPHIE ARCACHON
+# 2. DÉMOGRAPHIE ARCACHON
 # ─────────────────────────────────────────────────────────────────────────────
 
 # Données INSEE officielles — Dossier complet Arcachon (33009)
@@ -670,10 +527,11 @@ def resumer_demographie():
 # RAPPORT COMPLET
 # ─────────────────────────────────────────────────────────────────────────────
 
-def analyser_besoins(conn, avec_meteo=True):
+def analyser_besoins(conn):
     """
     Rapport complet d'analyse des besoins d'acquisition.
-    Combine signaux internes, météo et démographie.
+    Combine signaux internes et démographie (pas de météo/fréquentation,
+    jugées non pertinentes pour orienter des suggestions d'acquisition).
     """
     rapport = []
 
@@ -684,21 +542,6 @@ def analyser_besoins(conn, avec_meteo=True):
     # 2. Signaux internes
     signaux = analyser_signaux_internes(conn)
     rapport.append(resumer_signaux(signaux))
-    rapport.append("\n---\n")
-
-    # 3. Météo (optionnel)
-    if avec_meteo:
-        try:
-            date_debut = '2022-01-01'
-            date_fin = datetime.date.today().isoformat()
-            meteo = obtenir_meteo_archive(date_debut, date_fin)
-            if 'erreur' not in meteo:
-                correlation = correlate_meteo_frequentation(conn, meteo)
-                rapport.append(resumer_meteo(correlation))
-            else:
-                rapport.append(f"Météo non disponible : {meteo.get('erreur', '')}")
-        except Exception as e:
-            rapport.append(f"Météo : erreur ({e})")
 
     return "\n".join(rapport)
 
@@ -709,4 +552,4 @@ def analyser_besoins(conn, avec_meteo=True):
 if __name__ == '__main__':
     import db
     conn = db.connect()
-    print(analyser_besoins(conn, avec_meteo=True))
+    print(analyser_besoins(conn))

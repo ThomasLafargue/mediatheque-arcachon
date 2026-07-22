@@ -44,14 +44,14 @@ except Exception:
 import db
 from anthropic import Anthropic
 
-# Sources API bibliographiques (BnF SRU, Google Books, COBAS portail)
+# Sources API bibliographiques (BnF SRU, Google Books)
 try:
-    from sources_api import chercher_cobas_statut_isbn, enrichir_par_api
+    from sources_api import enrichir_par_api
     SOURCES_API_OK = True
 except ImportError:
     SOURCES_API_OK = False
 
-# Analyse des besoins d'acquisition (signaux internes + météo + démographie)
+# Analyse des besoins d'acquisition (signaux internes + démographie)
 try:
     from analyser_acquisition import analyser_besoins, PROFIL_ARCACHON
     ANALYSE_ACQUISITION_OK = True
@@ -772,48 +772,13 @@ def journaliser_requete(question, sql_executees, nb_recherches_web, a_exporte, a
 
 
 
-# ─────────────────────── COBAS PORTAIL — DISPONIBILITÉ TEMPS RÉEL ──────────
-
-def verifier_disponibilite_cobas(isbn: str) -> str:
-    """Interroge le portail public COBAS pour vérifier la disponibilité en temps réel."""
-    if not SOURCES_API_OK:
-        return json.dumps({"erreur": "Module sources_api non disponible."})
-    try:
-        resultat = chercher_cobas_statut_isbn(isbn)
-        if not resultat:
-            return json.dumps({"erreur": "Portail COBAS inaccessible."})
-        return json.dumps(resultat, ensure_ascii=False)
-    except Exception as e:
-        return json.dumps({"erreur": str(e)})
-
-
-OUTIL_COBAS = {
-    "name": "verifier_disponibilite_cobas",
-    "description": (
-        "Interroge le portail public COBAS en temps réel pour vérifier si un document "
-        "est disponible, en prêt, réservé ou en transit. "
-        "Utilise cet outil quand l'agent demande si un livre est disponible MAINTENANT, "
-        "ou veut savoir dans quelle médiathèque COBAS il se trouve. "
-        "NE PAS utiliser pour l'enrichissement de masse — uniquement à la demande."
-    ),
-    "input_schema": {
-        "type": "object",
-        "properties": {
-            "isbn": {"type": "string", "description": "ISBN ou EAN-13 du document (sans tirets)"}
-        },
-        "required": ["isbn"],
-    },
-}
-
-
-
 def lancer_analyse_acquisition() -> str:
-    """Analyse complète des besoins d'acquisition : signaux internes + météo + démographie."""
+    """Analyse complète des besoins d'acquisition : signaux internes + démographie."""
     if not ANALYSE_ACQUISITION_OK:
         return json.dumps({"erreur": "Module analyser_acquisition non disponible."})
     try:
         conn = db.connect()
-        rapport = analyser_besoins(conn, avec_meteo=True)
+        rapport = analyser_besoins(conn)
         return rapport
     except Exception as e:
         return json.dumps({"erreur": str(e)})
@@ -825,8 +790,7 @@ OUTIL_ANALYSE_ACQUISITION = {
         "Lance une analyse complète des besoins d'acquisition en croisant : "
         "(1) les signaux internes du fonds (genres à forte rotation, doublons nécessaires, "
         "séries incomplètes, auteurs manquants, public sous-servi), "
-        "(2) la corrélation météo/fréquentation (open-meteo.com), "
-        "(3) le profil démographique d'Arcachon. "
+        "(2) le profil démographique d'Arcachon. "
         "Appeler cet outil AVANT de faire des suggestions d'acquisition stratégiques "
         "pour orienter les recommandations sur les vrais besoins du fonds."
     ),
@@ -1199,7 +1163,6 @@ sur les dinosaures"), appeler d'abord lancer_analyse_acquisition() pour obtenir 
 - Les doublons urgents (exemplaires uniques surcharges)
 - Les séries incomplètes
 - Le profil démographique d'Arcachon
-- La corrélation météo/fréquentation
 Utiliser ce rapport pour orienter les suggestions AVANT de faire des recherches web.
 
 ÉTAPE 1 — VÉRIFICATION D'ABSENCE (TOUJOURS, SANS EXCEPTION)
@@ -1555,7 +1518,6 @@ def repondre(historique_existant, question, cle_api):
         OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
-        OUTIL_COBAS,
         OUTIL_ANALYSE_ACQUISITION,
         {"type": "web_search_20250305", "name": "web_search", "max_uses": 10},
     ]
@@ -1632,8 +1594,6 @@ def repondre(historique_existant, question, cle_api):
                 elif bloc.name == "supprimer_desherbage_effectue":
                     a_modifie_suggestions = True
                     resultat = supprimer_desherbage_effectue(**bloc.input)
-                elif bloc.name == "verifier_disponibilite_cobas":
-                    resultat = verifier_disponibilite_cobas(**bloc.input)
                 elif bloc.name == "lancer_analyse_acquisition":
                     resultat = lancer_analyse_acquisition()
                 else:
