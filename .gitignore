@@ -14,7 +14,9 @@ __pycache__/
 inventaire.db
 journal_recherche_initiale.log
 journal_*.csv
+journal_*.log
 liste_isbn_*.txt
+_liste_backfill_*.txt
 _stock_initial_complet.txt
 export-eppk*
 Fonds Arcachon*
