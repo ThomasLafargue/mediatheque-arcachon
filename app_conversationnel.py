@@ -889,7 +889,7 @@ TABLE exemplaire (une ligne par exemplaire physique) :
   statut              TEXT  — 'A - Prêtable', 'P - En prêt'…
   site                TEXT  — 'Arcachon', 'La Teste'…
   public_vise         TEXT
-  support             TEXT
+  support              TEXT
   prix                REAL
   nb_prets_total      INTEGER
   annee_dernier_pret  TEXT
