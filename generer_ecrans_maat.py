@@ -110,6 +110,16 @@ def _echapper_js(valeur):
     return '"' + valeur + '"'
 
 
+def _annee_nettoyee(brut):
+    """Le champ 210/214 $d contient parfois 'DL 2026' (dépôt légal) au lieu
+    d'une année seule -- on ne garde que les 4 chiffres, comme affiché
+    avant (l'affichage brut a fait croire à un nouveau champ inconnu)."""
+    if not brut:
+        return None
+    m = re.search(r"(19|20)\d{2}", brut)
+    return m.group(0) if m else brut
+
+
 def _date_inventaire_normalisee(brut):
     """995 $1 est en AAAAMMJJ (comme date_acquisition en base) -- on la
     ramène en AAAA-MM-JJ pour une comparaison lexicographique fiable."""
@@ -217,7 +227,7 @@ def parser_notice(rec):
         'isbn': isbn,
         'titre': titre,
         'auteur': auteur,
-        'annee': date_pub,
+        'annee': _annee_nettoyee(date_pub),
         'editeur': editeur,
         'resume': ' '.join(resume_parts) if resume_parts else None,
         'cote': meilleur.get('cote'),
