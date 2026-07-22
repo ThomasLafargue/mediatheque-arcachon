@@ -151,19 +151,22 @@ id, identifiant, titre, createurs, motif, date_retrait, operateur
 | API | URL | Auth | Statut (testé 2026-07-22 via `test_connexions.py`) |
 |-----|-----|------|--------|
 | Turso (lecture) | — | `TURSO_AUTH_TOKEN` | ✓ Opérationnel — 44 288 notices, 44 677 exemplaires |
-| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ✗ Non testable — variable absente du `.env` local (à copier depuis les secrets Streamlit) |
+| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ✓ Ajouté au `.env` local, testé fonctionnel (935 notices corrigées avec) |
 | Open-Meteo (météo archive) | `archive-api.open-meteo.com` | Aucune | ✓ Opérationnel |
 | BnF SRU | `catalogue.bnf.fr/api/SRU` | Aucune | ✓ Opérationnel |
 | Open Library (couvertures) | `covers.openlibrary.org` | Aucune | ✓ Opérationnel |
-| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ⚠️ La page d'accueil répond 200 (site relevé), mais l'échec documenté portait sur l'endpoint de récupération de couverture précis, non retesté — toujours considéré abandonné tant que l'endpoint réel n'est pas revalidé |
-| Google Books | `googleapis.com/books/v1` | Clé API | ✗ `503 Service Unavailable` reproduit deux fois (test manuel + `test_connexions.py`) — à vérifier côté Google Cloud Console (quota / statut de la clé), ne pas conclure trop vite à une simple panne passagère |
+| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ✗ Retiré du pipeline le 2026-07-22 (instabilité) |
+| Google Books | `googleapis.com/books/v1` | Clé API | ✗ Retiré du pipeline le 2026-07-22 (503 reproductibles) |
 
 ### Couvertures (ordre de priorité)
-1. Google Books : `https://books.google.com/books/content?vid=ISBN{ISBN}&printsec=frontcover&img=1&zoom=1`
-2. Open Library : `https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg`
+1. Open Library : `https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg`
+
+Google Books et Geobib retirés le 2026-07-22 (voir section "Problèmes connus").
+Fonctions conservées dans le code (`chercher_google_books()` dans
+`sources_api.py` et `moteur_recherche.py`) mais plus appelées.
 
 ### Script de test (2026-07-22)
-`test_connexions.py` (à la racine du dossier) teste les 6 connexions ci-dessus
+`test_connexions.py` (à la racine du dossier) teste les connexions ci-dessus
 en une commande, sans jamais afficher les jetons/clés :
 ```bash
 cd ~/Desktop/inventaire_isbn
@@ -188,7 +191,7 @@ TURSO_AUTH_TOKEN = "..."
 TURSO_AUTH_TOKEN_ECRITURE = "..."
 MOT_DE_PASSE = "..."
 MOT_DE_PASSE_IMPORT = "..."
-GOOGLE_BOOKS_API_KEY = "..."
+GOOGLE_BOOKS_API_KEY = "..."  -- plus utilisée depuis le 2026-07-22, peut être retirée
 ```
 
 ---
@@ -228,6 +231,18 @@ confirmée fonctionnelle.
 `.env` et `.env.save` (jetons Turso, clé Google Books) n'étaient **pas**
 dans `.gitignore`, alors que le repo est public. Vérifié : ils n'ont jamais
 été commités (historique propre). Corrigé et poussé.
+
+### Google Books + Geobib retirés du pipeline (2026-07-22)
+Google Books (API `googleapis.com/books/v1`, avec ou sans clé) a renvoyé des
+`503 Service Unavailable` de façon reproductible. Geobib était déjà
+documenté comme abandonné (erreur 500). Les deux ont été retirés :
+- `sources_api.py` : `enrichir_par_api()` n'appelle plus `chercher_google_books()` ;
+  la couverture BnF utilise Open Library au lieu de Geobib.
+- `moteur_recherche.py` : "Google Books" retiré de la liste `SOURCES` (12 → 11 sources).
+- `app_conversationnel.py` : instructions de couverture simplifiées sur Open Library seule.
+
+Les fonctions restent dans le code, juste plus appelées — faciles à
+réactiver si ces services redeviennent fiables.
 
 ---
 
@@ -272,12 +287,12 @@ les notices où serie ET tome sont NULL — ne touche jamais une notice où
 Decalog a fourni une valeur. Dry-run par défaut, `--appliquer` pour écrire.
 Nécessite `TURSO_AUTH_TOKEN_ECRITURE` dans `.env`.
 
-### Résultat du dry-run (2026-07-22)
+### Résultat (2026-07-22) — appliqué en base
 - **24 546** notices LIVRE sans serie/tome renseigné par Decalog (55% du
   fonds) — répartition dominée par Documentaire (5 806), Roman jeunesse
   (3 094), Album (2 730), BD (1 649), et 8 612 sans catégorie.
-- **935** corrigibles automatiquement (motif "tome"/"T."/"vol." explicite
-  dans le titre) — échantillon vérifié manuellement, résultats propres.
+- **935 corrigées en base** (motif "tome"/"T."/"vol." explicite dans le
+  titre) via `python3 corriger_serie_tome_manquants.py --appliquer`.
 - **23 611** restent ambigus : en grande partie des ouvrages hors-série
   (documentaires, albums isolés) pour lesquels l'absence de serie/tome est
   normale, mais aussi des séries BD/Manga/Roman jeunesse numérotées sans le
