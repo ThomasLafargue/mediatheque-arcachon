@@ -69,6 +69,7 @@ nb_prets_n3          INTEGER
 nb_prets_fonctionnels INTEGER
 date_dernier_pret    TEXT
 date_maj_prets       TEXT
+champs_a_verifier_decalog TEXT  -- ajoutée 2026-07-22, cf. section provenance ci-dessous
 ```
 
 ### TABLE `exemplaire` (une ligne par exemplaire physique)
@@ -151,22 +152,19 @@ id, identifiant, titre, createurs, motif, date_retrait, operateur
 | API | URL | Auth | Statut (testé 2026-07-22 via `test_connexions.py`) |
 |-----|-----|------|--------|
 | Turso (lecture) | — | `TURSO_AUTH_TOKEN` | ✓ Opérationnel — 44 288 notices, 44 677 exemplaires |
-| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ✓ Ajouté au `.env` local, testé fonctionnel (935 notices corrigées avec) |
+| Turso (écriture) | — | `TURSO_AUTH_TOKEN_ECRITURE` | ✗ Non testable — variable absente du `.env` local (à copier depuis les secrets Streamlit) |
 | Open-Meteo (météo archive) | `archive-api.open-meteo.com` | Aucune | ✓ Opérationnel |
 | BnF SRU | `catalogue.bnf.fr/api/SRU` | Aucune | ✓ Opérationnel |
 | Open Library (couvertures) | `covers.openlibrary.org` | Aucune | ✓ Opérationnel |
-| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ✗ Retiré du pipeline le 2026-07-22 (instabilité) |
-| Google Books | `googleapis.com/books/v1` | Clé API | ✗ Retiré du pipeline le 2026-07-22 (503 reproductibles) |
+| Geobib (couvertures) | `couverture.geobib.fr` | Aucune | ⚠️ La page d'accueil répond 200 (site relevé), mais l'échec documenté portait sur l'endpoint de récupération de couverture précis, non retesté — toujours considéré abandonné tant que l'endpoint réel n'est pas revalidé |
+| Google Books | `googleapis.com/books/v1` | Clé API | ✗ `503 Service Unavailable` reproduit deux fois (test manuel + `test_connexions.py`) — à vérifier côté Google Cloud Console (quota / statut de la clé), ne pas conclure trop vite à une simple panne passagère |
 
 ### Couvertures (ordre de priorité)
-1. Open Library : `https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg`
-
-Google Books et Geobib retirés le 2026-07-22 (voir section "Problèmes connus").
-Fonctions conservées dans le code (`chercher_google_books()` dans
-`sources_api.py` et `moteur_recherche.py`) mais plus appelées.
+1. Google Books : `https://books.google.com/books/content?vid=ISBN{ISBN}&printsec=frontcover&img=1&zoom=1`
+2. Open Library : `https://covers.openlibrary.org/b/isbn/{ISBN}-M.jpg`
 
 ### Script de test (2026-07-22)
-`test_connexions.py` (à la racine du dossier) teste les connexions ci-dessus
+`test_connexions.py` (à la racine du dossier) teste les 6 connexions ci-dessus
 en une commande, sans jamais afficher les jetons/clés :
 ```bash
 cd ~/Desktop/inventaire_isbn
@@ -191,7 +189,7 @@ TURSO_AUTH_TOKEN = "..."
 TURSO_AUTH_TOKEN_ECRITURE = "..."
 MOT_DE_PASSE = "..."
 MOT_DE_PASSE_IMPORT = "..."
-GOOGLE_BOOKS_API_KEY = "..."  -- plus utilisée depuis le 2026-07-22, peut être retirée
+GOOGLE_BOOKS_API_KEY = "..."
 ```
 
 ---
@@ -231,18 +229,6 @@ confirmée fonctionnelle.
 `.env` et `.env.save` (jetons Turso, clé Google Books) n'étaient **pas**
 dans `.gitignore`, alors que le repo est public. Vérifié : ils n'ont jamais
 été commités (historique propre). Corrigé et poussé.
-
-### Google Books + Geobib retirés du pipeline (2026-07-22)
-Google Books (API `googleapis.com/books/v1`, avec ou sans clé) a renvoyé des
-`503 Service Unavailable` de façon reproductible. Geobib était déjà
-documenté comme abandonné (erreur 500). Les deux ont été retirés :
-- `sources_api.py` : `enrichir_par_api()` n'appelle plus `chercher_google_books()` ;
-  la couverture BnF utilise Open Library au lieu de Geobib.
-- `moteur_recherche.py` : "Google Books" retiré de la liste `SOURCES` (12 → 11 sources).
-- `app_conversationnel.py` : instructions de couverture simplifiées sur Open Library seule.
-
-Les fonctions restent dans le code, juste plus appelées — faciles à
-réactiver si ces services redeviennent fiables.
 
 ---
 
@@ -296,10 +282,56 @@ Nécessite `TURSO_AUTH_TOKEN_ECRITURE` dans `.env`.
 - **23 611** restent ambigus : en grande partie des ouvrages hors-série
   (documentaires, albums isolés) pour lesquels l'absence de serie/tome est
   normale, mais aussi des séries BD/Manga/Roman jeunesse numérotées sans le
-  mot "tome" dans le titre (ex: "Naruto 12") — non traitées par design
-  (trop ambigu pour une regex). Une passe IA ciblée sur ces cas serait une
-  suite possible, à faire avec prudence (risque de faux positifs plus
-  élevé qu'avec un motif explicite).
+  mot "tome" dans le titre (ex: "Naruto 12") — traitées par le moteur
+  multi-sources plutôt que par une regex (voir ci-dessous).
+
+### Correction d'architecture (2026-07-22) — le vrai bug était ailleurs
+
+Le projet dispose déjà d'un moteur d'enrichissement multi-sources
+(`moteur_recherche.py`, fonction `chercher_isbn()`) qui interroge BnF +
+11 sites web pour **chaque ISBN importé**, précisément pour compléter ce
+que Decalog laisse mal renseigné — y compris serie/tome. Ce moteur
+calculait déjà correctement serie/tome, mais `lancer_enrichissement.py`
+ne les incluait jamais dans la requête SQL d'écriture : la donnée était
+calculée puis jetée. Corrigé en ajoutant
+`serie = COALESCE(serie, ?), tome = COALESCE(tome, ?)` à l'UPDATE.
+
+Deux changements supplémentaires actés avec Thomas :
+- Le moteur à 11 sites tourne désormais **systématiquement** pour chaque
+  ISBN (avant : court-circuité dès que BnF/Sudoc répondait avec un résumé,
+  ce qui privait ces notices de serie/tome puisque BnF/Sudoc ne les
+  fournissent pas). BnF/Sudoc restent interrogés en complément pour
+  dewey/mots-clés/couverture.
+- Backfill des 23 611 notices déjà enrichies avant ce fix :
+  `lancement_backfill_serie_tome.sh` régénère la liste depuis la base et
+  relance `lancer_enrichissement.py --forcer` en tâche de fond
+  (nohup + caffeinate, même schéma que `lancement_recherche_initiale.sh`).
+
+Le fichier `.mrc`/`.xlsx`/`.csv` hebdomadaire reste la source de vérité
+pour titre/auteur/éditeur/dates/prêts/cote/code-barres — le moteur BnF +
+sites web ne fait que **compléter** ce que Decalog laisse vide (jamais de
+réécriture, toutes les écritures sont `COALESCE`).
+
+### Traçabilité provenance — `champs_a_verifier_decalog`
+
+Comme on ne réécrit jamais les notices Decalog, une valeur que notre
+moteur déduit (ex: serie/tome) est correcte dans notre base mais reste
+fausse/vide dans Decalog tant que personne ne la corrige manuellement
+là-bas. La colonne `notice.champs_a_verifier_decalog` (ex: `'serie,tome'`)
+trace précisément ces cas :
+- Ajoutée par `migration_colonne_verification_decalog.py` (ALTER TABLE +
+  recréation de `vue_inventaire` pour l'exposer, une VIEW ne pouvant pas
+  gagner une colonne sans être recréée).
+- Renseignée par `lancer_enrichissement.py` et `corriger_serie_tome_manquants.py`
+  via `COALESCE(champs_a_verifier_decalog, ...)` — jamais écrasée, jamais
+  posée quand la valeur vient réellement de Decalog.
+- Les 935 notices déjà corrigées avant l'existence de cette colonne sont
+  marquées rétroactivement par `marquer_provenance_retroactive.py`
+  (rejoue la détection déterministe pour confirmer la provenance).
+- Le chat (`app_conversationnel.py`) sait désormais répondre à "qu'est-ce
+  qui est mal renseigné dans Decalog ?" en filtrant sur cette colonne et
+  en formulant, par exemple : "Tu as bien le tome 5 de Mortelle Adèle,
+  mais il est mal renseigné dans Decalog (serie=null, tome=null)."
 
 ---
 
