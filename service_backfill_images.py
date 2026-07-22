@@ -19,6 +19,14 @@ Portée : uniquement les types qui alimentent les écrans (tout sauf
 DVD/JEU/CD -- pas la peine d'aller chercher des couvertures pour des types
 qu'on n'affiche de toute façon jamais sur les écrans).
 
+Priorité (2026-07-22, suite au constat que la mosaïque affichait presque
+exclusivement de la jeunesse) : les BD/mangas jeunesse sont déjà très bien
+couverts par nos sources (Google Books/Amazon...), donc traités en dernier.
+Revues et public Adulte/Ado sont traités EN PREMIER, car nettement moins
+bien couverts par ces mêmes sources -- sans cette priorité, l'ordre neutre
+de la base favorisait mécaniquement la jeunesse dans le lot des premiers
+titres déjà pourvus d'une image.
+
 Usage direct (sans launchd, pour un test) :
     python3 service_backfill_images.py
 """
@@ -51,6 +59,13 @@ def isbns_restants():
             WHERE type_document NOT IN ('DVD', 'JEU', 'CD')
               AND (image_url IS NULL OR image_url = '')
               AND identifiant NOT LIKE 'CB:%'
+            ORDER BY
+              CASE
+                WHEN type_document = 'REVUE' THEN 0
+                WHEN public_vise = 'Adulte' THEN 1
+                WHEN public_vise IN ('Ado (12+)', 'Adolescent') THEN 2
+                ELSE 3
+              END
             """
         ).fetchall()
     finally:

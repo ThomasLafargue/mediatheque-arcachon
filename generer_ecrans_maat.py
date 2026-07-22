@@ -12,10 +12,19 @@ cotes...) au lieu de reparser un fichier MARC à part, et tourne chaque
 semaine via import_hebdomadaire.sh, juste après le traitement du .mrc.
 
 Sélection : tout exemplaire du fonds Arcachon acquis dans les 3 derniers
-mois glissants (date_acquisition), avec une image de couverture connue.
+mois glissants (date_acquisition), avec une image de couverture connue ET
+vérifiée accessible (voir filtrer_images_valides -- certaines sources
+bloquent l'affichage direct depuis un autre site, ce qui donnait des
+tuiles/diapositives vides malgré une URL enregistrée en base).
   - Mosaïque  : tout type_document SAUF DVD, JEU (jeux vidéo + jeux de
     société) et CD -- inclut donc Livre/BD/Manga/Album/Documentaire/Revue.
   - Diaporama : même base, restreinte au public Jeunesse/Ado/Tout public.
+
+Constat du 2026-07-22 : la mosaïque affichait presque exclusivement de la
+jeunesse (BD/mangas très bien couverts par nos sources d'images) et aucune
+revue -- pas un bug de filtre, mais un déséquilibre de couverture d'image
+entre catégories. Voir service_backfill_images.py, dont l'ordre de
+traitement priorise désormais revues et public adulte/ado.
 
 Les 2 fichiers HTML sont réécrits EN PLACE (même nom de fichier à chaque
 fois, puisque les écrans OVH pointent vers une URL fixe) : pas de fichiers
@@ -33,6 +42,9 @@ import os
 import re
 import sys
 import datetime
+import concurrent.futures
+import urllib.request
+import urllib.error
 
 DOSSIER = os.path.dirname(os.path.abspath(__file__))
 DOSSIER_ECRANS = os.path.join(DOSSIER, "ecrans maat")
@@ -97,6 +109,57 @@ def recuperer_nouveautes(conn, date_limite, filtre_jeunesse):
     """
     lignes = conn.execute(sql, parametres).fetchall()
     return [dict(zip(COLONNES, ligne)) for ligne in lignes]
+
+
+TIMEOUT_VALIDATION_SECONDES = 6
+EN_TETES_VALIDATION = {"User-Agent": "Mozilla/5.0 (compatible; MediathequeArcachonEcrans/1.0)"}
+
+
+def _image_accessible(url):
+    """Vérifie que l'URL de couverture répond bien avec une vraie image,
+    pour éviter des tuiles/diapositives vides sur les écrans (certaines
+    sources -- pages communautaires notamment -- refusent l'affichage
+    direct depuis un autre site : 403/404 à l'appel). En cas de doute
+    (timeout, erreur réseau passagère lors de la génération) on GARDE le
+    titre plutôt que de l'exclure à tort -- seul un refus explicite du
+    serveur (403/404/410) fait tomber l'image."""
+    if not url:
+        return False
+    for methode in ("HEAD", "GET"):
+        requete = urllib.request.Request(url, headers=EN_TETES_VALIDATION, method=methode)
+        try:
+            with urllib.request.urlopen(requete, timeout=TIMEOUT_VALIDATION_SECONDES) as reponse:
+                type_contenu = reponse.headers.get("Content-Type", "")
+                return type_contenu.startswith("image/")
+        except urllib.error.HTTPError as e:
+            if e.code in (403, 404, 410):
+                if methode == "HEAD":
+                    continue  # certains serveurs bloquent HEAD mais acceptent GET
+                return False
+            return True  # code HTTP inattendu (500, 429...) : incident probable, on garde
+        except Exception:
+            if methode == "HEAD":
+                continue
+            return True  # échec réseau après les 2 tentatives : on garde par prudence
+    return True
+
+
+def filtrer_images_valides(lignes):
+    """Teste en parallèle toutes les URLs de couverture d'un lot et retire
+    les titres dont l'image est explicitement refusée par son serveur."""
+    urls = sorted({ligne["image_url"] for ligne in lignes if ligne["image_url"]})
+    if not urls:
+        return lignes
+    resultats = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executeur:
+        futurs = {executeur.submit(_image_accessible, url): url for url in urls}
+        for futur in concurrent.futures.as_completed(futurs):
+            resultats[futurs[futur]] = futur.result()
+    retenues = [l for l in lignes if resultats.get(l["image_url"], True)]
+    nb_retirees = len(lignes) - len(retenues)
+    if nb_retirees:
+        _log(f"{nb_retirees} couverture(s) inaccessible(s) (403/404) écartée(s) sur {len(urls)} URL testées.")
+    return retenues
 
 
 def _ligne_objet(ligne, champ_image):
@@ -174,6 +237,7 @@ def main():
         _log(f"Nouveautés depuis le {date_limite} (fenêtre de {FENETRE_MOIS} mois glissants).")
 
         nouveautes_mosaique = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=False)
+        nouveautes_mosaique = filtrer_images_valides(nouveautes_mosaique)
         regenerer_fichier(
             FICHIER_MOSAIQUE, "BOOKS",
             [_ligne_objet(r, "extraUrl") for r in nouveautes_mosaique],
@@ -181,6 +245,7 @@ def main():
         _log(f"Mosaïque régénérée : {len(nouveautes_mosaique)} titres.")
 
         nouveautes_diaporama = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=True)
+        nouveautes_diaporama = filtrer_images_valides(nouveautes_diaporama)
         regenerer_fichier(
             FICHIER_DIAPORAMA, "SLIDES",
             [_ligne_objet(r, "img") for r in nouveautes_diaporama],
