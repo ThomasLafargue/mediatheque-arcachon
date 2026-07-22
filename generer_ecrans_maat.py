@@ -52,6 +52,25 @@ DOSSIER_ECRANS = os.path.join(DOSSIER, "ecrans maat")
 FICHIER_MOSAIQUE = os.path.join(DOSSIER_ECRANS, "mediatheque-cobas-mosaique.html")
 FICHIER_DIAPORAMA = os.path.join(DOSSIER_ECRANS, "mediatheque-diaporama-jeunesse.html")
 
+
+def _charger_dotenv():
+    """Ce script n'importe plus db.py (plus besoin de la base), donc il
+    doit charger .env lui-même -- sinon OVH_SFTP_* reste invisible même
+    quand .env est bien rempli."""
+    chemin = os.path.join(DOSSIER, ".env")
+    if not os.path.exists(chemin):
+        return
+    with open(chemin, encoding="utf-8") as f:
+        for ligne in f:
+            ligne = ligne.strip()
+            if not ligne or ligne.startswith("#") or "=" not in ligne:
+                continue
+            cle, _, valeur = ligne.partition("=")
+            os.environ.setdefault(cle.strip(), valeur.strip().strip('"').strip("'"))
+
+
+_charger_dotenv()
+
 FENETRE_MOIS = 4
 PUBLICS_JEUNESSE = ("Jeune", "Jeunesse", "Ado (12+)", "Adolescent", "Tout public")
 
