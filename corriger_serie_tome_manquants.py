@@ -114,8 +114,13 @@ def main():
 
     n_ok = 0
     for identifiant, titre, serie, tome in trouvailles:
+        # Ces valeurs viennent de notre détection, pas de Decalog -- marquées
+        # pour signalement (champs_a_verifier_decalog) afin de pouvoir les
+        # corriger dans Decalog lui-même le jour venu.
         cur.execute(
-            "UPDATE notice SET serie = ?, tome = ? WHERE identifiant = ? AND serie IS NULL AND tome IS NULL",
+            "UPDATE notice SET serie = ?, tome = ?, "
+            "champs_a_verifier_decalog = COALESCE(champs_a_verifier_decalog, 'serie,tome') "
+            "WHERE identifiant = ? AND serie IS NULL AND tome IS NULL",
             (serie, tome, identifiant),
         )
         n_ok += 1

@@ -19,6 +19,12 @@ obtenir de leur côté. Ce choix ralentit l'enrichissement (le moteur à 11
 sites est plus lent que BnF/Sudoc seul) mais garantit serie/tome partout
 où c'est possible.
 
+Depuis le 2026-07-22 également : chaque notice enrichie où NOUS déduisons
+serie et/ou tome alors que Decalog ne les avait pas fournis est marquée
+via champs_a_verifier_decalog (ex: 'serie,tome'). On ne réécrit jamais les
+notices Decalog elles-mêmes -- ce marqueur permet au chat de signaler au
+bibliothécaire précisément quelles fiches restent à corriger dans Decalog.
+
 Reprise automatique : chaque ISBN traité avec succès est marqué
 (date_enrichissement renseignée) — relancer ce script reprend exactement
 où il s'est arrêté, sans repasser sur ce qui est déjà fait.
@@ -128,13 +134,13 @@ def main():
             break
 
         try:
-            cur.execute("SELECT public_vise, date_enrichissement FROM notice WHERE identifiant = ?", (isbn,))
+            cur.execute("SELECT public_vise, date_enrichissement, serie, tome FROM notice WHERE identifiant = ?", (isbn,))
             row = cur.fetchone()
         except Exception as e:
             print(f"  [{i}/{len(isbns)}] {isbn} -> connexion perdue en lecture ({e}), reconnexion...")
             reconnecter()
             try:
-                cur.execute("SELECT public_vise, date_enrichissement FROM notice WHERE identifiant = ?", (isbn,))
+                cur.execute("SELECT public_vise, date_enrichissement, serie, tome FROM notice WHERE identifiant = ?", (isbn,))
                 row = cur.fetchone()
             except Exception as e2:
                 print(f"  [{i}/{len(isbns)}] {isbn} -> toujours en échec après reconnexion ({e2}), ISBN ignoré pour cette session")
@@ -143,7 +149,7 @@ def main():
 
         if not row:
             continue
-        public_vise_actuel, deja_fait = row
+        public_vise_actuel, deja_fait, serie_actuel, tome_actuel = row
         if deja_fait and not args.forcer:
             continue  # déjà traité lors d'une session précédente -- reprise automatique
 
@@ -171,6 +177,16 @@ def main():
             except Exception:
                 pass
 
+        # Marqueur "à corriger dans Decalog" : uniquement les champs que
+        # NOUS venons de déduire alors que Decalog ne les avait pas fournis
+        # (jamais écrasé si déjà marqué lors d'un passage précédent).
+        champs_web = []
+        if not serie_actuel and res.get("serie"):
+            champs_web.append("serie")
+        if not tome_actuel and res.get("tome"):
+            champs_web.append("tome")
+        marqueur_decalog = ",".join(champs_web) if champs_web else None
+
         traites += 1
         if res.get("statut") == "trouvé":
             trouves += 1
@@ -185,6 +201,7 @@ def main():
                     resume = COALESCE(resume, ?),
                     serie = COALESCE(serie, ?),
                     tome = COALESCE(tome, ?),
+                    champs_a_verifier_decalog = COALESCE(champs_a_verifier_decalog, ?),
                     score_confiance = ?,
                     nb_sources_consultees = ?,
                     date_enrichissement = ?
@@ -196,6 +213,7 @@ def main():
                 res.get("illustrateur") or None, res.get("collection") or None,
                 res.get("resume") or None,
                 res.get("serie") or None, res.get("tome") or None,
+                marqueur_decalog,
                 None, None, datetime.datetime.now().isoformat(), isbn,
             )
         else:
