@@ -419,7 +419,16 @@ def main():
     recentes = [n for n in toutes_notices if n['date_inventaire'] and n['date_inventaire'] >= date_limite]
     _log(f"{len(recentes)} notices Arcachon mises à l'inventaire depuis le {date_limite}.")
 
-    base_mosaique = [n for n in recentes if n['type_document'] == 'LIVRE']
+    base_mosaique = [
+        n for n in recentes
+        if n['type_document'] == 'LIVRE'
+        # Garde-fou (2026-07-22) : certains jeux vidéo sur support
+        # électronique sont classés 'Support électronique' côté Decalog,
+        # donc mappés à tort sur type_document='LIVRE' -- leur cote
+        # commence toujours par 'JV' (Jeu Vidéo), contrairement à un vrai
+        # livre. On les exclut explicitement par ce signal fiable.
+        and not (n['cote'] or '').upper().startswith('JV')
+    ]
     couvertures = resoudre_couvertures(base_mosaique)
     nouveautes_mosaique = [n for n in base_mosaique if n['isbn'] in couvertures]
     regenerer_fichier(
