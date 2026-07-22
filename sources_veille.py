@@ -5,6 +5,7 @@ Interroge :
 - Ricochet-jeunes.org : nouveautés jeunesse francophones (RSS + scraping)
 - BeDeTh-que.com     : nouveautés BD, manga, comics (scraping)
 - Booknode           : thèmes, séries, meilleures ventes françaises (scraping)
+- Croqulivre.fr      : chroniques jeunesse qualifiées (API REST WordPress)
 
 Usage dans app_conversationnel.py :
     from sources_veille import chercher_nouveautes
