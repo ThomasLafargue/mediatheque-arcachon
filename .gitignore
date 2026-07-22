@@ -1,3 +1,5 @@
+.env
+.env.*
 *.mrc
 *.xlsx
 *.xls
