@@ -83,6 +83,14 @@ echo ""
 echo "── Enrichissement des nouvelles notices..."
 bash lancement_recherche_initiale.sh
 
+# Écrans MAAT (mosaïque hall + diaporama jeunesse) : régénérés depuis la
+# base à jour, puis envoyés automatiquement sur OVH si les identifiants
+# SFTP sont renseignés dans .env (sinon fichiers générés en local, à
+# pousser via Cyberduck comme avant).
+echo ""
+echo "── Mise à jour des écrans MAAT (mosaïque + diaporama)..."
+python3 generer_ecrans_maat.py || echo "⚠ Génération des écrans MAAT échouée -- import du catalogue non affecté"
+
 echo ""
 echo "── Git push..."
 git add -A
