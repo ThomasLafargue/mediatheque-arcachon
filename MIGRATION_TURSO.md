@@ -314,6 +314,22 @@ Deux changements supplémentaires actés avec Thomas :
   de double traitement. Il s'arrête proprement (et n'est pas relancé) une
   fois qu'il n'y a plus aucune notice LIVRE sans serie/tome.
 
+  **Mise en place laborieuse (2026-07-22)** — le premier plist échouait
+  systématiquement avec `EX_CONFIG` (78), sans jamais écrire une seule
+  ligne de log, quel que soit le programme lancé (avec/sans `zsh`,
+  avec/sans `caffeinate`). Cause réelle : `StandardOutPath`/
+  `StandardErrorPath` pointaient vers un fichier dans `~/Desktop`, un
+  dossier protégé par macOS (TCC/Accès complet au disque) — c'est
+  `launchd` lui-même, pas Python, qui ouvre ces fichiers avant même de
+  lancer le programme, donc l'octroi d'Accès complet au disque à Python.app
+  n'y changeait rien. Résolu en déplaçant les logs vers `/tmp`
+  (non protégé) ; `caffeinate` a aussi été retiré (empêchait le démarrage
+  pour une raison distincte, non isolée avec certitude — l'accès complet
+  au disque accordé à Python.app pendant le dépannage reste en place,
+  sans nuire). Diagnostic qui a permis de trancher :
+  `launchctl print gui/$(id -u)/com.maat.backfillserietome` (bien plus
+  parlant que `launchctl list`, qui ne donne qu'un code de sortie brut).
+
 Le fichier `.mrc`/`.xlsx`/`.csv` hebdomadaire reste la source de vérité
 pour titre/auteur/éditeur/dates/prêts/cote/code-barres — le moteur BnF +
 sites web ne fait que **compléter** ce que Decalog laisse vide (jamais de
