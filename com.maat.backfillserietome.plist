@@ -9,10 +9,9 @@
 	<array>
 		<string>/usr/bin/caffeinate</string>
 		<string>-i</string>
-		<string>/bin/zsh</string>
-		<string>-l</string>
-		<string>-c</string>
-		<string>cd /Users/thomaslafargue/Desktop/inventaire_isbn &amp;&amp; exec python3 -u service_backfill_serie_tome.py</string>
+		<string>/Library/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python</string>
+		<string>-u</string>
+		<string>/Users/thomaslafargue/Desktop/inventaire_isbn/service_backfill_serie_tome.py</string>
 	</array>
 
 	<key>WorkingDirectory</key>

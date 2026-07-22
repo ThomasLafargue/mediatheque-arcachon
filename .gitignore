@@ -17,6 +17,7 @@ journal_*.csv
 journal_*.log
 liste_isbn_*.txt
 _liste_backfill_*.txt
+diagnostic.txt
 _stock_initial_complet.txt
 export-eppk*
 Fonds Arcachon*
