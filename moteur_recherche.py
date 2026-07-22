@@ -1536,12 +1536,14 @@ SOURCES = [
     ("Decitre",       decitre_lookup),
     ("LesLibraires",  leslibraires_lookup),
     ("Mollat",        mollat_lookup),
-    ("Google Books",  google_books_lookup),
     ("Open Library",  openlibrary_lookup),
     # En dernier : BnF pour compléter auteur/collection/résumé officiels
     ("BnF",           bnf_lookup),
 ]
 # Babelio retirée : son robots.txt interdit explicitement l'accès automatisé.
+# Google Books retirée le 2026-07-22 : API instable (503 reproductibles,
+# avec ou sans clé). google_books_lookup() reste définie plus haut dans ce
+# fichier si besoin de la réactiver un jour.
 
 # Priorité par catégorie de fichier (isbn_mangas.txt, isbn_bd.txt, ...) :
 # les sources listées ici sont interrogées EN PREMIER pour cette catégorie,

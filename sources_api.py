@@ -3,13 +3,17 @@ sources_api.py — Sources bibliographiques API pour enrichissement des notices
 
 Hiérarchie :
 1. BnF SRU         → notices professionnelles françaises, sans authentification
-2. Google Books    → résumés, couvertures, catégories (nécessite clé API gratuite)
-3. Sudoc           → fallback notices difficiles / fonds patrimoniaux
-4. COBAS portail   → disponibilité temps réel (scraping OPAC public Decalog)
-5. [12 sources web existantes dans moteur_recherche.py comme backup]
+2. Sudoc           → fallback notices difficiles / fonds patrimoniaux
+3. COBAS portail   → disponibilité temps réel (scraping OPAC public Decalog)
+4. [12 sources web existantes dans moteur_recherche.py comme backup]
 
-Pour Google Books : obtenir une clé gratuite sur https://console.cloud.google.com/
-puis ajouter GOOGLE_BOOKS_API_KEY=votre_clé dans le fichier .env
+Couvertures : Open Library (covers.openlibrary.org), sans authentification.
+
+Google Books (API + Geobib pour les couvertures) retirés du pipeline le
+2026-07-22 : API Google Books instable (503 reproductibles), Geobib déjà
+documenté comme abandonné (erreur 500). La fonction chercher_google_books()
+reste dans ce fichier mais n'est plus appelée -- facile à réactiver si
+Google Books redevient fiable.
 """
 
 import requests
@@ -147,8 +151,8 @@ def chercher_bnf(isbn):
         public_brut = _get_sf(record, '521', 'a')
         public_vise = _normaliser_public(public_brut)
 
-        # Couverture via Geobib (spécialisé bibliothèques françaises)
-        image_url = f"https://couverture.geobib.fr/api/v1/{isbn}/M"
+        # Couverture via Open Library (Geobib retiré le 2026-07-22 -- erreur 500 documentée)
+        image_url = f"https://covers.openlibrary.org/b/isbn/{isbn}-M.jpg"
 
         resultat = {
             'source': 'BnF SRU',
@@ -392,8 +396,12 @@ def chercher_cobas_statut_isbn(isbn):
 # ─────────────────────────────────────────────────────────────────────────────
 def enrichir_par_api(isbn, avec_cobas=False):
     """
-    Interroge BnF SRU + Google Books + Sudoc et fusionne les résultats.
+    Interroge BnF SRU + Sudoc et fusionne les résultats.
     Les 12 sources web de moteur_recherche.py restent en backup.
+
+    Google Books retiré du pipeline le 2026-07-22 (API instable, 503
+    reproductibles) -- chercher_google_books() reste disponible plus bas
+    dans ce fichier si besoin de le réactiver un jour.
     """
     fusionne = {}
     sources = []
@@ -404,18 +412,7 @@ def enrichir_par_api(isbn, avec_cobas=False):
         fusionne.update(bnf)
         sources.append('BnF SRU')
 
-    # 2. Google Books — complète ce que BnF n'a pas
-    google = chercher_google_books(isbn)
-    if google:
-        for cle, val in google.items():
-            if not fusionne.get(cle):
-                fusionne[cle] = val
-            # Préférer résumé Google si plus long
-            if cle == 'resume' and val and len(val) > len(fusionne.get('resume', '')):
-                fusionne['resume'] = val
-        sources.append('Google Books')
-
-    # 3. Sudoc — si champs essentiels manquants
+    # 2. Sudoc — si champs essentiels manquants
     manquants = sum(1 for c in ['titre', 'auteur', 'editeur'] if not fusionne.get(c))
     if manquants >= 2:
         sudoc = chercher_sudoc(isbn)
