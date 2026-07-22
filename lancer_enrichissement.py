@@ -10,6 +10,15 @@ createurs_secondaires (illustrateur), et depuis le 2026-07-22 serie/tome
 quand ils sont vides (le moteur multi-sources les extrait déjà -- ils
 n'étaient simplement pas écrits en base jusqu'ici).
 
+Depuis le 2026-07-22, le moteur à 11 sites (chercher_isbn) tourne
+SYSTÉMATIQUEMENT pour chaque ISBN -- avant, il était court-circuité dès que
+BnF/Sudoc répondait avec un résumé, ce qui privait ces notices de
+serie/tome (BnF/Sudoc ne les fournissent pas). BnF/Sudoc restent
+interrogés en complément pour dewey/mots_cles/couverture, plus rapides à
+obtenir de leur côté. Ce choix ralentit l'enrichissement (le moteur à 11
+sites est plus lent que BnF/Sudoc seul) mais garantit serie/tome partout
+où c'est possible.
+
 Reprise automatique : chaque ISBN traité avec succès est marqué
 (date_enrichissement renseignée) — relancer ce script reprend exactement
 où il s'est arrêté, sans repasser sur ce qui est déjà fait.
@@ -17,9 +26,17 @@ où il s'est arrêté, sans repasser sur ce qui est déjà fait.
 Usage :
     python3 lancer_enrichissement.py liste_isbn_a_enrichir.txt
     python3 lancer_enrichissement.py liste_isbn_a_enrichir.txt --limite 500
+    python3 lancer_enrichissement.py liste_isbn_backfill.txt --forcer
 
 --limite N   : traite au plus N ISBN sur cette exécution (pour avancer par
                petites sessions plutôt que de tout lancer d'un coup).
+--forcer     : retraite même les ISBN déjà marqués enrichis (date_enrichissement
+               déjà renseignée). Utile pour un backfill ciblé (ex: notices
+               enrichies avant le fix serie/tome du 2026-07-22) -- sans danger
+               pour les champs déjà bons grâce aux COALESCE. Pour reprendre un
+               backfill interrompu, régénère la liste depuis la base (les
+               notices déjà corrigées ne seront alors plus dans le fichier)
+               plutôt que de relancer --forcer sur l'ancienne liste complète.
 """
 
 import sys
@@ -64,6 +81,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("fichier_isbn")
     parser.add_argument("--limite", type=int, default=None)
+    parser.add_argument("--forcer", action="store_true")
     args = parser.parse_args()
 
     with open(args.fichier_isbn, encoding="utf-8") as f:
@@ -126,32 +144,32 @@ def main():
         if not row:
             continue
         public_vise_actuel, deja_fait = row
-        if deja_fait:
+        if deja_fait and not args.forcer:
             continue  # déjà traité lors d'une session précédente -- reprise automatique
 
         categorie_hint = deviner_categorie(None, public_vise_actuel)
 
-        res = None
+        # Le moteur à 11 sites tourne systématiquement -- c'est lui qui
+        # calcule serie/tome (BnF/Sudoc ne les fournissent jamais).
+        try:
+            res = chercher_isbn(isbn, categorie_hint)
+        except Exception as e:
+            print(f"  [{i}/{len(isbns)}] {isbn} -> erreur ({e})")
+            continue
+
+        # Complément BnF/Sudoc : dewey, mots-clés Rameau, couverture, et
+        # résumé de secours si le moteur à 11 sites n'en a pas trouvé.
         if API_OK:
             try:
                 api_data = enrichir_par_api(isbn)
-                if api_data and api_data.get('resume'):
-                    res = {'statut': 'trouve', 'type': None,
-                           'genre': api_data.get('genre'),
-                           'public': api_data.get('public_vise'),
-                           'pegi': None, 'illustrateur': None, 'collection': None,
-                           'resume': api_data.get('resume'),
-                           '_image_url': api_data.get('image_url'),
-                           '_mots_cles': api_data.get('mots_cles'),
-                           '_dewey': api_data.get('dewey')}
+                if api_data:
+                    res['_image_url'] = api_data.get('image_url')
+                    res['_mots_cles'] = api_data.get('mots_cles')
+                    res['_dewey'] = api_data.get('dewey')
+                    if not res.get('resume'):
+                        res['resume'] = api_data.get('resume')
             except Exception:
                 pass
-        if res is None:
-            try:
-                res = chercher_isbn(isbn, categorie_hint)
-            except Exception as e:
-                print(f"  [{i}/{len(isbns)}] {isbn} -> erreur ({e})")
-                continue
 
         traites += 1
         if res.get("statut") == "trouvé":
