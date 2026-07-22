@@ -24,11 +24,15 @@ tuiles/diapositives vides malgré une URL enregistrée en base).
   - Diaporama : même base, restreinte au public Jeunesse/Ado/Tout public.
 
 Équilibrage jeunesse/adulte (2026-07-22) : la jeunesse (BD/mangas) est très
-majoritaire dans les couvertures disponibles, ce qui rendait la mosaïque
-quasi exclusivement jeunesse à l'affichage. plafonner_jeunesse() limite
-désormais la part de jeunesse à PLAFOND_RATIO_JEUNESSE fois le nombre de
-titres non-jeunesse disponibles, plutôt que d'attendre que le backfill
-rattrape l'écart sur plusieurs jours/semaines.
+majoritaire dans les couvertures disponibles sur 3 mois, ce qui rendait la
+mosaïque quasi exclusivement jeunesse à l'affichage. Le non-jeunesse (peu
+nombreux) est donc cherché sur une fenêtre élargie à FENETRE_MOIS_NON_JEUNESSE
+(12 mois) pour avoir un vrai volume, tandis que la jeunesse reste cherchée
+sur les FENETRE_MOIS (3) mois habituels puis plafonnée à
+PLAFOND_RATIO_JEUNESSE fois le nombre de non-jeunesse trouvés -- sans
+plancher artificiel qui romprait ce ratio (piège du premier essai : un
+plancher fixe avait fait chuter toute la mosaïque à 44 titres au lieu de
+l'élargir).
 
 Les 2 fichiers HTML sont réécrits EN PLACE (même nom de fichier à chaque
 fois, puisque les écrans OVH pointent vers une URL fixe) : pas de fichiers
@@ -56,6 +60,7 @@ FICHIER_MOSAIQUE = os.path.join(DOSSIER_ECRANS, "mediatheque-cobas-mosaique.html
 FICHIER_DIAPORAMA = os.path.join(DOSSIER_ECRANS, "mediatheque-diaporama-jeunesse.html")
 
 FENETRE_MOIS = 3
+FENETRE_MOIS_NON_JEUNESSE = 12  # fenêtre élargie -- voir plafonner_jeunesse()
 PUBLICS_JEUNESSE = ("Jeune", "Jeunesse", "Ado (12+)", "Adolescent", "Tout public")
 
 sys.path.insert(0, DOSSIER)
@@ -67,14 +72,14 @@ def _log(message):
     print(f"[{horodatage}] {message}", flush=True)
 
 
-def _date_limite():
-    """AAAA-MM-JJ correspondant à 'aujourd'hui moins FENETRE_MOIS mois'."""
+def _date_limite(mois=FENETRE_MOIS):
+    """AAAA-MM-JJ correspondant à 'aujourd'hui moins N mois'."""
     aujourd_hui = datetime.date.today()
-    mois_total = aujourd_hui.month - 1 - FENETRE_MOIS
+    mois_total = aujourd_hui.month - 1 - mois
     annee = aujourd_hui.year + mois_total // 12
-    mois = mois_total % 12 + 1
+    mois_calcule = mois_total % 12 + 1
     jour = min(aujourd_hui.day, 28)  # évite les débordements de fin de mois
-    return datetime.date(annee, mois, jour).isoformat()
+    return datetime.date(annee, mois_calcule, jour).isoformat()
 
 
 def _echapper_js(valeur):
@@ -92,12 +97,19 @@ COLONNES = ["identifiant", "titre", "createurs", "date_publication", "editeur",
             "resume", "image_url", "cote", "public_vise", "support", "date_acquisition"]
 
 
-def recuperer_nouveautes(conn, date_limite, filtre_jeunesse):
+def recuperer_nouveautes(conn, date_limite, mode="tous"):
+    """mode : 'tous' (pas de filtre public), 'jeunesse' (public jeunesse/ado
+    /tout public uniquement) ou 'non_jeunesse' (tout le reste, typiquement
+    adulte + revues sans public précisé)."""
     condition_public = ""
     parametres = [date_limite]
-    if filtre_jeunesse:
+    if mode == "jeunesse":
         placeholders = ",".join("?" for _ in PUBLICS_JEUNESSE)
         condition_public = f" AND e.public_vise IN ({placeholders})"
+        parametres += list(PUBLICS_JEUNESSE)
+    elif mode == "non_jeunesse":
+        placeholders = ",".join("?" for _ in PUBLICS_JEUNESSE)
+        condition_public = f" AND (e.public_vise NOT IN ({placeholders}) OR e.public_vise IS NULL)"
         parametres += list(PUBLICS_JEUNESSE)
     sql = f"""
         SELECT n.identifiant, n.titre, n.createurs, n.date_publication, n.editeur,
@@ -169,18 +181,17 @@ def filtrer_images_valides(lignes):
 PLAFOND_RATIO_JEUNESSE = 2
 
 
-def plafonner_jeunesse(lignes):
+def plafonner_jeunesse(non_jeunesse, jeunesse):
     """Limite la part de titres jeunesse dans la mosaïque à
     PLAFOND_RATIO_JEUNESSE fois le nombre de titres non-jeunesse
-    disponibles, pour éviter qu'elle soit quasi exclusivement jeunesse
-    tant que le backfill des couvertures n'a pas rattrapé son retard sur
-    les autres publics. Garde toujours TOUS les titres non-jeunesse."""
-    non_jeunesse = [l for l in lignes if l["public_vise"] not in PUBLICS_JEUNESSE]
-    jeunesse = [l for l in lignes if l["public_vise"] in PUBLICS_JEUNESSE]
-    plafond = max(len(non_jeunesse) * PLAFOND_RATIO_JEUNESSE, 40)
+    disponibles (celui-ci étant déjà élargi sur FENETRE_MOIS_NON_JEUNESSE
+    pour avoir un vrai volume, cf. main()) -- sans plancher artificiel qui
+    romprait ce ratio quand le non-jeunesse reste malgré tout limité.
+    Garde toujours TOUS les titres non-jeunesse."""
+    plafond = len(non_jeunesse) * PLAFOND_RATIO_JEUNESSE
     if len(jeunesse) > plafond:
         _log(f"Part jeunesse plafonnée : {len(jeunesse)} -> {plafond} titres "
-             f"(pour {len(non_jeunesse)} non-jeunesse disponibles).")
+             f"(pour {len(non_jeunesse)} non-jeunesse disponibles sur {FENETRE_MOIS_NON_JEUNESSE} mois).")
         jeunesse = jeunesse[:plafond]
     return non_jeunesse + jeunesse
 
@@ -274,19 +285,24 @@ def main():
     sans_upload = "--sans-upload" in sys.argv
     conn = db.connect()
     try:
-        date_limite = _date_limite()
+        date_limite = _date_limite(FENETRE_MOIS)
+        date_limite_elargie = _date_limite(FENETRE_MOIS_NON_JEUNESSE)
         _log(f"Nouveautés depuis le {date_limite} (fenêtre de {FENETRE_MOIS} mois glissants).")
 
-        nouveautes_mosaique = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=False)
-        nouveautes_mosaique = filtrer_images_valides(nouveautes_mosaique)
-        nouveautes_mosaique = plafonner_jeunesse(nouveautes_mosaique)
+        jeunesse_mosaique = recuperer_nouveautes(conn, date_limite, mode="jeunesse")
+        non_jeunesse_mosaique = recuperer_nouveautes(conn, date_limite_elargie, mode="non_jeunesse")
+        nouveautes_mosaique = filtrer_images_valides(jeunesse_mosaique + non_jeunesse_mosaique)
+        jeunesse_ok = [r for r in nouveautes_mosaique if r["public_vise"] in PUBLICS_JEUNESSE]
+        non_jeunesse_ok = [r for r in nouveautes_mosaique if r["public_vise"] not in PUBLICS_JEUNESSE]
+        nouveautes_mosaique = plafonner_jeunesse(non_jeunesse_ok, jeunesse_ok)
         regenerer_fichier(
             FICHIER_MOSAIQUE, "BOOKS",
             [_ligne_objet(r, "extraUrl") for r in nouveautes_mosaique],
         )
-        _log(f"Mosaïque régénérée : {len(nouveautes_mosaique)} titres.")
+        _log(f"Mosaïque régénérée : {len(nouveautes_mosaique)} titres "
+             f"({len(non_jeunesse_ok)} non-jeunesse, {len(nouveautes_mosaique) - len(non_jeunesse_ok)} jeunesse).")
 
-        nouveautes_diaporama = recuperer_nouveautes(conn, date_limite, filtre_jeunesse=True)
+        nouveautes_diaporama = recuperer_nouveautes(conn, date_limite, mode="jeunesse")
         nouveautes_diaporama = filtrer_images_valides(nouveautes_diaporama)
         regenerer_fichier(
             FICHIER_DIAPORAMA, "SLIDES",
