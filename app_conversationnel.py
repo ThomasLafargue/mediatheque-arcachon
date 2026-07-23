@@ -27,10 +27,17 @@ import streamlit as st
 # db (qui lit ces variables au chargement). En local, ce pont ne fait rien
 # de plus que ce que le fichier .env fait déjà ; sur Streamlit Cloud, c'est
 # ce qui permet à db.py de détecter Turso sans aucun fichier .env présent.
-for _cle in ("TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN"):
+for _cle in (
+    "TURSO_DATABASE_URL", "TURSO_AUTH_TOKEN",
+    # Identifiants OVH (envoi des écrans mosaïque/diaporama sur le serveur)
+    # pour que la mise à jour des écrans soit possible depuis l'app déployée,
+    # pas seulement depuis le Terminal du Mac.
+    "OVH_SFTP_HOST", "OVH_SFTP_PORT", "OVH_SFTP_USER",
+    "OVH_SFTP_PASSWORD", "OVH_SFTP_DOSSIER",
+):
     try:
         if _cle in st.secrets:
-            os.environ[_cle] = st.secrets[_cle]
+            os.environ[_cle] = str(st.secrets[_cle])
     except Exception:
         pass  # pas de secrets.toml en local -- db.py se rabat sur .env / sqlite local
 
@@ -1791,13 +1798,22 @@ def _supprimer_etat_import():
         pass
 
 
-def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture):
+def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecriture, ovh_config=None):
     """
     Lance l'import complet dans un subprocess séparé.
     Persiste le PID et le log sur disque pour survivre aux resets de session Streamlit.
+
+    Si le fichier est un .mrc ET que les identifiants OVH sont fournis, on
+    enchaîne AUTOMATIQUEMENT la régénération des écrans MAAT (mosaïque +
+    diaporama) depuis ce même .mrc, puis leur envoi sur OVH -- de sorte que
+    la mise à jour hebdomadaire complète (catalogue + écrans) puisse se faire
+    depuis l'app, de n'importe où, sans passer par le Terminal. generer_ecrans_maat
+    ne lit que le .mrc et le réseau (pas la base), donc il fonctionne aussi
+    bien depuis le cloud que depuis le Mac.
     """
     import tempfile as _tempfile
     import subprocess as _subprocess
+    import textwrap as _textwrap
 
     dossier_tmp = _tempfile.mkdtemp()
     chemin_fichier = os.path.join(dossier_tmp, fichier_nom)
@@ -1807,6 +1823,23 @@ def lancer_import_background(fichier_bytes, fichier_nom, url_turso, jeton_ecritu
         f.write(fichier_bytes)
 
     app_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Étape écrans MAAT : uniquement pour un .mrc, et seulement si on a les
+    # identifiants OVH (sinon on génère sans envoyer, ce qui n'a pas de sens
+    # depuis le cloud où les fichiers locaux sont éphémères).
+    bloc_ecrans = ""
+    if fichier_nom.lower().endswith('.mrc') and ovh_config and ovh_config.get("OVH_SFTP_HOST"):
+        _env_ovh = "\n".join(
+            f'os.environ[{_k!r}] = {_v!r}' for _k, _v in ovh_config.items() if _v
+        )
+        bloc_ecrans = "\nprint('--- Mise a jour des ecrans MAAT (mosaique + diaporama) ---')\ntry:\n" + \
+            _textwrap.indent(_env_ovh, "    ") + "\n" + \
+            "    sys.argv = ['generer_ecrans_maat.py', '--mrc', " + repr(chemin_fichier) + "]\n" + \
+            "    import generer_ecrans_maat\n" + \
+            "    generer_ecrans_maat.main()\n" + \
+            "except Exception as _e:\n" + \
+            "    print('Ecrans MAAT non regeneres (import catalogue non affecte):', _e)\n"
+
     script = f"""
 import os, sys
 os.environ["TURSO_DATABASE_URL"] = {repr(url_turso)}
@@ -1815,7 +1848,7 @@ sys.path.insert(0, {repr(app_dir)})
 sys.argv = ['traiter_fichier.py', {repr(chemin_fichier)}]
 import traiter_fichier
 traiter_fichier.main()
-"""
+{bloc_ecrans}"""
 
     with open(chemin_log, 'w', encoding='utf-8') as log_f:
         proc = _subprocess.Popen(
@@ -2271,7 +2304,9 @@ with st.sidebar:
                 if not jeton_ecriture:
                     st.caption("TURSO_AUTH_TOKEN_ECRITURE manquant dans les secrets.")
                 else:
-                    st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv).")
+                    st.caption("Catalogue (.mrc), statistiques (.xlsx/.xls) ou fréquentation (.csv). "
+                               "Déposer le .mrc met aussi à jour automatiquement les écrans "
+                               "mosaïque + diaporama sur OVH (si identifiants OVH configurés).")
 
                     # Vérifier si un import tourne (depuis le disque, résistant aux resets)
                     etat_disque = _lire_etat_import()
@@ -2322,11 +2357,19 @@ with st.sidebar:
                             key="depot"
                         )
                         if fichier_depose and st.button("Traiter ce fichier"):
+                            _ovh_config = {
+                                "OVH_SFTP_HOST": st.secrets.get("OVH_SFTP_HOST", ""),
+                                "OVH_SFTP_PORT": str(st.secrets.get("OVH_SFTP_PORT", "22")),
+                                "OVH_SFTP_USER": st.secrets.get("OVH_SFTP_USER", ""),
+                                "OVH_SFTP_PASSWORD": st.secrets.get("OVH_SFTP_PASSWORD", ""),
+                                "OVH_SFTP_DOSSIER": st.secrets.get("OVH_SFTP_DOSSIER", "www"),
+                            }
                             lancer_import_background(
                                 fichier_depose.getvalue(),
                                 fichier_depose.name,
                                 db.TURSO_URL,
                                 jeton_ecriture,
+                                ovh_config=_ovh_config,
                             )
                             st.rerun()
 

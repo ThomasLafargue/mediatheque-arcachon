@@ -28,11 +28,15 @@ Usage :
     python3 veille_prix_litteraires.py
 """
 
-import os
-import re
-import unicodedata
-
 import db
+# Fonctions partagées, définies une seule fois dans veille_nouveautes_editeurs
+# (normalisation des titres, chargement du fonds, écriture anti-doublon en
+# base). On les réutilise ici au lieu de les dupliquer.
+from veille_nouveautes_editeurs import (
+    _normaliser,
+    charger_titres_du_fonds,
+    enregistrer_suggestions,
+)
 
 SELECTION = [
     # ── Prix Sorcières 2026 (40e édition, nommés -- ABF + ALSJ / Librairies
@@ -186,87 +190,23 @@ SELECTION = [
 ]
 
 
-def _normaliser(texte):
-    if not texte:
-        return ""
-    texte = unicodedata.normalize("NFKD", texte)
-    texte = "".join(c for c in texte if not unicodedata.combining(c))
-    texte = texte.lower()
-    texte = re.sub(r"[^a-z0-9 ]", " ", texte)
-    texte = re.sub(r"\s+", " ", texte).strip()
-    return texte
-
-
-def charger_titres_du_fonds():
-    conn = db.connect()
-    try:
-        lignes = conn.execute("SELECT titre FROM notice WHERE titre IS NOT NULL").fetchall()
-    finally:
-        conn.close()
-    return {_normaliser(l[0]) for l in lignes if l[0]}
-
-
-DEMANDEUR_VEILLE = "Veille automatique"
-
-
-def _connexion_ecriture():
-    jeton = os.environ.get("TURSO_AUTH_TOKEN_ECRITURE")
-    if not jeton or not db.MODE_EN_LIGNE:
-        return None
-    return db.connect_avec_jeton(db.TURSO_URL, jeton)
-
-
-def enregistrer_suggestions(absents):
-    """Même principe que veille_nouveautes_editeurs.py : jamais de doublon
-    d'un run à l'autre, statut de départ 'à étudier', rien n'est acquis
-    automatiquement."""
-    conn = _connexion_ecriture()
-    if conn is None:
-        print("(TURSO_AUTH_TOKEN_ECRITURE absent ou base locale -- suggestions non enregistrées, "
-              "affichées ci-dessus uniquement.)")
-        return 0, 0
-
-    try:
-        conn.execute("""
-            CREATE TABLE IF NOT EXISTS suggestion_acquisition (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                titre TEXT NOT NULL,
-                demandeur TEXT,
-                auteur TEXT,
-                editeur TEXT,
-                isbn TEXT,
-                prix REAL,
-                motif TEXT,
-                source TEXT,
-                statut TEXT NOT NULL DEFAULT 'à étudier',
-                date_ajout TEXT NOT NULL DEFAULT (datetime('now'))
-            )
-        """)
-        deja_suggeres = {
-            _normaliser(l[0]) for l in
-            conn.execute("SELECT titre FROM suggestion_acquisition").fetchall() if l[0]
+def enregistrer_suggestions_prix(absents):
+    """Enregistre les titres primés absents du fonds dans suggestion_acquisition.
+    Réutilise l'écriture générique de veille_nouveautes_editeurs (même table,
+    même garde-fou anti-doublon, même statut 'à étudier') : on se contente de
+    formater chaque prix en un 'motif' lisible, puis on délègue. Évite de
+    dupliquer la logique d'écriture, qui n'existe qu'à un seul endroit."""
+    a_ecrire = [
+        {
+            "titre": item["titre"],
+            "auteur": item.get("auteur"),
+            "editeur": item.get("editeur"),
+            "date_parution": None,
+            "motif": f"{item['prix']} — catégorie/niveau : {item['categorie']}",
         }
-
-        ajoutes = 0
-        ignores_doublon = 0
-        for item in absents:
-            norm = _normaliser(item["titre"])
-            if norm in deja_suggeres:
-                ignores_doublon += 1
-                continue
-            motif = f"{item['prix']} — catégorie/niveau : {item['categorie']}"
-            conn.execute(
-                "INSERT INTO suggestion_acquisition (titre, demandeur, auteur, editeur, motif, source) "
-                "VALUES (?, ?, ?, ?, ?, ?)",
-                (item["titre"], DEMANDEUR_VEILLE, item.get("auteur"), item.get("editeur"),
-                 motif, "Veille prix littéraires jeunesse"),
-            )
-            deja_suggeres.add(norm)
-            ajoutes += 1
-        conn.commit()
-        return ajoutes, ignores_doublon
-    finally:
-        conn.close()
+        for item in absents
+    ]
+    return enregistrer_suggestions(a_ecrire, source_label="Veille prix littéraires jeunesse")
 
 
 def main():
@@ -312,7 +252,7 @@ def main():
         print(f"  • {i['titre']}")
 
     print()
-    ajoutes, doublons = enregistrer_suggestions(absents)
+    ajoutes, doublons = enregistrer_suggestions_prix(absents)
     print(f"── Suggestions d'acquisition : {ajoutes} ajoutée(s), {doublons} déjà présente(s) (pas de doublon créé) ──")
 
 

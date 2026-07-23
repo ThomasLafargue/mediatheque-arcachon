@@ -189,9 +189,14 @@ def enregistrer_suggestions(absents, source_label):
             if norm in deja_suggeres:
                 ignores_doublon += 1
                 continue
-            motif = "Parution annoncée par l'éditeur"
-            if n.get("date_parution"):
-                motif += f" (date de parution : {n['date_parution']})"
+            # Motif fourni par l'appelant (ex. veille des prix littéraires :
+            # "Prix Sorcières 2026 — catégorie ...") sinon motif par défaut
+            # pour une nouveauté éditeur.
+            motif = n.get("motif")
+            if not motif:
+                motif = "Parution annoncée par l'éditeur"
+                if n.get("date_parution"):
+                    motif += f" (date de parution : {n['date_parution']})"
             conn.execute(
                 "INSERT INTO suggestion_acquisition (titre, demandeur, auteur, editeur, motif, source) "
                 "VALUES (?, ?, ?, ?, ?, ?)",
