@@ -2127,6 +2127,73 @@ if mot_de_passe_requis:
                 st.error("Mot de passe incorrect.")
         st.stop()
 
+# ── TRI DES SUGGESTIONS (cases à cocher) ─────────────────────────────────────
+# Panneau visuel pour trier la liste de suggestions alimentée par la veille :
+# pour chaque titre, choisir « Garder » (→ à commander) ou « Écarter » (→ ne
+# réapparaîtra plus), puis appliquer tout d'un coup. Complète le chat sans le
+# remplacer -- placé au-dessus du chat, dans un volet repliable pour ne pas
+# encombrer quand on ne s'en sert pas.
+with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"):
+    try:
+        _conn_sugg = db.connect(FICHIER_DB)
+        _lignes_sugg = _conn_sugg.execute(
+            "SELECT id, titre, auteur, editeur, motif, source "
+            "FROM suggestion_acquisition WHERE statut = 'à étudier' "
+            "ORDER BY (source LIKE 'Veille prix%') DESC, date_ajout DESC"
+        ).fetchall()
+        _conn_sugg.close()
+    except Exception as _e:
+        _lignes_sugg = []
+        st.caption(f"Liste indisponible ({_e}).")
+
+    if not _lignes_sugg:
+        st.caption("Aucune suggestion en attente. La veille en ajoutera de nouvelles chaque semaine.")
+    else:
+        import pandas as _pd
+        _df_sugg = _pd.DataFrame([
+            {
+                "Décision": "",
+                "Titre": r[1],
+                "Auteur": r[2] or "",
+                "Éditeur": r[3] or "",
+                "Motif / prix": r[4] or "",
+                "Source": r[5] or "",
+                "_id": r[0],
+            }
+            for r in _lignes_sugg
+        ])
+        st.caption(f"{len(_df_sugg)} suggestion(s) en attente. Choisis « Garder » ou « Écarter » "
+                   "pour chaque ligne, puis applique. Les titres non décidés restent en attente.")
+        _edite = st.data_editor(
+            _df_sugg,
+            hide_index=True,
+            use_container_width=True,
+            column_config={
+                "Décision": st.column_config.SelectboxColumn(
+                    "Décision", options=["", "✅ Garder", "❌ Écarter"], required=False, width="small",
+                ),
+                "_id": None,  # colonne technique masquée
+            },
+            disabled=["Titre", "Auteur", "Éditeur", "Motif / prix", "Source"],
+            key="editeur_suggestions",
+        )
+        if st.button("Appliquer le tri", type="primary"):
+            _gardes = _ecartes = 0
+            for _, _r in _edite.iterrows():
+                _dec = _r["Décision"]
+                if _dec == "✅ Garder":
+                    statuer_suggestion_acquisition(int(_r["_id"]), "à commander")
+                    _gardes += 1
+                elif _dec == "❌ Écarter":
+                    statuer_suggestion_acquisition(int(_r["_id"]), "écartée")
+                    _ecartes += 1
+            if _gardes or _ecartes:
+                st.success(f"Tri appliqué : {_gardes} à commander, {_ecartes} écartée(s). "
+                           "Les « à commander » restent consultables (statut « à commander »).")
+                st.rerun()
+            else:
+                st.info("Aucune décision cochée -- rien n'a changé.")
+
 # ── CHAT ─────────────────────────────────────────────────────────────────────
 if "messages_affiches" not in st.session_state:
     st.session_state.messages_affiches = []
