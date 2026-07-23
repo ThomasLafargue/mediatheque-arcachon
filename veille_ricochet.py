@@ -48,7 +48,12 @@ from veille_nouveautes_editeurs import (
     enregistrer_suggestions,
 )
 
-FLUX_RICOCHET = "https://www.ricochet-jeunes.org/rss.xml"
+# Flux du CATALOGUE LIVRES (et non /rss.xml, qui est le fil d'articles
+# éditoriaux du site -- testé le 2026-07-23, ne renvoyait que des billets de
+# blog, pas des livres). Garde-fou supplémentaire dans charger_nouveautes() :
+# on ne retient que les items pointant vers une fiche livre (/livres/), jamais
+# vers un article (/articles/).
+FLUX_RICOCHET = "https://www.ricochet-jeunes.org/livres/rss.xml"
 
 
 def _extraire_auteur(description_html):
@@ -82,6 +87,12 @@ def charger_nouveautes():
         if not titre:
             continue
         lien = (item.findtext("link") or "").strip()
+        # Garde-fou : on ne garde que les fiches livres. Si un jour ce flux
+        # se met à mélanger des articles éditoriaux (/articles/...), ils ne
+        # doivent JAMAIS finir en suggestion d'acquisition -- ce ne sont pas
+        # des livres.
+        if lien and "/livres/" not in lien and "/livre/" not in lien:
+            continue
         description = item.findtext("description") or ""
         nouveautes.append({
             "titre": titre,
