@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.maat.veillehebdo</string>
+
+	<!-- Lance le script-chapeau bash qui enchaîne les 3 veilles (BnF,
+	     Ricochet, prix littéraires). Bash plutôt que Python directement car
+	     veille_hebdomadaire.sh orchestre plusieurs scripts et reste tolérant
+	     aux pannes d'une source isolée. -->
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>/Users/thomaslafargue/Desktop/inventaire_isbn/veille_hebdomadaire.sh</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn</string>
+
+	<!-- Logs hors de ~/Desktop (protégé par macOS/TCC), comme les autres
+	     services MAAT. -->
+	<key>StandardOutPath</key>
+	<string>/tmp/journal_veille_hebdo.log</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/journal_veille_hebdo.log</string>
+
+	<!-- Chaque lundi à 8h00. Si le Mac est éteint/endormi à cette heure,
+	     launchd rattrape l'exécution au réveil (une seule fois). -->
+	<key>StartCalendarInterval</key>
+	<dict>
+		<key>Weekday</key>
+		<integer>1</integer>
+		<key>Hour</key>
+		<integer>8</integer>
+		<key>Minute</key>
+		<integer>0</integer>
+	</dict>
+
+	<!-- Tâche ponctuelle hebdomadaire : pas de RunAtLoad (on ne veut pas
+	     qu'elle se déclenche à chaque login), pas de KeepAlive (elle doit
+	     s'exécuter une fois puis rendre la main). -->
+	<key>ProcessType</key>
+	<string>Background</string>
+</dict>
+</plist>

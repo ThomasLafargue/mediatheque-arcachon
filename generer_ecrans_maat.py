@@ -364,6 +364,20 @@ def regenerer_fichier(chemin, variable, objets):
         f.write(contenu_nouveau)
 
 
+def _notifier_echec_macos(titre, message):
+    """Notification système macOS (fenêtre visible immédiatement), ajoutée
+    le 2026-07-23 : un échec d'envoi ne doit jamais rester silencieux dans
+    un log que personne ne relit systématiquement. Best-effort strict --
+    si osascript est indisponible ou échoue, ça ne doit jamais faire
+    planter la génération des écrans elle-même."""
+    try:
+        import subprocess
+        script = f'display notification {message!r} with title {titre!r} sound name "Basso"'
+        subprocess.run(["osascript", "-e", script], timeout=5, check=False)
+    except Exception:
+        pass
+
+
 def televerser_sftp(fichiers):
     hote = os.environ.get("OVH_SFTP_HOST")
     port = int(os.environ.get("OVH_SFTP_PORT", "22"))
@@ -381,23 +395,39 @@ def televerser_sftp(fichiers):
     except ImportError:
         _log("Module 'paramiko' non installé (pip install paramiko --break-system-packages) "
              "-- envoi SFTP ignoré, fichiers générés en local uniquement.")
+        _notifier_echec_macos(
+            "Écrans MAAT — envoi OVH impossible",
+            "Module paramiko manquant. Fichiers régénérés en local, à pousser via Cyberduck.",
+        )
         return
 
     _log(f"Connexion SFTP à {hote}:{port}...")
-    transport = paramiko.Transport((hote, port))
     try:
-        transport.connect(username=utilisateur, password=mot_de_passe)
-        sftp = paramiko.SFTPClient.from_transport(transport)
+        transport = paramiko.Transport((hote, port))
         try:
-            for chemin_local in fichiers:
-                nom = os.path.basename(chemin_local)
-                chemin_distant = dossier_distant.rstrip("/") + "/" + nom
-                sftp.put(chemin_local, chemin_distant)
-                _log(f"Envoyé sur OVH : {chemin_distant}")
+            transport.connect(username=utilisateur, password=mot_de_passe)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            try:
+                for chemin_local in fichiers:
+                    nom = os.path.basename(chemin_local)
+                    chemin_distant = dossier_distant.rstrip("/") + "/" + nom
+                    sftp.put(chemin_local, chemin_distant)
+                    _log(f"Envoyé sur OVH : {chemin_distant}")
+            finally:
+                sftp.close()
         finally:
-            sftp.close()
-    finally:
-        transport.close()
+            transport.close()
+    except Exception as e:
+        # Échec de connexion/envoi (identifiants expirés, réseau, etc.) : on
+        # ne fait jamais planter tout l'import hebdomadaire pour ça -- les
+        # fichiers sont déjà régénérés en local, il suffit de les pousser à
+        # la main via Cyberduck en attendant que le problème soit résolu.
+        _log(f"⚠ Échec de l'envoi SFTP vers OVH : {type(e).__name__}: {e}")
+        _log("Fichiers régénérés en local malgré tout -- pousse-les toi-même via Cyberduck en attendant.")
+        _notifier_echec_macos(
+            "Écrans MAAT — envoi OVH échoué",
+            "Mosaïque/diaporama régénérés en local mais pas envoyés sur OVH. Vérifie et pousse via Cyberduck.",
+        )
 
 
 def main():

@@ -1165,6 +1165,33 @@ sur les dinosaures"), appeler d'abord lancer_analyse_acquisition() pour obtenir 
 - Le profil démographique d'Arcachon
 Utiliser ce rapport pour orienter les suggestions AVANT de faire des recherches web.
 
+ÉTAPE 0 bis — CONSULTER LA VEILLE AUTOMATIQUE (toujours, en premier)
+Une veille tourne chaque semaine et pré-remplit la table suggestion_acquisition
+avec des titres jeunesse ABSENTS DU FONDS, repérés depuis des sources
+professionnelles fiables. Ces lignes ont demandeur = 'Veille automatique' et un
+champ source qui indique leur provenance :
+• source LIKE 'Veille prix littéraires%' → titre nommé/primé au Prix Sorcières
+  ou au Prix des Incorruptibles (le champ motif précise le prix et la
+  catégorie/niveau) — SIGNAL DE QUALITÉ FORT, à privilégier.
+• source LIKE 'Veille Ricochet%' → titre critiqué par Ricochet (plateforme
+  spécialisée jeunesse, couvre aussi BD et manga jeunesse).
+• source LIKE 'Veille BnF%' → parution jeunesse récemment annoncée par un
+  éditeur (signal de fraîcheur, pas de qualité : inclut de l'auto-édition, à
+  regarder d'un œil critique).
+Quand on te demande des idées d'acquisition (BD jeunesse, romans, albums,
+documentaires, premières lectures, manga jeunesse, séries...), commence
+TOUJOURS par interroger cette veille pour le segment demandé, ex :
+  SELECT titre, auteur, editeur, motif, source FROM suggestion_acquisition
+  WHERE demandeur = 'Veille automatique' AND statut = 'à étudier'
+  ORDER BY (source LIKE 'Veille prix%') DESC, date_ajout DESC
+Présente ces titres déjà repérés EN PREMIER (ils sont déjà vérifiés absents du
+fonds au moment de la veille — reconfirme quand même via l'ÉTAPE 1), puis
+complète au besoin par une recherche web. Un titre remonté à la fois par un prix
+ET par Ricochet est un candidat particulièrement solide.
+Un titre que tu écartes définitivement : passe son statut à 'écartée' (UPDATE)
+plutôt que de le laisser réapparaître ; un titre retenu : garde-le tel quel ou
+réattribue-le au demandeur réel.
+
 ÉTAPE 1 — VÉRIFICATION D'ABSENCE (TOUJOURS, SANS EXCEPTION)
 Avant de suggérer ou d'ajouter UN SEUL titre, vérifier qu'il n'est pas déjà
 dans notre fonds :
@@ -1519,7 +1546,17 @@ def repondre(historique_existant, question, cle_api):
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
         OUTIL_ANALYSE_ACQUISITION,
-        {"type": "web_search_20250305", "name": "web_search", "max_uses": 10},
+        # cache_control sur le DERNIER outil de la liste : Anthropic met en
+        # cache tout le préfixe jusqu'à ce marqueur (tous les outils +, avec
+        # le marqueur système ci-dessous, le prompt système complet). Ajouté
+        # le 2026-07-23 : réduit la latence et le coût de chaque appel, sans
+        # changer le comportement -- le contenu envoyé au modèle est
+        # strictement identique, seul son traitement est mis en cache
+        # (5 minutes de rémanence, renouvelées à chaque appel).
+        {
+            "type": "web_search_20250305", "name": "web_search", "max_uses": 10,
+            "cache_control": {"type": "ephemeral"},
+        },
     ]
 
     sql_executees = []
@@ -1533,7 +1570,12 @@ def repondre(historique_existant, question, cle_api):
             reponse = client.messages.create(
                 model="claude-sonnet-4-6",
                 max_tokens=8000,
-                system=PROMPT_SYSTEME,
+                # Prompt système passé en bloc avec cache_control (voir
+                # commentaire sur 'outils' ci-dessus) -- PROMPT_SYSTEME est
+                # volumineux (schéma complet + requêtes de référence) et
+                # identique à chaque appel, donc son coût de traitement est
+                # évité une fois mis en cache.
+                system=[{"type": "text", "text": PROMPT_SYSTEME, "cache_control": {"type": "ephemeral"}}],
                 tools=outils,
                 messages=historique,
             )
