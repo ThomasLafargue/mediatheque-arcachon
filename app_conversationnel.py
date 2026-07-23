@@ -390,17 +390,90 @@ def supprimer_suggestion_acquisition(id):
 OUTIL_SUPPRESSION_SUGGESTION = {
     "name": "supprimer_suggestion_acquisition",
     "description": (
-        "Supprime UNE suggestion précise de la liste, par son id. Utilise "
-        "executer_requete_sql d'abord pour trouver l'id exact (ex. SELECT id, "
-        "titre FROM suggestion_acquisition WHERE titre LIKE '%...%') avant "
-        "d'appeler cet outil -- ne devine jamais un id. Si plusieurs lignes "
-        "correspondent (doublon), demande confirmation avant de supprimer, "
-        "ou précise laquelle (la plus récente sauf indication contraire)."
+        "Supprime DÉFINITIVEMENT une suggestion (perte de toute trace). À "
+        "n'utiliser QUE pour corriger une erreur de saisie (doublon, entrée "
+        "fautive). Pour une décision normale -- accepter (à commander/acquérir) "
+        "ou refuser un titre -- utilise plutôt statuer_suggestion_acquisition, "
+        "qui garde l'historique. Utilise executer_requete_sql d'abord pour "
+        "trouver l'id exact. Si plusieurs lignes correspondent, demande "
+        "confirmation."
     ),
     "input_schema": {
         "type": "object",
         "properties": {"id": {"type": "integer", "description": "L'id exact de la ligne à supprimer"}},
         "required": ["id"],
+    },
+}
+
+
+STATUTS_SUGGESTION_AUTORISES = ("à étudier", "à commander", "acquise", "écartée")
+
+
+def statuer_suggestion_acquisition(id, statut):
+    """Change le STATUT d'une suggestion (par id), sans jamais l'effacer :
+    c'est la façon normale d'accepter ou de refuser un titre de la liste de
+    veille.
+      - 'à commander' / 'acquise' = décision positive (on prend le titre)
+      - 'écartée'                 = décision négative (on ne le prend pas)
+      - 'à étudier'               = remis en attente
+    Garder la ligne (plutôt que la supprimer) a un double intérêt : on
+    conserve l'historique des décisions, ET comme la veille hebdomadaire
+    dédoublonne par titre sur TOUTE la table, un titre 'écarté' ne réapparaît
+    jamais dans les suggestions la semaine suivante -- la décision est donc
+    définitive sans rien perdre."""
+    if statut not in STATUTS_SUGGESTION_AUTORISES:
+        return json.dumps({"erreur": f"Statut non autorisé. Valeurs possibles : {', '.join(STATUTS_SUGGESTION_AUTORISES)}."})
+    jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+    if not jeton_ecriture:
+        return json.dumps({"erreur": "Fonction non configurée (TURSO_AUTH_TOKEN_ECRITURE manquant)."})
+    try:
+        conn = db.connect_avec_jeton(db.TURSO_URL, jeton_ecriture) if db.MODE_EN_LIGNE else db.connect(FICHIER_DB)
+        cur = conn.cursor()
+        cur.execute("SELECT titre FROM suggestion_acquisition WHERE id = ?", (id,))
+        ligne = cur.fetchone()
+        if not ligne:
+            conn.close()
+            return json.dumps({"erreur": f"Aucune suggestion avec l'id {id}."})
+        titre = ligne[0]
+        conn.execute("UPDATE suggestion_acquisition SET statut = ? WHERE id = ?", (statut, id))
+        conn.commit()
+        conn.close()
+        return json.dumps({"statut": "ok", "info": f"« {titre} » (id {id}) → statut « {statut} »."})
+    except Exception as e:
+        import traceback
+        st.session_state["derniere_erreur_technique"] = traceback.format_exc()
+        return json.dumps({"erreur": f"{type(e).__name__}: {e}"})
+
+
+OUTIL_STATUER_SUGGESTION = {
+    "name": "statuer_suggestion_acquisition",
+    "description": (
+        "Décide du sort d'une suggestion d'acquisition (accepter ou refuser), "
+        "en changeant son statut SANS l'effacer. C'est l'outil à utiliser quand "
+        "on te dit d'accepter, valider, commander, acquérir, prendre un titre, "
+        "OU de refuser, écarter, ne pas prendre un titre de la liste. "
+        "Valeurs de statut :\n"
+        "  • 'à commander' : décision positive, le titre sera commandé\n"
+        "  • 'acquise'     : le titre a été acquis / est arrivé\n"
+        "  • 'écartée'     : décision négative, on ne prend pas ce titre "
+        "(il ne réapparaîtra plus dans la veille)\n"
+        "  • 'à étudier'   : remettre en attente\n"
+        "Trouve d'abord l'id exact via executer_requete_sql (ex. SELECT id, titre, "
+        "statut FROM suggestion_acquisition WHERE titre LIKE '%...%'). Ne devine "
+        "jamais un id. Si plusieurs lignes correspondent, demande laquelle. "
+        "Tu peux traiter plusieurs titres à la suite (un appel par id)."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "id": {"type": "integer", "description": "L'id exact de la suggestion"},
+            "statut": {
+                "type": "string",
+                "enum": list(STATUTS_SUGGESTION_AUTORISES),
+                "description": "Le nouveau statut",
+            },
+        },
+        "required": ["id", "statut"],
     },
 }
 
@@ -1188,9 +1261,16 @@ Présente ces titres déjà repérés EN PREMIER (ils sont déjà vérifiés abs
 fonds au moment de la veille — reconfirme quand même via l'ÉTAPE 1), puis
 complète au besoin par une recherche web. Un titre remonté à la fois par un prix
 ET par Ricochet est un candidat particulièrement solide.
-Un titre que tu écartes définitivement : passe son statut à 'écartée' (UPDATE)
-plutôt que de le laisser réapparaître ; un titre retenu : garde-le tel quel ou
-réattribue-le au demandeur réel.
+DÉCIDER DU SORT D'UNE SUGGESTION (accepter / refuser) :
+Utilise l'outil statuer_suggestion_acquisition (JAMAIS un UPDATE SQL direct,
+executer_requete_sql est en lecture seule ; ne supprime pas non plus, sauf
+vraie erreur de saisie).
+• On accepte / valide / commande / acquiert un titre → statut 'à commander'
+  (puis 'acquise' quand il est arrivé).
+• On refuse / écarte / ne prend pas un titre → statut 'écartée' (il ne
+  réapparaîtra plus dans la veille).
+Quand on te demande de traiter la liste, présente les titres avec leur id,
+applique les décisions une par une, et confirme chaque changement.
 
 ÉTAPE 1 — VÉRIFICATION D'ABSENCE (TOUJOURS, SANS EXCEPTION)
 Avant de suggérer ou d'ajouter UN SEUL titre, vérifier qu'il n'est pas déjà
@@ -1541,7 +1621,7 @@ def repondre(historique_existant, question, cle_api):
 
     outils = [
         OUTIL_SQL, OUTIL_EXPORT, OUTIL_RAPPORT,
-        OUTIL_SUGGESTION, OUTIL_SUPPRESSION_SUGGESTION,
+        OUTIL_SUGGESTION, OUTIL_SUPPRESSION_SUGGESTION, OUTIL_STATUER_SUGGESTION,
         OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
@@ -1616,6 +1696,9 @@ def repondre(historique_existant, question, cle_api):
                 elif bloc.name == "supprimer_suggestion_acquisition":
                     a_modifie_suggestions = True
                     resultat = supprimer_suggestion_acquisition(**bloc.input)
+                elif bloc.name == "statuer_suggestion_acquisition":
+                    a_modifie_suggestions = True
+                    resultat = statuer_suggestion_acquisition(**bloc.input)
                 elif bloc.name == "ajouter_suggestion_desherbage":
                     a_modifie_suggestions = True
                     resultat = ajouter_suggestion_desherbage(**bloc.input)
