@@ -399,6 +399,7 @@ def parser_mrc(chemin):
         # condition pour autoriser la 410 comme série (voir plus haut).
         est_bd_manga = any(
             ('bande' in (v or '').lower() or 'manga' in (v or '').lower()
+             or 'comic' in (v or '').lower()
              or (v or '').strip().lower() == 'bd')
             for v in cobas_valeurs
         )

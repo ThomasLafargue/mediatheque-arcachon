@@ -1,0 +1,32 @@
+═══ Ce que le moteur web déduit (série / tome) par ISBN ═══
+(interroge APIs + sources web -- quelques secondes chacun)
+
+  Geronimo Stilton / Le galion des chats pirates
+     ISBN 9782226324481
+     → série = '—'
+     → tome  = '—'
+     → titre = 'Le Galion des chats pirates (A.M. GS POCHE) (French Edition)'
+     → source(s) : Open Library
+
+  Le club des Cinq et le passage secret
+     ISBN 9782014018134
+     → série = 'Le club des Cinq'
+     → tome  = '—'
+     → titre = 'Le club des Cinq et le passage secret'
+     → source(s) : BnF
+
+  Mortelle Adèle, défis mortels
+     ISBN 9782747081511
+     → série = '—'
+     → tome  = '—'
+     → titre = '—'
+     → source(s) : ?
+
+  Tom-Tom et Nana, panique au resto
+     ISBN 9782747081474
+     → série = '—'
+     → tome  = '—'
+     → titre = '—'
+     → source(s) : ?
+
+✓ Test terminé.
