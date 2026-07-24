@@ -1102,6 +1102,18 @@ NE JAMAIS dire simplement "non, nous n'avons pas ce titre" sans avoir
 effectué ces vérifications.
 
 ── SÉRIES COMPLÈTES — DÉTECTION DES TOMES MANQUANTS ─────
+⚠️ RÈGLE ABSOLUE — TOUJOURS CADRER AUX VRAIES SÉRIES DE LECTURE :
+Ne JAMAIS lancer une détection de tomes manquants sur l'ensemble des notices
+sans filtre de catégorie. Le champ 'tome' contient parfois un NUMÉRO DE
+PARUTION (magazines : « Le Particulier » n°1116, « L'Automobile », « Dada »,
+« Images doc », « J'aime lire »...) ou un NUMÉRO DE COLLECTION d'éditeur
+(« Pôle fiction », « Points. Série Essais », « Classiques & contemporains »...).
+Ces cas produisent des faux positifs absurdes (« 1 tome sur 1116 »). Restreindre
+TOUJOURS l'analyse aux vraies séries à compléter : categorie IN ('BD','Manga')
+(et pour la jeunesse, cote LIKE 'BDJ%'). Ne jamais présenter la vue non filtrée.
+Signaler aussi qu'un écart peut venir d'un arc/personnage catalogué comme série
+à part ou d'une collection — la validation humaine reste requise.
+
 Pour "manque-t-il des tomes dans les BD jeunesse ?" ou toute série :
 1. Requête de base pour une série :
    SELECT serie, GROUP_CONCAT(CAST(tome AS INTEGER) ORDER BY CAST(tome AS INTEGER)) as tomes_presents,
