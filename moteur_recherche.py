@@ -1154,6 +1154,64 @@ def amazon_lookup(isbn):
 # SOURCE 7 : Cultura
 # ─────────────────────────────────────────────────────────
 
+def _cultura_depuis_titre_page(soup, isbn):
+    """Extrait série/tome/titre/auteur depuis la balise <title> de la page de
+    résultats Cultura.
+
+    Ajouté le 2026-07-24 : la liste de résultats est rendue en JavaScript, donc
+    aucun lien produit n'est visible pour un script -- l'ancienne logique
+    abandonnait (return None) et Cultura ne remontait jamais rien. En revanche
+    le <title> de la page, lui, est bien dans le HTML et contient TOUT ce qui
+    nous manquait, série et tome compris. Exemple réel :
+      « Harry Potter Tome 6 : Harry Potter et le Prince de sang-mêlé :
+        J. K. Rowling- Livres audio - CD | Cultura »
+    Format : « SÉRIE Tome N : TITRE : AUTEUR- catégories | Cultura »
+    """
+    el = soup.find("title")
+    if not el:
+        return None
+    brut = el.get_text(strip=True)
+    if not brut or "Cultura" not in brut:
+        return None
+    # retire le suffixe « | Cultura »
+    corps = brut.split("|")[0].strip()
+    parts = [p.strip() for p in corps.split(" : ") if p.strip()]
+    if not parts:
+        return None
+
+    serie = tome = ""
+    titre = parts[0]
+    auteur = ""
+
+    # 1re partie de la forme « Série Tome 6 » → série + tome
+    m = re.match(r"^(.*?)\s+Tome\s+(\d+)\s*$", parts[0], re.I)
+    if m and len(parts) >= 2:
+        serie = m.group(1).strip()
+        tome = m.group(2)
+        if len(parts) >= 3:
+            # « Série Tome N : TITRE : AUTEUR- catégories »
+            titre = parts[1].strip()
+            auteur = parts[2]
+        else:
+            # « Série Tome N : AUTEUR- catégories » (pas de titre d'album
+            # distinct) : ne PAS prendre l'auteur pour un titre -- on retombe
+            # sur le nom de la série, qui est correct.
+            titre = serie
+            auteur = parts[1]
+    elif len(parts) >= 2:
+        titre = parts[1].strip()
+        auteur = parts[2] if len(parts) >= 3 else ""
+
+    # l'auteur est parfois suivi des catégories : « J. K. Rowling- Livres audio - CD »
+    if auteur:
+        auteur = re.split(r"\s*-\s*(?:Livres?|Romans?|BD|Mangas?|CD|DVD)\b", auteur, 1)[0]
+        auteur = auteur.rstrip("- ").strip()
+
+    if not titre:
+        return None
+    return {"titre": titre, "serie": serie, "tome": tome, "auteur": auteur}
+
+
 def cultura_lookup(isbn):
     try:
         url = f"https://www.cultura.com/catalogsearch/result/?q={isbn}"
@@ -1161,7 +1219,24 @@ def cultura_lookup(isbn):
         if r.status_code != 200: return None
         soup = BeautifulSoup(r.text, "html.parser")
         lien = soup.select_one("a.product-item-link,.product-name a,h2 a")
-        if not lien: return None
+        if not lien:
+            # Repli : lire le <title> de la page de résultats (voir fonction
+            # ci-dessus). C'est le cas NORMAL aujourd'hui, la liste étant
+            # rendue en JavaScript.
+            base = _cultura_depuis_titre_page(soup, isbn)
+            if not base:
+                return None
+            titre = base["titre"]
+            serie = base["serie"] or extraire_serie(titre, "", "", base["tome"])
+            tome = base["tome"] or extraire_tome("", titre)
+            public = detecter_public("", titre, "", "", "")
+            type_doc = detecter_type(titre, "", "", "", "", "", public)
+            genre = detecter_genre(titre, "", "", "", type_doc)
+            return {"titre": titre, "auteur": base["auteur"], "illustrateur": "",
+                    "editeur": "", "annee": "", "type": type_doc,
+                    "public": public, "genre": genre, "serie": serie, "tome": tome,
+                    "pegi": "", "collection": "", "resume": "",
+                    "source": "Cultura", "statut": "trouvé"}
         href = lien.get("href","")
         if not href.startswith("http"): href = "https://www.cultura.com" + href
         r2 = requests.get(href, headers=HEADERS, timeout=(5, 10))
@@ -1209,7 +1284,9 @@ def cultura_lookup(isbn):
 
 def decitre_lookup(isbn):
     try:
-        url = f"https://www.decitre.fr/livres/{isbn}.html"
+        # URL de recherche mise à jour le 2026-07-24 : l'ancienne adresse
+        # /livres/{isbn}.html renvoie désormais 404 (Decitre a changé ses URL).
+        url = f"https://www.decitre.fr/rechercher/result?q={isbn}"
         r = requests.get(url, headers=HEADERS, timeout=(5, 10))
         if r.status_code != 200: return None
         soup = BeautifulSoup(r.text, "html.parser")
@@ -1355,7 +1432,8 @@ def leslibraires_lookup(isbn):
 
 def mollat_lookup(isbn):
     try:
-        url = f"https://www.mollat.com/livres/recherche?recherche={isbn}"
+        # URL de recherche mise à jour le 2026-07-24 (l'ancienne renvoyait 404).
+        url = f"https://www.mollat.com/recherche?q={isbn}"
         r = requests.get(url, headers=HEADERS, timeout=(5, 10))
         if r.status_code != 200: return None
         soup = BeautifulSoup(r.text, "html.parser")
