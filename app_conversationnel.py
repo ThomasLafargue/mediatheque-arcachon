@@ -1751,6 +1751,124 @@ def repondre(historique_existant, question, cle_api):
         journaliser_requete(question, sql_executees, nb_recherches_web, a_exporte, a_modifie_suggestions, erreur_pour_journal)
 
 
+def repondre_flux(historique_existant, question, cle_api, resultat_out):
+    """Version STREAMING de repondre() : générateur qui produit le texte de la
+    réponse au fil de l'eau (à consommer via st.write_stream), tout en gérant
+    la même boucle d'outils. L'historique mis à jour est déposé dans
+    resultat_out['historique'] à la fin (un générateur ne peut pas à la fois
+    yielder du texte et retourner une valeur). Mêmes garde-fous que
+    repondre() : copie de l'historique, journalisation, aucune écriture de la
+    conversation en cas d'erreur. repondre() est conservée intacte comme repli
+    immédiat (il suffit de rebasculer la ligne d'appel dans l'interface)."""
+    historique = list(historique_existant)
+    historique.append({"role": "user", "content": question})
+    client = Anthropic(api_key=cle_api)
+
+    outils = [
+        OUTIL_SQL, OUTIL_EXPORT, OUTIL_RAPPORT,
+        OUTIL_SUGGESTION, OUTIL_SUPPRESSION_SUGGESTION, OUTIL_STATUER_SUGGESTION,
+        OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
+        OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
+        OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
+        OUTIL_ANALYSE_ACQUISITION,
+        {
+            "type": "web_search_20250305", "name": "web_search", "max_uses": 10,
+            "cache_control": {"type": "ephemeral"},
+        },
+    ]
+
+    sql_executees = []
+    nb_recherches_web = 0
+    a_exporte = False
+    a_modifie_suggestions = False
+    erreur_pour_journal = None
+
+    try:
+        while True:
+            with client.messages.stream(
+                model="claude-sonnet-4-6",
+                max_tokens=8000,
+                system=[{"type": "text", "text": PROMPT_SYSTEME, "cache_control": {"type": "ephemeral"}}],
+                tools=outils,
+                messages=historique,
+            ) as flux:
+                for fragment in flux.text_stream:
+                    yield fragment
+                message = flux.get_final_message()
+
+            historique.append({"role": "assistant", "content": message.content})
+
+            try:
+                nb_recherches_web += message.usage.server_tool_use.web_search_requests
+            except Exception:
+                pass
+
+            if message.stop_reason != "tool_use":
+                resultat_out["historique"] = historique
+                return
+
+            resultats_outils = []
+            for bloc in message.content:
+                if bloc.type != "tool_use":
+                    continue
+                if bloc.name == "executer_requete_sql":
+                    sql = bloc.input.get("sql", "")
+                    sql_executees.append(sql)
+                    resultat = executer_requete_sql(sql)
+                elif bloc.name == "generer_export_excel":
+                    a_exporte = True
+                    contenu, n_lignes, erreur = generer_excel_bytes(bloc.input.get("sql"), bloc.input.get("lignes"))
+                    if erreur:
+                        resultat = json.dumps({"erreur": erreur})
+                    else:
+                        st.session_state["export_xlsx_pret"] = contenu
+                        st.session_state["export_xlsx_lignes"] = n_lignes
+                        resultat = json.dumps({
+                            "statut": "ok", "lignes": n_lignes,
+                            "info": "Fichier généré -- un bouton de téléchargement va apparaître juste sous ta réponse.",
+                        })
+                elif bloc.name == "ajouter_suggestion_acquisition":
+                    a_modifie_suggestions = True
+                    resultat = ajouter_suggestion_acquisition(**bloc.input)
+                elif bloc.name == "supprimer_suggestion_acquisition":
+                    a_modifie_suggestions = True
+                    resultat = supprimer_suggestion_acquisition(**bloc.input)
+                elif bloc.name == "statuer_suggestion_acquisition":
+                    a_modifie_suggestions = True
+                    resultat = statuer_suggestion_acquisition(**bloc.input)
+                elif bloc.name == "ajouter_suggestion_desherbage":
+                    a_modifie_suggestions = True
+                    resultat = ajouter_suggestion_desherbage(**bloc.input)
+                elif bloc.name == "supprimer_suggestion_desherbage":
+                    a_modifie_suggestions = True
+                    resultat = supprimer_suggestion_desherbage(**bloc.input)
+                elif bloc.name == "ajouter_suggestion_mise_en_avant":
+                    a_modifie_suggestions = True
+                    resultat = ajouter_suggestion_mise_en_avant(**bloc.input)
+                elif bloc.name == "supprimer_suggestion_mise_en_avant":
+                    a_modifie_suggestions = True
+                    resultat = supprimer_suggestion_mise_en_avant(**bloc.input)
+                elif bloc.name == "generer_rapport_import":
+                    resultat = json.dumps({"rapport": generer_rapport_import()})
+                elif bloc.name == "enregistrer_desherbage_effectue":
+                    a_modifie_suggestions = True
+                    resultat = enregistrer_desherbage_effectue(**bloc.input)
+                elif bloc.name == "supprimer_desherbage_effectue":
+                    a_modifie_suggestions = True
+                    resultat = supprimer_desherbage_effectue(**bloc.input)
+                elif bloc.name == "lancer_analyse_acquisition":
+                    resultat = lancer_analyse_acquisition()
+                else:
+                    resultat = json.dumps({"erreur": "outil inconnu"})
+                resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
+            historique.append({"role": "user", "content": resultats_outils})
+    except Exception as e:
+        erreur_pour_journal = f"{type(e).__name__}: {e}"
+        raise
+    finally:
+        journaliser_requete(question, sql_executees, nb_recherches_web, a_exporte, a_modifie_suggestions, erreur_pour_journal)
+
+
 # ----------------------------------------------------------------------------
 # Dépôt de fichier -- enrichissement direct depuis l'interface, RÉSERVÉ à
 # l'équipe (derrière le mot de passe si configuré). Utilise un jeton
@@ -2256,13 +2374,23 @@ if question:
         st.markdown(question)
 
     with st.chat_message("assistant"):
-        with st.spinner("Interrogation de la base..."):
-            try:
-                texte, nouvel_historique = repondre(st.session_state.messages_api, question, cle_api)
-                st.session_state.messages_api = nouvel_historique
-            except Exception as e:
-                texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
-        st.markdown(texte)
+        # Affichage en STREAMING : le texte apparaît au fil de l'eau via
+        # repondre_flux (générateur). Repli immédiat possible en réutilisant
+        # repondre() (non-streaming), qui reste en place :
+        #     texte, nh = repondre(st.session_state.messages_api, question, cle_api)
+        #     st.session_state.messages_api = nh ; st.markdown(texte)
+        _resultat_flux = {}
+        try:
+            texte = st.write_stream(
+                repondre_flux(st.session_state.messages_api, question, cle_api, _resultat_flux)
+            )
+            if "historique" in _resultat_flux:
+                # N'écrase l'historique de conversation que si la réponse a
+                # abouti (le générateur ne dépose 'historique' qu'à la fin).
+                st.session_state.messages_api = _resultat_flux["historique"]
+        except Exception as e:
+            texte = f"Erreur : {e}. L'historique n'a pas été modifié, tu peux reposer ta question normalement."
+            st.markdown(texte)
         if st.session_state.get("export_xlsx_pret"):
             n_lignes = st.session_state.get("export_xlsx_lignes", 0)
             st.download_button(
