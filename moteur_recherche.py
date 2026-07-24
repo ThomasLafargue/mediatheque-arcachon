@@ -1566,6 +1566,81 @@ def google_books_lookup(isbn):
 # SOURCE 14 : Open Library
 # ─────────────────────────────────────────────────────────
 
+def placedeslibraires_lookup(isbn):
+    """Place des Libraires — réseau national des libraires indépendants
+    (dont la Librairie Générale d'Arcachon, notre fournisseur).
+
+    Ajoutée le 2026-07-25 après vérification en conditions réelles. C'est
+    aujourd'hui la MEILLEURE source du moteur, pour trois raisons :
+      - ses données viennent de Dilicom (fichier professionnel du livre
+        français), donc série et tome sont normalisés, pas devinés ;
+      - la fiche est adressable DIRECTEMENT par ISBN (/livre/{isbn}/), sans
+        page de recherche intermédiaire ;
+      - le contenu est rendu côté serveur, donc lisible sans JavaScript --
+        contrairement à Mollat, Booknode, Decitre ou Ricochet, tous devenus
+        illisibles pour un script.
+
+    Format de <title> observé :
+      « NARUTO Tome 19 - Masashi Kishimoto - Kana - Poche - Place des Libraires »
+      « Prince de sang-mêlé - J. K. Rowling - Gallimard Jeunesse - CD Audio - ... »
+    Structure : « [SÉRIE Tome N |] TITRE - AUTEUR - ÉDITEUR - SUPPORT - Place des Libraires »
+    """
+    try:
+        url = f"https://www.placedeslibraires.fr/livre/{isbn}/"
+        r = requests.get(url, headers=HEADERS, timeout=(5, 10), allow_redirects=True)
+        if r.status_code != 200:
+            return None
+        soup = BeautifulSoup(r.text, "html.parser")
+        el = soup.find("title")
+        if not el:
+            return None
+        brut = el.get_text(strip=True)
+        if not brut or "Place des Libraires" not in brut:
+            return None
+
+        # retire le suffixe « - Place des Libraires »
+        corps = re.sub(r"\s*-\s*Place des Libraires\s*$", "", brut).strip()
+        parts = [p.strip() for p in corps.split(" - ") if p.strip()]
+        if not parts:
+            return None
+
+        titre = parts[0]
+        auteur = parts[1] if len(parts) >= 2 else ""
+        editeur = parts[2] if len(parts) >= 3 else ""
+        support = parts[3] if len(parts) >= 4 else ""
+
+        # « NARUTO Tome 19 » -> série + tome
+        serie = tome = ""
+        m = re.match(r"^(.*?)\s+Tome\s+(\d+)\s*$", titre, re.I)
+        if m:
+            serie = m.group(1).strip()
+            tome = m.group(2)
+            if not serie:
+                serie = ""
+        if not tome:
+            tome = extraire_tome("", titre)
+        if not serie:
+            serie = extraire_serie(titre, "", "", tome)
+
+        m_annee = re.search(r"\b(19|20)\d{2}\b", soup.get_text()[:4000])
+        annee = m_annee.group(0) if m_annee else ""
+
+        public = detecter_public("", titre, "", editeur, "")
+        type_doc = detecter_type(titre, "", "", support, "", editeur, public)
+        genre = detecter_genre(titre, "", "", support, type_doc)
+        pegi = detecter_pegi(type_doc, public, "")
+
+        if not titre:
+            return None
+        return {"titre": titre, "auteur": auteur, "illustrateur": "",
+                "editeur": editeur, "annee": annee, "type": type_doc,
+                "public": public, "genre": genre, "serie": serie, "tome": tome,
+                "pegi": pegi, "collection": "", "resume": "",
+                "source": "Place des Libraires", "statut": "trouvé"}
+    except Exception:
+        return None
+
+
 def openlibrary_lookup(isbn):
     try:
         url = f"https://openlibrary.org/api/books?bibkeys=ISBN:{isbn}&format=json&jscmd=data"
@@ -1604,19 +1679,26 @@ def openlibrary_lookup(isbn):
 # ─────────────────────────────────────────────────────────
 
 SOURCES = [
-    # En premier : sites avec titres complets incluant le numéro de tome
+    # ── Sources vérifiées fonctionnelles le 2026-07-24/25 ──
+    # Place des Libraires en TÊTE : données Dilicom (fichier professionnel du
+    # livre), fiche adressable par ISBN, rendue côté serveur, série et tome
+    # normalisés. C'est la source la plus fiable dont nous disposons.
+    ("Place des Libraires", placedeslibraires_lookup),
+    ("Cultura",       cultura_lookup),   # série+tome via le <title> de la page
+    ("Open Library",  openlibrary_lookup),
+    ("BnF",           bnf_lookup),       # notices officielles françaises
+    # ── Sources conservées mais actuellement muettes (diagnostic 2026-07-24) ──
+    # Elles ne coûtent qu'un appel qui échoue vite ; laissées en fin de liste
+    # au cas où les sites redeviendraient lisibles.
+    ("Decitre",       decitre_lookup),
+    ("Mollat",        mollat_lookup),
+    ("Manga News",    manganews_lookup),
+    ("Booknode",      booknode_lookup),
+    # ── Bloquées (HTTP 403 / anti-robot) : conservées pour mémoire ──
     ("Amazon",        amazon_lookup),
     ("Fnac",          fnac_lookup),
     ("BDfugue",       bdfugue_lookup),
-    ("Manga News",    manganews_lookup),
-    ("Booknode",      booknode_lookup),
-    ("Cultura",       cultura_lookup),
-    ("Decitre",       decitre_lookup),
     ("LesLibraires",  leslibraires_lookup),
-    ("Mollat",        mollat_lookup),
-    ("Open Library",  openlibrary_lookup),
-    # En dernier : BnF pour compléter auteur/collection/résumé officiels
-    ("BnF",           bnf_lookup),
 ]
 # Babelio retirée : son robots.txt interdit explicitement l'accès automatisé.
 # Google Books retirée le 2026-07-22 : API instable (503 reproductibles,
