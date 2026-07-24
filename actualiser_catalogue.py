@@ -267,6 +267,7 @@ def parser_mrc(chemin):
         type_support_hint = None
         ean_073 = isbn_010 = None
         serie_461 = tome_461 = date_461 = None
+        serie_410 = tome_410 = None
         cobas_valeurs = []
         cobas_raw_686 = []  # toutes les valeurs brutes 686 pour extraction ESAR
         mots_cles = []
@@ -340,6 +341,19 @@ def parser_mrc(chemin):
                         tome_461 = val
                     elif code == 'd':
                         date_461 = val
+            elif tag == '410':
+                # Zone 410 = lien de COLLECTION. Decalog y range certaines
+                # séries BD au lieu de la 461 (ex. Lucky Luke : « Le
+                # Pied-Tendre » a 410$t='Lucky Luke' $v='2'). $t = titre de la
+                # série/collection, $v = numéro. Exploité plus bas uniquement
+                # pour les BD/mangas (voir est_bd_manga) afin de ne pas
+                # confondre une vraie série avec une collection d'éditeur d'un
+                # roman (Folio, Points...).
+                for code, val in subs:
+                    if code == 't':
+                        serie_410 = val
+                    elif code == 'v':
+                        tome_410 = val
             elif tag == '686':
                 lib = scheme = None
                 cobas_raw_686.append(raw)  # conserver pour extraction ESAR
@@ -381,10 +395,25 @@ def parser_mrc(chemin):
             if sans_role:
                 auteur = sans_role[0]
 
+        # Une notice est BD/manga si un centre d'intérêt COBAS le dit --
+        # condition pour autoriser la 410 comme série (voir plus haut).
+        est_bd_manga = any(
+            ('bande' in (v or '').lower() or 'manga' in (v or '').lower()
+             or (v or '').strip().lower() == 'bd')
+            for v in cobas_valeurs
+        )
         if numero_partie:
             serie_brute, tome = titre, numero_partie
         elif serie_461 and tome_461:
             serie_brute, tome = nettoyer_nom_serie(serie_461), tome_461
+        elif serie_461:
+            # Lien de série 461 sans numéro de tome : on garde quand même le
+            # rattachement à la série (le tome peut manquer sans que la série
+            # soit fausse -- ex. « Wanted Lucky Luke »).
+            serie_brute, tome = nettoyer_nom_serie(serie_461), None
+        elif serie_410 and est_bd_manga:
+            # Série BD cataloguée via la zone 410 (collection) plutôt que 461.
+            serie_brute, tome = nettoyer_nom_serie(serie_410), tome_410
         else:
             serie_brute, tome = None, None
 

@@ -1109,10 +1109,28 @@ PARUTION (magazines : « Le Particulier » n°1116, « L'Automobile », « Dada 
 « Images doc », « J'aime lire »...) ou un NUMÉRO DE COLLECTION d'éditeur
 (« Pôle fiction », « Points. Série Essais », « Classiques & contemporains »...).
 Ces cas produisent des faux positifs absurdes (« 1 tome sur 1116 »). Restreindre
-TOUJOURS l'analyse aux vraies séries à compléter : categorie IN ('BD','Manga')
-(et pour la jeunesse, cote LIKE 'BDJ%'). Ne jamais présenter la vue non filtrée.
-Signaler aussi qu'un écart peut venir d'un arc/personnage catalogué comme série
-à part ou d'une collection — la validation humaine reste requise.
+TOUJOURS l'analyse aux vraies séries à compléter : categorie IN ('BD','Manga').
+Ne jamais présenter la vue non filtrée. Signaler aussi qu'un écart peut venir
+d'un arc/personnage catalogué comme série à part ou d'une collection — la
+validation humaine reste requise.
+
+⚠️⚠️ RÈGLE CAPITALE — LE « NOMBRE DE TOMES PRÉSENTS » N'EST PAS LE NOMBRE
+D'ALBUMS POSSÉDÉS. Beaucoup de BD classiques (Lucky Luke, Astérix, Tintin,
+Les Schtroumpfs, Boule et Bill...) n'ont AUCUN numéro de tome renseigné dans
+Decalog : le champ 'tome' est vide pour la plupart de leurs albums. Compter les
+« tomes numérotés présents » sous-estime alors GRAVEMENT le fonds réel (ex. on
+peut posséder 20 Lucky Luke mais n'en avoir que 2 avec un numéro → afficher
+« 2 tomes » est FAUX et trompeur).
+Donc, pour toute question sur une série précise, TOUJOURS d'abord compter le
+NOMBRE RÉEL D'ALBUMS possédés, indépendamment du tome, par le titre/la série :
+   SELECT COUNT(*) FROM notice
+   WHERE (serie LIKE '%Lucky Luke%' OR titre LIKE '%Lucky Luke%')
+Puis seulement, en complément, signaler les éventuels tomes numérotés manquants
+EN PRÉCISANT que beaucoup d'albums n'ont pas de numéro et que le décompte par
+tome est indicatif, jamais le compte réel. Ne jamais annoncer « il ne manque
+que N tomes » ou « nous n'en avons que N » sur la seule base des numéros.
+Les albums d'une même série peuvent en plus être répartis sur plusieurs cotes
+(BDJ, FJ, BD...) : ne pas restreindre le comptage à une seule cote.
 
 Pour "manque-t-il des tomes dans les BD jeunesse ?" ou toute série :
 1. Requête de base pour une série :
