@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.maat.enrichissementseries</string>
+
+	<key>ProgramArguments</key>
+	<array>
+		<string>/Library/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python</string>
+		<string>-u</string>
+		<string>/Users/thomaslafargue/Desktop/inventaire_isbn/service_enrichissement_series.py</string>
+	</array>
+
+	<key>WorkingDirectory</key>
+	<string>/Users/thomaslafargue/Desktop/inventaire_isbn</string>
+
+	<!-- Logs hors de ~/Desktop (dossier protégé par macOS/TCC : launchd ouvre
+	     ces fichiers avant de lancer le programme et échouerait sinon). -->
+	<key>StandardOutPath</key>
+	<string>/tmp/journal_enrichissement_series.log</string>
+	<key>StandardErrorPath</key>
+	<string>/tmp/journal_enrichissement_series.log</string>
+
+	<!-- Démarre à l'installation et à chaque ouverture de session -->
+	<key>RunAtLoad</key>
+	<true/>
+
+	<!-- Relancé UNIQUEMENT en cas d'arrêt anormal (crash, coupure réseau,
+	     redémarrage). Quand la campagne est réellement finie, le script sort
+	     avec le code 0 et launchd ne le relance pas. -->
+	<key>KeepAlive</key>
+	<dict>
+		<key>SuccessfulExit</key>
+		<false/>
+	</dict>
+
+	<key>ProcessType</key>
+	<string>Background</string>
+
+	<!-- Laisse passer une coupure réseau passagère avant de relancer -->
+	<key>ThrottleInterval</key>
+	<integer>30</integer>
+</dict>
+</plist>

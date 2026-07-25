@@ -29,7 +29,13 @@ echo "── 2/3 Critiques jeunesse Ricochet (dont BD & manga)..."
 python3 veille_ricochet.py || echo "⚠ Veille Ricochet échouée (sans effet sur les autres)."
 
 echo ""
-echo "── 3/3 Prix littéraires jeunesse (Sorcières, Incorruptibles)..."
+echo "── 3/4 Coups de cœur des libraires (Place des Libraires)..."
+# Curation professionnelle de libraires indépendants, données Dilicom.
+# Seule veille dont le rapprochement avec le fonds est EXACT (par ISBN).
+python3 veille_place_des_libraires.py || echo "⚠ Veille Place des Libraires échouée (sans effet sur les autres)."
+
+echo ""
+echo "── 4/4 Prix littéraires jeunesse (Sorcières, Incorruptibles)..."
 # Idempotent : ne ré-ajoute jamais un titre déjà suggéré. Utile chaque
 # semaine pour que toute mise à jour de la liste de référence soit
 # immédiatement répercutée, même si la liste elle-même ne change que 1 à
