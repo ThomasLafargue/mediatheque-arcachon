@@ -43,6 +43,13 @@ echo "── 4/4 Prix littéraires jeunesse (Sorcières, Incorruptibles)..."
 python3 veille_prix_litteraires.py || echo "⚠ Veille prix littéraires échouée (sans effet sur les autres)."
 
 echo ""
+echo "── Contrôle de santé des sources..."
+# Détecte les sources devenues muettes. Sans ce contrôle, une panne passe
+# inaperçue des semaines (cas vécu avec Cultura) : le moteur avale les échecs
+# en silence et l'enrichissement s'appauvrit sans aucun signal.
+python3 surveiller_sources.py || echo "⚠ Contrôle des sources échoué (sans effet sur la veille)."
+
+echo ""
 echo "════════════════════════════════════════════════════"
 echo "  ✓ Veille terminée — suggestions consultables dans le chat"
 echo "════════════════════════════════════════════════════"
