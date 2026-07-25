@@ -1,0 +1,1756 @@
+# Carte du site placedeslibraires.fr
+
+> Relevé automatique — 2026-07-25 — 60 pages explorées.
+> Le site n'a pas de plan public ; cette carte est reconstruite par exploration
+> des liens internes depuis l'accueil (profondeur 2, fiches livres exclues).
+
+Intérêt pour la médiathèque : les **sélections** sont des listes thématiques
+faites par des libraires (prix littéraires, rentrée, pépites jeunesse...) —
+c'est la matière première de la veille d'acquisition. Les **rayons** servent
+à cibler un domaine (jeunesse, BD, polar...) pour chaque agent.
+
+## Sélections de libraires  (/list-NNNN/ et coups de cœur)  (549)
+
+- **#Colère - Une sélection de notre partenaire Vive La CultureVoir tout** — `/list-56700/colere-une-selection-de-notre-partenaire-vive-la-culture/`
+- **01/11/2023 - LGL** — `/list-145844/dans-la-grande-librairie-du-mercredi-1er-novembre-2023/`
+- **06/12/2023 - LGL** — `/list-148199/dans-la-grande-librairie-du-mercredi-6-decembre-2023/`
+- **08/11/2023 - LGL** — `/list-146453/dans-la-grande-librairie-du-mercredi-8-novembre-2023/`
+- **1 jour sans viande - 19 février 2016Voir tout** — `/list-9574/1-jour-sans-viande-19-fevrier-2016/`
+- **11/10/2023 - LGL** — `/list-144625/dans-la-grande-librairie-du-mercredi-11-octobre-2023/`
+- **13/12/2023 - LGL** — `/list-148650/dans-la-grande-librairie-du-mercredi-13-decembre-2023/`
+- **15/11/2023 - LGL** — `/list-146654/dans-la-grande-librairie-du-mercredi-15-novembre-2023/`
+- **18/10/2023 - LGL** — `/list-144970/dans-la-grande-librairie-du-mercredi-18-octobre-2023/`
+- **2** — `/coups-de-coeur/?type_page=coupcoeur&page=2`
+- **2** — `/list-198888/fernando-pessoa-la-presse-en-parle/?num_table=198888&type_page=tables&page=2`
+- **2** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?num_table=190675&type_page=tables&page=2`
+- **2** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?num_table=189435&type_page=tables&page=2`
+- **2** — `/list-162649/festival-america-2024/?num_table=162649&type_page=tables&page=2`
+- **2** — `/list-162099/les-enchanteurs-de-james-ellroy/?num_table=162099&type_page=tables&page=2`
+- **2** — `/list-161598/femmes-sculptrices/?num_table=161598&type_page=tables&page=2`
+- **2** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?num_table=190807&type_page=tables&page=2`
+- **2** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?num_table=188636&type_page=tables&page=2`
+- **2** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?num_table=188276&type_page=tables&page=2`
+- **2** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?num_table=188178&type_page=tables&page=2`
+- **2** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?num_table=179339&type_page=tables&page=2`
+- **2** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?num_table=179338&type_page=tables&page=2`
+- **2** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?num_table=179121&type_page=tables&page=2`
+- **20/12/2023 - LGL** — `/list-148866/les-docs-de-la-grande-librairie-mercredi-20-decembre-2023/`
+- **2026, Année George SandVoir tout** — `/list-197540/2026-annee-george-sand/`
+- **22/11/2023 - LGL** — `/list-147145/dans-la-grande-librairie-du-mercredi-22-novembre-2023/`
+- **25/10/2023 - LGL** — `/list-145440/dans-la-grande-librairie-du-mercredi-25-octobre-2023/`
+- **29/11/2023 - LGL** — `/list-147820/dans-la-grande-librairie-du-mercredi-29-novembre-2023/`
+- **3** — `/coups-de-coeur/?type_page=coupcoeur&page=3`
+- **3** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?num_table=188178&type_page=tables&page=3`
+- **3** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?num_table=179338&type_page=tables&page=3`
+- **4/10/2023 - LGL** — `/list-144147/dans-la-grande-librairie-du-4-octobre-2023/`
+- **40eédition du Quai des Bulles : la BD néerlandaise à l'honneurVoir tou** — `/list-107599/40e-edition-du-quai-des-bulles-la-bd-neerlandaise-a-l-honneur/`
+- **46 ans d'horizons lointains avec les Éditions MétailiéVoir tout** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/`
+- **A l'approche du printemps, la sélection Kibookin "Jeunes Pousses"Voir ** — `/list-94453/a-l-approche-du-printemps-la-selection-kibookin-jeunes-pousses/`
+- **A la découverte de Mnémos, la maison de prestige du Fantastique et de ** — `/list-132482/a-la-decouverte-de-mnemos-la-maison-de-prestige-du-fantastique-et-de-la-sf/`
+- **AOC MédiaVoir tout** — `/list-106218/aoc-media/?recherche_base=allbooks`
+- **Adonis** — `/list-153657/adonis/`
+- **Agnès Varda (1928-2019)Voir tout** — `/list-149702/agnes-varda-1928-2019/`
+- **Alain Damasio** — `/list-154802/alain-damasio/`
+- **André Juillard, maître de la BD historiqueVoir tout** — `/list-160022/andre-juillard-maitre-de-la-bd-historique/?recherche_base=paper`
+- **António Lobo Antunes : 1942-2026Voir tout** — `/list-191718/antonio-lobo-antunes-1942-2026/?recherche_base=paper`
+- **Au pied du sapin - Noël pour les plus jeunesVoir tout** — `/list-168381/au-pied-du-sapin-noel-pour-les-plus-jeunes/`
+- **Autour de TolkienVoir tout** — `/list-164206/autour-de-tolkien/`
+- **Bandes-annonces dessinéesVoir tout** — `/list-121257/bandes-annonces-dessinees/`
+- **Basquiat / WarholVoir tout** — `/list-137469/basquiat-warhol/`
+- **BookaliciousVoir tout** — `/list-37462/bookalicious/`
+- **BotticelliVoir tout** — `/list-108799/botticelli/`
+- **Bruno Latour, la pensée de l'écologieVoir tout** — `/list-126087/bruno-latour-la-pensee-de-l-ecologie/`
+- **Camille Pascal** — `/list-162033/camille-pascal/`
+- **Coups de Cœur de nos StagiairesVoir tout** — `/list-198518/coups-de-coeur-de-nos-stagiaires/`
+- **Coups de coeur** — `/coups-de-coeur/`
+- **Dans La Grande Librairie du mardi 11 mars 2025Voir tout** — `/list-172506/dans-la-grande-librairie-du-mardi-11-mars-2025/`
+- **Dans La Grande Librairie du mercredi 10 avril 2024Voir tout** — `/list-154801/dans-la-grande-librairie-du-mercredi-10-avril-2024/`
+- **Dans La Grande Librairie du mercredi 10 décembre 2025Voir tout** — `/list-186881/dans-la-grande-librairie-du-mercredi-10-decembre-2025/`
+- **Dans La Grande Librairie du mercredi 10 janvier 2024Voir tout** — `/list-149297/dans-la-grande-librairie-du-mercredi-10-janvier-2024/`
+- **Dans La Grande Librairie du mercredi 10 septembre 2025Voir tout** — `/list-180662/dans-la-grande-librairie-du-mercredi-10-septembre-2025/`
+- **Dans La Grande Librairie du mercredi 11 février 2026Voir tout** — `/list-190262/dans-la-grande-librairie-du-mercredi-11-fevrier-2026/`
+- **Dans La Grande Librairie du mercredi 11 mars 2026Voir tout** — `/list-191993/dans-la-grande-librairie-du-mercredi-11-mars-2026/`
+- **Dans La Grande Librairie du mercredi 11 septembre 2024Voir tout** — `/list-161559/dans-la-grande-librairie-du-mercredi-11-septembre-2024/`
+- **Dans La Grande Librairie du mercredi 12 février 2025Voir tout** — `/list-170985/dans-la-grande-librairie-du-mercredi-12-fevrier-2025/`
+- **Dans La Grande Librairie du mercredi 13 mars 2024Voir tout** — `/list-153243/dans-la-grande-librairie-du-mercredi-13-mars-2024/`
+- **Dans La Grande Librairie du mercredi 14 février 2024Voir tout** — `/list-151605/dans-la-grande-librairie-du-mercredi-14-fevrier-2024/`
+- **Dans La Grande Librairie du mercredi 14 janvier 2026Voir tout** — `/list-188552/dans-la-grande-librairie-du-mercredi-14-janvier-2026/`
+- **Dans La Grande Librairie du mercredi 14 mai 2025Voir tout** — `/list-175564/dans-la-grande-librairie-du-mercredi-14-mai-2025/`
+- **Dans La Grande Librairie du mercredi 15 avril 2026Voir tout** — `/list-194256/dans-la-grande-librairie-du-mercredi-15-avril-2026/`
+- **Dans La Grande Librairie du mercredi 15 janvier 2025Voir tout** — `/list-169304/dans-la-grande-librairie-du-mercredi-15-janvier-2025/`
+- **Dans La Grande Librairie du mercredi 15 mai 2024Voir tout** — `/list-156199/dans-la-grande-librairie-du-mercredi-15-mai-2024/?recherche_base=paper`
+- **Dans La Grande Librairie du mercredi 15 octobre 2025Voir tout** — `/list-183072/dans-la-grande-librairie-du-mercredi-15-octobre-2025/`
+- **Dans La Grande Librairie du mercredi 16 octobre 2024Voir tout** — `/list-163780/dans-la-grande-librairie-du-mercredi-16-octobre-2024/`
+- **Dans La Grande Librairie du mercredi 17 décembre 2025Voir tout** — `/list-187330/dans-la-grande-librairie-du-mercredi-17-decembre-2025/`
+- **Dans La Grande Librairie du mercredi 17 janvier 2024Voir tout** — `/list-149982/dans-la-grande-librairie-du-mercredi-17-janvier-2024/`
+- **Dans La Grande Librairie du mercredi 17 juin 2026Voir tout** — `/list-198473/dans-la-grande-librairie-du-mercredi-17-juin-2026/`
+- **Dans La Grande Librairie du mercredi 17 septembre 2025Voir tout** — `/list-181096/dans-la-grande-librairie-du-mercredi-17-septembre-2025/`
+- **Dans La Grande Librairie du mercredi 18 décembre 2024Voir tout** — `/list-168947/dans-la-grande-librairie-du-mercredi-18-decembre-2024/`
+- **Dans La Grande Librairie du mercredi 18 février 2026Voir tout** — `/list-190674/dans-la-grande-librairie-du-mercredi-18-fevrier-2026/`
+- **Dans La Grande Librairie du mercredi 18 mars 2026Voir tout** — `/list-192594/dans-la-grande-librairie-du-mercredi-18-mars-2026/`
+- **Dans La Grande Librairie du mercredi 18 septembre 2024Voir tout** — `/list-162028/dans-la-grande-librairie-du-mercredi-18-septembre-2024/`
+- **Dans La Grande Librairie du mercredi 19 février 2025Voir tout** — `/list-171260/dans-la-grande-librairie-du-mercredi-19-fevrier-2025/`
+- **Dans La Grande Librairie du mercredi 1eravril 2026Voir tout** — `/list-193520/dans-la-grande-librairie-du-mercredi-1er-avril-2026/`
+- **Dans La Grande Librairie du mercredi 1ermai 2024Voir tout** — `/list-155903/dans-la-grande-librairie-du-mercredi-1er-mai-2024/`
+- **Dans La Grande Librairie du mercredi 1eroctobre 2025Voir tout** — `/list-182158/dans-la-grande-librairie-du-mercredi-1er-octobre-2025/`
+- **Dans La Grande Librairie du mercredi 2 avril 2025Voir tout** — `/list-173745/dans-la-grande-librairie-du-mercredi-2-avril-2025/`
+- **Dans La Grande Librairie du mercredi 2 octobre 2024Voir tout** — `/list-162989/dans-la-grande-librairie-du-mercredi-2-octobre-2024/`
+- **Dans La Grande Librairie du mercredi 20 mars 2024Voir tout** — `/list-153601/dans-la-grande-librairie-du-mercredi-20-mars-2024/`
+- **Dans La Grande Librairie du mercredi 21 février 2024Voir tout** — `/list-152064/dans-la-grande-librairie-du-mercredi-21-fevrier-2024/`
+- **Dans La Grande Librairie du mercredi 21 janvier 2026Voir tout** — `/list-188916/dans-la-grande-librairie-du-mercredi-21-janvier-2026/`
+- **Dans La Grande Librairie du mercredi 21 mai 2025Voir tout** — `/list-176223/dans-la-grande-librairie-du-mercredi-21-mai-2025/`
+- **Dans La Grande Librairie du mercredi 22 janvier 2025Voir tout** — `/list-170091/dans-la-grande-librairie-du-mercredi-22-janvier-2025/`
+- **Dans La Grande Librairie du mercredi 22 octobre 2025Voir tout** — `/list-183484/dans-la-grande-librairie-du-mercredi-22-octobre-2025/`
+- **Dans La Grande Librairie du mercredi 23 avril 2025Voir tout** — `/list-174953/dans-la-grande-librairie-du-mercredi-23-avril-2025/`
+- **Dans La Grande Librairie du mercredi 23 octobre 2024Voir tout** — `/list-164178/dans-la-grande-librairie-du-mercredi-23-octobre-2024/`
+- **Dans La Grande Librairie du mercredi 24 avril 2024Voir tout** — `/list-155471/dans-la-grande-librairie-du-mercredi-24-avril-2024/`
+- **Dans La Grande Librairie du mercredi 24 janvier 2024Voir tout** — `/list-150461/dans-la-grande-librairie-du-mercredi-24-janvier-2024/`
+- **Dans La Grande Librairie du mercredi 24 septembre 2025Voir tout** — `/list-181493/dans-la-grande-librairie-du-mercredi-24-septembre-2025/`
+- **Dans La Grande Librairie du mercredi 25 février 2026Voir tout** — `/list-191117/dans-la-grande-librairie-du-mercredi-25-fevrier-2026/`
+- **Dans La Grande Librairie du mercredi 25 juin 2025Voir tout** — `/list-177754/dans-la-grande-librairie-du-mercredi-25-juin-2025/`
+- **Dans La Grande Librairie du mercredi 25 mars 2026Voir tout** — `/list-193021/dans-la-grande-librairie-du-mercredi-25-mars-2026/`
+- **Dans La Grande Librairie du mercredi 25 septembre 2024Voir tout** — `/list-162511/dans-la-grande-librairie-du-mercredi-25-septembre-2024/`
+- **Dans La Grande Librairie du mercredi 26 février 2025Voir tout** — `/list-171729/dans-la-grande-librairie-du-mercredi-26-fevrier-2025/`
+- **Dans La Grande Librairie du mercredi 26 mars 2025Voir tout** — `/list-172930/dans-la-grande-librairie-du-mercredi-26-mars-2025/`
+- **Dans La Grande Librairie du mercredi 26 novembre 2025Voir tout** — `/list-185762/dans-la-grande-librairie-du-mercredi-26-novembre-2025/`
+- **Dans La Grande Librairie du mercredi 27 mai 2026Voir tout** — `/list-197039/dans-la-grande-librairie-du-mercredi-27-mai-2026/`
+- **Dans La Grande Librairie du mercredi 27 mars 2024Voir tout** — `/list-154130/dans-la-grande-librairie-du-mercredi-27-mars-2024/`
+- **Dans La Grande Librairie du mercredi 27 novembre 2024Voir tout** — `/list-167213/dans-la-grande-librairie-du-mercredi-27-novembre-2024/`
+- **Dans La Grande Librairie du mercredi 28 février 2024Voir tout** — `/list-152557/dans-la-grande-librairie-du-mercredi-28-fevrier-2024/`
+- **Dans La Grande Librairie du mercredi 28 janvier 2026Voir tout** — `/list-189418/dans-la-grande-librairie-du-mercredi-28-janvier-2026/`
+- **Dans La Grande Librairie du mercredi 28 mai 2025Voir tout** — `/list-176693/dans-la-grande-librairie-du-mercredi-28-mai-2025/`
+- **Dans La Grande Librairie du mercredi 29 avril 2026Voir tout** — `/list-195429/dans-la-grande-librairie-du-mercredi-29-avril-2026/`
+- **Dans La Grande Librairie du mercredi 29 octobre 2025Voir tout** — `/list-183917/dans-la-grande-librairie-du-mercredi-29-octobre-2025/`
+- **Dans La Grande Librairie du mercredi 3 avril 2024Voir tout** — `/list-154389/dans-la-grande-librairie-du-mercredi-3-avril-2024/`
+- **Dans La Grande Librairie du mercredi 3 septembre 2025Voir tout** — `/list-180355/dans-la-grande-librairie-du-mercredi-3-septembre-2025/`
+- **Dans La Grande Librairie du mercredi 30 avril 2025Voir tout** — `/list-175269/dans-la-grande-librairie-du-mercredi-30-avril-2025/`
+- **Dans La Grande Librairie du mercredi 30 octobre 2024Voir tout** — `/list-165188/dans-la-grande-librairie-du-mercredi-30-octobre-2024/`
+- **Dans La Grande Librairie du mercredi 31 janvier 2024Voir tout** — `/list-150903/dans-la-grande-librairie-du-mercredi-31-janvier-2024/`
+- **Dans La Grande Librairie du mercredi 4 décembre 2024Voir tout** — `/list-167511/dans-la-grande-librairie-du-mercredi-4-decembre-2024/`
+- **Dans La Grande Librairie du mercredi 4 février 2026Voir tout** — `/list-189831/dans-la-grande-librairie-du-mercredi-4-fevrier-2026/`
+- **Dans La Grande Librairie du mercredi 4 juin 2025Voir tout** — `/list-176694/dans-la-grande-librairie-du-mercredi-4-juin-2025/`
+- **Dans La Grande Librairie du mercredi 4 mars 2026Voir tout** — `/list-191579/dans-la-grande-librairie-du-mercredi-4-mars-2026/`
+- **Dans La Grande Librairie du mercredi 4 septembre 2024Voir tout** — `/list-161261/dans-la-grande-librairie-du-mercredi-4-septembre-2024/`
+- **Dans La Grande Librairie du mercredi 5 février 2025Voir tout** — `/list-170504/dans-la-grande-librairie-du-mercredi-5-fevrier-2025/`
+- **Dans La Grande Librairie du mercredi 5 juin 2024Voir tout** — `/list-157653/dans-la-grande-librairie-du-mercredi-5-juin-2024/`
+- **Dans La Grande Librairie du mercredi 5 mars 2025Voir tout** — `/list-172122/dans-la-grande-librairie-du-mercredi-5-mars-2025/`
+- **Dans La Grande Librairie du mercredi 5 novembre 2025Voir tout** — `/list-184415/dans-la-grande-librairie-du-mercredi-5-novembre-2025/`
+- **Dans La Grande Librairie du mercredi 6 mars 2024Voir tout** — `/list-152871/dans-la-grande-librairie-du-mercredi-6-mars-2024/`
+- **Dans La Grande Librairie du mercredi 7 février 2024Voir tout** — `/list-151250/dans-la-grande-librairie-du-mercredi-7-fevrier-2024/`
+- **Dans La Grande Librairie du mercredi 7 janvier 2026Voir tout** — `/list-188174/dans-la-grande-librairie-du-mercredi-7-janvier-2026/`
+- **Dans La Grande Librairie du mercredi 7 mai 2025Voir tout** — `/list-175612/dans-la-grande-librairie-du-mercredi-7-mai-2025/`
+- **Dans La Grande Librairie du mercredi 8 janvier 2025Voir tout** — `/list-168948/dans-la-grande-librairie-du-mercredi-8-janvier-2025/`
+- **Dans La Grande Librairie du mercredi 8 octobre 2025Voir tout** — `/list-182676/dans-la-grande-librairie-du-mercredi-8-octobre-2025/`
+- **Dans La Grande Librairie du mercredi 9 avril 2025Voir tout** — `/list-173744/dans-la-grande-librairie-du-mercredi-9-avril-2025/`
+- **Dans La Grande Librairie du mercredi 9 octobre 2024Voir tout** — `/list-163343/dans-la-grande-librairie-du-mercredi-9-octobre-2024/`
+- **Dans Le Masque et la Plume du dimanche 11 février 2024Voir tout** — `/list-151536/dans-le-masque-et-la-plume-du-dimanche-11-fevrier-2024/`
+- **Dans Le Masque et la Plume du dimanche 14 janvier 2024Voir tout** — `/list-149846/dans-le-masque-et-la-plume-du-dimanche-14-janvier-2024/`
+- **Dans la Grande Librairie du mercredi 12 novembre 2025 : Boualem Sansal** — `/list-184836/dans-la-grande-librairie-du-mercredi-12-novembre-2025-boualem-sansal/`
+- **Dans la Grande Librairie du mercredi 19 novembre 2025Voir tout** — `/list-185186/dans-la-grande-librairie-du-mercredi-19-novembre-2025/`
+- **Dark Fantasy : Plongée dans l'imaginaire de la pénombreVoir tout** — `/list-160493/dark-fantasy-plongee-dans-l-imaginaire-de-la-penombre/`
+- **David Hockney, l'exposition : peindre la NormandieVoir tout** — `/list-107250/david-hockney-l-exposition-peindre-la-normandie/`
+- **David Hockney, le jongleur de la couleurVoir tout** — `/list-198156/david-hockney-le-jongleur-de-la-couleur/`
+- **David Lynch - Fire will Walk with Us foreverVoir tout** — `/list-170179/david-lynch-fire-will-walk-with-us-forever/`
+- **De la Musique avant toute choseVoir tout** — `/list-173743/de-la-musique-avant-toute-chose/`
+- **Des BD pour NoëlVoir tout** — `/list-168093/des-bd-pour-noel/`
+- **Des Fleurs, pas des pesticides !Voir tout** — `/list-193022/des-fleurs-pas-des-pesticides/`
+- **Des Livres au Cinéma - Août 2025Voir tout** — `/list-179436/des-livres-au-cinema-aout-2025/`
+- **Des Livres au Cinéma - Avril 2026Voir tout** — `/list-193644/des-livres-au-cinema-avril-2026/`
+- **Des Livres au Cinéma - Décembre 2025Voir tout** — `/list-186504/des-livres-au-cinema-decembre-2025/`
+- **Des Livres au Cinéma - Février 2026Voir tout** — `/list-189885/des-livres-au-cinema-fevrier-2026/`
+- **Des Livres au Cinéma - Janvier 2026Voir tout** — `/list-188209/des-livres-au-cinema-janvier-2026/`
+- **Des Livres au Cinéma - Juillet 2025Voir tout** — `/list-179435/des-livres-au-cinema-juillet-2025/`
+- **Des Livres au Cinéma - Juillet 2026Voir tout** — `/list-198956/des-livres-au-cinema-juillet-2026/`
+- **Des Livres au Cinéma - Juin 2025Voir tout** — `/list-179434/des-livres-au-cinema-juin-2025/`
+- **Des Livres au Cinéma - Juin 2026Voir tout** — `/list-197206/des-livres-au-cinema-juin-2026/`
+- **Des Livres au Cinéma - Mai 2025Voir tout** — `/list-179433/des-livres-au-cinema-mai-2025/`
+- **Des Livres au Cinéma - Mai 2026Voir tout** — `/list-195443/des-livres-au-cinema-mai-2026/`
+- **Des Livres au Cinéma - Mars 2026Voir tout** — `/list-191704/des-livres-au-cinema-mars-2026/`
+- **Des Livres au Cinéma - Novembre 2025Voir tout** — `/list-184143/des-livres-au-cinema-novembre-2025/`
+- **Des Livres au Cinéma - Octobre 2025Voir tout** — `/list-182280/des-livres-au-cinema-octobre-2025/`
+- **Des Livres au Cinéma - Septembre 2025Voir tout** — `/list-180354/des-livres-au-cinema-septembre-2025/`
+- **Des Livres au Cinéma - Spécial Césars 2026Voir tout** — `/list-191335/des-livres-au-cinema-special-cesars-2026/`
+- **Des femmes et du foot - Une sélection de notre partenaire Vive La Cult** — `/list-44763/des-femmes-et-du-foot-une-selection-de-notre-partenaire-vive-la-culture/`
+- **Dominique Eddé** — `/list-153257/dominique-edde/`
+- **Dune : découvrez la suite du film !Voir tout** — `/list-105260/dune-decouvrez-la-suite-du-film/`
+- **Découvrez Doctor Who avec un livre inédit et exclusif en France - et d** — `/list-108236/decouvrez-doctor-who-avec-un-livre-inedit-et-exclusif-en-france-et-d-autres-livres-revenant-sur-les-classiques-de-la-sf/`
+- **Délivrées !Voir tout** — `/list-144795/delivrees/`
+- **Edgar Morin, pour une pensée complexeVoir tout** — `/list-197405/edgar-morin-pour-une-pensee-complexe/`
+- **Edouard Louis** — `/list-155473/edouard-louis/`
+- **En 2020, les filles sont de la partie - Sélection KibookinVoir tout** — `/list-77575/en-2020-les-filles-sont-de-la-partie-selection-kibookin/`
+- **Essais - FéminismeVoir tout** — `/list-56695/essais-feminisme/`
+- **Essais JeunesseVoir tout** — `/list-37792/essais-jeunesse/`
+- **Et voici les Pépites 2023 du Salon du Livre et Presse Jeunesse de Sein** — `/list-144721/et-voici-les-pepites-2023-du-salon-du-livre-et-presse-jeunesse-de-seine-saint-denis-du-29-11-au-04-12/`
+- **Femmes sculptricesVoir tout** — `/list-161598/femmes-sculptrices/`
+- **Fernando Pessoa - La Presse en parleVoir tout** — `/list-198888/fernando-pessoa-la-presse-en-parle/`
+- **Festival America 2024Voir tout** — `/list-162649/festival-america-2024/`
+- **François Sureau** — `/list-154152/francois-sureau/`
+- **Félipé 2020** — `/list-85700/selection-2020-du-felipe-jeunesse-festival-du-livre-et-de-la-presse-d-39-ecologie/`
+- **Gabriel García MárquezVoir tout** — `/list-194296/gabriel-garc-a-marquez/`
+- **GaudíVoir tout** — `/list-120317/gaud/`
+- **Gaëlle Josse** — `/list-153653/gaelle-josse/`
+- **George Sand, l'avant-garde féministeVoir tout** — `/list-175289/george-sand-l-avant-garde-feministe/`
+- **Giovanni Bellini. La Renaissance à VeniseVoir tout** — `/list-133588/giovanni-bellini-la-renaissance-a-venise/`
+- **Goldorak : de retour avec une nouvelle BD française inédite !Voir tout** — `/list-107247/goldorak-de-retour-avec-une-nouvelle-bd-francaise-inedite/`
+- **Grand Prix de l'Académie française - Première sélectionVoir tout** — `/list-162806/grand-prix-de-l-academie-francaise-premiere-selection/`
+- **Grand Prix de l'Académie française 2025 - Deuxième sélectionVoir tout** — `/list-183294/grand-prix-de-l-academie-francaise-2025-deuxieme-selection/`
+- **Grand Prix du Roman de l'Académie française 2025 - Première sélectionV** — `/list-182455/grand-prix-du-roman-de-l-academie-francaise-2025-premiere-selection/`
+- **Guide de cadeaux pour adolescents par Morgan NoamVoir tout** — `/list-168382/guide-de-cadeaux-pour-adolescents-par-morgan-noam/`
+- **Guide de cadeaux pour enfants par Morgan NoamVoir tout** — `/list-167937/guide-de-cadeaux-pour-enfants-par-morgan-noam/`
+- **Guy Marchand.. TristesseVoir tout** — `/list-148753/guy-marchand-tristesse/`
+- **Halloween au CinémaVoir tout** — `/list-183049/halloween-au-cinema/`
+- **Han Kang, prix Nobel de littérature 2024Voir tout** — `/list-163558/han-kang-prix-nobel-de-litterature-2024/`
+- **Hermann, grande figure de la BD européenneVoir tout** — `/list-193115/hermann-grande-figure-de-la-bd-europeenne/`
+- **Hervé Le Tellier** — `/list-155917/herve-le-tellier/`
+- **Ilya Répine : peindre l'âme russe, exposition au Petit Palais, à Paris** — `/list-107392/ilya-repine-peindre-l-ame-russe-exposition-au-petit-palais-a-paris/`
+- **James Ellroy** — `/list-162512/james-ellroy/`
+- **Jean-Paul Dubois** — `/list-153648/jean-paul-dubois/`
+- **Jeunesse & EcologieVoir tout** — `/list-8888/jeunesse-et-ecologie/`
+- **Jeunesse - FéminismeVoir tout** — `/list-56697/jeunesse-feminisme/`
+- **Jo Nesbø, maître du polar scandinaveVoir tout** — `/list-161316/jo-nesb-maitre-du-polar-scandinave/`
+- **Jouer à se faire peur par Le Salon du livre et de la presse jeunesse -** — `/list-145939/jouer-a-se-faire-peur-par-le-salon-du-livre-et-de-la-presse-jeunesse-un-voyage-litteraire-et-initiatique-pour-apprendre-a-depasser-ses-peurs/`
+- **Journal d'un NobelVoir tout** — `/list-149230/journal-d-un-nobel/`
+- **Journée Internationale des DROITS des Femmes - 8 mars 2024Voir tout** — `/list-153063/journee-internationale-des-droits-des-femmes-8-mars-2024/`
+- **Journée Internationale des Droits des Femmes 8 mars 2021Voir tout** — `/list-88867/journee-internationale-des-droits-des-femmes-8-mars-2021/`
+- **Journée Internationale des Droits des Femmes 8 mars 2022Voir tout** — `/list-116073/journee-internationale-des-droits-des-femmes-8-mars-2022/`
+- **Journée Mondiale de l'Environnement - 5 juin 2019Voir tout** — `/list-44533/journee-mondiale-de-l-environnement-5-juin-2019/`
+- **Journée internationale Nelson Mandela 2026Voir tout** — `/list-200191/journee-internationale-nelson-mandela-2026/`
+- **Journée internationale de lutte contre la violence et le harcèlement e** — `/list-108792/journee-internationale-de-lutte-contre-la-violence-et-le-harcelement-en-milieu-scolaire/`
+- **Journée internationale de lutte contre les violences faites aux femmes** — `/list-147426/journee-internationale-de-lutte-contre-les-violences-faites-aux-femmes-25-novembre-2023/`
+- **Journée internationale de lutte contre les violences sexistes et sexue** — `/list-84973/journee-internationale-de-lutte-contre-les-violences-sexistes-et-sexuelles-25-novembre-2020/`
+- **Journée internationale des femmes et des filles de science - 11 févrie** — `/list-170593/journee-internationale-des-femmes-et-des-filles-de-science-11-fevrier-2025/`
+- **Jérôme Ferrari** — `/list-161263/jerome-ferrari/`
+- **Kamel Daoud** — `/list-162030/kamel-daoud/`
+- **Kibookin - Le portail du salon du livre et de la presse jeunesseVoir t** — `/list-55618/kibookin-le-portail-du-salon-du-livre-et-de-la-presse-jeunesse/`
+- **L'Art est dans la rue et dans les livresVoir tout** — `/list-175290/l-art-est-dans-la-rue-et-dans-les-livres/`
+- **L'auteur de bande dessinée Jean-Paul Krassinsky nous a quittésVoir tou** — `/list-193726/l-auteur-de-bande-dessinee-jean-paul-krassinsky-nous-a-quittes/?recherche_base=paper`
+- **L'hymne à la Poésie de Thomas SchlesserVoir tout** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/`
+- **L'écologie dans la bande dessinéeVoir tout** — `/list-8889/l-ecologie-dans-la-bande-dessinee/`
+- **L'écologie en livresVoir tout** — `/list-8887/l-ecologie-en-livres/`
+- **La Fête de la Musique... en dessin !Voir tout** — `/list-198395/la-fete-de-la-musique-en-dessin/`
+- **La Littérature en vogue dans le Mezzogiorno italienVoir tout** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/`
+- **La Poésie au Cinéma dansUn poètede Simón Mesa SotoVoir tout** — `/list-183491/la-poesie-au-cinema-dans-un-poete-de-simon-mesa-soto/`
+- **La Renaissance fait le PrintempsVoir tout** — `/list-175017/la-renaissance-fait-le-printemps/`
+- **La Rentrée littéraire d'Hiver 2026 n'est pas terminée !Voir tout** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/`
+- **La Roue du Temps : la saga de fantasy, vendue à plus de 80 millions d'** — `/list-108549/la-roue-du-temps-la-saga-de-fantasy-vendue-a-plus-de-80-millions-d-exemplaires-ecrite-par-robert-jordan-et-brandon-sanderson/`
+- **La Série Noire fête ses 80 ansVoir tout** — `/list-175121/la-serie-noire-fete-ses-80-ans/`
+- **La collection Rivages/Noir fête ses 40 ansVoir tout** — `/list-193468/la-collection-rivages-noir-fete-ses-40-ans/`
+- **La rentrée des livres de poche 2024Voir tout** — `/list-161267/la-rentree-des-livres-de-poche-2024/`
+- **La sélection jeunesse Kibookin de la semaineVoir tout** — `/list-105103/la-selection-jeunesse-kibookin-de-la-semaine/`
+- **La tectonique des corps, la sélection du Salon du livre et de la press** — `/list-150178/la-tectonique-des-corps-la-selection-du-salon-du-livre-et-de-la-presse-jeunesse-pour-les-nuits-de-la-lecture-2024-du-18-au-21-janvier-2024/`
+- **La ville qui vous entoure cache bien plus qu'il n'y paraîtVoir tout** — `/list-175291/la-ville-qui-vous-entoure-cache-bien-plus-qu-il-n-y-parait/`
+- **Laurent Mauvignier, lauréat du prix Goncourt 2025Voir tout** — `/list-184817/laurent-mauvignier-laureat-du-prix-goncourt-2025/`
+- **Le 1 l'hebdo - Hors-série XL spécial Cop 21Voir tout** — `/list-8863/le-1-l-hebdo-hors-serie-xl-special-cop-21/`
+- **Le Bauhaus, construction d'un mouvement de penséeVoir tout** — `/list-198472/le-bauhaus-construction-d-un-mouvement-de-pensee/`
+- **Le Monde merveilleux des insectesVoir tout** — `/list-199803/le-monde-merveilleux-des-insectes/`
+- **Le Petit Prince célèbre ses 80 ansVoir tout** — `/list-193604/le-petit-prince-celebre-ses-80-ans/`
+- **Le dessinateur Clément Oubrerie nous a quittésVoir tout** — `/list-191630/le-dessinateur-clement-oubrerie-nous-a-quittes/?recherche_base=paper`
+- **Le principe d'adaptationVoir tout** — `/list-175054/le-principe-d-adaptation/`
+- **Le retour à la fiction de Salman RushdieVoir tout** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/`
+- **Leonora CarringtonVoir tout** — `/list-194651/leonora-carrington/`
+- **Les 3 lauréats littéraires du Festival de Beaune 2016Voir tout** — `/list-9899/les-3-laureats-litteraires-du-festival-de-beaune-2016/`
+- **Les 30 ans de Quarto, le jardin rebelle de GallimardVoir tout** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/`
+- **Les Arts Déco fêtent leurs 100 ansVoir tout** — `/list-186998/les-arts-deco-fetent-leurs-100-ans/`
+- **Les Beaux Livres 2021Voir tout** — `/list-109291/les-beaux-livres-2021/?recherche_base=allbooks`
+- **Les Choses, exposition du LouvreVoir tout** — `/list-129655/les-choses-exposition-du-louvre/`
+- **Les Docs de La Grande Librairie, mercredi 19 mars 2025Voir tout** — `/list-172932/les-docs-de-la-grande-librairie-mercredi-19-mars-2025/`
+- **Les Docs de La Grande Librairie, mercredi 29 mai 2024Voir tout** — `/list-157293/les-docs-de-la-grande-librairie-mercredi-29-mai-2024/`
+- **Les Défricheurs - éditeurs libresVoir tout** — `/list-105036/les-defricheurs-editeurs-libres/?recherche_base=allbooks`
+- **Les Enchanteursde James EllroyVoir tout** — `/list-162099/les-enchanteurs-de-james-ellroy/`
+- **Les Femmes à l'honneur en LittératureVoir tout** — `/list-191627/les-femmes-a-l-honneur-en-litterature/`
+- **Les Monstres : entre Littérature et Psychanalyse de l'étrangeVoir tout** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/`
+- **Les Prix littéraires de la rentrée 2024Voir tout** — `/list-165046/les-prix-litteraires-de-la-rentree-2024/`
+- **Les Prix littéraires de la rentrée 2025Voir tout** — `/list-186598/les-prix-litteraires-de-la-rentree-2025/`
+- **Les Pépites du SLPJ de Montreuil 2024Voir tout** — `/list-163245/les-pepites-du-slpj-de-montreuil-2024/`
+- **Les Utopiales 2024Voir tout** — `/list-164797/les-utopiales-2024/`
+- **Les Utopiales 2025Voir tout** — `/list-184033/les-utopiales-2025/`
+- **Les coups de cœur des librairies partenaires du Salon du livre et de l** — `/list-148697/les-coups-de-coeur-des-librairies-partenaires-du-salon-du-livre-et-de-la-presse-jeunesse-2023/`
+- **Les femmes au front : récits historiques des combattantes qui prennent** — `/list-117902/les-femmes-au-front-recits-historiques-des-combattantes-qui-prennent-part-aux-guerres/`
+- **Les filles sont de la partie - SLPJ Montreuil** — `/list-94465/les-filles-sont-de-la-partie-par-le-salon-du-livre-et-de-la-presse-jeunesse/`
+- **Les portes du Vieux Royaume - Jean-Philippe JaworskiVoir tout** — `/list-131335/les-portes-du-vieux-royaume-jean-philippe-jaworski/`
+- **Les Éditions Delcourt ont 40 ansVoir tout** — `/list-192052/les-editions-delcourt-ont-40-ans/`
+- **Les Éditions du Regard tirent leur révérenceVoir tout** — `/list-193135/les-editions-du-regard-tirent-leur-reverence/`
+- **Leïla Slimani** — `/list-156202/leila-slimani/`
+- **László Krasznahorkai, prix Nobel de Littérature 2025Voir tout** — `/list-184037/laszlo-krasznahorkai-prix-nobel-de-litterature-2025/`
+- **Maisons d'éditions - Focus sur In Fine Editions d'ArtVoir tout** — `/list-51819/maisons-d-editions-focus-sur-in-fine-editions-d-art/?recherche_base=allbooks`
+- **Marc Bloch entre au PanthéonVoir tout** — `/list-198698/marc-bloch-entre-au-pantheon/`
+- **Marie Robert** — `/list-170503/marie-robert/`
+- **Marion Fayolle, ou la délicate question de l'AmourVoir tout** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/`
+- **Marjane Satrapi, l'autrice dePersepolis, nous a quittésVoir tout** — `/list-197706/marjane-satrapi-l-autrice-de-persepolis-nous-a-quittes/`
+- **Mehdi Charef, une mémoire de la banlieueVoir tout** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/`
+- **Mer et Merveilles par KibookinVoir tout** — `/list-103606/mer-et-merveilles-par-kibookin/`
+- **Mosaïque** — `/coups-de-coeur/?modele=grille`
+- **Mosaïque** — `/list-200191/journee-internationale-nelson-mandela-2026/?modele=grille`
+- **Mosaïque** — `/list-199803/le-monde-merveilleux-des-insectes/?modele=grille`
+- **Mosaïque** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/?modele=grille`
+- **Mosaïque** — `/list-198518/coups-de-coeur-de-nos-stagiaires/?modele=grille`
+- **Mosaïque** — `/list-198698/marc-bloch-entre-au-pantheon/?modele=grille`
+- **Mosaïque** — `/list-198888/fernando-pessoa-la-presse-en-parle/?modele=grille`
+- **Mosaïque** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/?modele=grille`
+- **Mosaïque** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/?modele=grille`
+- **Mosaïque** — `/list-197540/2026-annee-george-sand/?modele=grille`
+- **Mosaïque** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/?modele=grille`
+- **Mosaïque** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/?modele=grille`
+- **Mosaïque** — `/list-193604/le-petit-prince-celebre-ses-80-ans/?modele=grille`
+- **Mosaïque** — `/list-194296/gabriel-garc-a-marquez/?modele=grille`
+- **Mosaïque** — `/list-193022/des-fleurs-pas-des-pesticides/?modele=grille`
+- **Mosaïque** — `/list-191627/les-femmes-a-l-honneur-en-litterature/?modele=grille`
+- **Mosaïque** — `/list-191718/antonio-lobo-antunes-1942-2026/?recherche_base=paper&modele=grille`
+- **Mosaïque** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?modele=grille`
+- **Mosaïque** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?modele=grille`
+- **Mosaïque** — `/list-188576/remi-david-l-ecrivain-magicien/?modele=grille`
+- **Mosaïque** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/?modele=grille`
+- **Mosaïque** — `/list-173743/de-la-musique-avant-toute-chose/?modele=grille`
+- **Mosaïque** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/?modele=grille`
+- **Mosaïque** — `/list-162649/festival-america-2024/?modele=grille`
+- **Mosaïque** — `/list-162598/quand-l-histoire-rencontre-l-histoire/?modele=grille`
+- **Mosaïque** — `/list-162099/les-enchanteurs-de-james-ellroy/?modele=grille`
+- **Mosaïque** — `/list-161598/femmes-sculptrices/?modele=grille`
+- **Mosaïque** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/?modele=grille`
+- **Mosaïque** — `/list-149230/journal-d-un-nobel/?modele=grille`
+- **Mosaïque** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?modele=grille`
+- **Mosaïque** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?modele=grille`
+- **Mosaïque** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?modele=grille`
+- **Mosaïque** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?modele=grille`
+- **Mosaïque** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/?modele=grille`
+- **Mosaïque** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?modele=grille`
+- **Mosaïque** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?modele=grille`
+- **Mosaïque** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?modele=grille`
+- **Naoki Urasawa, le Monstre du MangaVoir tout** — `/list-192533/naoki-urasawa-le-monstre-du-manga/`
+- **Nicolas Mathieu** — `/list-153081/nicolas-mathieu/`
+- **Notre sélection jeunesseVoir tout** — `/list-105447/notre-selection-jeunesse/`
+- **Olivier Adam** — `/list-183483/olivier-adam/`
+- **Omedetô gozaimasu Hayao MiyazakiVoir tout** — `/list-149363/omedeto-gozaimasu-hayao-miyazaki/`
+- **On se sent bien !Voir tout** — `/list-44933/on-se-sent-bien/`
+- **Paris Musées EditionsVoir tout** — `/list-87734/paris-musees-editions/?recherche_base=allbooks`
+- **Pas de vacances pour la littérature jeunesse ! SélectionKibookinVoir t** — `/list-62454/pas-de-vacances-pour-la-litterature-jeunesse-selection-kibookin/`
+- **Patrick Boucheron** — `/list-162032/patrick-boucheron/`
+- **Patrick de Saint-Exupéry** — `/list-154419/patrick-de-saint-exupery/`
+- **Pauline Guéna** — `/list-155472/pauline-guena/`
+- **PhaidonVoir tout** — `/list-114967/phaidon/?recherche_base=paper`
+- **Philippe Druillet intronisé au "Hall of Fame" Will Eisner Comic AwardV** — `/list-179429/philippe-druillet-intronise-au-hall-of-fame-will-eisner-comic-award/`
+- **Philosophie magazine ÉditeurVoir tout** — `/list-174245/philosophie-magazine-editeur/?recherche_base=allbooks`
+- **Pierre BordageVoir tout** — `/list-187897/pierre-bordage/?recherche_base=paper`
+- **Pleins feux sur Le Bélial, spécialiste de l'ImaginaireVoir tout** — `/list-195029/pleins-feux-sur-le-belial-specialiste-de-l-imaginaire/`
+- **Pont Neuf, regard neuf : L’art de révéler autrementVoir tout** — `/list-198551/pont-neuf-regard-neuf-l-art-de-reveler-autrement/`
+- **Pratique jeunesseVoir tout** — `/list-112699/pratique-jeunesse/`
+- **Première Rentrée littéraire d'Hiver 2026 - La Littérature françaiseVoi** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/`
+- **Première rentrée 2024Voir tout** — `/list-160575/premiere-rentree-2024/`
+- **Prix Femina 2024 - Première sélectionVoir tout** — `/list-162307/prix-femina-2024-premiere-selection/`
+- **Prix Femina 2025 - Première sélection des Romans françaisVoir tout** — `/list-180786/prix-femina-2025-premiere-selection-des-romans-francais/`
+- **Prix Femina 2025 - Troisièmes sélectionsVoir tout** — `/list-183603/prix-femina-2025-troisiemes-selections/`
+- **Prix Femina Essai 2024 - Première sélectionVoir tout** — `/list-163434/prix-femina-essai-2024-premiere-selection/`
+- **Prix Fémina 2016Voir tout** — `/list-34749/prix-femina-2016/`
+- **Prix Fémina 2017Voir tout** — `/list-34750/prix-femina-2017/`
+- **Prix Goncourt 2024 - Deuxième sélectionVoir tout** — `/list-163071/prix-goncourt-2024-deuxieme-selection/`
+- **Prix Goncourt 2024 - Première sélectionVoir tout** — `/list-162134/prix-goncourt-2024-premiere-selection/`
+- **Prix Goncourt 2025 - Deuxième sélectionVoir tout** — `/list-183440/prix-goncourt-2025-deuxieme-selection/`
+- **Prix Goncourt 2025 - Première sélectionVoir tout** — `/list-180529/prix-goncourt-2025-premiere-selection/`
+- **Prix Interallié 2024 - Deuxième sélectionVoir tout** — `/list-163268/prix-interallie-2024-deuxieme-selection/`
+- **Prix Interallié 2024 - Première sélectionVoir tout** — `/list-162332/prix-interallie-2024-premiere-selection/`
+- **Prix Interallié 2025 - Première sélectionVoir tout** — `/list-181737/prix-interallie-2025-premiere-selection/`
+- **Prix Médicis 2016Voir tout** — `/list-34751/prix-medicis-2016/`
+- **Prix Médicis 2017Voir tout** — `/list-34752/prix-medicis-2017/`
+- **Prix Médicis 2024 - Deuxième sélectionVoir tout** — `/list-163546/prix-medicis-2024-deuxieme-selection/`
+- **Prix Médicis 2024 - Première sélectionVoir tout** — `/list-162309/prix-medicis-2024-premiere-selection/`
+- **Prix Médicis 2025 - Deuxième sélectionVoir tout** — `/list-183215/prix-medicis-2025-deuxieme-selection/`
+- **Prix Médicis 2025 - Première sélectionVoir tout** — `/list-180915/prix-medicis-2025-premiere-selection/`
+- **Prix Renaudot 2016Voir tout** — `/list-34753/prix-renaudot-2016/`
+- **Prix Renaudot 2017Voir tout** — `/list-34754/prix-renaudot-2017/`
+- **Prix Renaudot 2024 - Deuxième sélectionVoir tout** — `/list-163266/prix-renaudot-2024-deuxieme-selection/`
+- **Prix Renaudot 2024 - Première sélectionVoir tout** — `/list-162149/prix-renaudot-2024-premiere-selection/`
+- **Prix Renaudot 2025 - Première sélectionVoir tout** — `/list-180549/prix-renaudot-2025-premiere-selection/`
+- **Prix de l'essai féministe Causette - SélectionVoir tout** — `/list-56693/prix-de-l-essai-feministe-causette-selection/`
+- **Pépite 2020 Noël SLPJ** — `/list-85020/pour-la-jeunesse-pour-noel-la-selection-pepites-2020-du-slpj-montreuil-2020/`
+- **Pépites 2019** — `/list-52747/pepites-2019-du-salon-du-livre-et-la-presse-jeunesse-de-montreuil/`
+- **Pépites 2021** — `/list-109996/les-pepites-jeunesse-2021/`
+- **Quai des Bulles - Palmarès 2025Voir tout** — `/list-183937/quai-des-bulles-palmares-2025/`
+- **Quai des Bulles 2024Voir tout** — `/list-164202/quai-des-bulles-2024/`
+- **Quais du Polar 2024Voir tout** — `/list-154531/quais-du-polar-2024/`
+- **Quais du Polar 2025Voir tout** — `/list-174181/quais-du-polar-2025/`
+- **Quais du Polar 2026 : « Chercheurs d'histoires : sciences et fictions ** — `/list-193570/quais-du-polar-2026-chercheurs-d-histoires-sciences-et-fictions/`
+- **Quand l'histoire rencontre l'HistoireVoir tout** — `/list-162598/quand-l-histoire-rencontre-l-histoire/`
+- **Que manger demain ?Voir tout** — `/list-9869/que-manger-demain/`
+- **Questions de genreVoir tout** — `/list-155806/questions-de-genre/`
+- **Rentrée 2020** — `/list-66164/la-selection-de-la-rentree-2020-par-le-salon-du-livre-et-de-la-presse-jeunesse/`
+- **Rentrée littéraire 2025 : la Littérature françaiseVoir tout** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/`
+- **Rentrée littéraire 2025 : la Littérature étrangèreVoir tout** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/`
+- **Rentrée littéraire 2025 : les Premiers romansVoir tout** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/`
+- **Rentrée littéraire d'Hiver 2026 - Le retour de Delphine de ViganVoir t** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/`
+- **Rentrée littéraire d'Hiver 2026 : la Littérature étrangèreVoir tout** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/`
+- **Rentrée littéraire d'Hiver 2026 : les Premiers romansVoir tout** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/`
+- **Romans graphiques & BD - FéminismeVoir tout** — `/list-56696/romans-graphiques-et-bd-feminisme/`
+- **Rosa Bonheur, le bicentenaireVoir tout** — `/list-124038/rosa-bonheur-le-bicentenaire/`
+- **Rémi David, l'écrivain magicienVoir tout** — `/list-188576/remi-david-l-ecrivain-magicien/`
+- **SORTIR DU NOIR - Le Fils de SaulVoir tout** — `/list-8965/sortir-du-noir-le-fils-de-saul/`
+- **SempéVoir tout** — `/list-123241/sempe/`
+- **Simon HantaïVoir tout** — `/list-121007/simon-hantai/`
+- **Soleil, plage, camping et MangasVoir tout** — `/list-179431/soleil-plage-camping-et-mangas/`
+- **Sorcières 2019** — `/list-37791/prix-sorcieres-2019/`
+- **Sorcières 2022** — `/list-119205/les-laureats-des-prix-sorcieres-2022/`
+- **Street ArtVoir tout** — `/list-132892/street-art/`
+- **Supergirl, la dernière fille de KryptonVoir tout** — `/list-199040/supergirl-la-derniere-fille-de-krypton/`
+- **Sélection Bandes Dessinées Prix SNCF PolarVoir tout** — `/list-9843/selection-bandes-dessinees-prix-sncf-polar/`
+- **Sélection Journée Mondiale du Climat - 8 décembre 2020Voir tout** — `/list-85725/selection-journee-mondiale-du-climat-8-decembre-2020/`
+- **Sélection KibookinVoir tout** — `/list-132351/selection-kibookin/`
+- **Sélection Roman pour le Prix SNCF du PolarVoir tout** — `/list-9842/selection-roman-pour-le-prix-sncf-du-polar/`
+- **Sélection Shoot the Book du Salon du Livre et Presse Jeunesse.Voir tou** — `/list-166146/selection-shoot-the-book-du-salon-du-livre-et-presse-jeunesse/`
+- **Sélections SLPJ 2019** — `/list-52748/selections-pepites-2019-du-slpj-montreuil/`
+- **Thomas Jeunesse, force de propositions pour les Tout-PetitsVoir tout** — `/list-193094/thomas-jeunesse-force-de-propositions-pour-les-tout-petits/`
+- **Tim Burton - La Presse en parleVoir tout** — `/list-196606/tim-burton-la-presse-en-parle/`
+- **Valérie Zenatti** — `/list-152573/valerie-zenatti/`
+- **Vasari (1511-1574), vies d'artistes et dessin à la RenaissanceVoir tou** — `/list-117628/vasari-1511-1574-vies-d-artistes-et-dessin-a-la-renaissance/`
+- **Vive La CultureVoir tout** — `/list-37372/vive-la-culture/`
+- **Vive la Culture - Buster KeatonVoir tout** — `/list-9562/vive-la-culture-buster-keaton/`
+- **Vive la Culture - Retour vers le Futur.Voir tout** — `/list-8827/vive-la-culture-retour-vers-le-futur/`
+- **Vive la culture - Barcelo c/o PicassoVoir tout** — `/list-9937/vive-la-culture-barcelo-c-o-picasso/`
+- **Voyageons dans l'EspaceVoir tout** — `/list-189637/voyageons-dans-l-espace/`
+- **Véronique Ovaldé** — `/list-154804/veronique-ovalde/`
+- **(sans libellé)** — `/coups-de-coeur/?provenance=wishlist_list`
+- **(sans libellé)** — `/coups-de-coeur/?select_langue=es`
+- **(sans libellé)** — `/coups-de-coeur/?select_langue=gb`
+- **(sans libellé)** — `/coups-de-coeur/?select_langue=nl`
+- **(sans libellé)** — `/list-149230/journal-d-un-nobel/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-149230/journal-d-un-nobel/?select_langue=es`
+- **(sans libellé)** — `/list-149230/journal-d-un-nobel/?select_langue=gb`
+- **(sans libellé)** — `/list-149230/journal-d-un-nobel/?select_langue=nl`
+- **(sans libellé)** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/?select_langue=es`
+- **(sans libellé)** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/?select_langue=gb`
+- **(sans libellé)** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/?select_langue=nl`
+- **(sans libellé)** — `/list-161598/femmes-sculptrices/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-161598/femmes-sculptrices/?select_langue=es`
+- **(sans libellé)** — `/list-161598/femmes-sculptrices/?select_langue=gb`
+- **(sans libellé)** — `/list-161598/femmes-sculptrices/?select_langue=nl`
+- **(sans libellé)** — `/list-162099/les-enchanteurs-de-james-ellroy/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-162099/les-enchanteurs-de-james-ellroy/?select_langue=es`
+- **(sans libellé)** — `/list-162099/les-enchanteurs-de-james-ellroy/?select_langue=gb`
+- **(sans libellé)** — `/list-162099/les-enchanteurs-de-james-ellroy/?select_langue=nl`
+- **(sans libellé)** — `/list-162598/quand-l-histoire-rencontre-l-histoire/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-162598/quand-l-histoire-rencontre-l-histoire/?select_langue=es`
+- **(sans libellé)** — `/list-162598/quand-l-histoire-rencontre-l-histoire/?select_langue=gb`
+- **(sans libellé)** — `/list-162598/quand-l-histoire-rencontre-l-histoire/?select_langue=nl`
+- **(sans libellé)** — `/list-162649/festival-america-2024/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-162649/festival-america-2024/?select_langue=es`
+- **(sans libellé)** — `/list-162649/festival-america-2024/?select_langue=gb`
+- **(sans libellé)** — `/list-162649/festival-america-2024/?select_langue=nl`
+- **(sans libellé)** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/?select_langue=es`
+- **(sans libellé)** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/?select_langue=gb`
+- **(sans libellé)** — `/list-173162/les-30-ans-de-quarto-le-jardin-rebelle-de-gallimard/?select_langue=nl`
+- **(sans libellé)** — `/list-173743/de-la-musique-avant-toute-chose/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-173743/de-la-musique-avant-toute-chose/?select_langue=es`
+- **(sans libellé)** — `/list-173743/de-la-musique-avant-toute-chose/?select_langue=gb`
+- **(sans libellé)** — `/list-173743/de-la-musique-avant-toute-chose/?select_langue=nl`
+- **(sans libellé)** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?select_langue=es`
+- **(sans libellé)** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?select_langue=gb`
+- **(sans libellé)** — `/list-179121/rentree-litteraire-2025-la-litterature-francaise/?select_langue=nl`
+- **(sans libellé)** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?select_langue=es`
+- **(sans libellé)** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?select_langue=gb`
+- **(sans libellé)** — `/list-179338/rentree-litteraire-2025-les-premiers-romans/?select_langue=nl`
+- **(sans libellé)** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?select_langue=es`
+- **(sans libellé)** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?select_langue=gb`
+- **(sans libellé)** — `/list-179339/rentree-litteraire-2025-la-litterature-etrangere/?select_langue=nl`
+- **(sans libellé)** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/?select_langue=es`
+- **(sans libellé)** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/?select_langue=gb`
+- **(sans libellé)** — `/list-187821/premiere-rentree-litteraire-d-hiver-2026-la-litterature-francaise/?select_langue=nl`
+- **(sans libellé)** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?select_langue=es`
+- **(sans libellé)** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?select_langue=gb`
+- **(sans libellé)** — `/list-188178/rentree-litteraire-d-hiver-2026-les-premiers-romans/?select_langue=nl`
+- **(sans libellé)** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/?select_langue=es`
+- **(sans libellé)** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/?select_langue=gb`
+- **(sans libellé)** — `/list-188254/marion-fayolle-ou-la-delicate-question-de-l-amour/?select_langue=nl`
+- **(sans libellé)** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?select_langue=es`
+- **(sans libellé)** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?select_langue=gb`
+- **(sans libellé)** — `/list-188276/rentree-litteraire-d-hiver-2026-la-litterature-etrangere/?select_langue=nl`
+- **(sans libellé)** — `/list-188576/remi-david-l-ecrivain-magicien/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-188576/remi-david-l-ecrivain-magicien/?select_langue=es`
+- **(sans libellé)** — `/list-188576/remi-david-l-ecrivain-magicien/?select_langue=gb`
+- **(sans libellé)** — `/list-188576/remi-david-l-ecrivain-magicien/?select_langue=nl`
+- **(sans libellé)** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?select_langue=es`
+- **(sans libellé)** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?select_langue=gb`
+- **(sans libellé)** — `/list-188636/rentree-litteraire-d-hiver-2026-le-retour-de-delphine-de-vigan/?select_langue=nl`
+- **(sans libellé)** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?select_langue=es`
+- **(sans libellé)** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?select_langue=gb`
+- **(sans libellé)** — `/list-189435/l-hymne-a-la-poesie-de-thomas-schlesser/?select_langue=nl`
+- **(sans libellé)** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?select_langue=es`
+- **(sans libellé)** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?select_langue=gb`
+- **(sans libellé)** — `/list-190675/les-monstres-entre-litterature-et-psychanalyse-de-l-etrange/?select_langue=nl`
+- **(sans libellé)** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?select_langue=es`
+- **(sans libellé)** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?select_langue=gb`
+- **(sans libellé)** — `/list-190807/la-rentree-litteraire-d-hiver-2026-n-est-pas-terminee/?select_langue=nl`
+- **(sans libellé)** — `/list-191627/les-femmes-a-l-honneur-en-litterature/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-191627/les-femmes-a-l-honneur-en-litterature/?select_langue=es`
+- **(sans libellé)** — `/list-191627/les-femmes-a-l-honneur-en-litterature/?select_langue=gb`
+- **(sans libellé)** — `/list-191627/les-femmes-a-l-honneur-en-litterature/?select_langue=nl`
+- **(sans libellé)** — `/list-191718/antonio-lobo-antunes-1942-2026/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-191718/antonio-lobo-antunes-1942-2026/?select_langue=es`
+- **(sans libellé)** — `/list-191718/antonio-lobo-antunes-1942-2026/?select_langue=gb`
+- **(sans libellé)** — `/list-191718/antonio-lobo-antunes-1942-2026/?select_langue=nl`
+- **(sans libellé)** — `/list-193022/des-fleurs-pas-des-pesticides/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-193022/des-fleurs-pas-des-pesticides/?select_langue=es`
+- **(sans libellé)** — `/list-193022/des-fleurs-pas-des-pesticides/?select_langue=gb`
+- **(sans libellé)** — `/list-193022/des-fleurs-pas-des-pesticides/?select_langue=nl`
+- **(sans libellé)** — `/list-193604/le-petit-prince-celebre-ses-80-ans/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-193604/le-petit-prince-celebre-ses-80-ans/?select_langue=es`
+- **(sans libellé)** — `/list-193604/le-petit-prince-celebre-ses-80-ans/?select_langue=gb`
+- **(sans libellé)** — `/list-193604/le-petit-prince-celebre-ses-80-ans/?select_langue=nl`
+- **(sans libellé)** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/?select_langue=es`
+- **(sans libellé)** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/?select_langue=gb`
+- **(sans libellé)** — `/list-193976/46-ans-d-horizons-lointains-avec-les-editions-metailie/?select_langue=nl`
+- **(sans libellé)** — `/list-194296/gabriel-garc-a-marquez/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-194296/gabriel-garc-a-marquez/?select_langue=es`
+- **(sans libellé)** — `/list-194296/gabriel-garc-a-marquez/?select_langue=gb`
+- **(sans libellé)** — `/list-194296/gabriel-garc-a-marquez/?select_langue=nl`
+- **(sans libellé)** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/?select_langue=es`
+- **(sans libellé)** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/?select_langue=gb`
+- **(sans libellé)** — `/list-196517/la-litterature-en-vogue-dans-le-mezzogiorno-italien/?select_langue=nl`
+- **(sans libellé)** — `/list-197540/2026-annee-george-sand/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-197540/2026-annee-george-sand/?select_langue=es`
+- **(sans libellé)** — `/list-197540/2026-annee-george-sand/?select_langue=gb`
+- **(sans libellé)** — `/list-197540/2026-annee-george-sand/?select_langue=nl`
+- **(sans libellé)** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/?select_langue=es`
+- **(sans libellé)** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/?select_langue=gb`
+- **(sans libellé)** — `/list-197922/le-retour-a-la-fiction-de-salman-rushdie/?select_langue=nl`
+- **(sans libellé)** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/?select_langue=es`
+- **(sans libellé)** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/?select_langue=gb`
+- **(sans libellé)** — `/list-198127/mehdi-charef-une-memoire-de-la-banlieue/?select_langue=nl`
+- **(sans libellé)** — `/list-198518/coups-de-coeur-de-nos-stagiaires/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-198518/coups-de-coeur-de-nos-stagiaires/?select_langue=es`
+- **(sans libellé)** — `/list-198518/coups-de-coeur-de-nos-stagiaires/?select_langue=gb`
+- **(sans libellé)** — `/list-198518/coups-de-coeur-de-nos-stagiaires/?select_langue=nl`
+- **(sans libellé)** — `/list-198698/marc-bloch-entre-au-pantheon/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-198698/marc-bloch-entre-au-pantheon/?select_langue=es`
+- **(sans libellé)** — `/list-198698/marc-bloch-entre-au-pantheon/?select_langue=gb`
+- **(sans libellé)** — `/list-198698/marc-bloch-entre-au-pantheon/?select_langue=nl`
+- **(sans libellé)** — `/list-198888/fernando-pessoa-la-presse-en-parle/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-198888/fernando-pessoa-la-presse-en-parle/?select_langue=es`
+- **(sans libellé)** — `/list-198888/fernando-pessoa-la-presse-en-parle/?select_langue=gb`
+- **(sans libellé)** — `/list-198888/fernando-pessoa-la-presse-en-parle/?select_langue=nl`
+- **(sans libellé)** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/?select_langue=es`
+- **(sans libellé)** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/?select_langue=gb`
+- **(sans libellé)** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/?select_langue=nl`
+- **(sans libellé)** — `/list-199803/le-monde-merveilleux-des-insectes/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-199803/le-monde-merveilleux-des-insectes/?select_langue=es`
+- **(sans libellé)** — `/list-199803/le-monde-merveilleux-des-insectes/?select_langue=gb`
+- **(sans libellé)** — `/list-199803/le-monde-merveilleux-des-insectes/?select_langue=nl`
+- **(sans libellé)** — `/list-200191/journee-internationale-nelson-mandela-2026/?provenance=wishlist_list`
+- **(sans libellé)** — `/list-200191/journee-internationale-nelson-mandela-2026/?select_langue=es`
+- **(sans libellé)** — `/list-200191/journee-internationale-nelson-mandela-2026/?select_langue=gb`
+- **(sans libellé)** — `/list-200191/journee-internationale-nelson-mandela-2026/?select_langue=nl`
+- **notre première sélection de livres en cette année 2024** — `/list-149198/entendus-sur-france-culture-janvier-2024/`
+- **septembre 2023 - LGL** — `/list-143727/dans-la-grande-librairie-du-mercredi-27-septembre-2023/`
+- **Ça lit dans le métro - Juillet 2026Voir tout** — `/list-199066/ca-lit-dans-le-metro-juillet-2026/`
+- **Éditions Le Tripode, ce "lieu d'asile aux esprits singuliers" (Jean-Ja** — `/list-160883/editions-le-tripode-ce-lieu-d-asile-aux-esprits-singuliers-jean-jacques-pauvert/`
+- **Élisabeth Badinter** — `/list-155474/elisabeth-badinter/`
+- **Éric-Emmanuel Schmitt** — `/list-154803/eric-emmanuel-schmitt/`
+
+## Rayons  (/xxx/ssh-NNNN)  (91)
+
+- **AOC** — `/aoc/ssh-7687`
+- **Actes Sud - Domaine du Possible** — `/Actes-Sud-Domaine-du-Possible-Selection-a-9-99-du-27-novembre-au-13-decembre-2015/ssh-682`
+- **BD** — `/bd/ssh-9019`
+- **Beaux Livres** — `/beaux-livres/ssh-8472`
+- **Cinéma** — `/cinema-et-litterature/ssh-768`
+- **Ecologie** — `/ecologie/ssh-628`
+- **Fantasy / SF** — `/fantasy-sf/ssh-8493`
+- **FéminismeS** — `/feminismes/ssh-5541`
+- **Jeunesse** — `/jeunesse/ssh-1277`
+- **Kibookin** — `/kibookin-salon-du-livre-et-de-la-presse-jeunesse/ssh-8239`
+- **La Grande Librairie** — `/la-grande-librairie/ssh-10273`
+- **Le Masque et la Plume** — `/le-masque-et-la-plume/ssh-10579`
+- **Liseuses** — `/liseuses/ssh-8255`
+- **Littérature** — `/litt-rature/ssh-9018`
+- **Mangas** — `/mangas/ssh-11871`
+- **Partenaires** — `/nos-partenaires/ssh-520`
+- **Polar** — `/polar/ssh-769`
+- **Prix Littéraires** — `/prix-litteraire/ssh-2819`
+- **Quais du Polar** — `/Quais-du-Polar-2016/ssh-737`
+- **Rentrée littéraire** — `/rentree-litteraire-2024/ssh-11136`
+- **Vive la Culture** — `/Vive-la-Culture/ssh-673`
+- **WebTV Culture** — `/WebTV-Culture/ssh-689`
+- **(sans libellé)** — `/bd/ssh-9019?provenance=wishlist_list`
+- **(sans libellé)** — `/bd/ssh-9019?select_langue=es`
+- **(sans libellé)** — `/bd/ssh-9019?select_langue=gb`
+- **(sans libellé)** — `/bd/ssh-9019?select_langue=nl`
+- **(sans libellé)** — `/beaux-livres/ssh-8472?provenance=wishlist_list`
+- **(sans libellé)** — `/beaux-livres/ssh-8472?select_langue=es`
+- **(sans libellé)** — `/beaux-livres/ssh-8472?select_langue=gb`
+- **(sans libellé)** — `/beaux-livres/ssh-8472?select_langue=nl`
+- **(sans libellé)** — `/cinema-et-litterature/ssh-768?provenance=wishlist_list`
+- **(sans libellé)** — `/cinema-et-litterature/ssh-768?select_langue=es`
+- **(sans libellé)** — `/cinema-et-litterature/ssh-768?select_langue=gb`
+- **(sans libellé)** — `/cinema-et-litterature/ssh-768?select_langue=nl`
+- **(sans libellé)** — `/ecologie/ssh-628?provenance=wishlist_list`
+- **(sans libellé)** — `/ecologie/ssh-628?select_langue=es`
+- **(sans libellé)** — `/ecologie/ssh-628?select_langue=gb`
+- **(sans libellé)** — `/ecologie/ssh-628?select_langue=nl`
+- **(sans libellé)** — `/fantasy-sf/ssh-8493?provenance=wishlist_list`
+- **(sans libellé)** — `/fantasy-sf/ssh-8493?select_langue=es`
+- **(sans libellé)** — `/fantasy-sf/ssh-8493?select_langue=gb`
+- **(sans libellé)** — `/fantasy-sf/ssh-8493?select_langue=nl`
+- **(sans libellé)** — `/feminismes/ssh-5541?provenance=wishlist_list`
+- **(sans libellé)** — `/feminismes/ssh-5541?select_langue=es`
+- **(sans libellé)** — `/feminismes/ssh-5541?select_langue=gb`
+- **(sans libellé)** — `/feminismes/ssh-5541?select_langue=nl`
+- **(sans libellé)** — `/jeunesse/ssh-1277?provenance=wishlist_list`
+- **(sans libellé)** — `/jeunesse/ssh-1277?select_langue=es`
+- **(sans libellé)** — `/jeunesse/ssh-1277?select_langue=gb`
+- **(sans libellé)** — `/jeunesse/ssh-1277?select_langue=nl`
+- **(sans libellé)** — `/kibookin-salon-du-livre-et-de-la-presse-jeunesse/ssh-8239?provenance=wishlist_list`
+- **(sans libellé)** — `/kibookin-salon-du-livre-et-de-la-presse-jeunesse/ssh-8239?select_langue=es`
+- **(sans libellé)** — `/kibookin-salon-du-livre-et-de-la-presse-jeunesse/ssh-8239?select_langue=gb`
+- **(sans libellé)** — `/kibookin-salon-du-livre-et-de-la-presse-jeunesse/ssh-8239?select_langue=nl`
+- **(sans libellé)** — `/la-grande-librairie/ssh-10273?provenance=wishlist_list`
+- **(sans libellé)** — `/la-grande-librairie/ssh-10273?select_langue=es`
+- **(sans libellé)** — `/la-grande-librairie/ssh-10273?select_langue=gb`
+- **(sans libellé)** — `/la-grande-librairie/ssh-10273?select_langue=nl`
+- **(sans libellé)** — `/le-masque-et-la-plume/ssh-10579?provenance=wishlist_list`
+- **(sans libellé)** — `/le-masque-et-la-plume/ssh-10579?select_langue=es`
+- **(sans libellé)** — `/le-masque-et-la-plume/ssh-10579?select_langue=gb`
+- **(sans libellé)** — `/le-masque-et-la-plume/ssh-10579?select_langue=nl`
+- **(sans libellé)** — `/liseuses/ssh-8255?provenance=wishlist_list`
+- **(sans libellé)** — `/liseuses/ssh-8255?select_langue=es`
+- **(sans libellé)** — `/liseuses/ssh-8255?select_langue=gb`
+- **(sans libellé)** — `/liseuses/ssh-8255?select_langue=nl`
+- **(sans libellé)** — `/litt-rature/ssh-9018?provenance=wishlist_list`
+- **(sans libellé)** — `/litt-rature/ssh-9018?select_langue=es`
+- **(sans libellé)** — `/litt-rature/ssh-9018?select_langue=fr`
+- **(sans libellé)** — `/litt-rature/ssh-9018?select_langue=gb`
+- **(sans libellé)** — `/litt-rature/ssh-9018?select_langue=nl`
+- **(sans libellé)** — `/mangas/ssh-11871?provenance=wishlist_list`
+- **(sans libellé)** — `/mangas/ssh-11871?select_langue=es`
+- **(sans libellé)** — `/mangas/ssh-11871?select_langue=gb`
+- **(sans libellé)** — `/mangas/ssh-11871?select_langue=nl`
+- **(sans libellé)** — `/nos-partenaires/ssh-520?provenance=wishlist_list`
+- **(sans libellé)** — `/nos-partenaires/ssh-520?select_langue=es`
+- **(sans libellé)** — `/nos-partenaires/ssh-520?select_langue=gb`
+- **(sans libellé)** — `/nos-partenaires/ssh-520?select_langue=nl`
+- **(sans libellé)** — `/polar/ssh-769?provenance=wishlist_list`
+- **(sans libellé)** — `/polar/ssh-769?select_langue=es`
+- **(sans libellé)** — `/polar/ssh-769?select_langue=gb`
+- **(sans libellé)** — `/polar/ssh-769?select_langue=nl`
+- **(sans libellé)** — `/prix-litteraire/ssh-2819?provenance=wishlist_list`
+- **(sans libellé)** — `/prix-litteraire/ssh-2819?select_langue=es`
+- **(sans libellé)** — `/prix-litteraire/ssh-2819?select_langue=gb`
+- **(sans libellé)** — `/prix-litteraire/ssh-2819?select_langue=nl`
+- **(sans libellé)** — `/rentree-litteraire-2024/ssh-11136?provenance=wishlist_list`
+- **(sans libellé)** — `/rentree-litteraire-2024/ssh-11136?select_langue=es`
+- **(sans libellé)** — `/rentree-litteraire-2024/ssh-11136?select_langue=gb`
+- **(sans libellé)** — `/rentree-litteraire-2024/ssh-11136?select_langue=nl`
+
+## Listes filtrées  (/listeliv.php?...)  (1009)
+
+- **10-18** — `/listeliv.php?form_recherche_avancee=ok&editeur=10/18`
+- **87eDistrict** — `/listeliv.php?base=paper&mots_recherche=87e+district`
+- **Abd Al Malik** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Abd+Al+Malik&auteurs1=Abd+Al+Malik&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Abnousse Shalmani** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Abnousse+Shalmani&auteurs1=Abnousse+Shalmani&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Abnousse Shalmani** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Abnousse+Shalmani&auteurs1=Abnousse+Shalmani&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Actes Sud Audio** — `/listeliv.php?form_recherche_avancee=ok&editeur=Actes%20Sud%20Audio&base=ebook`
+- **Adam Rapp** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=adam%20rapp`
+- **Ados** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&codegtl1=2000000&codegtl2=2050000&codegtl2=2050000`
+- **Adèle Yon** — `/listeliv.php?base=allbooks&mots_recherche=Adele+Yon`
+- **Adélaïde Bon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ad%C3%A9la%C3%AFde%20bon`
+- **Adélaïde de Clermont-Tonnerre** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Ad%C3%A9la%C3%AFde+de+Clermont-Tonnerre&auteurs1=Ad%C3%A9la%C3%AFde+de+Clermont-Tonnerre&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Agnès Desarthe** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Agn%C3%A8s+Desarthe&auteurs1=Agn%C3%A8s+Desarthe&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Agnès Desarthe** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%22Agn%C3%A8s+Desarthe%22&auteurs1=%22Agn%C3%A8s+Desarthe%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Agnès Jaoui** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Agn%C3%A8s+Jaoui&auteurs1=Agn%C3%A8s+Jaoui&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Ahmet Altan** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Ahmet+Altan&auteurs1=Ahmet+Altan&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Aimé Césaire** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=aim%C3%A9%20c%C3%A9saire`
+- **Al Alvarez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=al%20alvarez`
+- **Alain Aspect** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=alain+aspect&auteurs1=alain+aspect&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Alain Blottière** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alain%20blotti%C3%A8re`
+- **Alain Duault** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alain%20duault`
+- **Alain Finkielkraut** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Alain+Finkielkraut&auteurs1=Alain+Finkielkraut&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alain Mabanckou** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%22Alain+Mabanckou%22&auteurs1=%22Alain+Mabanckou%22&dispo=1&select_tri_recherche=pertinence`
+- **Alain Mabanckou** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Alain+Mabanckou&auteurs1=Alain+Mabanckou&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alain Mabanckou** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alain%20mabanckou`
+- **Alasdair Gray** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alasdair%20gray`
+- **Alex Atkinson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alex%20atkinson`
+- **Alexandra Matine** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Alexandra+Matine&auteurs1=Alexandra+Matine&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alexandre Jardin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Alexandre+Jardin%22&auteurs1=%22Alexandre+Jardin%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alexandro Jodorowsky** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alexandro%20jodorowsky`
+- **Alexei Du Perier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alexei%20du%20perier`
+- **Alexis Michalik** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Alexis+Michalik&auteurs1=Alexis+Michalik&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Alfred de Montesquiou** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Alfred+de+Montesquiou&auteurs1=Alfred+de+Montesquiou&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alice McDermott** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alice%20mcdermott`
+- **Alice Munro** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alice%20munro`
+- **Alice Zeniter** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=alice+zeniter&auteurs1=alice+zeniter&dispo=1&select_tri_recherche=pertinence`
+- **Alice Zeniter** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alice%20zeniter`
+- **Aliette de Laleu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=aliette%20de%20laleu`
+- **Alison Hawkins** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alison%20hawkins`
+- **Alix de Saint-André** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Alix+de+Saint-Andr%C3%A9%22&auteurs1=%22Alix+de+Saint-Andr%C3%A9%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Alternatives** — `/listeliv.php?form_recherche_avancee=ok&editeur=Alternatives`
+- **Alya Aglan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=alya%20aglan`
+- **Amy Tintera** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=amy%20tintera`
+- **Amélie Nothomb** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Am%C3%A9lie+Nothomb&auteurs1=Am%C3%A9lie+Nothomb&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Amélie Nothomb** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Amelie+Nothomb&auteurs1=Amelie+Nothomb&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Amélie Nothomb** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=am%C3%A9lie%20nothomb`
+- **Ananda Devi** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Ananda+Devi&select_tri_recherche=dateparution_decroissant&dispo=1&base=allbooks&page=1`
+- **Anastassia Elias** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anastassia%20elias`
+- **Andrea Lawlor** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=andrea%20lawlor`
+- **Andreas Eschbach** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=andreas%20eschbach`
+- **Andrew O'Hagan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=andrew%20o%27hagan`
+- **Andreï Kourkov** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Andre%C3%AF+Kourkov&auteurs1=Andre%C3%AF+Kourkov&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Andrus Kivirähk** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=andrus%20kivir%C3%A4hk`
+- **André Comte-Sponville** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Andr%C3%A9+Comte-Sponville&auteurs1=Andre+Comte-Sponville&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **André Manoukian** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=andr%C3%A9%20manoukian`
+- **André Velter** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Andr%C3%A9+Velter&auteurs1=Andr%C3%A9+Velter&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Anja Klauss** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anja%20klauss`
+- **Anna Hope** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anna%20hope`
+- **Anne Berest** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Anne+Berest%22&auteurs1=%22Anne+Berest%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Anne Berest** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Anne+Berest&auteurs1=Anne+Berest&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Anne Berest** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anne%20berest`
+- **Anne Delbée** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anne%20delb%C3%A9e`
+- **Anne Liénard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anne%20li%C3%A9nard`
+- **Anne Michaels** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anne%20michaels`
+- **Anne Plantagenet** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Anne+Plantagenet&auteurs1=Anne+Plantagenet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Anne Terral** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anne%20terral`
+- **Anne-Dauphine Julliand** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Anne-Dauphine+Julliand&auteurs1=Anne-Dauphine+Julliand&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **AnneMarie Brear** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=annemarie%20brear`
+- **Annette Becker** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Annette+Becker&auteurs1=Annette+Becker&code_support=T&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Annick Cojean** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Annick+Cojean&auteurs1=Annick+Cojean&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Annick Masson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=annick%20masson`
+- **Annie Ernaux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=annie%20ernaux`
+- **Anouk Grinberg** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Anouk+Grinberg&auteurs1=Anouk+Grinberg&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Anouk Ricard** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Anouk+Ricard&auteurs1=Anouk+Ricard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Anthony Huard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anthony%20huard`
+- **Antoine Compagnon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Antoine+Compagnon%22&auteurs1=%22Antoine+Compagnon%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Antoine Compagnon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Antoine+Compagnon&auteurs1=Antoine+Compagnon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Antoine De Saint Exupery** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antoine%20de%20saint%20exupery`
+- **Antoine Sénanque** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Antoine+S%C3%A9nanque&auteurs1=Antoine+S%C3%A9nanque&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Antoine Wauters** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antoine%20wauters`
+- **Antoine de Saint-Exupéry** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antoine%20de%20saint-exup%C3%A9ry`
+- **Antonin Crenn** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antonin%20crenn`
+- **Antonin Varenne** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antonin%20varenne`
+- **Antonio Lobo Antunes** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antonio%20lobo%20antunes`
+- **Antonio Munoz Molina** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antonio%20munoz%20molina`
+- **Antonio Scurati** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=antonio%20scurati`
+- **Anya Nousri** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=anya%20nousri`
+- **Ariane Ascaride** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Ariane+Ascaride&auteurs1=Ariane+Ascaride&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Armel Job** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=armel%20job`
+- **Armistead Maupin** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Armistead+Maupin&auteurs1=Armistead+Maupin&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Arnaldur Indridason** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=arnaldur%20indridason`
+- **Arnaud Cathrine** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Arnaud+Cathrine&auteurs1=Arnaud+Cathrine&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Arthur Nersesian** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=arthur%20nersesian`
+- **Arthur Rimbaud** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=arthur%20rimbaud`
+- **Arts & Spectacles** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Arts+et+spectacles&codegtl1=6000000`
+- **Arturo Pérez-Reverte** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=arturo%20p%C3%A9rez-reverte`
+- **Arundhati Roy** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Arundhati+Roy&auteurs1=Arundhati+Roy&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Arènes** — `/listeliv.php?form_recherche_avancee=ok&editeur=Arenes`
+- **Asma Mhalla** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Asma+Mhalla&auteurs1=Asma+Mhalla&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Atiq Rahimi** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Atiq+Rahimi&auteurs1=Atiq+Rahimi&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **AudioLib** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&editeur=audiolib&editeur1=audiolib&dispo=1%2C2&select_tri_recherche=pertinence&formats=mp3`
+- **Audrey Alwett** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Audrey+Alwett&auteurs1=Audrey+Alwett&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Audrée Wilhelmy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=audr%C3%A9e%20wilhelmy`
+- **Aurélie Silvestre** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Aur%C3%A9lie+Silvestre&auteurs1=Aur%C3%A9lie+Silvestre&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Aurélien Gautherie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=aur%C3%A9lien%20gautherie`
+- **Aurélien Police** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=aur%C3%A9lien%20police`
+- **Ayana Mathis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ayana%20mathis`
+- **BD** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=pertinence&codegtl1=3000000&codegtl2=3020000&rayon=Bandes+dessin%26eacute%3Bes+%2F+Comics+%2F+Mangas%7CBandes+dessin%26eacute%3Bes`
+- **BD, Manga** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&codegtl1=3000000&codegtl1=3000000`
+- **Bandes dessinées / Comics / Mangas** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Bandes+dessin%C3%A9es+%2F+Comics+%2F+Mangas&codegtl1=3000000`
+- **Barack Obama** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=barack%20obama`
+- **Barbara Cassin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Barbara+Cassin&auteurs1=Barbara+Cassin&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Barbara Taylor** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=barbara%20taylor`
+- **Barroux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=barroux`
+- **Barry Strauss** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=barry%20strauss`
+- **Bart Rossel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=bart%20rossel`
+- **Bartabas** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=bartabas`
+- **Beata Umubyeyi Mairesse** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Beata+Umubyeyi+Mairesse&auteurs1=Beata+Umubyeyi+Mairesse&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Beauchesne** — `/listeliv.php?form_recherche_avancee=ok&editeur=Beauchesne`
+- **Benjamin Dierstein** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Benjamin+Dierstein&auteurs1=Benjamin+Dierstein&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Benjamin Dierstein** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=benjamin%20dierstein`
+- **Benjamin Lacombe** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Benjamin+Lacombe&auteurs1=Benjamin+Lacombe&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Benoît Dahan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=beno%C3%AEt%20dahan`
+- **Bernard Comment** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=bernard%20comment`
+- **Bernard Minier** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Bernard+Minier&auteurs1=Bernard+Minier&dispo=1&select_tri_recherche=pertinence`
+- **Bernard Quiriny** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Bernard+Quiriny&auteurs1=Bernard+Quiriny&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Bernard Werber** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Bernard+Werber&auteurs1=Bernard+Werber&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Bernardo Carvalho** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=bernardo%20carvalho`
+- **Birago Diop** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=birago%20diop`
+- **Blandine Delenatte** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=blandine%20delenatte`
+- **Bloomsbury UK** — `/listeliv.php?form_recherche_avancee=ok&editeur=Bloomsbury%20UK&base=paper&page=1&codegtl1=1000000`
+- **Boileau-Narcejac** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=boileau-narcejac`
+- **Bordas** — `/listeliv.php?mots_recherche=bordas&base=allbooks`
+- **Boris Cyrulnik** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Boris+Cyrulnik&auteurs1=Boris+Cyrulnik&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Boris Cyrulnik** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Boris+Cyrulnik&auteurs1=Boris+Cyrulnik&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Boualem Sansal** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=boualem+sansal&auteurs1=boualem+sansal&dispo=1&select_tri_recherche=pertinence`
+- **Brian Aldiss** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=brian%20aldiss`
+- **Brigitte Krulic** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=brigitte%20krulic`
+- **Bruno Patino** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Bruno+Patino&auteurs1=Bruno+Patino&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Bénédicte Solle-bazaille** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=b%C3%A9n%C3%A9dicte%20solle-bazaille`
+- **Bérengère Cournut** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=b%C3%A9reng%C3%A8re%20cournut`
+- **Bérénice Pichat** — `/listeliv.php?base=allbooks&mots_recherche=Berenice+Pichat`
+- **CD** — `/listeliv.php?base=music&mots_recherche=`
+- **Callicéphale** — `/listeliv.php?form_recherche_avancee=ok&editeur=Callicephale`
+- **Camila Sosa Villada** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=camila%20sosa%20villada`
+- **Camille Bordas** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Camille+Bordas&auteurs1=Camille+Bordas&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Camille Charvet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Camille+Charvet&auteurs1=Camille+Charvet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Camille Froidevaux-Metterie** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Camille+Froidevaux-Metterie&auteurs1=Camille+Froidevaux-Metterie&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Camille Kouchner** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Camille+Kouchner&auteurs1=Camille+Kouchner&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Camille Laurans** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=camille%20laurans`
+- **Camille Laurens** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Camille+Laurens&auteurs1=Camille+Laurens&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Camille Leyvraz** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=camille%20leyvraz`
+- **Carlo Lucarelli** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=carlo%20lucarelli`
+- **Carole Boinet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=carole%20boinet`
+- **Carole Trébor** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=carole%20tr%C3%A9bor`
+- **Caroline Boidé** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Caroline+Boide&auteurs1=Caroline+Boide&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Caroline De Mulder** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Caroline+de+Mulder&auteurs1=Caroline+de+Mulder&dispo=1&select_tri_recherche=pertinence`
+- **Caroline Lunoir** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=caroline%20lunoir`
+- **Caroline Pelissier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=caroline%20pelissier`
+- **Caryl Férey** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Caryl+F%C3%A9rey&auteurs1=Caryl+F%C3%A9rey&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Casterman** — `/listeliv.php?mots_recherche=Casterman&base=allbooks`
+- **Catherine Bardon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=catherine%20bardon`
+- **Catherine Cusset** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Catherine+Cusset&auteurs1=Catherine+Cusset&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Catherine Delvaux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=catherine%20delvaux`
+- **Catherine Deneuve** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=catherine+deneuve&auteurs1=catherine+deneuve&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Catherine Girard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=catherine%20girard`
+- **Catherine Millet** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Catherine+Millet&select_tri_recherche=dateparution_decroissant&dispo=1&base=paper&page=1`
+- **Catherine Ryan Howard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=catherine%20ryan%20howard`
+- **Cathy Karsenty** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Cathy+Karsenty&auteurs1=Cathy+Karsenty&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Cathy Karsenty** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=cathy%20karsenty`
+- **Chantal Le Mouël** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chantal%20le%20mou%C3%ABl`
+- **Charles Baudelaire** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=charles%20baudelaire`
+- **Charles Dantzig** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Charles+Dantzig&auteurs1=Charles+Dantzig&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Charles Dantzig** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Charles+Dantzig&auteurs1=Charles+Dantzig&dispo=1&select_tri_recherche=pertinence`
+- **Charles Pennequin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=charles%20pennequin`
+- **Charles-Éloi Vial** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=charles-%C3%A9loi%20vial`
+- **Charlotte Casiraghi** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Charlotte+Casiraghi&auteurs1=Charlotte+Casiraghi&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Chester Himes** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chester%20himes`
+- **Chico Buarque** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chico%20buarque`
+- **Chimamanda Ngozi Adichie** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Chimamanda+Ngozi+Adichie&auteurs1=Chimamanda+Ngozi+Adichie&dispo=1&select_tri_recherche=pertinence`
+- **Chimamanda Ngozi Adichie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chimamanda%20ngozi%20adichie`
+- **Chloé Delaume** — `/listeliv.php?form_recherche_avancee=ok&auteurs=%22Chlo%C3%A9+Delaume%22&select_tri_recherche=dateparution_decroissant&dispo=1&base=allbooks&page=1`
+- **Chloé Delaume** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chlo%C3%A9%20delaume`
+- **Chocolat** — `/listeliv.php?form_recherche_avancee=ok&editeur=Chocolat`
+- **Chris Broad** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=chris%20broad`
+- **Christian Durieux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christian%20durieux`
+- **Christian Signol** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Christian+Signol&auteurs1=Christian+Signol&dispo=1&select_tri_recherche=pertinence`
+- **Christine Angot** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Christine+Angot&auteurs1=Christine+Angot&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Christine Angot** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Christine+Angot&auteurs1=Christine+Angot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Christine Spianti** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christine%20spianti`
+- **Christophe Donner** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christophe%20donner`
+- **Christophe Galfard** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Christophe+Galfard&auteurs1=Christophe+Galfard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Christophe Ono-dit-Biot** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Christophe+Ono-dit-Biot&auteurs1=Christophe+Ono-dit-Biot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Christophe Ylla-Somers** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christophe%20ylla-somers`
+- **Christopher Bollen** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christopher%20bollen`
+- **Christopher Laquieze** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=christopher%20laquieze`
+- **Claire Meunier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=claire%20meunier`
+- **Claire-Marie Le Guay** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Claire-Marie+Le+Guay&auteurs1=Claire-Marie+Le+Guay&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Clara Dupont-Monod** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Clara+Dupont-Monod&auteurs1=Clara+Dupont-Monod&dispo=1&select_tri_recherche=pertinence`
+- **Clara Dupont-Monod** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Clara+Dupont-Monod&auteurs1=Clara+Dupont-Monod&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Clarence Angles Sabin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=clarence%20angles%20sabin`
+- **Clarisse Gorokhoff** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=clarisse%20gorokhoff`
+- **Claude-Sophie Mazeas** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=claude-sophie%20mazeas`
+- **Clothilde Salelles** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Clothilde+Salelles&auteurs1=Clothilde+Salelles&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Clotilde Bruneau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=clotilde%20bruneau`
+- **Clémentine Beauvais** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Cl%C3%A9mentine+Beauvais&auteurs1=Cl%C3%A9mentine+Beauvais&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Clémentine Beauvais** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Clementine+Beauvais&auteurs1=Clementine+Beauvais&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Clémentine Mélois** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Clementine+Melois&auteurs1=Clementine+Melois&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Collectif** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=collectif`
+- **Constance Debré** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Constance+Debr%C3%A9&auteurs1=Constance+Debr%C3%A9&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Constance Debré** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=constance%20debr%C3%A9`
+- **Constance Guisset** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=constance%20guisset`
+- **Constance Robert-Murail** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Constance+Robert-Murail&auteurs1=Constance+Robert-Murail&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Constantin Alexandrakis** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Constantin+Alexandrakis&auteurs1=Constantin+Alexandrakis&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Cormac McCarthy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=Cormac%20McCarthy`
+- **Cristina Comencini** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=cristina%20comencini`
+- **Cynthia Fleury** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Cynthia+Fleury&auteurs1=Cynthia+Fleury&dispo=1&select_tri_recherche=pertinence`
+- **Cyril Lieron** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=cyril%20lieron`
+- **Cécile Coulon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22C%C3%A9cile+Coulon%22&auteurs1=%22C%C3%A9cile+Coulon%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Cécile Coulon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9cile%20coulon`
+- **Cécile Delacoudre** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9cile%20delacoudre`
+- **Cécile Guilbert** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22C%C3%A9cile+Guilbert%22&auteurs1=%22C%C3%A9cile+Guilbert%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Cécile Ladjali** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=C%C3%A9cile+Ladjali&auteurs1=C%C3%A9cile+Ladjali&dispo=1&select_tri_recherche=pertinence`
+- **Cécile Ladjali** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9cile%20ladjali`
+- **Cédric Fernandez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9dric%20fernandez`
+- **Cédric Sapin-Defour** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9dric%20sapin-defour`
+- **Cédric Sire** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9dric%20sire`
+- **Célestin Robaglia** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9lestin%20robaglia`
+- **Céline Denjean** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9line%20denjean`
+- **Céline Hromadova** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=C%C3%A9line+Hromadova&auteurs1=C%C3%A9line+Hromadova&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Céline Minard** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22C%C3%A9line+Minard%22&auteurs1=%22C%C3%A9line+Minard%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Céline Minard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=c%C3%A9line%20minard`
+- **DVD** — `/listeliv.php?base=dvd&mots_recherche=`
+- **Dahlia de La Cerda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dahlia%20de%20la%20cerda`
+- **Dan Brown** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Dan+Brown&auteurs1=Dan+Brown&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Dan Chaon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dan%20chaon`
+- **Daniel Blancou** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=daniel%20blancou`
+- **Daniel Pennac** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Daniel+Pennac&auteurs1=Daniel+Pennac&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Daniel Pennac** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Daniel+Pennac&auteurs1=Daniel+Pennac&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Danielle Steel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=danielle%20steel`
+- **Danièle Sallenave** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Dani%C3%A8le+Sallenave&auteurs1=Dani%C3%A8le+Sallenave&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Danièle Sallenave** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Dani%C3%A8le+Sallenave&select_tri_recherche=dateparution_decroissant&dispo=1%2C2&base=allbooks&page=2`
+- **Dante Alighieri** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dante%20alighieri`
+- **Daphné Collignon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=daphn%C3%A9%20collignon`
+- **Dario Ferrari** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dario%20ferrari`
+- **David Deneufgermain** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=david%20deneufgermain`
+- **David Diop** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=david%20diop`
+- **David Fincher** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=david%20fincher`
+- **David Foenkinos** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=David+Foenkinos&auteurs1=David+Foenkinos&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **David Foenkinos** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22David+Foenkinos%22&auteurs1=%22David+Foenkinos%22&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **David Joy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=david%20joy`
+- **David Le Breton** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=david%20le%20breton`
+- **Dawnie Walton** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dawnie%20walton`
+- **De L'Aube** — `/listeliv.php?form_recherche_avancee=ok&editeur=Editions%20De%20L%27aube`
+- **Deborah Levy** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Deborah+Levy&auteurs1=Deborah+Levy&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Delphine Horvilleur** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Delphine+Horvilleur&auteurs1=Delphine+Horvilleur&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Delphine Minoui** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Delphine+Minoui&auteurs1=Delphine+Minoui&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Delphine Saubaber** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=delphine%20saubaber`
+- **Delphine de Vigan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=delphine%20de%20vigan`
+- **Denis Podalydès** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Denis+Podalyd%C3%A8s&auteurs1=Denis+Podalyd%C3%A8s&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Denis Westhoff** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Denis+Westhoff&auteurs1=Denis+Westhoff&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Dennis Lehane** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dennis%20lehane`
+- **Dictionnaires / Encyclopédies / Documentation** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Dictionnaires+%2F+Encyclop%C3%A9dies+%2F+Documentation&codegtl1=13000000`
+- **Didier Conrad** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Didier+Conrad&auteurs1=Didier+Conrad&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Didier Poli** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=didier%20poli`
+- **Didier Tronchet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=didier%20tronchet`
+- **Dimitri Rouchon-Borie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=dimitri%20rouchon-borie`
+- **Dominique Celis** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Dominique+Celis&auteurs1=Dominique+Celis&dispo=1&select_tri_recherche=pertinence`
+- **Dorcy Rugamba** — `/listeliv.php?base=allbooks&mots_recherche=Dorcy+Rugamba`
+- **Doris Lessing** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=doris%20lessing`
+- **Dorothée Dussy** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Doroth%C3%A9e+Dussy&auteurs1=Doroth%C3%A9e+Dussy&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Douglas Kennedy** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Douglas+Kennedy&auteurs1=Douglas+Kennedy&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Dóra Kiss** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=d%C3%B3ra%20kiss`
+- **Edel Rodriguez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=edel%20rodriguez`
+- **Edgar Hilsenrath** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=edgar%20hilsenrath`
+- **Edgar Morin** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Edgar+Morin&select_tri_recherche=dateparution_decroissant&dispo=1&base=allbooks&page=1`
+- **Editions La Plage** — `/listeliv.php?form_recherche_avancee=ok&editeur=La%20Plage`
+- **Eduardo Mendoza** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=eduardo%20mendoza`
+- **Elena Ferrante** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elena%20ferrante`
+- **Eleonora Galasso** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=eleonora%20galasso`
+- **Elfriede Jelinek** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elfriede%20jelinek`
+- **Elijah Wald** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elijah%20wald`
+- **Elin Anna Labba** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elin%20anna%20labba`
+- **Elisabeth Jullien** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elisabeth%20jullien`
+- **Elise Lépine** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elise%20l%C3%A9pine`
+- **Elizabeth George** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elizabeth%20george`
+- **Ella Balaert** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ella%20balaert`
+- **Eloïse Oger** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elo%C3%AFse%20oger`
+- **Elsa Régis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=elsa%20r%C3%A9gis`
+- **Emanuele Coccia** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emanuele%20coccia`
+- **Emile Ajar** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emile%20ajar`
+- **Emilia Petrakis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emilia%20petrakis`
+- **Emilie Pigeard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emilie%20pigeard`
+- **Emilie Rivard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emilie%20rivard`
+- **Emily Barnett** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emily%20barnett`
+- **Emily Brontë** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emily%20bront%C3%AB`
+- **Emma Doude van Troostwijk** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Emma+Doude+van+Troostwijk&auteurs1=Emma+Doude+van+Troostwijk&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Emmanuel Arago** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emmanuel%20arago`
+- **Emmanuel Carrère** — `/listeliv.php?form_recherche_avancee=ok&auteurs=%22emmanuel+carrere%22&select_tri_recherche=dateparution_decroissant&dispo=1&base=paper&page=1`
+- **Emmanuel Carrère** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emmanuel%20carr%C3%A8re`
+- **Emmanuel Lafont** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emmanuel%20lafont`
+- **Emmanuel de Waresquiel** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Emmanuel+de+Waresquiel&auteurs1=Emmanuel+de+Waresquiel&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Emmanuelle Hutin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Emmanuelle+Hutin&auteurs1=Emmanuelle+Hutin&dispo=1&select_tri_recherche=pertinence`
+- **Emmanuelle Pierrot** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emmanuelle%20pierrot`
+- **Emmanuelle Puche-Artero** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=emmanuelle%20puche-artero`
+- **Enki Bilal** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Enki+Bilal&auteurs1=Enki+Bilal&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Entreprise, Eco & Droit** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Entreprise%2C+%C3%A9conomie+%26+droit&codegtl1=8000000`
+- **Eric Vuillard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=eric%20vuillard`
+- **Eric-Emmanuel Schmitt** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=eric-emmanuel%20schmitt`
+- **Erik Larson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=erik%20larson`
+- **Erik Orsenna** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Erik+Orsenna&auteurs1=Erik+Orsenna&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Erik Orsenna** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Erik+Orsenna%22&auteurs1=%22Erik+Orsenna%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Ernest Hemingway** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ernest%20hemingway`
+- **Erri De Luca** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=erri%20de%20luca`
+- **Etienne Klein** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Etienne+Klein&auteurs1=Etienne+Klein&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Fabcaro** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Fabcaro&auteurs1=Fabcaro&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Fabien Quinazi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fabien%20quinazi`
+- **Fabienne Betting** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fabienne%20betting`
+- **Fabrice Colin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fabrice%20colin`
+- **Fabrice Humbert** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Fabrice+Humbert&auteurs1=Fabrice+Humbert&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Fabrice Luchin** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=fabrice+luchini&auteurs1=fabrice+luchini&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Fabrice Luchini** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=fabrice+luchini&auteurs1=fabrice+luchini&dispo=1&select_tri_recherche=pertinence`
+- **Fabrice Nicolino** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fabrice%20nicolino`
+- **Fabrice Venturini** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fabrice%20venturini`
+- **Fanny Taillandier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fanny%20taillandier`
+- **Fantasy & SF** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Fantasy+%26+Science-fiction&codegtl1=91000000`
+- **Fantazio** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fantazio`
+- **Fatima Daas** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Fatima+Daas&auteurs1=Fatima+Daas&dispo=1&select_tri_recherche=pertinence`
+- **Fatima Daas** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fatima%20daas`
+- **Fatou Diome** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Fatou+Diome&auteurs1=Fatou+Diome&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Federica Manzon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=federica%20manzon`
+- **Fernando Aramburu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fernando%20aramburu`
+- **Fernando Pessoa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fernando%20pessoa`
+- **Feuilles** — `/listeliv.php?form_recherche_avancee=ok&editeur=Feuilles`
+- **Fieve** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fieve`
+- **Fleur Breteau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fleur%20breteau`
+- **Florence Aubenas** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Florence+Aubenas&auteurs1=Florence+Aubenas&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Florence Saugère** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=florence%20saug%C3%A8re`
+- **Florence Seyvos** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Florence+Seyvos&auteurs1=Florence+Seyvos&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Florent Grandin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=florent%20grandin`
+- **Florent Oiseau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=florent%20oiseau`
+- **Florian Mazel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=florian%20mazel`
+- **Francesca Melandri** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=francesca%20melandri`
+- **Francisco Goldman** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=francisco%20goldman`
+- **Franck Renevier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=franck%20renevier`
+- **Franck Thilliez** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Franck+Thilliez&select_tri_recherche=dateparution_decroissant&dispo=1&base=paper&page=1`
+- **Franck Thilliez** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Franck+Thilliez&auteurs1=Franck+Thilliez&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Frantz Fanon** — `/listeliv.php?base=paper&mots_recherche=Frantz+Fanon`
+- **Frantz-Marty** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=frantz-marty`
+- **François Bégaudeau** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Fran%C3%A7ois+B%C3%A9gaudeau&auteurs1=Fran%C3%A7ois+B%C3%A9gaudeau&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **François Bégaudeau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7ois%20b%C3%A9gaudeau`
+- **François Garde** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Francois+Garde&auteurs1=Francois+Garde&dispo=1%2C2&select_tri_recherche=pertinence`
+- **François Lecointre** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Fran%C3%A7ois+Lecointre%22&auteurs1=%22Fran%C3%A7ois+Lecointre%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **François Morel** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Fran%C3%A7ois+Morel%22&auteurs1=%22Fran%C3%A7ois+Morel%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **François Roca** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7ois%20roca`
+- **François Sureau** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Fran%C3%A7ois+Sureau&auteurs1=Fran%C3%A7ois+Sureau&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **François Veillerette** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7ois%20veillerette`
+- **François Villon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7ois%20villon`
+- **François-Henri Désérable** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Francois-Henri+Deserable&auteurs1=Francois-Henri+Deserable&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **François-Henri Désérable** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7ois-henri%20d%C3%A9s%C3%A9rable`
+- **Françoise Combes** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Fran%C3%A7oise+Combes%22&auteurs1=%22Fran%C3%A7oise+Combes%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Françoise Henry** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fran%C3%A7oise%20henry`
+- **Françoise Sagan** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Fran%C3%A7oise+Sagan&auteurs1=Fran%C3%A7oise+Sagan&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Frederick Treves** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=frederick%20treves`
+- **Frédéric Beigbeder** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Fr%C3%A9d%C3%A9ric+Beigbeder&auteurs1=Fr%C3%A9d%C3%A9ric+Beigbeder&dispo=1&select_tri_recherche=pertinence`
+- **Frédéric Gros** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fr%C3%A9d%C3%A9ric%20gros`
+- **Frédéric Ploussard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=fr%C3%A9d%C3%A9ric%20ploussard`
+- **Frémeaux & Associés** — `/listeliv.php?base=ebook&form_recherche_avancee=ok&editeur=Frémeaux%20%26%20Associés&formats=mp3`
+- **Gabor Zoltan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gabor%20zoltan`
+- **Gabriel Garcia Marquez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gabriel%20garcia%20marquez`
+- **Gabriel García Márquez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gabriel%20garc%C3%ADa%20m%C3%A1rquez`
+- **Gabriela Mistral** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gabriela%20mistral`
+- **Gabrielle de Tournemire** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gabrielle%20de%20tournemire`
+- **Gallimard** — `/listeliv.php?mots_recherche=gallimard&base=allbooks`
+- **Gallimard Audio** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&editeur=gallimard+audio&editeur1=gallimard+audio&dispo=1%2C2&select_tri_recherche=pertinence&formats=mp3`
+- **Gallimard Jeunesse Audio** — `/listeliv.php?base=ebook&form_recherche_avancee=ok&editeur=Gallimard%20Jeunesse%20Audio&formats=mp3`
+- **Gaspard Koenig** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Gaspard+Koenig&auteurs1=Gaspard+Koenig&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Gaspard Koenig** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gaspard%20koenig`
+- **Gaël Faye** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Gael+Faye&auteurs1=Gael+Faye&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Gaëlle Nohant** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ga%C3%ABlle%20nohant`
+- **George Sand** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=george%20sand`
+- **Georges Buisson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=georges%20buisson`
+- **Georges-Olivier Châteaureynaud** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=georges-olivier%20ch%C3%A2teaureynaud`
+- **Germaine Richier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=germaine%20richier`
+- **Ghislaine Dunant** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ghislaine%20dunant`
+- **Gianrico Carofiglio** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gianrico%20carofiglio`
+- **Gilbert Lascault** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gilbert%20lascault`
+- **Gilles Baum** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gilles%20baum`
+- **Gilles Marchand** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gilles%20marchand`
+- **Gilles Paris** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gilles%20paris`
+- **Giovanni Lorusso** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=giovanni%20lorusso`
+- **Gisèle Bienne** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gis%C3%A8le%20bienne`
+- **Giuliano da Empoli** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Giuliano+da+Empoli&auteurs1=Giuliano+da+Empoli&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Goliarda Sapienza** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=goliarda%20sapienza`
+- **Golshifteh Farahan** — `/listeliv.php?form_recherche_avancee=ok&base=dvd&code_support=Blu-ray&interprete=Golshifteh+Farahani&interprete1=Golshifteh+Farahani&dispo=1&select_tri_recherche=pertinence`
+- **Gonçalo M. Tavares** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gon%C3%A7alo%20m.%20tavares`
+- **Grazia Deledda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=grazia%20deledda`
+- **Grégory Cingal** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gr%C3%A9gory%20cingal`
+- **Guillaume Apollinaire** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=guillaume%20apollinaire`
+- **Guillaume Gallienne** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Guillaume+Gallienne&auteurs1=Guillaume+Gallienne&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Guillaume Gallienne** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Guillaume+Gallienne&auteurs1=Guillaume+Gallienne&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Guillaume Karr** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=guillaume%20karr`
+- **Guillaume Krempp** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=guillaume%20krempp`
+- **Guillaume Le Blanc** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=guillaume%20le%20blanc`
+- **Gustav Meyrink** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gustav%20meyrink`
+- **Gustave Flaubert** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=gustave%20flaubert`
+- **Guy de Maupassant** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=guy%20de%20maupassant`
+- **Gérald Bronner** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=G%C3%A9rald+Bronner&auteurs1=G%C3%A9rald+Bronner&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Géraldine Jeffroy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=g%C3%A9raldine%20jeffroy`
+- **Gérard Mordillat** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=G%C3%A9rard+Mordillat&auteurs1=G%C3%A9rard+Mordillat&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Gérard Unger** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=g%C3%A9rard%20unger`
+- **H. G. Wells** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=h.%20g.%20wells`
+- **Hannah Arendt** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hannah%20arendt`
+- **Harlan Coben** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=harlan%20coben`
+- **Haruki Murakami** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=haruki%20murakami`
+- **Heiko Bellmann** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=heiko%20bellmann`
+- **Helene Lespagnard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=helene%20lespagnard`
+- **Hemley Boum** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hemley%20boum`
+- **Hermann Schulz** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hermann%20schulz`
+- **Herta Müller** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=herta%20m%C3%BCller`
+- **Hirohiko Araki** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hirohiko%20araki`
+- **Hisham Matar** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hisham%20matar`
+- **Hoffmann** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hoffmann`
+- **Hu Anyan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hu%20anyan`
+- **Hugo Lindenberg** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Hugo+Lindenberg&auteurs1=Hugo+Lindenberg&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Hugo Lindenberg** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hugo%20lindenberg`
+- **Hugo Pratt** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=hugo%20pratt`
+- **Hélène Coutard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=h%C3%A9l%C3%A8ne%20coutard`
+- **Iain Levison** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=iain%20levison`
+- **Iegor Gran** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=iegor%20gran`
+- **Ilaria Gaspari** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ilaria%20gaspari`
+- **Imre Kertész** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=imre%20kert%C3%A9sz`
+- **In Fine** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&editeur=In Fine&editeur1=In Fine&dispo=1,2&select_tri_recherche=pertinence`
+- **Ingrid Astier** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Ingrid+Astier&auteurs1=Ingrid+Astier&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Ingrid Glowacki** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ingrid%20glowacki`
+- **Ingrid Sterckx** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ingrid%20sterckx`
+- **Inès Léraud** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=in%C3%A8s%20l%C3%A9raud`
+- **Irène Frain** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Ir%C3%A8ne+Frain&select_tri_recherche=dateparution_decroissant&dispo=1&base=allbooks&page=1`
+- **Isabelle Autissier** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Isabelle+Autissier&auteurs1=Isabelle+Autissier&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Isabelle Carré** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Isabelle+Carr%C3%A9&auteurs1=Isabelle+Carr%C3%A9&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Isabelle Maroger** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=isabelle%20maroger`
+- **Isabelle Mayault** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=isabelle%20mayault`
+- **J. M. G. Le Clézio** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=j.%20m.%20g.%20le%20cl%C3%A9zio`
+- **J.M.G Le Clezio** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Le+Clezio&auteurs1=Le+Clezio&dispo=1&select_tri_recherche=pertinence`
+- **J.M.G Le Clézio** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Le+Cl%C3%A9zio&auteurs1=Le+Cl%C3%A9zio&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jaap Robben** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jaap%20robben`
+- **Jack Kerouac** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jack%20kerouac`
+- **Jacques Abeille** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jacques%20abeille`
+- **Jacques Rancière** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jacques+Ranciere&auteurs1=Jacques+Ranciere&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jacques Weber** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%22Jacques+Weber%22&auteurs1=%22Jacques+Weber%22&dispo=1&select_tri_recherche=pertinence`
+- **Jakub Szamalek** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jakub%20szamalek`
+- **Jakuta Alikavazovic** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jakuta+Alikavazovic&auteurs1=Jakuta+Alikavazovic&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **James Ellroy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=james%20ellroy`
+- **Jandy Nelson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jandy%20nelson`
+- **Jane Austen** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jane%20austen`
+- **Jarvis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jarvis`
+- **Javier Cercas** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Javier+Cercas&auteurs1=Javier+Cercas&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jawaharlal Nehru** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jawaharlal%20nehru`
+- **Jean Berthier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean%20berthier`
+- **Jean Echenoz** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jean+Echenoz&auteurs1=Jean+Echenoz&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean Echenoz** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean%20echenoz`
+- **Jean Hegland** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean%20hegland`
+- **Jean-Baptiste Del Amo** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jean-Baptiste+Del+Amo&auteurs1=Jean-Baptiste+Del+Amo&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Jean-Christophe Cavallin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-christophe%20cavallin`
+- **Jean-Christophe Grangé** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jean-Christophe+Grang%C3%A9&auteurs1=Jean-Christophe+Grang%C3%A9&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Christophe Grangé** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Jean-Christophe+Grang%C3%A9%22&auteurs1=%22Jean-Christophe+Grang%C3%A9%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Christophe Rufin** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jean-Christophe+Rufin&auteurs1=Jean-Christophe+Rufin&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Christophe Rufin** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%22Jean-Christophe+Rufin%22&auteurs1=%22Jean-Christophe+Rufin%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Claude Raspiengeas** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jean-Claude+Raspiengeas&auteurs1=Jean-Claude+Raspiengeas&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Jean-David Morvan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-david%20morvan`
+- **Jean-Louis Andral** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-louis%20andral`
+- **Jean-Louis Drouet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-louis%20drouet`
+- **Jean-Marc Rochette** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jean-Marc+Rochette&auteurs1=Jean-Marc+Rochette&dispo=1&select_tri_recherche=pertinence`
+- **Jean-Michel Desbuis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-michel%20desbuis`
+- **Jean-Michel Fortier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-michel%20fortier`
+- **Jean-Patrick Manchette** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-patrick%20manchette`
+- **Jean-Paul Goux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-paul%20goux`
+- **Jean-Paul Jouary** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-paul%20jouary`
+- **Jean-Philippe Daguerre** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-philippe%20daguerre`
+- **Jean-Pierre Luminet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jean-Pierre+Luminet&auteurs1=Jean-Pierre+Luminet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Pierre Nucci** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-pierre%20nucci`
+- **Jean-Yves Jouannais** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jean-Yves+Jouannais&auteurs1=Jean-Yves+Jouannais&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jean-Yves Tadié** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jean-yves%20tadi%C3%A9`
+- **Jeanne Benameur** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jeanne+Benameur&auteurs1=Jeanne+Benameur&dispo=1&select_tri_recherche=pertinence`
+- **Jeanne-Alix Berne** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jeanne-alix%20berne`
+- **Jennifer Kerner** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jennifer%20kerner`
+- **Jesmyn Ward** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jesmyn%20ward`
+- **Jessica Oublié** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jessica%20oubli%C3%A9`
+- **Jessé Rémond Lacroix** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jess%C3%A9%20r%C3%A9mond%20lacroix`
+- **Jeunesse** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Jeunesse&codegtl1=2000000`
+- **Jim** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jim`
+- **Jim Harrison** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jim%20harrison`
+- **Jiro Nitta** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jiro%20nitta`
+- **Joann Sfar** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Joann+Sfar&auteurs1=Joann+Sfar&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Joann Sfar** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joann%20sfar`
+- **Joanna Elmy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joanna%20elmy`
+- **Joaquim Maria Machado de Assis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joaquim%20maria%20machado%20de%20assis`
+- **Joe Sacco** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joe%20sacco`
+- **Jonas Sollberger** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jonas%20sollberger`
+- **Jonathan Escoffery** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jonathan%20escoffery`
+- **Joseph Conrad** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joseph%20conrad`
+- **Joseph Mugnaini** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joseph%20mugnaini`
+- **Josiane Balasko** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Josiane+Balasko&auteurs1=Josiane+Balasko&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **José Luis Sampedro** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jos%C3%A9%20luis%20sampedro`
+- **José Saramago** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jos%C3%A9%20saramago`
+- **José maria eça de Queirós** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jos%C3%A9%20maria%20e%C3%A7a%20de%20queir%C3%B3s`
+- **Josée Kamoun** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Jos%C3%A9e+Kamoun&auteurs1=Jos%C3%A9e+Kamoun&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Joyce Carol Oates** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Joyce+Carol+Oates&auteurs1=Joyce+Carol+Oates&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Joyce Maynard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=joyce%20maynard`
+- **Joël Dicker** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Jo%C3%ABl+Dicker&auteurs1=Jo%C3%ABl+Dicker&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Joël Labbé** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=jo%C3%ABl%20labb%C3%A9`
+- **Juan José Saer** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=juan%20jos%C3%A9%20saer`
+- **Judith Perrignon** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Judith+Perrignon&auteurs1=Judith+Perrignon&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Judith Perrignon** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Judith+Perrignon&auteurs1=Judith+Perrignon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Julia Malye** — `/listeliv.php?base=allbooks&form_recherche_avancee=ok&auteurs=Julia%20Malye`
+- **Julia Wertz** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Julia+Wertz+&auteurs1=Julia+Wertz+&dispo=1&select_tri_recherche=pertinence`
+- **Julie Duchatel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=julie%20duchatel`
+- **Julie Gore** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=julie%20gore`
+- **Julien Bisson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=julien%20bisson`
+- **Juliette Brocal** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=juliette%20brocal`
+- **Juliette Oury** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=juliette%20oury`
+- **Justin Morin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Justin+Morin&auteurs1=Justin+Morin&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Justin Torres** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Justin+Torres&auteurs1=Justin+Torres&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Justine Duquesnoy** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=justine%20duquesnoy`
+- **Justine Levy** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Justine+Levy&auteurs1=Justine+Levy&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Jérôme Chantreau** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=J%C3%A9r%C3%B4me+Chantreau&auteurs1=J%C3%A9r%C3%B4me+Chantreau&dispo=1&select_tri_recherche=pertinence`
+- **Jérôme Garcin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=J%C3%A9r%C3%B4me+Garcin&auteurs1=J%C3%A9r%C3%B4me+Garcin&dispo=1&select_tri_recherche=pertinence`
+- **Jérôme Jullien** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=j%C3%A9r%C3%B4me%20jullien`
+- **Kamatama** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kamatama`
+- **Kamel Daoud** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Kamel+Daoud&auteurs1=Kamel+Daoud&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Kamel Daoud** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kamel%20daoud`
+- **Kamel Khélif** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kamel%20kh%C3%A9lif`
+- **Kang Han** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kang%20han`
+- **Karen Blixen** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=karen%20blixen`
+- **Karim Kattan** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Karim+Kattan&auteurs1=Karim+Kattan&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Karine Sulpice** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=karine%20sulpice`
+- **Karine Tuil** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Karine+Tuil&auteurs1=Karine+Tuil&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Karol Beffa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=karol%20beffa`
+- **Kathrine Avraam** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kathrine%20avraam`
+- **Ken Follett** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Ken+Follett&auteurs1=Ken+Follett&dispo=1&select_tri_recherche=pertinence`
+- **Kevin Lambert** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Kevin+Lambert&auteurs1=Kevin+Lambert&dispo=1&select_tri_recherche=pertinence`
+- **Kevin Thievon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kevin%20thievon`
+- **Khashayar J. Khabushani** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=khashayar%20j.%20khabushani`
+- **Kristen Arnett** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=kristen%20arnett`
+- **L'Eclat** — `/listeliv.php?form_recherche_avancee=ok&editeur=L%27Eclat`
+- **L'Iconoclaste** — `/listeliv.php?form_recherche_avancee=ok&editeur=L%27iconoclaste`
+- **La Bibliothèque des Voix** — `/listeliv.php?base=ebook&form_recherche_avancee=ok&editeur=Des%20femmes-Antoinette%20Fouque&collection=La%20Bibliothèque%20des%20voix`
+- **Laetitia Colombani** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laetitia+Colombani&auteurs1=Laetitia+Colombani&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laird Hunt** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laird%20hunt`
+- **Lara Marlowe** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lara%20marlowe`
+- **Lars Wilker** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lars%20wilker`
+- **Laura Vazquez** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=+Laura+Vazquez&auteurs1=+Laura+Vazquez&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laure Adler** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Laure+Adler&auteurs1=Laure+Adler&dispo=1&select_tri_recherche=pertinence`
+- **Laure Heinich** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Laure+Heinich&auteurs1=Laure+Heinich&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laure Heinich** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laure%20heinich`
+- **Laure Limongi** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laure+Limongi&auteurs1=Laure+Limongi&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laure Murat** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laure+Murat&auteurs1=Laure+Murat&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laurence Durieu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurence%20durieu`
+- **Laurence Le Guen** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurence%20le%20guen`
+- **Laurence Nobécourt** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laurence+Nob%C3%A9court&auteurs1=Laurence+Nob%C3%A9court&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laurence Tardieu** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Laurence+Tardieu&auteurs1=Laurence+Tardieu&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laurence Voïta** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurence%20vo%C3%AFta`
+- **Laurent Bidot** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurent%20bidot`
+- **Laurent Bonneau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurent%20bonneau`
+- **Laurent Gaudé** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Laurent+Gaud%C3%A9%22&auteurs1=%22Laurent+Gaud%C3%A9%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laurent Gaudé** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurent%20gaud%C3%A9`
+- **Laurent Mauvignier** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laurent+Mauvignier&auteurs1=Laurent+Mauvignier&dispo=1&select_tri_recherche=pertinence`
+- **Laurent Mauvignier** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Laurent+Mauvignier&auteurs1=Laurent+Mauvignier&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Laurent Mauvignier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=laurent%20mauvignier`
+- **Laurine Roux** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Laurine+Roux&auteurs1=Laurine+Roux&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Leonardo Padura** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=leonardo%20padura`
+- **Leïla Slimani** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Le%C3%AFla+Slimani&auteurs1=Le%C3%AFla+Slimani&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Leïla Slimani** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Le%C3%AFla+Slimani&auteurs1=Le%C3%AFla+Slimani&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Lidia Jorge** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lidia%20jorge`
+- **Linnea Axelsson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=linnea%20axelsson`
+- **Lionel Duroy** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Lionel+Duroy&auteurs1=Lionel+Duroy&dispo=1&select_tri_recherche=pertinence`
+- **Lionel Shriver** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lionel%20shriver`
+- **Lisette Lombé** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Lisette+Lombe&auteurs1=Lisette+Lombe&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Littérature** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Litt%C3%A9rature+g%C3%A9n%C3%A9rale&codegtl1=1000000`
+- **Littérature** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Litt%C3%A9rature&codegtl1=1000000`
+- **Livres Audio** — `/listeliv.php?formats=mp3&form_recherche_avancee=ok&base=allbooks&dispo=1%2C2&select_tri_recherche=pertinence&format_mp3=mp3`
+- **Livres numériques** — `/listeliv.php?formats=epub&form_recherche_avancee=ok&base=allbooks&dispo=1%2C2&select_tri_recherche=pertinence&format_epub=epub`
+- **Lizzie** — `/listeliv.php?base=ebook&mots_recherche=lizzie&select_tri_recherche=pertinence&editeur=Lizzie`
+- **Lola Lafon** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Lola+Lafon&auteurs1=Lola+Lafon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Lola Lafon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Lola+Lafon&auteurs1=Lola+Lafon&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Lola Lafon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lola%20lafon`
+- **Lolita Pille** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Lolita+Pille&auteurs1=Lolita+Pille&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Lotte Paepcke** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lotte%20paepcke`
+- **Louis Aragon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louis%20aragon`
+- **Louis-Henri de La Rochefoucauld** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Louis-Henri+de+La+Rochefoucauld&auteurs1=Louis-Henri+de+La+Rochefoucauld&dispo=1&select_tri_recherche=pertinence`
+- **Louis-Henri de La Rochefoucauld** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louis-henri%20de%20la%20rochefoucauld`
+- **Louisa Yousfi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louisa%20yousfi`
+- **Louise Chennevière** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Louise+Chennevi%C3%A8re&auteurs1=Louise+Chennevi%C3%A8re&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Louise Glück** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louise%20gl%C3%BCck`
+- **Louise Labé** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louise%20lab%C3%A9`
+- **Louise Rose** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=louise%20rose`
+- **Luc Ferry** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=luc%20ferry`
+- **Lucie Albrecht** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lucie%20albrecht`
+- **Lucie Kayas** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lucie%20kayas`
+- **Lucien Febvre** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lucien%20febvre`
+- **Lucy Maud Montgomery** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lucy%20maud%20montgomery`
+- **Luigi Natoli** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=luigi%20natoli`
+- **Luis Sepúlveda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=luis%20sep%C3%BAlveda`
+- **Lydie Salvayre** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Lydie+Salvayre&auteurs1=Lydie+Salvayre&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Lyonel Trouillot** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=lyonel%20trouillot`
+- **Léonard de vinci** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=l%C3%A9onard%20de%20vinci`
+- **Léonor de Récondo** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=L%C3%A9onor+de+R%C3%A9condo&auteurs1=L%C3%A9onor+de+R%C3%A9condo&dispo=1&select_tri_recherche=pertinence`
+- **Léopold Sédar Senghor** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=l%C3%A9opold%20s%C3%A9dar%20senghor`
+- **Magali Briat-Philippe** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=magali%20briat-philippe`
+- **Malika Moustadraf** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=malika%20moustadraf`
+- **Manal Salamé** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Manal+Salam%C3%A9&auteurs1=Manal+Salam%C3%A9&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mandla Langa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mandla%20langa`
+- **Mangas** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=pertinence&codegtl1=3000000&codegtl2=3040000&rayon=Bandes+dessin%26eacute%3Bes+%2F+Comics+%2F+Mangas%7CManga+%2F+Manhwa+%2F+Man+Hua`
+- **Manon Garcia** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Manon+Garcia&auteurs1=Manon+Garcia&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Manon Garcia** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Manon+Garcia&auteurs1=Manon+Garcia&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Manu Causse** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=manu%20causse`
+- **Manu Larcenet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=Manu%20Larcenet`
+- **Manuel Cornejo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=manuel%20cornejo`
+- **Mara Goyet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Mara+Goyet&auteurs1=Mara+Goyet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marc Bloch** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marc%20bloch`
+- **Marc Graciano** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marc%20graciano`
+- **Marcel Proust** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marcel%20proust`
+- **Margaret Atwood** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Margaret+Atwood&auteurs1=Margaret+Atwood&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maria Isabel Sanchez Vegara** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maria%20isabel%20sanchez%20vegara`
+- **Maria Pourchet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Maria+Pourchet&auteurs1=Maria+Pourchet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maria Pourchet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maria%20pourchet`
+- **Marianne Chaillan** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Marianne+Chaillan&auteurs1=Marianne+Chaillan&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marianne Gokalp** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marianne%20gokalp`
+- **Marie Fabre** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marie%20fabre`
+- **Marie NDiaye** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Marie+NDiaye&auteurs1=Marie+NDiaye&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Marie-Aude Murail** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Marie-Aude+Murail&auteurs1=Marie-Aude+Murail&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marie-Helene Piwnik** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marie-helene%20piwnik`
+- **Marie-Hélène Baylac** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marie-h%C3%A9l%C3%A8ne%20baylac`
+- **Marie-Hélène Lafon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Marie-H%C3%A9l%C3%A8ne+Lafon%22&auteurs1=%22Marie-H%C3%A9l%C3%A8ne+Lafon%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marie-Hélène Lafon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Marie-H%C3%A9l%C3%A8ne+Lafon&auteurs1=Marie-H%C3%A9l%C3%A8ne+Lafon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marie-Hélène Lafon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marie-h%C3%A9l%C3%A8ne%20lafon`
+- **Marilyn Plénard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marilyn%20pl%C3%A9nard`
+- **Marina Tsvetaeva** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marina%20tsvetaeva`
+- **Marion Fayolle** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marion%20fayolle`
+- **Marion Montaigne** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Marion+Montaigne&auteurs1=Marion+Montaigne&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Marion Quantin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marion%20quantin`
+- **Marius Degardin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=marius%20degardin`
+- **Martin Suter** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=martin%20suter`
+- **Mary Shelley** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mary%20shelley`
+- **Maryse Burgot** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Maryse+Burgot&auteurs1=Maryse+Burgot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maryvonne de Saint-Pulgent** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Maryvonne+de+Saint-Pulgent&auteurs1=Maryvonne+de+Saint-Pulgent&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maryvonne de Saint-Pulgent** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maryvonne%20de%20saint-pulgent`
+- **Mathieu Belezi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mathieu%20belezi`
+- **Mathieu Lours** — `/listeliv.php?base=allbooks&mots_recherche=mathieu+lours`
+- **Mathieu Simonet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Mathieu+Simonet&auteurs1=Mathieu+Simonet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mathilda Di Matteo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mathilda%20di%20matteo`
+- **Mathilde Beaussault** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Mathilde+Beaussault&auteurs1=Mathilde+Beaussault&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mathilde Beaussault** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mathilde%20beaussault`
+- **Mathilde Desaché** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mathilde%20desach%C3%A9`
+- **Matt Dinniman** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=matt%20dinniman`
+- **Matthieu Mégevand** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=matthieu%20m%C3%A9gevand`
+- **Matthieu Ricard** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Matthieu+Ricard&auteurs1=Matthieu+Ricard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maud Perrin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maud%20perrin`
+- **Maurice Ravel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maurice%20ravel`
+- **Max Aub** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=max%20aub`
+- **Max de Paz** — `/listeliv.php?base=allbooks&mots_recherche=Max+de+Paz`
+- **Maxime Chattam** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Maxime+Chattam&auteurs1=Maxime+Chattam&dispo=1&select_tri_recherche=pertinence`
+- **Maxime Rovere** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Maxime+Rovere&auteurs1=Maxime+Rovere&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maylis de Kerangal** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Maylis+de+Kerangal&auteurs1=Maylis+de+Kerangal&dispo=1&select_tri_recherche=pertinence`
+- **Maylis de Kerangal** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=maylis%20de%20kerangal`
+- **Mazarine M. Pingeot** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Mazarine+Pingeot&auteurs1=Mazarine+Pingeot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mazarine Pingeot** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Mazarine+Pingeot&auteurs1=Mazarine+Pingeot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Maïa Thiriet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ma%C3%AFa%20thiriet`
+- **Medy Oberendorff** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=medy%20oberendorff`
+- **Mehdi Charef** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mehdi%20charef`
+- **Meilleures Ventes** — `/listeliv.php?ssh_id=&type_page=palmares&base=`
+- **Melvin Mélissa** — `/listeliv.php?base=paper&mots_recherche=Melvin+Melissa`
+- **Mervyn Peake** — `/listeliv.php?base=allbooks&mots_recherche=Mervyn%20Peake`
+- **Mia Couto** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mia%20couto`
+- **Michael Christie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=michael%20christie`
+- **Michaël Dichter** — `/listeliv.php?base=allbooks&mots_recherche=Micha%C3%ABl+Dichter`
+- **Michel Boucher** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=michel%20boucher`
+- **Michel Bussi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=michel%20bussi`
+- **Michel Hazanavicius** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Michel+Hazanavicius&auteurs1=Michel+Hazanavicius&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Michel Houellebecq** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Michel+Houellebecq&auteurs1=Michel+Houellebecq&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Michelle Perrot** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Michelle+Perrot&auteurs1=Michelle+Perrot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Michelle Perrot** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Michelle+Perrot&auteurs1=Michelle+Perrot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Michèle Desbordes** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mich%C3%A8le%20desbordes`
+- **Miguel Bonnefoy** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Miguel+Bonnefoy&auteurs1=Miguel+Bonnefoy&dispo=1&select_tri_recherche=pertinence`
+- **Mika** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mika`
+- **Mikhaïl Chevelev** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mikha%C3%AFl%20chevelev`
+- **Milena Palminteri** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=milena%20palminteri`
+- **Miles Hyman Matz** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=miles%20hyman%20matz`
+- **Minalima** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=minalima`
+- **Mireille Huchon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Mireille+huchon&auteurs1=Mireille+huchon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mireille Rosambert-tissier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=mireille%20rosambert-tissier`
+- **Mona Chollet** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Mona+Chollet&auteurs1=Mona+Chollet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Monica Acito** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=monica%20acito`
+- **Montesquieu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=montesquieu`
+- **Morgane Peyrot** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=morgane%20peyrot`
+- **Muriel Diallo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=muriel%20diallo`
+- **Muriel Zürcher** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=muriel%20z%C3%BCrcher`
+- **Mélissa Da Costa** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22M%C3%A9lissa+Da+Costa%22&auteurs1=%22M%C3%A9lissa+Da+Costa%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Mélissa Da Costa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=m%C3%A9lissa%20da%20costa`
+- **Nadia Daam** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Nadia+Daam&auteurs1=Nadia+Daam&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Nadia Daam** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Nadia+Daam&auteurs1=Nadia+Daam&dispo=1&select_tri_recherche=pertinence`
+- **Nadine Gordimer** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nadine%20gordimer`
+- **Nancy Huston** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Nancy+Huston&auteurs1=Nancy+Huston&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Natalia Zaremba-Huzsvai** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=natalia%20zaremba-huzsvai`
+- **Nathacha Appanah** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Nathacha+Appanah&auteurs1=Nathacha+Appanah&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Nathacha Appanah** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nathacha%20appanah`
+- **Nathan** — `/listeliv.php?form_recherche_avancee=ok&editeur=Nathan`
+- **Nathan Devers** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Nathan+Devers&auteurs1=Nathan+Devers&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Nathan Hill** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nathan%20hill`
+- **Nathan Thrall** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nathan%20thrall`
+- **Nayla Chidiac** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Nayla+Chidiac&auteurs1=Nayla+Chidiac&dispo=1&select_tri_recherche=pertinence`
+- **Nelly Sachs** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nelly%20sachs`
+- **Nelson Kadir** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nelson%20kadir`
+- **Nelson Mandela** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nelson%20mandela`
+- **Nicola Gobbi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicola%20gobbi`
+- **Nicolas Chemla** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicolas%20chemla`
+- **Nicolas Delesalle** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicolas%20delesalle`
+- **Nicolas Demorand** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Nicolas+Demorand&auteurs1=Nicolas+Demorand&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Nicolas Doutey** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicolas%20doutey`
+- **Nicolas Galkowski** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicolas%20galkowski`
+- **Nicolas Gaudemet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicolas%20gaudemet`
+- **Nicole Caligaris** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicole%20caligaris`
+- **Nicole Mersey Ortega** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nicole%20mersey%20ortega`
+- **Niki de Saint phalle** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=niki%20de%20saint%20phalle`
+- **Nina Allan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nina%20allan`
+- **Nina Léger** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=nina%20l%C3%A9ger`
+- **Noémie Fachan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=no%C3%A9mie%20fachan`
+- **Oisin McKenna** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=oisin%20mckenna`
+- **Olga De Dios** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olga%20de%20dios`
+- **Olga Tokarczuk** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olga%20tokarczuk`
+- **Olivia Ruiz** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Olivia+Ruiz&auteurs1=Olivia+Ruiz&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Olivia Sautreuil** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olivia%20sautreuil`
+- **Olivia de Lamberterie** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Olivia+de+Lamberterie&auteurs1=Olivia+de+Lamberterie&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Olivier Guez** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Olivier+Guez&auteurs1=Olivier+Guez&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Olivier Guez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olivier%20guez`
+- **Olivier Larrègle** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olivier%20larr%C3%A8gle`
+- **Olivier Mora** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olivier%20mora`
+- **Olivier Norek** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Olivier+Norek&auteurs1=Olivier+Norek&dispo=1&select_tri_recherche=pertinence`
+- **Olivier Zarrouati** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=olivier%20zarrouati`
+- **Oskar** — `/listeliv.php?form_recherche_avancee=ok&editeur=Oskar`
+- **Pablo Neruda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pablo%20neruda`
+- **Pacôme Thiellement** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pac%C3%B4me%20thiellement`
+- **Paolo Bellomo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=paolo%20bellomo`
+- **Paolo Rumiz** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Paolo+Rumiz&auteurs1=Paolo+Rumiz&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Parascolaire** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Parascolaire&codegtl1=12000000`
+- **Pascal Bruckner** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Pascal+Bruckner&auteurs1=Pascal+Bruckner&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Pascal Chabot** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Pascal+Chabot&auteurs1=Pascal+Chabot&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pascal Quignard** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=pascal+quignard&auteurs1=pascal+quignard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pascale Tournier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pascale%20tournier`
+- **Patricia Melo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=patricia%20melo`
+- **Patrick Besson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=patrick%20besson`
+- **Patrick Boucheron** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Patrick+Boucheron&auteurs1=Patrick+Boucheron&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Patrick Chamoiseau** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Patrick+Chamoiseau&auteurs1=Patrick+Chamoiseau&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Patrick Lemoine** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Patrick+Lemoine&auteurs1=Patrick+Lemoine&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Patrick Modiano** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Patrick+Modiano&auteurs1=Patrick+Modiano&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Patrick Modiano** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=patrick%20modiano`
+- **Paul Eluard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=paul%20eluard`
+- **Paul Hindemith** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=paul%20hindemith`
+- **Paul Lynch** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Paul+Lynch&auteurs1=Paul+Lynch&dispo=1&select_tri_recherche=pertinence`
+- **Paul Verlaine** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=paul%20verlaine`
+- **Paula Ringer** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=paula%20ringer`
+- **Pauline Clavière** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pauline%20clavi%C3%A8re`
+- **Pauline Pantera** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pauline%20pantera`
+- **Pauline Peyrade** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Pauline+Peyrade&auteurs1=Pauline+Peyrade&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pearl Buck** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pearl%20buck`
+- **Percival Everett** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Percival+Everett&auteurs1=Percival+Everett&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Percival Everett** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=percival%20everett`
+- **Philibert Humm** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Philibert+Humm&auteurs1=Philibert+Humm&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philip K. Dick** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philip%20k.%20dick`
+- **Philip Roth** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philip%20roth`
+- **Philippa Motte** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Philippa+Motte&auteurs1=Philippa+Motte&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philippe Auzou** — `/listeliv.php?form_recherche_avancee=ok&editeur=Philippe%20Auzou`
+- **Philippe Barbeau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philippe%20barbeau`
+- **Philippe Besson** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Philippe+Besson&auteurs1=Philippe+Besson&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philippe Besson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philippe%20besson`
+- **Philippe Claudel** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Philippe+Claudel&auteurs1=Philippe+Claudel&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Philippe Collin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Philippe+Collin%22&auteurs1=%22Philippe+Collin%22&dispo=1&select_tri_recherche=pertinence`
+- **Philippe Delerm** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Philippe+Delerm&auteurs1=Philippe+Delerm&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philippe Forest** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Philippe+Forest&auteurs1=Philippe+Forest&dispo=1&select_tri_recherche=pertinence`
+- **Philippe Jaenada** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Philippe+Jaenada&auteurs1=Philippe+Jaenada&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philippe Manevy** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Philippe+Manevy&auteurs1=Philippe+Manevy&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Philippe Savet** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philippe%20savet`
+- **Philippe Van der Schrieck** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=philippe%20van%20der%20schrieck`
+- **Piergiorgio Pulixi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=piergiorgio%20pulixi`
+- **Pierre Arditi** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Pierre+Arditi&auteurs1=Pierre+Arditi&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pierre Assouline** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Pierre+Assouline&auteurs1=Pierre+Assouline&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pierre Bergounioux** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Pierre+Bergounioux&auteurs1=Pierre+Bergounioux&dispo=1&select_tri_recherche=pertinence`
+- **Pierre Bergounioux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=Pierre%20Bergounioux`
+- **Pierre Guyotat** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pierre%20guyotat`
+- **Pierre Lemaitre** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Pierre+Lemaitre%22&auteurs1=%22Pierre+Lemaitre%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pierre Lemaitre** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pierre%20lemaitre`
+- **Pierre Michon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Pierre+Michon%22&auteurs1=%22Pierre+Michon%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pierre Van Hove** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pierre%20van%20hove`
+- **Pierre-Gilles Girault** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pierre-gilles%20girault`
+- **Pierre-Roland Saint-Dizier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pierre-roland%20saint-dizier`
+- **Pintachan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=pintachan`
+- **Plinio Apuleyo Mendoza** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=plinio%20apuleyo%20mendoza`
+- **Polar & Thriller** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Policier+%26+Thriller&codegtl1=90000000`
+- **Polar & Thriller** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&codegtl1=90000000&codegtl1=90000000`
+- **Pénélope Bagieu** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=P%C3%A9n%C3%A9lope+Bagieu&auteurs1=P%C3%A9n%C3%A9lope+Bagieu&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Pénélope Bagieu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=p%C3%A9n%C3%A9lope%20bagieu`
+- **Quynh Tran** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=quynh%20tran`
+- **Rachel Carson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rachel%20carson`
+- **Rachid Benzine** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Rachid+Benzine&auteurs1=Rachid+Benzine&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Rachida Brakni** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Rachida+Brakni&auteurs1=Rachida+Brakni&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Rainer Maria Rilke** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rainer%20maria%20rilke`
+- **Ralph Vendôme** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ralph%20vend%C3%B4me`
+- **Ramsès Kefi** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Rams%C3%A8s+Kefi&auteurs1=Rams%C3%A8s+Kefi&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Ramsès Kéfi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rams%C3%A8s%20k%C3%A9fi`
+- **Raoul Peck** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Raoul+Peck&auteurs1=Raoul+Peck&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Raphaël Gaillard** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Rapha%C3%ABl+Gaillard&auteurs1=Rapha%C3%ABl+Gaillard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Raphaël Liogier** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Rapha%C3%ABl+Liogier&auteurs1=Rapha%C3%ABl+Liogier&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Raphaël Sigal** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Rapha%C3%ABl+Sigal&auteurs1=Rapha%C3%ABl+Sigal&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Raphaël Sigal** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rapha%C3%ABl%20sigal`
+- **Ray Bradbury** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ray%20bradbury`
+- **Raymond Chandler** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=raymond%20chandler`
+- **Rebecca Benhamou** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rebecca%20benhamou`
+- **Rebecca Yarros** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rebecca%20yarros`
+- **Rebeka Warrior** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Rebeka+Warrior&auteurs1=Rebeka+Warrior&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Reine Bellivier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=reine%20bellivier`
+- **Religion & Esotérisme** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Religion+%26+Esot%C3%A9risme&codegtl1=7000000`
+- **Renaud Leblond** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=renaud%20leblond`
+- **Riad Sattouf** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Riad+Sattouf&select_tri_recherche=dateparution_decroissant&dispo=1&base=paper&page=1`
+- **Riad Sattouf** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Riad+Sattouf&auteurs1=Riad+Sattouf&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Richard Ford** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Richard+Ford&auteurs1=Richard+Ford&dispo=1&select_tri_recherche=pertinence`
+- **Richard Ford** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=richard%20ford`
+- **Richard Zenith** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=richard%20zenith`
+- **Rim Battal** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Rim+Battal&auteurs1=Rim+Battal&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Rita Bullwinkel** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rita%20bullwinkel`
+- **Rivages Noir30 ans...** — `/listeliv.php?mots_recherche=rivages+noirs&base=allbooks`
+- **Roberto Saviano** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Roberto+Saviano&auteurs1=Roberto+Saviano&dispo=1&select_tri_recherche=pertinence`
+- **Robin Hobb** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=robin%20hobb`
+- **Roger-Pol Droit** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Roger-Pol+Droit&auteurs1=Roger-Pol+Droit&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Romain Gary** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=romain%20gary`
+- **Romance** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Romance&codegtl1=92000000`
+- **Romance** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&codegtl1=92000000&codegtl1=92000000`
+- **Romans** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&codegtl1=1000000&codegtl2=1010000&rayon=Litt%26eacute%3Brature+g%26eacute%3Bn%26eacute%3Brale%7CRomans+%26amp%3B+Nouvelles`
+- **Rosa Montero** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rosa%20montero`
+- **Rudyard Kipling** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rudyard%20kipling`
+- **Rune Christiansen** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=rune%20christiansen`
+- **Ruslan Hordiienko** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ruslan%20hordiienko`
+- **Régis Jauffret** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Regis+Jauffret&auteurs1=Regis+Jauffret&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Régis Quatresous** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=r%C3%A9gis%20quatresous`
+- **Rémi David** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=r%C3%A9mi%20david`
+- **Rémi Saillart** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=r%C3%A9mi%20saillart`
+- **S. A. Cosby** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=s.%20a.%20cosby`
+- **Sabaa Tahir** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sabaa%20tahir`
+- **Sabri Louatah** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sabri+Louatah&auteurs1=Sabri+Louatah&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Sabrina Delarue** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sabrina%20delarue`
+- **Salman Rushdie** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Salman+Rushdie&auteurs1=Salman+Rushdie&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Salman Rushdie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=salman%20rushdie`
+- **Salomé Berlioux** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Salom%C3%A9+Berlioux&auteurs1=Salom%C3%A9+Berlioux&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Salomé Botella** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=salom%C3%A9%20botella`
+- **Salomé Saqué** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Salome+Saque&auteurs1=Salome+Saque&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Sandra Nelson** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sandra%20nelson`
+- **Sandra Tosello** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sandra%20tosello`
+- **Sandrine Collette** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sandrine+Collette&auteurs1=Sandrine+Collette&dispo=1&select_tri_recherche=pertinence`
+- **Sandro Botticelli** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sandro%20botticelli`
+- **Sandro Veronesi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sandro%20veronesi`
+- **Santiago Amigorena** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Santiago+Amigorena&auteurs1=Santiago+Amigorena&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Saphia Azzeddine** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=saphia%20azzeddine`
+- **Sapphô** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sapph%C3%B4`
+- **Sarah Chiche** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Sarah+Chiche&auteurs1=Sarah+Chiche&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sarah Chiche** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sarah%20chiche`
+- **Sarah Jollien-Fardel** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sarah+Jollien-Fardel&auteurs1=Sarah+Jollien-Fardel&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sasha Georges** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sasha%20georges`
+- **Sciences** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Sciences+%26+Techniques&codegtl1=10000000`
+- **Sciences Humaines** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Sciences+humaines+%26+sociales&codegtl1=9000000`
+- **Scolaire** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Scolaire&codegtl1=11000000`
+- **Selma Lagerlof** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=selma%20lagerlof`
+- **Serena Giuliano** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=serena%20giuliano`
+- **Serge Toubiana** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Serge+Toubiana&auteurs1=Serge+Toubiana&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Shane Haddad** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Shane+Haddad&auteurs1=Shane+Haddad&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Shin'ichi Sakamoto** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=shin%27ichi%20sakamoto`
+- **Shumona Sinha** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Shumona+Sinha&auteurs1=Shumona+Sinha&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sigrid Undset** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sigrid%20undset`
+- **Silène Edgar** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sil%C3%A8ne%20edgar`
+- **Simon Fulleda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=simon%20fulleda`
+- **Simon Johannin** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Simon+Johannin&auteurs1=Simon+Johannin&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Simon Liberati** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Simon+Liberati&auteurs1=Simon+Liberati&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Simona Lo Iacono** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=simona%20lo%20iacono`
+- **Simonetta Greggio** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Simonetta+Greggio&auteurs1=Simonetta+Greggio&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sonia Kronlund** — `/listeliv.php?base=allbooks&form_recherche_avancee=ok&auteurs=Sonia%20Kronlund`
+- **Sonja Delzongle** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sonja+Delzongle&auteurs1=Sonja+Delzongle&dispo=1&select_tri_recherche=pertinence`
+- **Sophie Divry** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sophie+Divry&auteurs1=Sophie+Divry&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Sophie Fontanel** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Sophie+Fontanel&auteurs1=Sophie+Fontanel&dispo=1&select_tri_recherche=pertinence`
+- **Sophie Mackintosh** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sophie%20mackintosh`
+- **Sophie Ménard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sophie%20m%C3%A9nard`
+- **Sophie Pelloux-Prayer** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sophie%20pelloux-prayer`
+- **Sophie Tal Men** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sophie%20tal%20men`
+- **Sophie de Mullenheim** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sophie%20de%20mullenheim`
+- **Sorj Chalandon** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sorj+Chalandon&auteurs1=Sorj+Chalandon&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sorj Chalandon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sorj%20chalandon`
+- **Stan Manoukian** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=stan%20manoukian`
+- **Stanislas Dehaene** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Stanislas+Dehaene&auteurs1=Stanislas+Dehaene&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Stefania Auci** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=stefania%20auci`
+- **Stefano Massini** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=stefano%20massini`
+- **Stephen King** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=stephen%20king`
+- **Stephen Markley** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=stephen%20markley`
+- **Steven Jezo-Vannier** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=steven%20jezo-vannier`
+- **Stéphane Guégan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=st%C3%A9phane%20gu%C3%A9gan`
+- **Stéphane Hurtrez** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=st%C3%A9phane%20hurtrez`
+- **Stéphane Mallarmé** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=st%C3%A9phane%20mallarm%C3%A9`
+- **Stéphane Tamaillon** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=st%C3%A9phane%20tamaillon`
+- **Stéphanie Hochet** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=St%C3%A9phanie+Hochet&auteurs1=St%C3%A9phanie+Hochet&dispo=1&select_tri_recherche=pertinence`
+- **Susanna Bissoli** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=susanna%20bissoli`
+- **Susie Morgenstern** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Susie+Morgenstern&auteurs1=Susie+Morgenstern&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Suzanne Collins** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=suzanne%20collins`
+- **Suzette Bloch** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=suzette%20bloch`
+- **Svetlana Alexievitch** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=svetlana%20alexievitch`
+- **Sylvain Ledda** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sylvain%20ledda`
+- **Sylvain Tesson** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Sylvain+Tesson&auteurs1=Sylvain+Tesson&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sylvain Tesson** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Sylvain+Tesson&auteurs1=Sylvain+Tesson&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sylvie Bessard** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sylvie%20bessard`
+- **Sylvie Chokron** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Sylvie+Chokron&auteurs1=Sylvie+Chokron&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Sylvie Delaigue-Moins** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=sylvie%20delaigue-moins`
+- **Sylvie Testud** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Sylvie+Testud&auteurs1=Sylvie+Testud&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Szilvia Molnar** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=szilvia%20molnar`
+- **Sébastien Dulude** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=s%C3%A9bastien%20dulude`
+- **Séverine Cressan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=s%C3%A9verine%20cressan`
+- **Takuji Ishikawa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=takuji%20ishikawa`
+- **Tash Aw** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tash%20aw`
+- **Tatiana de Perlinghi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tatiana%20de%20perlinghi`
+- **Tatiana de Rosnay** — `/listeliv.php?form_recherche_avancee=ok&auteurs=Tatiana+de+Rosnay&select_tri_recherche=pertinence&base=allbooks&page=1`
+- **Tehila Hakimi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tehila%20hakimi`
+- **Terreur Graphique** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Terreur+Graphique&auteurs1=Terreur+Graphique&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Tetsuya Yano** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tetsuya%20yano`
+- **Thibault Daelman** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=thibault%20daelman`
+- **Thibault Vetter** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=thibault%20vetter`
+- **Thibault de Montaigu** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Thibault+de+Montaigu&auteurs1=Thibault+de+Montaigu&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Thibault de Montaigu** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=thibault%20de%20montaigu`
+- **Thierry Frémaux** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Thierry+Fr%C3%A9maux&auteurs1=Thierry+Fr%C3%A9maux&dispo=1&select_tri_recherche=pertinence`
+- **Thomas Bois** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=thomas%20bois`
+- **Thomas Pesquet** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Thomas+pesquet&auteurs1=Thomas+pesquet&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Thomas Schlesser** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Thomas+Schlesser&auteurs1=Thomas+Schlesser&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Thomas Schlesser** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=thomas%20schlesser`
+- **Thomas VDB** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Thomas+VDB&auteurs1=Thomas+VDB&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Thélème** — `/listeliv.php?base=ebook&form_recherche_avancee=ok&editeur=Éditions%20Thélème&formats=mp3`
+- **Thérèse Bonté** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=th%C3%A9r%C3%A8se%20bont%C3%A9`
+- **Théâtrales** — `/listeliv.php?form_recherche_avancee=ok&editeur=Theatrales`
+- **Timothée Zourabichvili** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=timoth%C3%A9e%20zourabichvili`
+- **Timothée de Fombelle** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%22Timoth%C3%A9e+de+Fombelle%22&auteurs1=%22Timoth%C3%A9e+de+Fombelle%22&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Timothée de Fombelle** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Timothee+de+Fombelle&auteurs1=Timothee+de+Fombelle&dispo=1&select_tri_recherche=pertinence`
+- **Tobie Nathan** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Tobie+Nathan&auteurs1=Tobie+Nathan&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Toby Lloyd** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=toby%20lloyd`
+- **Toni Morrison** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=toni%20morrison`
+- **Tony Côme** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tony%20c%C3%B4me`
+- **Tourisme & Voyages** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Tourisme+%26+Voyages&codegtl1=5000000`
+- **Tous les livres VO** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Litt%C3%A9rature%20g%C3%A9n%C3%A9rale&codegtl1=1000000&page=1&codelangue1=30000`
+- **Tristan Jordis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tristan%20jordis`
+- **Tsukiko Ochi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=tsukiko%20ochi`
+- **Ugo Bertotti** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=ugo%20bertotti`
+- **Usama Al Shahmani** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=usama%20al%20shahmani`
+- **V. V. Ganeshananthan** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=v.%20v.%20ganeshananthan`
+- **Val Walerczuk** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=val%20walerczuk`
+- **Valeria Galante** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=valeria%20galante`
+- **Valérie Da Costa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=val%C3%A9rie%20da%20costa`
+- **Valérie Manteau** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=val%C3%A9rie%20manteau`
+- **Valérie Perrin** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Val%C3%A9rie+Perrin&auteurs1=Val%C3%A9rie+Perrin&dispo=1&select_tri_recherche=pertinence&datemin=01%2F10%2F2017&datemax=28%2F10%2F2024`
+- **Valérie Perrin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=val%C3%A9rie%20perrin`
+- **Valérie Zenatti** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Val%C3%A9rie+Zenatti&auteurs1=Val%C3%A9rie+Zenatti&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Vanessa Robidou** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=vanessa%20robidou`
+- **Vanessa Springora** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Vanessa+Springora&auteurs1=Vanessa+Springora&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Victor Dekyvère** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=victor%20dekyv%C3%A8re`
+- **Victor Hugo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=victor%20hugo`
+- **Victor Malzac** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=victor%20malzac`
+- **Victoria Mas** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Victoria+Mas&auteurs1=Victoria+Mas&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Vie pratique & Loisirs** — `/listeliv.php?refgtl=home&base=allbooks&select_tri_recherche=&rayon=Vie+pratique+%26+Loisirs&codegtl1=4000000`
+- **Vincent Kings** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=vincent%20kings`
+- **Vincent Lavoie** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=vincent%20lavoie`
+- **Vincent Pianina** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=vincent%20pianina`
+- **Vinciane Despret** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Vinciane+Despret&auteurs1=Vinciane+Despret&dispo=1&select_tri_recherche=pertinence`
+- **Vinciane Lebrun** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=vinciane%20lebrun`
+- **Viola Ardone** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=viola%20ardone`
+- **Violaine Huisman** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Violaine+Huisman&auteurs1=Violaine+Huisman&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Virginia Tangvald** — `/listeliv.php?base=allbooks&mots_recherche=Virginia+Tangvald`
+- **Virginie Aladjdi** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=virginie%20aladjdi`
+- **Virginie Grimaldi** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Virginie+Grimaldi&auteurs1=Virginie+Grimaldi&dispo=1&select_tri_recherche=pertinence`
+- **Virginie Nepoux** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=virginie%20nepoux`
+- **Véronique Tadjo** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=v%C3%A9ronique%20tadjo`
+- **Wajdi Mouawad** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Wajdi+Mouawad&auteurs1=Wajdi+Mouawad&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Wajdi Mouawad** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Wajdi+Mouawad&auteurs1=Wajdi+Mouawad&dispo=1%2C2&select_tri_recherche=pertinence`
+- **Walid Daqqa** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=walid%20daqqa`
+- **Walt Whitman** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=walt%20whitman`
+- **William Blake** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=william%20blake`
+- **William Marx** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=William+Marx&auteurs1=William+Marx&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **William Styron** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=william%20styron`
+- **Wislawa Szymborska** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=wislawa%20szymborska`
+- **Xavier Chapuis** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=xavier%20chapuis`
+- **Yann Arthus-Bertrand** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%22Yann+Arthus-Bertrand%22&auteurs1=%22Yann+Arthus-Bertrand%22&dispo=1&select_tri_recherche=pertinence`
+- **Yann Potin** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yann%20potin`
+- **Yaroslav Trofimov** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yaroslav%20trofimov`
+- **Yasmina Khadra** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Yasmina+Khadra&auteurs1=Yasmina+Khadra&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Yasmina Khadra** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Yasmina+Khadra&auteurs1=Yasmina+Khadra&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Yasmina Reza** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=Yasmina+Reza&auteurs1=Yasmina+Reza&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Yiyun Li** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yiyun%20li`
+- **Yoko Mure** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yoko%20mure`
+- **Yoshino Nabeta** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yoshino%20nabeta`
+- **Yugata Tanabe** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yugata%20tanabe`
+- **Yukio Mishima** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yukio%20mishima`
+- **Yves de Gaulle** — `/listeliv.php?base=paper&form_recherche_avancee=ok&auteurs=yves%20de%20gaulle`
+- **Zep** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=Zep&auteurs1=Zep&dispo=1&select_tri_recherche=pertinence`
+- **ebooks gratuits** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=1%2C2&select_tri_recherche=pertinence&prixmin=0&prixmax=0`
+- **ebooks à paraître** — `/listeliv.php?form_recherche_avancee=ok&base=ebook&dispo=2&select_tri_recherche=pertinence`
+- **Émilie Lanez** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%C3%89milie+Lanez&auteurs1=%C3%89milie+Lanez&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Éric Vuillard** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%C3%89ric+Vuillard&auteurs1=%C3%89ric+Vuillard&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Éric-Emmanuel Schmitt** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%C3%89ric-Emmanuel+Schmitt&auteurs1=%C3%89ric-Emmanuel+Schmitt&dispo=1%2C2&select_tri_recherche=dateparution_decroissant`
+- **Éric-Emmanuel Schmitt** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%C3%89ric-Emmanuel+Schmitt&auteurs1=%C3%89ric-Emmanuel+Schmitt&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Étienne Kern** — `/listeliv.php?form_recherche_avancee=ok&base=paper&auteurs=%C3%89tienne+Kern&auteurs1=%C3%89tienne+Kern&dispo=1&select_tri_recherche=dateparution_decroissant`
+- **Étienne Klein** — `/listeliv.php?form_recherche_avancee=ok&base=allbooks&auteurs=%C3%89tienne+Klein&auteurs1=%C3%89tienne+Klein&dispo=1&select_tri_recherche=pertinence`
+
+## Autres pages  (85)
+
+- **(Librairie La Friche)** — `/magasins/paris/La-Friche-2518/`
+- **0Mon panier** — `/panier.php`
+- **A la Marge** — `/magasins/montreuil/A-la-marge-3446/`
+- **AFCAE** — `/mot-du-libraire/avis-des-cinemas-art-et-essai-2680/mois=/an=/base=`
+- **Accessibilité** — `/accessibilite_numerique.php`
+- **Administration magasin** — `/gestion`
+- **Agenda** — `/agenda.php`
+- **Arborescence** — `/magasins/massy/Arborescence-5973/`
+- **Aurélie** — `/mot-du-libraire/aurelie-1171/mois=/an=/base=`
+- **BD Net** — `/magasins/paris/BD-Net-6159/`
+- **BooKalicious** — `/?ssh_id=1794`
+- **Comment Dire** — `/magasins/rennes/Comment-Dire-6312/`
+- **Conditions générales** — `/conditions_generales.php`
+- **Données personnelles** — `/cgp.php`
+- **Déconnexion** — `/deconint.php`
+- **Elise** — `/mot-du-libraire/elise-1489/mois=/an=/base=`
+- **Folies d'encre** — `/magasins/villemomble/Folies-d-encre-Villemomble-3474/`
+- **Gutenberg** — `/magasins/strasbourg/Librairie-Gutenberg-2861/`
+- **Géraldine** — `/mot-du-libraire/geraldine-242/mois=/an=/base=`
+- **Inscrivez-vous à la newsletter** — `/?provenance=moncompte_infos`
+- **Isabelle** — `/mot-du-libraire/isabelle-219/mois=/an=/base=`
+- **Kléber** — `/mot-du-libraire/kleber-/mois=/an=/base=`
+- **L'Ecume des pages** — `/magasins/paris/Librairie-L-Ecume-des-Pages-2819/`
+- **La Boussole** — `/magasins/villefranche-sur-saone/La-Boussole-6581/`
+- **La Grande balade** — `/magasins/le-kremlin-bicetre/La-Grande-Balade-3523/`
+- **La Librairie du Tramway** — `/magasins/lyon/La-librairie-du-Tramway-2945/`
+- **La Mécanique céleste** — `/magasins/lyon/La-Mecanique-Celeste-6539/`
+- **La Nuit des temps** — `/magasins/rennes/La-Nuit-des-Temps-6054/`
+- **La Petite Gare** — `/magasins/reze/La-petite-gare-6503/`
+- **La Ruche** — `/magasins/maisons-alfort/la-ruche-3342/`
+- **La Vie devant soi** — `/magasins/nantes/La-vie-devant-soi-5754/`
+- **La Voie aux chapitres** — `/magasins/lyon/La-voie-aux-chapitres-5604/`
+- **La fourmi rouge** — `/magasins/cahors/La-fourmi-rouge-3311/`
+- **La montée du soir** — `/magasins/paris/La-montee-du-soir-2906/`
+- **La toute petite librairie** — `/magasins/paris/La-toute-petite-librairie-6021/`
+- **La vie immédiate** — `/magasins/charenton-le-pont/La-Vie-immediate-3514/`
+- **Lamartine** — `/magasins/paris/Lamartine-2318/`
+- **Le Divan** — `/magasins/paris/Librairie-Le-Divan-2663/`
+- **Le Garage Hermétique** — `/magasins/luc-sur-mer/Le-Garage-Hermetique-6599/`
+- **Le Phare** — `/magasins/paris/Le-Phare-5862/`
+- **Le Pied à Terre** — `/magasins/paris/Le-Pied-a-Terre-3340/`
+- **Le mot de la faim** — `/mot-du-libraire/le-mot-de-la-faim-/mois=/an=/base=`
+- **Les Caractères** — `/magasins/paris/Les-Caracteres-3477/`
+- **Les Cocottes Rousses** — `/magasins/st-symphorien-d-ozon/Les-cocottes-rousses-5702/`
+- **Les Librairies** — `/reseaumag.php`
+- **Les Rebelles ordinaires** — `/magasins/la-rochelle/Les-Rebelles-ordinaires-5885/`
+- **Librairie Albertine** — `/magasins/concarneau/Albertine-3288/`
+- **Librairie Galignani** — `/magasins/paris/Librairie-Galignani-2693/`
+- **Librairie L'instant** — `/mot-du-libraire/librairie-l'instant-/mois=/an=/base=`
+- **Librairie de Paris** — `/magasins/paris/Librairie-de-Paris-2515/`
+- **Librairie du Canal** — `/magasins/paris/La-Librairie-du-Canal-3160/`
+- **Librairie du Centre** — `/magasins/ferney-voltaire/Librairie-du-Centre-6108/`
+- **Librairie-café Menta** — `/magasins/osses/Librairie-Cafe-Menta-6370/`
+- **Lilosimages** — `/magasins/angouleme/Lilosimages-5984/`
+- **L’Amandier** — `/magasins/puteaux/L-Amandier-2563/`
+- **L’Astragale** — `/magasins/lyon/L-Astragale-3194/`
+- **Mazette** — `/magasins/marseille/Mazette-3376/`
+- **Mentions légales** — `/mentions.php`
+- **Mes listes** — `/wishlist_list.php`
+- **Michel** — `/mot-du-libraire/michel-1660/mois=/an=/base=`
+- **Millepages** — `/magasins/vincennes/Millepages-2554/`
+- **Mot du libraire** — `/mot-du-libraire`
+- **Mouche** — `/magasins/st-gregoire/Librairie-Mouche-6097/`
+- **Mystérieuse Librairie Nantaise** — `/magasins/nantes/La-Mysterieuse-librairie-nantaise-5855/`
+- **Nos librairies** — `/magasins.php`
+- **Pantagruel** — `/magasins/marseille/Pantagruel-3389/`
+- **Paris Mômes** — `/mot-du-libraire/paris-momes-1508/mois=/an=/base=`
+- **Paroles** — `/magasins/st-mande/Paroles-2857/`
+- **Pleine Lune** — `/magasins/tassin-la-demi-lune/Pleine-Lune-3106/`
+- **Point-Virgule** — `/magasins/aurillac/Point-Virgule-5747/`
+- **Quai des brumes** — `/magasins/strasbourg/Quai-des-brumes-2608/`
+- **Questions fréquentes** — `/faq.php`
+- **Recherche avancée** — `/recherche_avancee.php`
+- **Rendez-vous avec La Nature - A livre ouvert** — `/mot-du-libraire/rendez-vous-avec-la-nature---a-livre-ouvert-/mois=/an=/base=`
+- **Shakespeare and co** — `/magasins/paris/Librairie-Shakespeare-and-co-2619/`
+- **Sélections** — `/liste_selections.php`
+- **Tarifs de livraison** — `/vpc.php`
+- **Vignettes** — `/magasins/paris/Vignettes-6106/`
+- **Voir sur la carte** — `/map.php`
+- **(sans libellé)** — `/`
+- **(sans libellé)** — `/?provenance=wishlist_list`
+- **(sans libellé)** — `/?select_langue=es`
+- **(sans libellé)** — `/?select_langue=gb`
+- **(sans libellé)** — `/?select_langue=nl`
+- **(sans libellé)** — `/forbidden/`

@@ -198,9 +198,11 @@ def enregistrer_suggestions(absents, source_label):
                 if n.get("date_parution"):
                     motif += f" (date de parution : {n['date_parution']})"
             conn.execute(
-                "INSERT INTO suggestion_acquisition (titre, demandeur, auteur, editeur, motif, source) "
-                "VALUES (?, ?, ?, ?, ?, ?)",
-                (n["titre"], DEMANDEUR_VEILLE, n.get("auteur"), n.get("editeur"), motif, source_label),
+                "INSERT INTO suggestion_acquisition "
+                "(titre, demandeur, auteur, editeur, isbn, motif, source) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (n["titre"], DEMANDEUR_VEILLE, n.get("auteur"), n.get("editeur"),
+                 n.get("isbn"), motif, source_label),
             )
             deja_suggeres.add(norm)
             ajoutes += 1
