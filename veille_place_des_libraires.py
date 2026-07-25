@@ -150,12 +150,33 @@ def recuperer_selections():
         bas = nom.lower()
         return any(mot in bas for mot in MOTS_PRIORITAIRES)
 
-    prioritaires = sorted(
-        [(n, u) for u, n in trouvees.items() if prioritaire(n)],
-        key=lambda x: -identifiant(x[1]))
-    autres = sorted(
-        [(n, u) for u, n in trouvees.items() if not prioritaire(n)],
-        key=lambda x: -identifiant(x[1]))
+    annee_courante = datetime.date.today().year
+
+    def annee_du_nom(nom):
+        """Année mentionnée dans l'intitulé, ou None. Sert à écarter les
+        sélections périmées : en 2026, « Rentrée littéraire 2025 » n'a plus
+        d'intérêt pour des acquisitions."""
+        annees = [int(a) for a in re.findall(r"\b(20\d{2})\b", nom)]
+        return max(annees) if annees else None
+
+    def perimee(nom):
+        a = annee_du_nom(nom)
+        if a is None:
+            return False                     # sélection intemporelle : on garde
+        if "rentrée" in nom.lower() or "rentree" in nom.lower():
+            return a < annee_courante        # une rentrée passée est périmée
+        return a < annee_courante - 2        # sinon on tolère 2 ans (prix, pépites)
+
+    def cle_tri(nom, url):
+        # d'abord les plus récentes par millésime, puis par identifiant
+        a = annee_du_nom(nom) or annee_courante   # sans année = considérée actuelle
+        return (-a, -identifiant(url))
+
+    retenues = [(n, u) for u, n in trouvees.items() if not perimee(n)]
+    prioritaires = sorted([(n, u) for n, u in retenues if prioritaire(n)],
+                          key=lambda x: cle_tri(*x))
+    autres = sorted([(n, u) for n, u in retenues if not prioritaire(n)],
+                    key=lambda x: cle_tri(*x))
 
     # ROTATION hebdomadaire : sans elle, les mêmes sélections seraient
     # consultées à chaque passage et les autres jamais atteintes. On décale
@@ -286,6 +307,12 @@ def main():
             "date_parution": None,
             "isbn": isbn,
             "motif": motif,
+            # Classement déduit par le moteur : permet de filtrer les
+            # suggestions par segment dans l'interface (BD jeunesse, manga
+            # adulte, romans ado...).
+            "categorie": res.get("type"),
+            "public_vise": res.get("public"),
+            "genre": res.get("genre"),
         })
         print(f"  • {res['titre'][:52]}"
               + (f" — {res['auteur'][:28]}" if res.get("auteur") else ""))

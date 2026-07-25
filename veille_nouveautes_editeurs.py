@@ -177,6 +177,16 @@ def enregistrer_suggestions(absents, source_label):
                 date_ajout TEXT NOT NULL DEFAULT (datetime('now'))
             )
         """)
+        # Migration silencieuse : colonnes de classement, ajoutées le
+        # 2026-07-25 pour permettre de trier les suggestions par segment
+        # (BD jeunesse, manga adulte, romans ado...) dans l'interface.
+        for colonne in ("categorie", "public_vise", "genre"):
+            try:
+                conn.execute(f"ALTER TABLE suggestion_acquisition ADD COLUMN {colonne} TEXT")
+                conn.commit()
+            except Exception:
+                pass  # colonne déjà présente
+
         deja_suggeres = {
             _normaliser(l[0]) for l in
             conn.execute("SELECT titre FROM suggestion_acquisition").fetchall() if l[0]
@@ -199,10 +209,12 @@ def enregistrer_suggestions(absents, source_label):
                     motif += f" (date de parution : {n['date_parution']})"
             conn.execute(
                 "INSERT INTO suggestion_acquisition "
-                "(titre, demandeur, auteur, editeur, isbn, motif, source) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "(titre, demandeur, auteur, editeur, isbn, motif, source, "
+                " categorie, public_vise, genre) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (n["titre"], DEMANDEUR_VEILLE, n.get("auteur"), n.get("editeur"),
-                 n.get("isbn"), motif, source_label),
+                 n.get("isbn"), motif, source_label,
+                 n.get("categorie"), n.get("public_vise"), n.get("genre")),
             )
             deja_suggeres.add(norm)
             ajoutes += 1

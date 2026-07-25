@@ -2317,11 +2317,22 @@ if mot_de_passe_requis:
 with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"):
     try:
         _conn_sugg = db.connect(FICHIER_DB)
-        _lignes_sugg = _conn_sugg.execute(
-            "SELECT id, titre, auteur, editeur, motif, source "
-            "FROM suggestion_acquisition WHERE statut = 'à étudier' "
-            "ORDER BY (source LIKE 'Veille prix%') DESC, date_ajout DESC"
-        ).fetchall()
+        try:
+            _lignes_sugg = _conn_sugg.execute(
+                "SELECT id, titre, auteur, editeur, motif, source, "
+                "       categorie, public_vise, genre "
+                "FROM suggestion_acquisition WHERE statut = 'à étudier' "
+                "ORDER BY (source LIKE 'Veille prix%') DESC, date_ajout DESC"
+            ).fetchall()
+        except Exception:
+            # Base pas encore migrée (colonnes de classement absentes)
+            _lignes_sugg = [
+                tuple(r) + (None, None, None) for r in _conn_sugg.execute(
+                    "SELECT id, titre, auteur, editeur, motif, source "
+                    "FROM suggestion_acquisition WHERE statut = 'à étudier' "
+                    "ORDER BY date_ajout DESC"
+                ).fetchall()
+            ]
         _conn_sugg.close()
     except Exception as _e:
         _lignes_sugg = []
@@ -2339,11 +2350,52 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
                 "Éditeur": r[3] or "",
                 "Motif / prix": r[4] or "",
                 "Source": r[5] or "",
+                "Catégorie": r[6] or "—",
+                "Public": r[7] or "—",
+                "Genre": r[8] or "—",
                 "_id": r[0],
             }
             for r in _lignes_sugg
         ])
-        st.caption(f"{len(_df_sugg)} suggestion(s) en attente. Choisis « Garder » ou « Écarter » "
+
+        # ── Filtres par segment ──────────────────────────────────────────
+        # Plusieurs agents utilisent l'outil, chacun sur son domaine : on doit
+        # pouvoir ne voir que « BD jeunesse », « manga adulte », « romans ado »...
+        _c1, _c2, _c3 = st.columns(3)
+        with _c1:
+            _f_cat = st.multiselect(
+                "Catégorie", sorted(_df_sugg["Catégorie"].unique()), default=[])
+        with _c2:
+            _f_pub = st.multiselect(
+                "Public", sorted(_df_sugg["Public"].unique()), default=[])
+        with _c3:
+            _f_src = st.multiselect(
+                "Source", sorted(_df_sugg["Source"].unique()), default=[])
+        _recherche = st.text_input(
+            "Filtrer par mot (titre, auteur, éditeur, sélection d'origine)", "")
+
+        _filtre = _df_sugg
+        if _f_cat:
+            _filtre = _filtre[_filtre["Catégorie"].isin(_f_cat)]
+        if _f_pub:
+            _filtre = _filtre[_filtre["Public"].isin(_f_pub)]
+        if _f_src:
+            _filtre = _filtre[_filtre["Source"].isin(_f_src)]
+        if _recherche.strip():
+            _m = _recherche.strip().lower()
+            _filtre = _filtre[
+                _filtre.apply(
+                    lambda r: _m in " ".join(
+                        str(r[c]).lower()
+                        for c in ("Titre", "Auteur", "Éditeur", "Motif / prix")
+                    ),
+                    axis=1,
+                )
+            ]
+        _df_sugg = _filtre
+
+        st.caption(f"{len(_df_sugg)} suggestion(s) affichée(s) sur "
+                   f"{len(_lignes_sugg)} en attente. Choisis « Garder » ou « Écarter » "
                    "pour chaque ligne, puis applique. Les titres non décidés restent en attente.")
         _edite = st.data_editor(
             _df_sugg,
@@ -2355,7 +2407,8 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
                 ),
                 "_id": None,  # colonne technique masquée
             },
-            disabled=["Titre", "Auteur", "Éditeur", "Motif / prix", "Source"],
+            disabled=["Titre", "Auteur", "Éditeur", "Motif / prix", "Source",
+                      "Catégorie", "Public", "Genre"],
             key="editeur_suggestions",
         )
         if st.button("Appliquer le tri", type="primary"):
