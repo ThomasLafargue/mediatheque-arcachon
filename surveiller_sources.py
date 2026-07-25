@@ -51,6 +51,11 @@ EN_TETES = {
 # Choisis parce qu'ils sont stables et bien documentés partout.
 ISBN_MANGA = "9782871298168"     # Naruto t.19  -> série ET tome attendus
 ISBN_ROMAN = "9782075105170"     # Harry Potter t.6 -> série attendue
+# Cas de référence propre à la BnF : son catalogue SRU ne couvre ni les mangas
+# japonais ni certaines éditions récentes de littérature étrangère (vérifié le
+# 2026-07-25 : ni Naruto ni Harry Potter t.6 ne répondent). Le Club des Cinq,
+# lui, est bien référencé -- c'est donc le bon témoin pour cette source.
+ISBN_BNF = "9782014018134"       # Le Club des Cinq et le passage secret
 
 # Sources CRITIQUES = celles qui portent l'information série/tome. Si l'une
 # tombe, la qualité de l'enrichissement chute sans autre signal.
@@ -91,7 +96,7 @@ def controler_enrichissement():
     # BnF ne référence pas les mangas japonais par ISBN français, la tester
     # sur Naruto produirait un faux négatif hebdomadaire (donc du bruit, donc
     # une alerte qu'on finirait par ignorer).
-    isbn_par_source = {"BnF": ISBN_ROMAN}
+    isbn_par_source = {"BnF": ISBN_BNF}
 
     for nom, fn in m.SOURCES:
         isbn_test = isbn_par_source.get(nom, ISBN_MANGA)
@@ -122,7 +127,8 @@ def controler_enrichissement():
         # signal aussi important qu'une panne : c'est ce qui est arrivé à
         # Cultura (page devenue JavaScript, titre encore lisible mais vide).
         if nom in SOURCES_CRITIQUES and not serie:
-            attendu = "Harry Potter" if isbn_test == ISBN_ROMAN else "Naruto"
+            attendu = {ISBN_BNF: "Le club des Cinq",
+                       ISBN_ROMAN: "Harry Potter"}.get(isbn_test, "Naruto")
             anomalies.append(f"{nom} répond mais ne rend plus la série")
             _log(f"    ⚠ {nom} ne rend plus la série (attendu : {attendu})")
 
