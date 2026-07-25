@@ -82,12 +82,18 @@ NB_SELECTIONS_PAR_PASSAGE = 14   # on ne peut pas aspirer 549 listes/semaine
 
 
 def _nettoyer_url_selection(url):
-    """Écarte les variantes d'affichage et de pagination d'une même sélection
-    (?modele=grille, ?page=2...) qui feraient consulter deux fois la même."""
-    url = url.split("#")[0]
-    url = re.sub(r"[?&]modele=grille", "", url)
-    url = re.sub(r"[?&](page|num_table|type_page)=[^&]*", "", url)
-    return url.rstrip("?&")
+    """Ramène une sélection à son adresse canonique /list-{id}/{slug}/.
+
+    Une même sélection est liée sous de multiples formes selon le contexte
+    (?modele=grille, ?page=2, ?provenance=…, ?select_langue=…). Aucun de ces
+    paramètres ne change le contenu : on supprime donc TOUTE la partie
+    interrogative, sinon la même liste serait consultée plusieurs fois dans
+    le même passage (constaté le 2026-07-25 : 5 doublons sur une sélection).
+    """
+    url = url.split("#")[0].split("?")[0]
+    if not url.endswith("/"):
+        url += "/"
+    return url
 
 
 def recuperer_selections():
@@ -137,7 +143,16 @@ def recuperer_selections():
                     continue
                 nom = re.sub(r"Voir tout$", "", m.group(1)).strip()[:80]
                 url = _nettoyer_url_selection(BASE + m.group(2))
+                # La carte note « (sans libellé) » quand le lien n'avait pas de
+                # texte : on reconstruit alors le nom depuis le slug de l'URL,
+                # sinon la sélection passerait pour intemporelle (pas d'année
+                # détectable) et échapperait au filtre d'obsolescence.
+                if nom.lower().startswith("(sans libell"):
+                    nom = ""
                 if not nom or nom.isdigit() or nom.lower() in ("mosaïque", "mosaique"):
+                    ms = re.search(r"/list-\d+/([^/?]+)", url)
+                    nom = ms.group(1).replace("-", " ").capitalize() if ms else ""
+                if not nom:
                     continue
                 if url not in trouvees or len(nom) > len(trouvees[url]):
                     trouvees[url] = nom
@@ -152,27 +167,28 @@ def recuperer_selections():
 
     annee_courante = datetime.date.today().year
 
-    def annee_du_nom(nom):
-        """Année mentionnée dans l'intitulé, ou None. Sert à écarter les
-        sélections périmées : en 2026, « Rentrée littéraire 2025 » n'a plus
-        d'intérêt pour des acquisitions."""
-        annees = [int(a) for a in re.findall(r"\b(20\d{2})\b", nom)]
+    def annee_du_nom(nom, url=""):
+        """Année mentionnée dans l'intitulé OU dans l'adresse (le slug la
+        contient souvent), sinon None. Sert à écarter les sélections périmées :
+        en 2026, « Rentrée littéraire 2025 » n'a plus d'intérêt."""
+        annees = [int(a) for a in re.findall(r"\b(20\d{2})\b", nom + " " + url)]
         return max(annees) if annees else None
 
-    def perimee(nom):
-        a = annee_du_nom(nom)
+    def perimee(nom, url=""):
+        a = annee_du_nom(nom, url)
         if a is None:
             return False                     # sélection intemporelle : on garde
-        if "rentrée" in nom.lower() or "rentree" in nom.lower():
+        texte = (nom + " " + url).lower()
+        if "rentree" in texte or "rentrée" in texte:
             return a < annee_courante        # une rentrée passée est périmée
         return a < annee_courante - 2        # sinon on tolère 2 ans (prix, pépites)
 
     def cle_tri(nom, url):
         # d'abord les plus récentes par millésime, puis par identifiant
-        a = annee_du_nom(nom) or annee_courante   # sans année = considérée actuelle
+        a = annee_du_nom(nom, url) or annee_courante   # sans année = actuelle
         return (-a, -identifiant(url))
 
-    retenues = [(n, u) for u, n in trouvees.items() if not perimee(n)]
+    retenues = [(n, u) for u, n in trouvees.items() if not perimee(n, u)]
     prioritaires = sorted([(n, u) for n, u in retenues if prioritaire(n)],
                           key=lambda x: cle_tri(*x))
     autres = sorted([(n, u) for n, u in retenues if not prioritaire(n)],
