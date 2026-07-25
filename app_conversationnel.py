@@ -2320,14 +2320,14 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
         try:
             _lignes_sugg = _conn_sugg.execute(
                 "SELECT id, titre, auteur, editeur, motif, source, "
-                "       categorie, public_vise, genre "
+                "       categorie, public_vise, genre, isbn, date_ajout "
                 "FROM suggestion_acquisition WHERE statut = 'à étudier' "
                 "ORDER BY (source LIKE 'Veille prix%') DESC, date_ajout DESC"
             ).fetchall()
         except Exception:
             # Base pas encore migrée (colonnes de classement absentes)
             _lignes_sugg = [
-                tuple(r) + (None, None, None) for r in _conn_sugg.execute(
+                tuple(r) + (None, None, None, None, None) for r in _conn_sugg.execute(
                     "SELECT id, titre, auteur, editeur, motif, source "
                     "FROM suggestion_acquisition WHERE statut = 'à étudier' "
                     "ORDER BY date_ajout DESC"
@@ -2348,11 +2348,13 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
                 "Titre": r[1],
                 "Auteur": r[2] or "",
                 "Éditeur": r[3] or "",
-                "Motif / prix": r[4] or "",
-                "Source": r[5] or "",
+                "ISBN": str(r[9]) if len(r) > 9 and r[9] else "",
                 "Catégorie": r[6] or "—",
                 "Public": r[7] or "—",
                 "Genre": r[8] or "—",
+                "Motif / prix": r[4] or "",
+                "Source": r[5] or "",
+                "Ajoutée le": str(r[10])[:10] if len(r) > 10 and r[10] else "",
                 "_id": r[0],
             }
             for r in _lignes_sugg
@@ -2397,6 +2399,33 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
         st.caption(f"{len(_df_sugg)} suggestion(s) affichée(s) sur "
                    f"{len(_lignes_sugg)} en attente. Choisis « Garder » ou « Écarter » "
                    "pour chaque ligne, puis applique. Les titres non décidés restent en attente.")
+
+        # ── Export Excel de la liste FILTRÉE ────────────────────────────
+        # Les agents travaillent volontiers sur tableur (bons de commande,
+        # circulation entre collègues) : on exporte exactement ce qui est
+        # affiché, ISBN compris pour pouvoir commander directement.
+        if len(_df_sugg):
+            _colonnes_export = [
+                ("Titre", "Titre"), ("Auteur", "Auteur"), ("Éditeur", "Éditeur"),
+                ("ISBN", "ISBN / EAN"), ("Catégorie", "Catégorie"),
+                ("Public", "Public visé"), ("Genre", "Genre"),
+                ("Motif / prix", "Motif / sélection d'origine"),
+                ("Source", "Source de la veille"), ("Ajoutée le", "Ajoutée le"),
+            ]
+            _lignes_export = _df_sugg[[c for c, _ in _colonnes_export]].to_dict("records")
+            try:
+                _xlsx, _n, _err = _ecrire_xlsx(_lignes_export, _colonnes_export,
+                                               acces_par_cle=True)
+                if _xlsx:
+                    st.download_button(
+                        f"📊 Télécharger ces {_n} suggestion(s) en Excel",
+                        data=_xlsx,
+                        file_name=f"suggestions_acquisition_{datetime.date.today().isoformat()}.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        key="dl_suggestions_xlsx",
+                    )
+            except Exception as _e:
+                st.caption(f"Export Excel indisponible ({_e}).")
         _edite = st.data_editor(
             _df_sugg,
             hide_index=True,
@@ -2407,8 +2436,8 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
                 ),
                 "_id": None,  # colonne technique masquée
             },
-            disabled=["Titre", "Auteur", "Éditeur", "Motif / prix", "Source",
-                      "Catégorie", "Public", "Genre"],
+            disabled=["Titre", "Auteur", "Éditeur", "ISBN", "Motif / prix",
+                      "Source", "Catégorie", "Public", "Genre", "Ajoutée le"],
             key="editeur_suggestions",
         )
         if st.button("Appliquer le tri", type="primary"):
