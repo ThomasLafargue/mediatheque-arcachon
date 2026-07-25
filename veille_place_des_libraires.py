@@ -70,15 +70,24 @@ PAGES_DECOUVERTE = [
     BASE + "/jeunesse/ssh-1277",
 ]
 
-# Sélections prioritaires quel que soit leur âge : ce sont des références
-# professionnelles (prix littéraires, sélections du Salon du livre jeunesse).
-MOTS_PRIORITAIRES = (
-    "jeunesse", "pépite", "pepite", "slpj", "kibookin", "prix ", "goncourt",
-    "femina", "renaudot", "académie", "academie", "nobel", "ado", "rentrée",
-    "rentree", "coup de cœur", "coups de cœur", "coup de coeur", "coups de coeur",
+# ── Familles de sélections ────────────────────────────────────────────────
+# La section jeunesse est la raison d'être de l'outil : elle a un QUOTA
+# GARANTI à chaque passage. Sans lui, les prix littéraires adultes (très
+# nombreux : Goncourt, Médicis, Femina, Renaudot, Interallié, Académie...)
+# saturent la fenêtre et la jeunesse ne remonte jamais (constaté le
+# 2026-07-25 : 0 sélection jeunesse sur un passage entier).
+MOTS_JEUNESSE = (
+    "jeunesse", "pépite", "pepite", "slpj", "kibookin", "ado", "adolescent",
+    "enfant", "tout-petit", "tout petit", "album", "petits", "jeunes",
+)
+MOTS_PRIX = (
+    "prix ", "goncourt", "femina", "renaudot", "médicis", "medicis",
+    "interallié", "interallie", "académie", "academie", "nobel",
 )
 
 NB_SELECTIONS_PAR_PASSAGE = 14   # on ne peut pas aspirer 549 listes/semaine
+QUOTA_JEUNESSE = 7               # la moitié du passage réservée à la jeunesse
+QUOTA_PRIX = 4
 
 
 def _nettoyer_url_selection(url):
@@ -161,9 +170,13 @@ def recuperer_selections():
         m = re.search(r"/list-(\d+)/", url)
         return int(m.group(1)) if m else 0
 
-    def prioritaire(nom):
+    def est_jeunesse(nom):
         bas = nom.lower()
-        return any(mot in bas for mot in MOTS_PRIORITAIRES)
+        return any(mot in bas for mot in MOTS_JEUNESSE)
+
+    def est_prix(nom):
+        bas = nom.lower()
+        return any(mot in bas for mot in MOTS_PRIX)
 
     annee_courante = datetime.date.today().year
 
@@ -189,26 +202,35 @@ def recuperer_selections():
         return (-a, -identifiant(url))
 
     retenues = [(n, u) for u, n in trouvees.items() if not perimee(n, u)]
-    prioritaires = sorted([(n, u) for n, u in retenues if prioritaire(n)],
-                          key=lambda x: cle_tri(*x))
-    autres = sorted([(n, u) for n, u in retenues if not prioritaire(n)],
+
+    # Trois familles distinctes, pour garantir la part jeunesse. Une sélection
+    # jeunesse ET primée (ex. « Pépites du SLPJ ») compte comme jeunesse.
+    jeunesse = sorted([(n, u) for n, u in retenues if est_jeunesse(n)],
+                      key=lambda x: cle_tri(*x))
+    prix = sorted([(n, u) for n, u in retenues
+                   if est_prix(n) and not est_jeunesse(n)],
+                  key=lambda x: cle_tri(*x))
+    autres = sorted([(n, u) for n, u in retenues
+                     if not est_jeunesse(n) and not est_prix(n)],
                     key=lambda x: cle_tri(*x))
 
     # ROTATION hebdomadaire : sans elle, les mêmes sélections seraient
     # consultées à chaque passage et les autres jamais atteintes. On décale
-    # le point de départ selon la semaine de l'année.
+    # le point de départ selon la semaine de l'année, dans chaque famille.
     semaine = datetime.date.today().isocalendar()[1]
-    n_prio = int(NB_SELECTIONS_PAR_PASSAGE * 0.6)      # ~60 % de prioritaires
-    n_autres = NB_SELECTIONS_PAR_PASSAGE - n_prio
 
     def fenetre(liste, taille):
-        if not liste:
+        if not liste or taille <= 0:
             return []
         depart = (semaine * taille) % len(liste)
-        double = liste + liste
-        return double[depart:depart + taille]
+        return (liste + liste)[depart:depart + taille]
 
-    selections = fenetre(prioritaires, n_prio) + fenetre(autres, n_autres)
+    lot_jeunesse = fenetre(jeunesse, QUOTA_JEUNESSE)
+    lot_prix = fenetre(prix, QUOTA_PRIX)
+    # le reste de la fenêtre va aux autres rayons (collègues non-jeunesse)
+    reste = NB_SELECTIONS_PAR_PASSAGE - len(lot_jeunesse) - len(lot_prix)
+    lot_autres = fenetre(autres, reste)
+    selections = lot_jeunesse + lot_prix + lot_autres
     # la page « coups de cœur » est une sélection à part entière, vue à chaque fois
     selections.append(("Coups de cœur des libraires", PAGE_COUPS_DE_COEUR))
     return selections
@@ -273,9 +295,19 @@ def main():
     if not selections:
         print("Aucune sélection récupérée (page inaccessible ?).")
         return
-    print(f"{len(selections)} sélection(s) trouvée(s) :\n")
+    _jeun = sum(1 for n, _ in selections
+                if any(m in n.lower() for m in MOTS_JEUNESSE))
+    _prix = sum(1 for n, _ in selections
+                if any(m in n.lower() for m in MOTS_PRIX)
+                and not any(m in n.lower() for m in MOTS_JEUNESSE))
+    print(f"{len(selections)} sélection(s) retenue(s) — "
+          f"{_jeun} jeunesse, {_prix} prix littéraires, "
+          f"{len(selections) - _jeun - _prix} autres rayons :\n")
     for nom, url in selections:
-        print(f"  • {nom[:60]:60} {url[len(BASE):][:45]}")
+        bas = nom.lower()
+        marque = ("[JEUNESSE]" if any(m in bas for m in MOTS_JEUNESSE)
+                  else ("[PRIX]" if any(m in bas for m in MOTS_PRIX) else "         "))
+        print(f"  {marque:10} {nom[:52]:52} {url[len(BASE):][:38]}")
 
     if lister_seulement:
         print("\n(--lister : rien n'a été écrit en base.)")
