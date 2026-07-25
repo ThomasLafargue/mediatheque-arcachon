@@ -41,7 +41,11 @@ for _cle in (
     except Exception:
         pass  # pas de secrets.toml en local -- db.py se rabat sur .env / sqlite local
 
-# Clé Google Books depuis secrets Streamlit Cloud
+# Clé Google Books depuis secrets Streamlit Cloud.
+# NB (audit 2026-07-25) : Google Books est RETIRÉ du pipeline d'enrichissement
+# depuis le 2026-07-22 (mesuré le 25/07 : 1 livre trouvé sur 8 ISBN français,
+# 0 information de série, 5 erreurs 503). La clé reste chargée ici sans effet,
+# au cas où la source redeviendrait exploitable.
 try:
     if "GOOGLE_BOOKS_API_KEY" in st.secrets:
         os.environ["GOOGLE_BOOKS_API_KEY"] = st.secrets["GOOGLE_BOOKS_API_KEY"]
@@ -51,7 +55,7 @@ except Exception:
 import db
 from anthropic import Anthropic
 
-# Sources API bibliographiques (BnF SRU, Google Books)
+# Sources API bibliographiques (BnF SRU + Sudoc ; Google Books désactivé)
 try:
     from sources_api import enrichir_par_api
     SOURCES_API_OK = True
@@ -2012,277 +2016,17 @@ traiter_fichier.main()
 
 
 
-def traiter_fichier_depose(fichier_televerse, url_turso, jeton_ecriture):
-    """Version synchrone conservée pour compatibilité."""
-    import tempfile as _tempfile
-    dossier_tmp = _tempfile.mkdtemp()
-    chemin_tmp = os.path.join(dossier_tmp, fichier_televerse.name)
-    with open(chemin_tmp, 'wb') as tmp:
-        tmp.write(fichier_televerse.getvalue())
-
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import actualiser_catalogue
-    import actualiser_statistiques
-    import actualiser_frequentation
-    import lancer_enrichissement
-
-    connexion_ecriture = db.connect_avec_jeton(url_turso, jeton_ecriture)
-    ancien_connect = db.connect
-    db.connect = lambda *a, **k: connexion_ecriture
-
-    tampon_sortie = io.StringIO()
-    ancien_stdout = sys.stdout
-    sys.stdout = tampon_sortie
-    try:
-        t = deviner_type_fichier(fichier_televerse.name)
-        sys.argv = ['x', chemin_tmp]
-        if t == 'catalogue':
-            actualiser_catalogue.main()
-        elif t == 'statistiques':
-            actualiser_statistiques.main()
-        elif t == 'frequentation':
-            actualiser_frequentation.main()
-        else:
-            return False, "Type de fichier non reconnu (.mrc, .xlsx/.xls ou .csv attendu)."
-
-        if t == 'catalogue':
-            print("\n" + "─" * 60)
-            print("RAPPORT DE SYNTHÈSE")
-            print("─" * 60)
-            db.connect = lambda *a, **k: connexion_ecriture
-            print(generer_rapport_import())
-            print("─" * 60)
-        print("\n✓ Import terminé.")
-        return True, tampon_sortie.getvalue()
-    except Exception as e:
-        return False, f"{tampon_sortie.getvalue()}\n\nErreur : {e}"
-    finally:
-        sys.stdout = ancien_stdout
-        db.connect = ancien_connect
-        connexion_ecriture.close()
-        try:
-            os.remove(chemin_tmp)
-            os.rmdir(dossier_tmp)
-        except Exception:
-            pass
-
-
 # ----------------------------------------------------------------------------
-# Fonctions tableau de bord, ROI acquisitions, export ORB, Babelio
+# Note (audit du 2026-07-25) : ~270 lignes ont été retirées ici. Il s'agissait
+# de fonctions jamais appelées -- vestiges d'un tableau de bord abandonné
+# (get_kpis, get_frequentation_mensuelle, get_rotation_genres, get_top_titres,
+# get_roi_acquisitions, get_suggestions_acquisition_liste, get_alertes), d'un
+# export ORB jamais finalisé (exporter_suggestions_orb), d'une version
+# synchrone de l'import remplacée par lancer_import_background
+# (traiter_fichier_depose), et d'un scraping Babelio inutilisable (le
+# robots.txt du site interdit l'accès automatisé).
+# Elles restent consultables dans l'historique git si besoin.
 # ----------------------------------------------------------------------------
-
-@st.cache_data(ttl=300)
-def get_kpis():
-    """Indicateurs clés du fonds — mis en cache 5 minutes."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        notices = conn.execute("SELECT COUNT(*) FROM notice").fetchone()[0]
-        exemplaires = conn.execute("SELECT COUNT(*) FROM exemplaire").fetchone()[0]
-        enrichis = conn.execute(
-            "SELECT COUNT(*) FROM notice WHERE date_enrichissement IS NOT NULL"
-        ).fetchone()[0]
-        prets_total = conn.execute("SELECT COALESCE(SUM(nb_prets_total),0) FROM notice").fetchone()[0]
-        try:
-            frequentation = conn.execute(
-                "SELECT COALESCE(SUM(entrees),0) FROM frequentation"
-            ).fetchone()[0]
-        except Exception:
-            frequentation = 0
-        try:
-            derniere_maj = conn.execute(
-                "SELECT MAX(date_maj) FROM exemplaire"
-            ).fetchone()[0]
-        except Exception:
-            derniere_maj = None
-        conn.close()
-        return {
-            'notices': notices,
-            'exemplaires': exemplaires,
-            'enrichis': enrichis,
-            'taux_enrichissement': round(enrichis * 100 / notices) if notices else 0,
-            'prets_total': prets_total,
-            'frequentation': frequentation,
-            'derniere_maj': derniere_maj,
-        }
-    except Exception as e:
-        return {'erreur': str(e)}
-
-
-@st.cache_data(ttl=300)
-def get_frequentation_mensuelle():
-    """Fréquentation mensuelle sur 18 mois."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        rows = conn.execute("""
-            SELECT SUBSTR(date_iso,1,7) as mois, SUM(entrees) as total
-            FROM frequentation
-            WHERE date_iso >= DATE('now', '-18 months')
-            GROUP BY mois ORDER BY mois
-        """).fetchall()
-        conn.close()
-        return {r[0]: r[1] for r in rows}
-    except Exception:
-        return {}
-
-
-@st.cache_data(ttl=300)
-def get_rotation_genres():
-    """Rotation par genre (prêts / nb titres)."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        rows = conn.execute("""
-            SELECT genre, COUNT(*) as titres, SUM(nb_prets_total) as prets,
-                   ROUND(CAST(SUM(nb_prets_total) AS FLOAT)/COUNT(*),1) as rotation
-            FROM notice
-            WHERE genre IS NOT NULL AND genre != '' AND nb_prets_total > 0
-            GROUP BY genre HAVING titres >= 3
-            ORDER BY rotation DESC LIMIT 20
-        """).fetchall()
-        conn.close()
-        return [{'genre': r[0], 'titres': r[1], 'prets': r[2], 'rotation': r[3]} for r in rows]
-    except Exception:
-        return []
-
-
-@st.cache_data(ttl=300)
-def get_top_titres(n=25):
-    """Top N titres les plus empruntés."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        rows = conn.execute(f"""
-            SELECT titre, createurs AS auteur, genre, public_vise, nb_prets_total AS nb_prets, identifiant,
-                   (SELECT COUNT(*) FROM exemplaire WHERE identifiant=n.identifiant) as nb_ex
-            FROM notice n
-            ORDER BY nb_prets DESC LIMIT {n}
-        """).fetchall()
-        conn.close()
-        return [{'titre': r[0], 'auteur': r[1], 'genre': r[2],
-                 'public': r[3], 'prets': r[4], 'isbn': r[5], 'nb_ex': r[6]} for r in rows]
-    except Exception:
-        return []
-
-
-@st.cache_data(ttl=300)
-def get_roi_acquisitions():
-    """Retour sur investissement des acquisitions récentes (2023+)."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        rows = conn.execute("""
-            SELECT titre, createurs AS auteur, genre, public_vise, SUBSTR(date_publication,1,4) AS annee, nb_prets_total AS nb_prets, identifiant,
-                   CASE
-                     WHEN nb_prets = 0 THEN 'Jamais emprunté'
-                     WHEN nb_prets < 3 THEN 'Peu emprunté (<3)'
-                     WHEN nb_prets < 10 THEN 'Moyen (3-9)'
-                     WHEN nb_prets < 20 THEN 'Bon (10-19)'
-                     ELSE 'Excellent (20+)'
-                   END as categorie_roi
-            FROM notice
-            WHERE SUBSTR(date_publication,1,4) >= '2023' AND type_document = 'LIVRE'
-            ORDER BY nb_prets ASC
-        """).fetchall()
-        conn.close()
-        resultats = [{'titre': r[0], 'auteur': r[1], 'genre': r[2],
-                      'public': r[3], 'annee': r[4], 'prets': r[5],
-                      'isbn': r[6], 'roi': r[7]} for r in rows]
-        # Distribution
-        distrib = {}
-        for r in resultats:
-            distrib[r['roi']] = distrib.get(r['roi'], 0) + 1
-        return {'titres': resultats, 'distribution': distrib}
-    except Exception:
-        return {'titres': [], 'distribution': {}}
-
-
-@st.cache_data(ttl=60)
-def get_suggestions_acquisition_liste():
-    """Liste des suggestions d'acquisition en attente."""
-    try:
-        conn = db.connect(FICHIER_DB)
-        rows = conn.execute("""
-            SELECT id, titre, auteur, editeur, isbn, prix, motif, source, demandeur,
-                   date_ajout
-            FROM suggestion_acquisition ORDER BY date_ajout DESC
-        """).fetchall()
-        conn.close()
-        return [{'id': r[0], 'titre': r[1], 'auteur': r[2], 'editeur': r[3],
-                 'isbn': r[4], 'prix': r[5], 'motif': r[6], 'source': r[7],
-                 'demandeur': r[8], 'date': r[9]} for r in rows]
-    except Exception:
-        return []
-
-
-@st.cache_data(ttl=300)
-def get_alertes():
-    """Alertes actives : doublons nécessaires, séries incomplètes."""
-    alertes = []
-    try:
-        conn = db.connect(FICHIER_DB)
-        # Doublons urgents
-        doublons = conn.execute("""
-            SELECT n.titre, SUM(e.nb_prets_total) as prets
-            FROM notice n JOIN exemplaire e ON n.identifiant=e.identifiant
-            GROUP BY n.identifiant HAVING COUNT(e.id)=1 AND prets>=15
-            ORDER BY prets DESC LIMIT 5
-        """).fetchall()
-        for d in doublons:
-            alertes.append(f"📚 Doublon urgent : **{d[0]}** ({d[1]} prêts, 1 seul exemplaire)")
-
-        # Séries incomplètes
-        series = conn.execute("""
-            SELECT serie, COUNT(DISTINCT tome) as presents, MAX(CAST(tome AS INTEGER)) as max_tome,
-                   SUM(nb_prets_total) as prets
-            FROM notice WHERE serie IS NOT NULL AND tome IS NOT NULL AND tome GLOB '[0-9]*'
-            GROUP BY serie HAVING presents < max_tome AND max_tome > 1 AND prets >= 10
-            ORDER BY prets DESC LIMIT 5
-        """).fetchall()
-        for s in series:
-            alertes.append(f"📖 Série incomplète : **{s[0]}** ({s[1]}/{s[2]} tomes, {s[3]} prêts)")
-
-        conn.close()
-    except Exception:
-        pass
-    return alertes
-
-
-def exporter_suggestions_orb(suggestions):
-    """Export CSV au format ORB (EAN;Titre;Auteur;Editeur;Prix;Quantite;Motif)."""
-    import io, csv as csv_module
-    buf = io.StringIO()
-    writer = csv_module.writer(buf, delimiter=';', quoting=csv_module.QUOTE_ALL)
-    writer.writerow(['EAN', 'Titre', 'Auteur', 'Editeur', 'Prix TTC', 'Quantite', 'Motif'])
-    for s in suggestions:
-        writer.writerow([
-            s.get('isbn') or '',
-            s.get('titre') or '',
-            s.get('auteur') or '',
-            s.get('editeur') or '',
-            s.get('prix') or '',
-            1,
-            s.get('motif') or '',
-        ])
-    return buf.getvalue().encode('utf-8-sig')  # BOM UTF-8 pour Excel
-
-
-def chercher_note_babelio(isbn):
-    """Récupère la note Babelio d'un livre par ISBN (scraping simple)."""
-    try:
-        url = f"https://www.babelio.com/recherche/?Recherche={isbn}&type=isbn"
-        r = requests.get(url, headers=HEADERS, timeout=(5, 10))
-        if r.status_code != 200:
-            return None
-        from bs4 import BeautifulSoup as _BS
-        soup = _BS(r.text, 'html.parser')
-        # Note globale
-        note_el = soup.find(class_=re.compile(r'(note|rating|score)', re.I))
-        if note_el:
-            note_text = note_el.get_text(strip=True)
-            note_match = re.search(r'(\d+[.,]\d+)', note_text)
-            if note_match:
-                return float(note_match.group(1).replace(',', '.'))
-        return None
-    except Exception:
-        return None
-
 
 # Interface
 # ----------------------------------------------------------------------------
