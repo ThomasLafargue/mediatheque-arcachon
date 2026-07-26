@@ -79,9 +79,28 @@ if [ -n "$DERNIER_FONDS" ]; then
 fi
 
 # Enrichissement des nouvelles notices
+#
+# Corrigé le 2026-07-26 : ce script lançait auparavant son PROPRE
+# enrichissement (lancement_recherche_initiale.sh, en nohup), ce qui faisait
+# tourner DEUX enrichisseurs en parallèle quand le service launchd
+# com.maat.enrichissementseries était actif -- donc deux processus écrivant
+# en même temps dans la base. Désormais le service est le seul enrichisseur :
+# on se contente de le (re)démarrer, et il prend en charge aussi bien les
+# notices nouvelles que la campagne série en cours.
 echo ""
 echo "── Enrichissement des nouvelles notices..."
-bash lancement_recherche_initiale.sh
+PLIST_ENRICH="$HOME/Library/LaunchAgents/com.maat.enrichissementseries.plist"
+if [ -f "$PLIST_ENRICH" ]; then
+    # kickstart relance le service s'il dormait (il s'arrête tout seul quand
+    # il n'a plus rien à traiter) ; -k le redémarre s'il tourne déjà.
+    launchctl kickstart -k "gui/$(id -u)/com.maat.enrichissementseries" 2>/dev/null \
+      || launchctl bootstrap "gui/$(id -u)" "$PLIST_ENRICH" 2>/dev/null
+    echo "  Service d'enrichissement (re)lancé — il traitera les nouvelles notices"
+    echo "  en tâche de fond. Suivi : tail -f /tmp/journal_enrichissement_series.log"
+else
+    echo "  Service launchd absent — repli sur le lancement direct."
+    bash lancement_recherche_initiale.sh
+fi
 
 # Écrans MAAT (mosaïque hall + diaporama jeunesse) : régénérés depuis la
 # base à jour, puis envoyés automatiquement sur OVH si les identifiants

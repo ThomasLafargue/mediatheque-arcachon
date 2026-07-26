@@ -63,13 +63,27 @@ def ajouter_deja_tentes(isbns):
             f.write(i + "\n")
 
 
-def isbns_sans_serie():
+def isbns_a_enrichir():
+    """Notices à traiter, deux cas réunis (corrigé le 2026-07-26) :
+
+      1. JAMAIS ENRICHIES (date_enrichissement NULL), tous types confondus --
+         typiquement les notices nouvelles arrivées par l'import hebdomadaire ;
+      2. LIVRES SANS SÉRIE, pour la campagne de rattrapage en cours.
+
+    Cette fusion est volontaire : auparavant, l'import hebdomadaire lançait
+    SON PROPRE enrichissement (via lancement_recherche_initiale.sh) pendant
+    que ce service tournait -- deux processus écrivaient donc en même temps
+    dans la base. Désormais ce service est le SEUL enrichisseur, et l'import
+    se contente de le relancer.
+    """
     conn = db.connect()
     try:
         lignes = conn.execute(
             "SELECT identifiant FROM notice "
-            "WHERE type_document='LIVRE' AND (serie IS NULL OR serie='') "
-            "AND identifiant NOT LIKE 'CB:%'"
+            "WHERE identifiant NOT LIKE 'CB:%' AND ("
+            "      date_enrichissement IS NULL"
+            "   OR (type_document='LIVRE' AND (serie IS NULL OR serie=''))"
+            ")"
         ).fetchall()
     finally:
         conn.close()
@@ -82,7 +96,7 @@ def main():
 
     while True:
         try:
-            restants = isbns_sans_serie()
+            restants = isbns_a_enrichir()
         except Exception as e:
             _log(f"Erreur de lecture base ({e}) -- nouvelle tentative dans 60 s.")
             time.sleep(60)
