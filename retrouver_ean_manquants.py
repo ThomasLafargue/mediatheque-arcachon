@@ -101,30 +101,53 @@ def notices_sans_ean(annee_min):
 
 
 def chercher_ean(titre, auteur):
-    """Cherche le livre sur Place des Libraires. Renvoie (isbn, titre_trouve)
-    ou (None, None)."""
+    """Cherche le livre sur Place des Libraires, puis VÉRIFIE le résultat en
+    lisant la fiche trouvée.
+
+    Corrigé le 2026-07-26 : la première version se contentait de prendre le
+    premier ISBN de la page de résultats, sans pouvoir lire le titre associé
+    (les liens sont des images, sans texte). Tous les résultats sortaient donc
+    en confiance « faible » et étaient invérifiables -- inacceptable ici, car
+    un titre courant (« Un secret », « Control »...) renvoie très facilement
+    un autre livre. On consulte donc la fiche de chaque candidat pour comparer
+    réellement titre ET auteur.
+
+    Renvoie (isbn, titre_trouve, auteur_trouve) ou (None, None, None).
+    """
     requete = " ".join(x for x in (titre, (auteur or "").split(",")[0]) if x)[:120]
     url = f"{BASE}/listeliv.php?mots_recherche=" + urllib.parse.quote(requete)
     try:
         r = requests.get(url, headers=EN_TETES, timeout=20, allow_redirects=True)
         if r.status_code != 200:
-            return None, None
+            return None, None, None
         soup = BeautifulSoup(r.text, "html.parser")
+        candidats = []
         for a in soup.select("a[href*='/livre/']"):
             m = re.search(r"/livre/(\d{9,13})", a.get("href", ""))
-            if not m:
-                continue
-            isbn = m.group(1)
-            # le libellé du lien est souvent vide (image) : on lit alors le
-            # slug de l'URL, qui reprend le titre
-            libelle = re.sub(r"\s+", " ", a.get_text(strip=True))
-            if not libelle:
-                ms = re.search(r"/livre/\d+/([^/?]+)", a.get("href", ""))
-                libelle = ms.group(1).replace("-", " ") if ms else ""
-            return isbn, libelle
+            if m and m.group(1) not in candidats:
+                candidats.append(m.group(1))
+            if len(candidats) >= 3:      # on n'examine que les 3 premiers
+                break
     except Exception:
-        return None, None
-    return None, None
+        return None, None, None
+
+    # Vérification : on lit la fiche de chaque candidat et on garde le meilleur
+    import moteur_recherche as m_rech
+    meilleur = (None, None, None, 0.0)
+    for isbn in candidats:
+        try:
+            fiche = m_rech.placedeslibraires_lookup(isbn)
+        except Exception:
+            fiche = None
+        if not fiche or not fiche.get("titre"):
+            continue
+        score = _similarite(titre, fiche["titre"])
+        if score > meilleur[3]:
+            meilleur = (isbn, fiche.get("titre"), fiche.get("auteur"), score)
+        if score >= 0.9:                 # correspondance franche : on s'arrête
+            break
+        time.sleep(0.3)
+    return meilleur[0], meilleur[1], meilleur[2]
 
 
 def main():
@@ -152,13 +175,24 @@ def main():
     resultats = []
     trouves = 0
     for i, n in enumerate(notices, 1):
-        isbn, titre_trouve = chercher_ean(n["titre"], n["auteur"])
+        isbn, titre_trouve, auteur_trouve = chercher_ean(n["titre"], n["auteur"])
         conf = _similarite(n["titre"], titre_trouve) if isbn else 0.0
+        # L'auteur conforte (ou infirme) la correspondance de titre : deux
+        # livres homonymes d'auteurs différents ne doivent pas passer en
+        # confiance élevée.
+        conf_auteur = _similarite(n["auteur"], auteur_trouve) if auteur_trouve else 0.0
         if isbn:
             trouves += 1
-        niveau = ("élevée" if conf >= 0.8 else
-                  "moyenne" if conf >= 0.5 else
-                  "faible" if isbn else "—")
+        if conf >= 0.8 and (conf_auteur >= 0.4 or not n["auteur"]):
+            niveau = "élevée"
+        elif conf >= 0.8:
+            niveau = "moyenne"          # titre bon mais auteur discordant
+        elif conf >= 0.5:
+            niveau = "moyenne"
+        elif isbn:
+            niveau = "faible"
+        else:
+            niveau = "—"
         resultats.append({
             "Cote": n["cote"] or "",
             "Titre (Decalog)": n["titre"] or "",
@@ -167,6 +201,7 @@ def main():
             "Éditeur": n["editeur"] or "",
             "ISBN trouvé": isbn or "",
             "Titre trouvé (Place des Libraires)": titre_trouve or "",
+            "Auteur trouvé": auteur_trouve or "",
             "Confiance": niveau,
             "Identifiant actuel": n["identifiant"],
         })

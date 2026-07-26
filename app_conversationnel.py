@@ -163,7 +163,14 @@ OUTIL_SQL = {
         "a_genere_export, a_modifie_suggestions, erreur) -- historique de toutes les "
         "questions posées, utile pour analyser l'usage de l'outil lui-même. "
         "Toujours préférer nb_prets_cet_exemplaire pour des questions sur le fonds "
-        "d'Arcachon spécifiquement. Limite automatique à 500 lignes par requête."
+        "d'Arcachon spécifiquement.\n"
+        "⚠️ LIMITE DE 500 LIGNES PAR REQUÊTE — RÈGLE ABSOLUE : le résultat est "
+        "TOUJOURS tronqué à 500 lignes. Ne JAMAIS déduire un total du nombre de "
+        "lignes reçues : si tu reçois 500 lignes, cela signifie « au moins 500 », "
+        "jamais « 500 au total ». Pour annoncer un effectif, faire OBLIGATOIREMENT "
+        "une requête COUNT(*) séparée AVANT de lister. Annoncer un total faux à "
+        "partir d'un résultat tronqué est une erreur grave (constatée le "
+        "2026-07-26 : « ~500 fiches » annoncé alors qu'il y en avait 5 616)."
     ),
     "input_schema": {
         "type": "object",

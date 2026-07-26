@@ -1,0 +1,26 @@
+═══ Recherche des EAN manquants (Place des Libraires) ═══
+
+989 notice(s) sans EAN publiées depuis 2000.
+Mode test : 15 traitée(s).
+
+  ~ [1/15] Je cherche mon papa !                    → 9782740421789  (moyenne)
+  ? [2/15] L'empoisonnement                         → 9782344042663  (faible)
+  ~ [3/15] Inheritance games                        → 9782266358651  (moyenne)
+  ? [4/15] Le premier printemps                     → 9782357960541  (faible)
+  ~ [5/15] Les souvenirs de Ferdinand Taupe         → 9782211313155  (moyenne)
+  ~ [6/15] Control                                  → 9782073009425  (moyenne)
+  ? [7/15] La maison hantée                         → 9782095050948  (faible)
+  ✓ [8/15] Le jour où tout a failli basculer...     → 9782211313346  (élevée)
+  ✓ [9/15] Mohican                                  → 9782073017246  (élevée)
+  ? [10/15] Choses sérieuses                         → 9782017114321  (faible)
+  ? [11/15] Les cinq épreuves                        → 9782203222113  (faible)
+  ✓ [12/15] Tortue express                           → 9782374083575  (élevée)
+  ~ [13/15] La voie du tablier                       → 9782505076698  (moyenne)
+  ~ [14/15] Un voyage à Paris                        → 9782017114260  (moyenne)
+  ? [15/15] Un secret                                → 9782017108320  (faible)
+
+→ 15/15 ISBN retrouvés
+→ dont 3 en confiance ÉLEVÉE (saisissables rapidement)
+
+✓ Export : EAN_a_corriger_2026-07-26.xlsx
+  À vérifier puis saisir dans Decalog. Rien n'a été écrit en base.
