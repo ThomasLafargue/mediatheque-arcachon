@@ -45,7 +45,7 @@ def main():
                        "SIMULATION (rien ne sera écrit)"))
     print("=" * 68)
 
-    for table in ("notice", "exemplaire"):
+    for table in ("notice", "exemplaire", "suggestion_acquisition"):
         print(f"\n--- table {table} ---")
         avant = etat(conn, table)
         for v, n in avant:
@@ -134,7 +134,7 @@ def main():
     # 3. contrôle final
     if appliquer:
         print("\n--- CONTRÔLE FINAL ---")
-        for table in ("notice", "exemplaire"):
+        for table in ("notice", "exemplaire", "suggestion_acquisition"):
             restantes = [str(v) for v, _ in etat(conn, table)]
             print(f"  {table:12} : {', '.join(restantes)}")
 

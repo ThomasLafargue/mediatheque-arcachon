@@ -1,0 +1,45 @@
+====================================================================
+NORMALISATION DU PUBLIC VISÉ — 2026-07-27 23:11
+MODE : APPLICATION RÉELLE
+====================================================================
+
+--- table notice ---
+  'Adulte'                   24264   (inchangé)
+  'Jeunesse'                 15540   (inchangé)
+  'Tout public'               3224   (inchangé)
+  'Adolescent'                1274   (inchangé)
+  'None'                        22   (inchangé)
+  lignes modifiées : 0
+
+--- table exemplaire ---
+  'Adulte'                   25048   (inchangé)
+  'Jeunesse'                 14594   (inchangé)
+  'Tout public'               3715   (inchangé)
+  'Adolescent'                1341   (inchangé)
+  lignes modifiées : 0
+
+--- table suggestion_acquisition ---
+  'None'                       222   (inchangé)
+  ''                            78   (inchangé)
+  'Jeunesse'                    46   (inchangé)
+  'Jeune'                       44 -> 'Jeunesse'
+  'Adolescent'                   4   (inchangé)
+  'Dès 3 ans'                    1 -> 'Jeunesse'
+  'Ado (12+)'                    1 -> 'Adolescent'
+  lignes modifiées : 46
+
+--- nettoyage du champ pegi ---
+  « PEGI n » -> « n » : 0 notice(s) nettoyées
+
+--- règle manga (PEGI) ---
+  mangas PEGI >= 14 -> Adulte    : 0 notice(s) corrigées
+  mangas PEGI < 14 -> Jeunesse  : 0 notice(s) corrigées
+  mangas sans PEGI (public conservé tel quel) : 200
+
+--- CONTRÔLE FINAL ---
+  notice       : Adulte, Jeunesse, Tout public, Adolescent, None
+  exemplaire   : Adulte, Jeunesse, Tout public, Adolescent
+  suggestion_acquisition : None, Jeunesse, , Adolescent
+
+====================================================================
+Terminé. L'import hebdomadaire entretient désormais la règle.

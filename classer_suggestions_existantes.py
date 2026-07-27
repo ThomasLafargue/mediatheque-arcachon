@@ -59,7 +59,7 @@ def deduire_depuis_texte(titre, motif):
     if any(m in texte for m in ("adolescent", "ado ", "ados", "young adult", " ya ")):
         public = "Adolescent"
     elif any(m in texte for m in ("jeunesse", "enfant", "tout-petit", "petits")):
-        public = "Jeune"
+        public = "Jeunesse"  # valeur canonique (normalisation 2026-07-27)
 
     if "policier" in texte or "polar" in texte or "thriller" in texte:
         genre = "Policier"
