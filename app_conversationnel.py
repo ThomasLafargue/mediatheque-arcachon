@@ -913,7 +913,15 @@ TABLE notice (une ligne par titre) :
   editeur             TEXT
   date_publication    TEXT  — 'YYYY' ou 'YYYY-MM-DD' ← PAS "annee"
   categorie           TEXT  — 'Roman jeunesse','BD','Manga','Album','Documentaire'…
-  genre               TEXT  — peut être double : 'Policier / Science-fiction'
+  genre               TEXT  — souvent COMPOSÉ : 'Aventure / Humour',
+                              'Amour / Romance / Vie quotidienne'…
+                              RÈGLE ABSOLUE : filtrer avec LIKE '%mot%',
+                              JAMAIS avec = (l'égalité stricte rate toutes
+                              les combinaisons). « les policiers » →
+                              genre LIKE '%Policier%' ; « de l'aventure » →
+                              genre LIKE '%Aventure%' ; « du suspense » →
+                              (genre LIKE '%Frissons%' OR genre LIKE
+                              '%Policier%' OR genre LIKE '%Mystère%')
   public_vise         TEXT  — 4 valeurs EXACTEMENT (normalisé 2026-07-27) :
                               'Adulte','Jeunesse','Adolescent','Tout public'
   age_recommande      TEXT

@@ -213,8 +213,15 @@ def main():
             # « Ado (12+) », « Jeune », « Dès 12 ans »... ; en base n'entrent
             # que les 4 valeurs canoniques (public_vise.py, décision 2026-07-27)
             from public_vise import normaliser as _norm_public
+            # genres canonisés à l'écriture (« Romance » -> « Amour /
+            # Romance », « Histoire » -> « Historique »...) : même règle
+            # que la fusion validée du 2026-07-27, sinon les nouvelles
+            # fiches recréeraient les variantes qu'on vient d'unifier
+            from proposer_fusion_genres import proposer as _canon_genre
+            genre_canon = (_canon_genre(res.get("genre"))[0]
+                           if res.get("genre") else None)
             params = (
-                res.get("type") or None, res.get("genre") or None,
+                res.get("type") or None, genre_canon,
                 _norm_public(res.get("public")) or None, res.get("pegi") or None,
                 res.get("illustrateur") or None, res.get("collection") or None,
                 res.get("resume") or None,
