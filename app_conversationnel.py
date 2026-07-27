@@ -2111,7 +2111,13 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
                 "Auteur": r[2] or "",
                 "Éditeur": r[3] or "",
                 "ISBN": str(r[9]) if len(r) > 9 and r[9] else "",
-                "Catégorie": r[6] or "—",
+                # La catégorie est un TYPE de document pur : la nuance
+                # jeunesse/ado vit dans la colonne Public (demande de
+                # Thomas, 2026-07-27 — inutile d'avoir « Roman » ET
+                # « Roman jeunesse » dans le menu quand le public se
+                # choisit à côté).
+                "Catégorie": {"Roman jeunesse": "Roman",
+                              "Roman ado / YA": "Roman"}.get(r[6], r[6]) or "—",
                 "Public": r[7] or "—",
                 "Genre": r[8] or "—",
                 "Motif / prix": r[4] or "",
@@ -2130,8 +2136,14 @@ with st.expander("📋 Trier les suggestions d'acquisition (veille automatique)"
             _f_cat = st.multiselect(
                 "Catégorie", sorted(_df_sugg["Catégorie"].unique()), default=[])
         with _c2:
+            # options FIXES et non déduites des données : « Adulte » doit
+            # être proposé même quand aucune suggestion adulte n'est en
+            # attente (sinon l'agent croit que le filtre n'existe pas).
+            _publics_canon = ["Adulte", "Jeunesse", "Adolescent", "Tout public"]
+            _autres_pub = sorted(set(_df_sugg["Public"].unique())
+                                 - set(_publics_canon))
             _f_pub = st.multiselect(
-                "Public", sorted(_df_sugg["Public"].unique()), default=[])
+                "Public", _publics_canon + _autres_pub, default=[])
         with _c3:
             _f_src = st.multiselect(
                 "Source", sorted(_df_sugg["Source"].unique()), default=[])
