@@ -79,7 +79,9 @@ def deviner_categorie(classifications, public_vise):
     if 'documentaire' in c:
         return 'documentaire'
     if 'roman' in c:
-        return 'roman_ado' if public_vise == 'Ado (12+)' else 'roman_jeunesse'
+        # « Ado (12+) » conservé pour les valeurs pas encore normalisées
+        return ('roman_ado' if public_vise in ('Adolescent', 'Ado (12+)')
+                else 'roman_jeunesse')
     return None
 
 
@@ -207,9 +209,13 @@ def main():
                     date_enrichissement = ?
                 WHERE identifiant = ?
             """
+            # public normalisé à l'écriture : les sources web renvoient
+            # « Ado (12+) », « Jeune », « Dès 12 ans »... ; en base n'entrent
+            # que les 4 valeurs canoniques (public_vise.py, décision 2026-07-27)
+            from public_vise import normaliser as _norm_public
             params = (
                 res.get("type") or None, res.get("genre") or None,
-                res.get("public") or None, res.get("pegi") or None,
+                _norm_public(res.get("public")) or None, res.get("pegi") or None,
                 res.get("illustrateur") or None, res.get("collection") or None,
                 res.get("resume") or None,
                 res.get("serie") or None, res.get("tome") or None,
@@ -223,6 +229,15 @@ def main():
 
         ok = executer_avec_reprise(sql, params)
         if ok and res.get('statut') in ('trouvé', 'trouve'):
+            # RÈGLE MANGA (Thomas, 2026-07-27) : PEGI >= 14 -> Adulte,
+            # sinon Jeunesse. Elle PRIME sur le public existant (c'est le
+            # seul cas où on écrase et non COALESCE) : le PEGI est une
+            # information plus fiable que l'étiquette d'origine.
+            if res.get("type") == "Manga" and res.get("pegi"):
+                from public_vise import public_manga
+                executer_avec_reprise(
+                    "UPDATE notice SET public_vise = ? WHERE identifiant = ?",
+                    (public_manga(res.get("pegi")), isbn))
             img, mc, dw = res.get('_image_url'), res.get('_mots_cles'), res.get('_dewey')
             if img or mc or dw:
                 executer_avec_reprise(

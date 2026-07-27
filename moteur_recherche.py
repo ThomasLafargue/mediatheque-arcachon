@@ -469,16 +469,16 @@ def detecter_pegi(type_doc, public, texte_brut=""):
     # Chercher PEGI explicite dans le texte
     m = re.search(r"PEGI\s*(\d+)", texte_brut, re.IGNORECASE)
     if m:
-        return f"PEGI {m.group(1)}"
+        return m.group(1)  # nombre seul : CAST SQL et tris fonctionnent (2026-07-27)
     # Déduire depuis le public
     if public in ("Ado (12+)", "Dès 12 ans", "12-16 ans"):
-        return "PEGI 12"
+        return "12"
     if public in ("Ado", "Ado / YA") or re.search(r"\b(16|17|18)\b", public):
-        return "PEGI 16"
+        return "16"
     if public in ("Jeunesse", "Dès 6 ans", "6-8 ans", "8-12 ans"):
-        return "PEGI 7"
+        return "7"
     if type_doc == "Manga":
-        return "PEGI 12"  # Par défaut manga
+        return "12"  # Par défaut manga
     return ""
 
 # ─────────────────────────────────────────────────────────
@@ -1128,7 +1128,7 @@ def amazon_lookup(isbn):
         # PEGI Amazon (souvent dans les détails)
         pegi_brut = ""
         m_pegi = re.search(r"PEGI\s*(\d+)", texte_page, re.I)
-        if m_pegi: pegi_brut = f"PEGI {m_pegi.group(1)}"
+        if m_pegi: pegi_brut = m_pegi.group(1)
 
         # Tranche d'âge Amazon
         tranche = ""

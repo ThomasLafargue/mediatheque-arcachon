@@ -33,6 +33,7 @@ import urllib.error
 import xml.etree.ElementTree as ET
 
 import db
+from public_vise import normaliser as normaliser_public
 
 FLUX_JEUNESSE = "https://nouveautes-editeurs.bnf.fr/neRss?jeunesse=true"
 FLUX_TOUS = "https://nouveautes-editeurs.bnf.fr/neRss"
@@ -214,7 +215,12 @@ def enregistrer_suggestions(absents, source_label):
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (n["titre"], DEMANDEUR_VEILLE, n.get("auteur"), n.get("editeur"),
                  n.get("isbn"), motif, source_label,
-                 n.get("categorie"), n.get("public_vise"), n.get("genre")),
+                 n.get("categorie"),
+                 # même règle que le catalogue : 4 valeurs canoniques
+                 # (public_vise.py) — le panneau de tri et le chat filtrent
+                 # sur les mêmes étiquettes des deux côtés
+                 normaliser_public(n.get("public_vise")),
+                 n.get("genre")),
             )
             deja_suggeres.add(norm)
             ajoutes += 1

@@ -39,6 +39,7 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from iso2709 import parse_records, get_subfields  # noqa: E402
+from public_vise import normaliser as normaliser_public  # noqa: E402
 
 FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventaire.db")
 
@@ -374,7 +375,11 @@ def parser_mrc(chemin):
                     type_support_hint = d.get('w')
                 exemplaires_locaux.append({
                     'site': d.get('a'), 'code_barres': d.get('f'), 'cote': d.get('k'),
-                    'public_vise': d.get('l'), 'statut': d.get('v'),
+                    # normalisé dès l'entrée : Decalog dit « Jeune », notre
+                    # base dit « Jeunesse » (décision du 2026-07-27, cf.
+                    # public_vise.py). C'est CE point qui entretient la
+                    # propreté d'une semaine sur l'autre.
+                    'public_vise': normaliser_public(d.get('l')), 'statut': d.get('v'),
                     'support': d.get('w'), 'date_inventaire': d.get('1'),
                 })
 

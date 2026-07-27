@@ -1,0 +1,42 @@
+====================================================================
+NORMALISATION DU PUBLIC VISÉ — 2026-07-27 19:19
+MODE : SIMULATION (rien ne sera écrit)
+====================================================================
+
+--- table notice ---
+  'Adulte'                   24296   (inchangé)
+  'Jeune'                    11799 -> 'Jeunesse'
+  'Tout public'               3224   (inchangé)
+  'Ado (12+)'                 2624 -> 'Adolescent'
+  'Jeunesse'                  2115   (inchangé)
+  'Adolescent'                 160   (inchangé)
+  '8-12 ans'                    54 -> 'Jeunesse'
+  'None'                        22   (inchangé)
+  'Dès 6 ans'                   15 -> 'Jeunesse'
+  'Dès 3 ans'                   12 -> 'Jeunesse'
+  'Ados / Adultes'               1 -> 'Tout public'
+  'dès 9 ans'                    1 -> 'Jeunesse'
+  'à partir de 8'                1 -> 'Jeunesse'
+
+  [simulation] 5 valeur(s) d'âge seraient recopiées vers age_recommande avant conversion
+  lignes à modifier : 14507
+
+--- table exemplaire ---
+  'Adulte'                   25048   (inchangé)
+  'Jeune'                    14594 -> 'Jeunesse'
+  'Tout public'               3713   (inchangé)
+  'Adolescent'                1341   (inchangé)
+  'Ados / Adultes'               2 -> 'Tout public'
+  lignes à modifier : 14596
+
+--- nettoyage du champ pegi ---
+  « PEGI n » -> « n » : 4547 notice(s) à nettoyer
+
+--- règle manga (PEGI) ---
+  mangas PEGI >= 14 -> Adulte    : 0 notice(s) à corriger
+  mangas PEGI < 14 -> Jeunesse  : 1868 notice(s) à corriger
+  mangas sans PEGI (public conservé tel quel) : 200
+
+====================================================================
+Simulation terminée, rien n'a été écrit.
+Pour appliquer :  python3 normaliser_public_vise.py --appliquer

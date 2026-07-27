@@ -29,7 +29,7 @@ REQUETES_TYPES = [
     ("Tomes manquants d'une série",
      "SELECT titre, tome FROM notice WHERE serie = 'Lucky Luke'"),
     ("Fonds jeunesse par catégorie",
-     "SELECT COUNT(*) FROM notice WHERE public_vise = 'Jeune' "
+     "SELECT COUNT(*) FROM notice WHERE public_vise = 'Jeunesse' "
      "AND categorie = 'Bande dessinée'"),
     ("Nouveautés de l'année",
      "SELECT titre FROM notice WHERE date_publication LIKE '2026%'"),

@@ -914,7 +914,8 @@ TABLE notice (une ligne par titre) :
   date_publication    TEXT  — 'YYYY' ou 'YYYY-MM-DD' ← PAS "annee"
   categorie           TEXT  — 'Roman jeunesse','BD','Manga','Album','Documentaire'…
   genre               TEXT  — peut être double : 'Policier / Science-fiction'
-  public_vise         TEXT  — 'Jeune','Jeunesse','Ado (12+)','Adulte'…
+  public_vise         TEXT  — 4 valeurs EXACTEMENT (normalisé 2026-07-27) :
+                              'Adulte','Jeunesse','Adolescent','Tout public'
   age_recommande      TEXT
   score_confiance     REAL
   date_enrichissement TEXT
@@ -1028,17 +1029,17 @@ Ces équivalences doivent être transparentes pour l'utilisateur. Quand
 quelqu'un demande "romans ado" ou "livres pour ados", gère ça seul sans
 jamais demander à l'utilisateur de préciser la valeur exacte.
 
-Public :
-• "ado", "adolescent", "ados", "pour les ados", "12 ans et plus"
-  → chercher : public IN ('Ado (12+)', 'Adolescent') [deux valeurs existent]
-• "jeunesse", "jeunes", "enfants", "section jeunesse"
-  → chercher : public IN ('Jeune', 'Jeunesse') [deux valeurs existent]
+Public — LE CHAMP EST NORMALISÉ (2026-07-27), une seule valeur par public :
+• "ado", "adolescent", "ados", "12 ans et plus" → public_vise = 'Adolescent'
+• "jeunesse", "jeunes", "enfants"               → public_vise = 'Jeunesse'
+• "adulte"                                      → public_vise = 'Adulte'
+  (les anciennes variantes 'Jeune' et 'Ado (12+)' n'existent plus en base)
 
 Catégorie :
 • "roman jeunesse", "roman enfant", "roman junior"
   → categorie = 'Roman jeunesse'
 • "roman ado", "roman ado/YA", "young adult", "YA"
-  → categorie IN ('Roman ado / YA', 'Roman jeunesse') AND public IN ('Ado (12+)', 'Adolescent')
+  → categorie IN ('Roman ado / YA', 'Roman jeunesse') AND public_vise = 'Adolescent'
 • "bande dessinée", "BD", "bandes dessinées"
   → categorie = 'BD'
 • "album", "album illustré", "album jeunesse"
@@ -1080,8 +1081,10 @@ car cela retournerait aussi les romans jeunesse. Critères exacts à utiliser :
 • BD adulte         : categorie='BD' AND cote NOT LIKE 'BDJ%' AND (genre IS NULL OR genre != 'Comics')
 • Comics (BD adulte): categorie='BD' AND genre='Comics'
 • Roman graphique   : categorie='BD' AND genre='Roman graphique'
-• Manga jeunesse    : categorie='Manga' AND (pegi IS NULL OR CAST(pegi AS INTEGER) < 14 OR public IN ('Jeune','Jeunesse'))
-• Manga adulte      : categorie='Manga' AND (CAST(pegi AS INTEGER) >= 14 OR public='Adulte')
+• Manga jeunesse    : categorie='Manga' AND public_vise='Jeunesse'
+• Manga adulte      : categorie='Manga' AND public_vise='Adulte'
+  (règle maison appliquée en base le 2026-07-27 : PEGI >= 14 -> Adulte,
+   PEGI < 14 -> Jeunesse ; pegi est désormais un nombre pur, ex. '12')
 TOUJOURS utiliser ces critères précis. Vérifier systématiquement avec
 COUNT(*) avant de répondre -- ne jamais supposer le résultat.
 

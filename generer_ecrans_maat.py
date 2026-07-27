@@ -72,7 +72,7 @@ def _charger_dotenv():
 _charger_dotenv()
 
 FENETRE_MOIS = 4
-PUBLICS_JEUNESSE = ("Jeune", "Jeunesse", "Ado (12+)", "Adolescent", "Tout public")
+PUBLICS_JEUNESSE = ("Jeunesse", "Adolescent", "Tout public")  # normalisé 2026-07-27
 
 sys.path.insert(0, DOSSIER)
 from iso2709 import parse_records, get_subfields  # noqa: E402

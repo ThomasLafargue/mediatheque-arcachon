@@ -99,7 +99,7 @@ def _executer_avec_reprise(sql, essais=4):
 
 def recuperer(jeunesse_seule=False, maxi=None):
     filtre_jeunesse = (
-        " AND n.public_vise IN ('Jeune','Jeunesse','Ado (12+)','Adolescent') "
+        " AND n.public_vise IN ('Jeunesse','Adolescent') "
         if jeunesse_seule else ""
     )
     # NB (2026-07-26) : une sous-requête corrélée sur `exemplaire` (44 000

@@ -1,0 +1,8 @@
+pegi des mangas (base en ligne) :
+  pegi='PEGI 12'            CAST=   0   1636 notices
+  pegi='PEGI 7'             CAST=   0    500 notices
+  pegi='None'               CAST=None    200 notices
+
+pegi toutes catégories (les 12 plus fréquents) :
+  'PEGI 7'               2853
+  'PEGI 12'              1694

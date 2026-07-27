@@ -107,7 +107,7 @@ def main():
          "SELECT titre, tome FROM notice WHERE serie = 'Lucky Luke'"),
         ("BD jeunesse",
          "SELECT COUNT(*) FROM notice WHERE categorie = 'Bande dessinée' "
-         "AND public_vise = 'Jeune'"),
+         "AND public_vise = 'Jeunesse'"),
         ("Nouveautés",
          "SELECT titre FROM notice WHERE date_publication LIKE '2026%'"),
         ("Notices à enrichir",
