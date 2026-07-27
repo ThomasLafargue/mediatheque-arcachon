@@ -1,0 +1,145 @@
+========================================================================
+AUDIT DE LA BASE — 2026-07-27 16:57
+========================================================================
+
+
+1. TABLES
+------------------------------------------------------------------------
+  commande                              0 lignes    7 colonnes  <-- VIDE
+  etat_imports                          2 lignes    3 colonnes
+  exemplaire                        44698 lignes   13 colonnes
+  flux_historique                   37005 lignes    4 colonnes
+  flux_mensuel                          0 lignes    6 colonnes  <-- VIDE
+  frequentation                      1921 lignes    2 colonnes
+  frequentation_horaire             23696 lignes    4 colonnes
+  horaires_ouverture                   18 lignes    9 colonnes
+  journal_requetes                    135 lignes    8 colonnes
+  livraison                             0 lignes    5 colonnes  <-- VIDE
+  notice                            44324 lignes   40 colonnes
+  schema_info                           1 lignes    3 colonnes
+  suggestion_acquisition              396 lignes   14 colonnes
+  suggestion_desherbage                12 lignes   10 colonnes
+  type_document                         6 lignes    3 colonnes
+
+  => 3 table(s) vide(s) : commande, flux_mensuel, livraison
+     Le chat lit leur schéma à chaque question, pour rien.
+
+
+2. REMPLISSAGE DES COLONNES DE `notice`
+------------------------------------------------------------------------
+  statut_publication           0.0%                             0  <-- VIDE
+  score_confiance              0.0%                             0  <-- VIDE
+  nb_sources_consultees        0.0%                             0  <-- VIDE
+  nb_joueurs_max               1.4%                           638  <-- rare
+  nb_joueurs_min               1.5%                           671  <-- rare
+  duree_partie                 2.3%                          1018  <-- rare
+  date_creation                3.5%                          1561  <-- rare
+  age_joueurs                  5.7%  #                       2514
+  pegi                        10.3%  ##                      4546
+  champs_a_verifier_decalog   10.3%  ##                      4549
+  traducteur                  17.6%  ###                     7780
+  createurs_secondaires       19.0%  ###                     8439
+  age_recommande              21.9%  ####                    9703
+  image_url                   27.5%  #####                  12197
+  collection                  28.9%  #####                  12818
+  tome                        29.5%  #####                  13062
+  mots_cles                   33.3%  ######                 14781
+  serie                       38.7%  #######                17172
+  dewey_libelle               47.4%  #########              20995
+  dewey                       48.4%  #########              21447
+  categorie                   73.8%  ##############         32693
+  resume                      74.7%  ##############         33096
+  date_dernier_pret           76.0%  ###############        33687
+  genre                       80.9%  ################       35878
+  nb_prets_total              83.5%  ################       37005
+  nb_prets_annee_courante     83.5%  ################       37005
+  nb_prets_n1                 83.5%  ################       37005
+  nb_prets_n2                 83.5%  ################       37005
+  nb_prets_n3                 83.5%  ################       37005
+  nb_prets_fonctionnels       83.5%  ################       37005
+  date_maj_prets              83.5%  ################       37005
+  createurs                   85.8%  #################      38034
+  date_publication            85.9%  #################      38086
+  description_physique        86.6%  #################      38369
+  date_enrichissement         89.0%  #################      39435
+  editeur                     93.2%  ##################     41332
+  titre                       99.9%  ###################    44298
+  public_vise                100.0%  ###################    44302
+  identifiant                100.0%  ####################   44324
+  type_document              100.0%  ####################   44324
+
+  => 3 colonne(s) jamais remplie(s) : statut_publication, score_confiance, nb_sources_consultees
+
+
+3. INDEX EXISTANTS
+------------------------------------------------------------------------
+  commande               idx_commande_identifiant               CREATE INDEX idx_commande_identifiant ON commande (identifia
+  commande               idx_commande_statut                    CREATE INDEX idx_commande_statut ON commande (statut)
+  etat_imports           sqlite_autoindex_etat_imports_1        (automatique)
+  exemplaire             idx_exemplaire_code_barre_unique       CREATE UNIQUE INDEX idx_exemplaire_code_barre_unique ON exem
+  exemplaire             idx_exemplaire_cote                    CREATE INDEX idx_exemplaire_cote ON exemplaire (cote)
+  exemplaire             idx_exemplaire_identifiant             CREATE INDEX idx_exemplaire_identifiant ON exemplaire (ident
+  flux_historique        idx_flux_historique_identifiant        CREATE INDEX idx_flux_historique_identifiant ON flux_histori
+  flux_historique        sqlite_autoindex_flux_historique_1     (automatique)
+  flux_mensuel           idx_flux_identifiant                   CREATE INDEX idx_flux_identifiant ON flux_mensuel (identifia
+  flux_mensuel           idx_flux_mois                          CREATE INDEX idx_flux_mois ON flux_mensuel (mois_export)
+  flux_mensuel           sqlite_autoindex_flux_mensuel_1        (automatique)
+  frequentation          sqlite_autoindex_frequentation_1       (automatique)
+  frequentation_horaire  sqlite_autoindex_frequentation_horaire_1 (automatique)
+  livraison              idx_livraison_commande                 CREATE INDEX idx_livraison_commande ON livraison (commande_i
+  notice                 idx_notice_statut                      CREATE INDEX idx_notice_statut ON notice (statut_publication
+  notice                 idx_notice_type                        CREATE INDEX idx_notice_type ON notice (type_document)
+  notice                 sqlite_autoindex_notice_1              (automatique)
+  type_document          sqlite_autoindex_type_document_1       (automatique)
+
+  total : 18
+
+
+4. CE QUE LE CHAT DEMANDE VRAIMENT
+------------------------------------------------------------------------
+  116 requêtes analysées.
+  Colonnes les plus filtrées (candidates à l'index) :
+      324x  titre
+      185x  categorie
+      130x  serie
+      103x  type
+      100x  public
+       46x  cote
+       41x  auteur
+       28x  nb_prets_cet_exemplaire
+       23x  isbn
+       22x  tome
+       21x  annee
+       18x  date
+       13x  tome_max
+       10x  statut_exemplaire
+        8x  code_barres
+
+
+5. PLANS D'EXÉCUTION
+------------------------------------------------------------------------
+  SCAN = balayage complet (lent, coûteux en lignes lues)
+  SEARCH ... USING INDEX = accès direct (bon)
+
+  Tomes manquants d'une série
+      SCAN notice  <<< BALAYAGE
+
+  Fonds jeunesse par catégorie
+      SCAN notice  <<< BALAYAGE
+
+  Nouveautés de l'année
+      SCAN notice  <<< BALAYAGE
+
+  Notices à enrichir
+      SCAN notice  <<< BALAYAGE
+
+  Documents les plus empruntés
+      SCAN notice  <<< BALAYAGE
+      USE TEMP B-TREE FOR ORDER BY
+
+  Jointure notice + exemplaire par cote
+      SCAN e  <<< BALAYAGE
+      SEARCH n USING INDEX sqlite_autoindex_notice_1 (identifiant=?)
+
+========================================================================
+Audit terminé. Rien n'a été modifié.

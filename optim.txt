@@ -1,0 +1,60 @@
+======================================================================
+OPTIMISATION DE LA BASE — 2026-07-27 17:08
+MODE : APPLICATION RÉELLE
+======================================================================
+
+idx_notice_serie_tome
+  sur notice (serie, tome)
+  → « quels tomes de Lucky Luke nous manquent » — la question phare. Sert aussi toute recherche sur la seule série (préfixe gauche).
+  CRÉÉ en 2.0s
+
+idx_notice_categorie_public
+  sur notice (categorie, public_vise)
+  → « les BD jeunesse », « les romans ado » — les deux colonnes les plus filtrées, presque toujours ensemble.
+  CRÉÉ en 1.3s
+
+idx_notice_public
+  sur notice (public_vise)
+  → public visé seul, sans catégorie (non couvert par le composite).
+  CRÉÉ en 0.7s
+
+idx_notice_date_publication
+  sur notice (date_publication)
+  → « les nouveautés de l'année », les acquisitions récentes.
+  CRÉÉ en 0.8s
+
+idx_notice_enrichissement
+  sur notice (date_enrichissement)
+  → requête du service d'enrichissement, rejouée toutes les quelques minutes : c'est probablement le premier consommateur de lignes lues.
+  CRÉÉ en 0.7s
+
+idx_notice_prets
+  sur notice (nb_prets_total DESC)
+  → « les documents les plus empruntés » — évite en prime le tri temporaire (USE TEMP B-TREE) relevé par l'audit.
+  CRÉÉ en 0.8s
+
+======================================================================
+VÉRIFICATION — plans d'exécution après l'opération
+======================================================================
+
+  Tomes d'une série
+      SEARCH notice USING INDEX idx_notice_serie_tome (serie=?)   OK
+
+  BD jeunesse
+      SEARCH notice USING COVERING INDEX idx_notice_categorie_public (categorie=? AND public_vise=?)   OK
+
+  Nouveautés
+      SCAN notice   <<< BALAYAGE COMPLET
+
+  Notices à enrichir
+      SEARCH notice USING INDEX idx_notice_enrichissement (date_enrichissement=?)   OK
+
+  Plus empruntés
+      SCAN notice USING INDEX idx_notice_prets   <<< BALAYAGE COMPLET
+
+======================================================================
+6 index créé(s). Aucune donnée modifiée.
+
+Pour annuler un index :  DROP INDEX <nom>;
+
+À décider séparément — index devenu inutile : idx_notice_statut (statut_publication rempli à 0 %).

@@ -1,0 +1,11 @@
+=== Test Turso apres redemarrage serveur ===
+2026-07-27 14:29:17 CEST
+
+  OK    SELECT 1 (le plus simple)                                    1 ligne(s)  (0.5s)
+  OK    COUNT(*) sur notice                                          1 ligne(s)  (0.3s)
+  OK    10 lignes courtes                                           10 ligne(s)  (0.2s)
+  OK    300 lignes avec titre + auteur                             300 ligne(s)  (0.2s)
+  OK    1000 lignes avec titre + auteur                           1000 ligne(s)  (0.3s)
+  OK    4000 lignes avec titre + auteur (le cas qui cassait en premier)  4000 ligne(s)  (0.5s)
+
+Copier-coller ce bloc entier dans la reponse au support.
