@@ -71,6 +71,25 @@ def deduire_depuis_texte(titre, motif):
     return categorie, public, genre
 
 
+def deduire_depuis_source(source):
+    """Étage 3 (2026-07-27) : la SOURCE de veille détermine le public quand
+    ni l'ISBN ni le texte n'ont parlé. Une critique Ricochet ou un prix
+    jeunesse concernent la jeunesse par construction — c'est la nature de la
+    source, pas une déduction."""
+    s = (source or "").lower()
+    if "ricochet" in s or "jeunesse" in s:
+        return "Jeunesse"
+    return None
+
+
+# Étage 4, le filet : demandé par Thomas le 2026-07-27 — TOUTES les
+# suggestions doivent avoir un public, le panneau de tri ne doit plus
+# afficher de « — ». « Tout public » est l'aveu honnête qu'on ne sait pas
+# trancher : mieux vaut ça qu'un « Adulte » deviné à tort, et la suggestion
+# reste visible dans tous les filtres.
+PUBLIC_PAR_DEFAUT = "Tout public"
+
+
 def main():
     maxi = None
     if "--max" in sys.argv:
@@ -94,7 +113,7 @@ def main():
                 pass
 
         lignes = conn.execute(
-            "SELECT id, titre, isbn, motif FROM suggestion_acquisition "
+            "SELECT id, titre, isbn, motif, source FROM suggestion_acquisition "
             "WHERE (categorie IS NULL OR categorie = '') "
             "   OR (public_vise IS NULL OR public_vise = '')"
         ).fetchall()
@@ -112,8 +131,8 @@ def main():
         except Exception:
             m = None
 
-        classees_isbn = classees_texte = 0
-        for sid, titre, isbn, motif in lignes:
+        classees_isbn = classees_texte = classees_source = par_defaut = 0
+        for sid, titre, isbn, motif, source in lignes:
             categorie = public = genre = None
 
             if isbn and m:
@@ -134,8 +153,18 @@ def main():
                 if categorie or public:
                     classees_texte += 1
 
-            if not (categorie or public or genre):
-                continue
+            if not public:
+                public = deduire_depuis_source(source)
+                if public:
+                    classees_source += 1
+            if not public:
+                public = PUBLIC_PAR_DEFAUT
+                par_defaut += 1
+
+            # normalisation systématique (les sources web renvoient parfois
+            # « Jeune », « Ado (12+) »...)
+            from public_vise import normaliser as _norm
+            public = _norm(public)
 
             conn.execute(
                 "UPDATE suggestion_acquisition SET "
@@ -150,7 +179,8 @@ def main():
 
         conn.commit()
         print(f"\n✓ Terminé : {classees_isbn} classée(s) via ISBN, "
-              f"{classees_texte} via mots-clés.")
+              f"{classees_texte} via mots-clés, {classees_source} via la "
+              f"source, {par_defaut} en « {PUBLIC_PAR_DEFAUT} » (indéterminé).")
     finally:
         conn.close()
 

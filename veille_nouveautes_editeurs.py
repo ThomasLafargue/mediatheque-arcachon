@@ -217,9 +217,13 @@ def enregistrer_suggestions(absents, source_label):
                  n.get("isbn"), motif, source_label,
                  n.get("categorie"),
                  # même règle que le catalogue : 4 valeurs canoniques
-                 # (public_vise.py) — le panneau de tri et le chat filtrent
-                 # sur les mêmes étiquettes des deux côtés
-                 normaliser_public(n.get("public_vise")),
+                 # (public_vise.py), et JAMAIS de public vide (demande de
+                 # Thomas, 2026-07-27) : à défaut, la source décide
+                 # (veille jeunesse -> Jeunesse), sinon « Tout public »
+                 normaliser_public(n.get("public_vise"))
+                 or ("Jeunesse" if any(mot in source_label.lower()
+                                       for mot in ("jeunesse", "ricochet"))
+                     else "Tout public"),
                  n.get("genre")),
             )
             deja_suggeres.add(norm)
