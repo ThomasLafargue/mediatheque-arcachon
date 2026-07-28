@@ -77,16 +77,37 @@ def lire_scans():
 
 
 def lire_memoire():
+    """code -> (nb_occurrences_comptées, [dates de scan]).
+
+    Format : code <TAB> nb <TAB> date1;date2;...
+    Un document peut être scanné PLUSIEURS fois au fil de la campagne :
+    parti en prêt puis revenu, il repasse sous la scanette. Chaque passage
+    garde sa date — c'est une information de circulation, pas une erreur
+    (précision de Thomas, 2026-07-28). L'ancien format à 2 colonnes
+    (code <TAB> date) est lu comme « 1 scan »."""
     memoire = {}
     if os.path.exists(FICHIER_MEMOIRE):
         with open(FICHIER_MEMOIRE, encoding="utf-8") as f:
             for ligne in f:
                 if ligne.lstrip().startswith("#") or not ligne.strip():
                     continue
-                morceaux = ligne.rstrip("\n").split("\t")
-                memoire[morceaux[0]] = (morceaux[1] if len(morceaux) > 1
-                                        else "?")
+                m = ligne.rstrip("\n").split("\t")
+                if len(m) >= 3:
+                    memoire[m[0]] = (int(m[1]),
+                                     [d for d in m[2].split(";") if d])
+                elif len(m) == 2:      # ancien format
+                    memoire[m[0]] = (1, [m[1]])
+                else:
+                    memoire[m[0]] = (1, ["?"])
     return memoire
+
+
+def ecrire_memoire(memoire):
+    """Réécrit la mémoire complète (petite : un document par ligne)."""
+    with open(FICHIER_MEMOIRE, "w", encoding="utf-8") as f:
+        f.write("# code-barres <TAB> nb de scans comptés <TAB> dates\n")
+        for code, (nb, dates) in memoire.items():
+            f.write(f"{code}\t{nb}\t{';'.join(dates)}\n")
 
 
 def main():
@@ -94,14 +115,28 @@ def main():
     memoire = lire_memoire()
     scans = lire_scans()
 
-    nouveaux = [c for c in dict.fromkeys(scans) if c not in memoire]
-    if nouveaux:
-        with open(FICHIER_MEMOIRE, "a", encoding="utf-8") as f:
-            for c in nouveaux:
-                f.write(f"{c}\t{aujourdhui}\n")
-                memoire[c] = aujourdhui
-    print(f"Scans lus : {len(scans)} — nouveaux : {len(nouveaux)} — "
-          f"total mémorisé : {len(memoire)}")
+    # Occurrences dans le fichier de scans : si un code y figure PLUS de
+    # fois que ce que la mémoire a déjà compté, ce sont de nouveaux
+    # passages sous la scanette -> une date de plus par passage. (Le
+    # fichier de scans grossit sans jamais être vidé : on ne compte que
+    # la différence, jamais deux fois la même ligne.)
+    from collections import Counter
+    occurrences = Counter(scans)
+    nouveaux = re_scannes = 0
+    for code, occ in occurrences.items():
+        nb_connu, dates = memoire.get(code, (0, []))
+        if occ > nb_connu:
+            supplement = occ - nb_connu
+            memoire[code] = (occ, dates + [aujourdhui] * supplement)
+            if nb_connu == 0:
+                nouveaux += 1
+            else:
+                re_scannes += 1
+    if nouveaux or re_scannes:
+        ecrire_memoire(memoire)
+    print(f"Scans lus : {len(scans)} — premiers scans : {nouveaux} — "
+          f"documents revus (prêt/retour ?) : {re_scannes} — "
+          f"total suivi : {len(memoire)}")
 
     if not memoire:
         print("Rien à comparer (fichier recolement_scans.txt vide ou absent).")
@@ -170,13 +205,15 @@ def main():
     feuille(ws1, ["Code-barres", "ISBN-identifiant", "Cote", "Statut",
                   "Titre", "Auteur"], manquants)
     ws2 = wb.create_sheet("2 - Scannés")
-    feuille(ws2, ["Code-barres", "Date de scan", "Cote", "Titre", "Auteur"],
-            sorted(((cb, memoire[cb], v[1], v[4], v[5])
+    feuille(ws2, ["Code-barres", "Nb de scans", "Dates de scan",
+                  "Cote", "Titre", "Auteur"],
+            sorted(((cb, memoire[cb][0], " ; ".join(memoire[cb][1]),
+                     v[1], v[4], v[5])
                     for cb, v in scannes_connus.items()),
-                   key=lambda x: (x[2], x[3])))
+                   key=lambda x: (-x[1], x[3], x[4])))
     ws3 = wb.create_sheet("3 - Inconnus")
-    feuille(ws3, ["Code-barres scanné (absent de la base)", "Date de scan"],
-            [(c, memoire[c]) for c in inconnus])
+    feuille(ws3, ["Code-barres scanné (absent de la base)", "Dates de scan"],
+            [(c, " ; ".join(memoire[c][1])) for c in inconnus])
     ws4 = wb.create_sheet("4 - Résumé")
     feuille(ws4, ["Zone (préfixe de cote)", "Attendus", "Scannés",
                   "Manquants", "Progression"],
