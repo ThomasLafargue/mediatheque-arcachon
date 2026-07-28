@@ -54,6 +54,9 @@ FICHIER_DIAPORAMA = os.path.join(DOSSIER_ECRANS, "mediatheque-diaporama-jeunesse
 # Visuels d'information de la ville, intercalés dans le diaporama jeunesse
 DOSSIER_DIAPOS_VILLE = os.path.join(DOSSIER, "diapos_ville")
 
+sys.path.insert(0, DOSSIER)
+from public_vise import normaliser as normaliser_public  # noqa: E402
+
 
 def _charger_dotenv():
     """Ce script n'importe plus db.py (plus besoin de la base), donc il
@@ -189,7 +192,11 @@ def parser_notice(rec):
             if type_support_hint is None:
                 type_support_hint = d.get('w')
             exemplaires_locaux.append({
-                'cote': d.get('k'), 'public_vise': d.get('l'),
+                # normalisé : le .mrc brut dit encore « Jeune » alors que
+                # nos filtres utilisent les 4 valeurs canoniques du
+                # 2026-07-27. Sans cette ligne, le diaporama jeunesse était
+                # tombé de 311 à 18 titres (constaté le 2026-07-28 au soir).
+                'cote': d.get('k'), 'public_vise': normaliser_public(d.get('l')),
                 'support': d.get('w'), 'date_inventaire': d.get('1'),
             })
 
