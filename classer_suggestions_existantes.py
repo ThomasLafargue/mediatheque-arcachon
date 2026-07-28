@@ -131,6 +131,8 @@ def main():
         # mots-clés) soit retentée. Sans effet dès la seconde exécution.
         conn.execute("UPDATE suggestion_acquisition SET categorie = NULL "
                      "WHERE categorie IN ('Livre', 'À classer')")
+        conn.execute("UPDATE suggestion_acquisition SET genre = NULL "
+                     "WHERE genre = 'À préciser'")
         conn.commit()
 
         lignes = conn.execute(
@@ -164,17 +166,21 @@ def main():
             categorie = public = genre = None
             isbn_trouve = None
 
-            # Étage 1 : l'ISBN mène directement à la fiche
+            # Étage 1 : l'ISBN passe par le MOTEUR COMPLET (chercher_isbn,
+            # le même que l'enrichissement du catalogue) : toutes les
+            # sources, vote majoritaire — pas seulement la fiche Place des
+            # Libraires, qui ne porte pas toujours le genre. Exigence de
+            # Thomas (2026-07-28) : catégorie ET genre réellement établis.
             if isbn and m:
                 try:
-                    res = m.placedeslibraires_lookup(str(isbn).replace("-", "").strip())
+                    res = m.chercher_isbn(str(isbn).replace("-", "").strip())
                 except Exception:
                     res = None
-                if res:
+                if res and res.get("statut") in ("trouvé", "trouve"):
                     categorie = res.get("type") or None
                     public = res.get("public") or None
                     genre = res.get("genre") or None
-                    if categorie or public:
+                    if categorie or genre:
                         classees_isbn += 1
                 time.sleep(0.4)
 
@@ -183,16 +189,17 @@ def main():
             # RETROUVE la fiche par titre + auteur, comme pour les EAN
             # manquants. La fiche donne catégorie/public/genre, et on
             # garde l'ISBN au passage : la suggestion en sort complète.
-            if not categorie and titre and m and chercher_ean:
+            if not (categorie and genre) and titre and m and chercher_ean:
                 try:
-                    isbn_trouve, _, _ = chercher_ean(titre, None)
+                    if not isbn_trouve:
+                        isbn_trouve, _, _ = chercher_ean(titre, None)
                     if isbn_trouve:
-                        res = m.placedeslibraires_lookup(isbn_trouve)
-                        if res:
+                        res = m.chercher_isbn(isbn_trouve)
+                        if res and res.get("statut") in ("trouvé", "trouve"):
                             categorie = categorie or res.get("type") or None
                             public = public or res.get("public") or None
                             genre = genre or res.get("genre") or None
-                            if categorie:
+                            if categorie or genre:
                                 classees_titre += 1
                 except Exception:
                     pass

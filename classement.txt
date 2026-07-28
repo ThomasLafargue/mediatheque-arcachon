@@ -1,0 +1,389 @@
+385 suggestion(s) à classer.
+
+  #19 Friday - Tome 2                            → BD / Jeunesse / Policier / Mystère / Fantastique  [ISBN retrouvé : 9782344055045]
+  #20 Friday - Tome 3                            → BD / Jeunesse / Fantastique / Policier / Mystère  [ISBN retrouvé : 9782344055052]
+  #21 L'Adolescence du perroquet                 → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782226513045]
+  #22 JE                                         → Roman jeunesse / Jeunesse / Humour / Vie quotidienne  [ISBN retrouvé : 9782073152985]
+  #23 L'Inconnue du quai de Javel                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080490896]
+  #24 Une histoire d'amours                      → Roman jeunesse / Jeunesse / Amour / Romance / Historique  [ISBN retrouvé : 9782264088055]
+  #25 Heures sauvages                            → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782487819450]
+  #26 Le Fabuleux piano                          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221286807]
+  #27 Le Palais                                  → Roman jeunesse / Jeunesse / Policier / Mystère  [ISBN retrouvé : 9791041420414]
+  #28 La Hantise                                 → Conte / Poésie / Jeunesse / Vie quotidienne / Frissons  [ISBN retrouvé : 9782357844377]
+  #29 Notre-Dame-des-Anges                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782016173299]
+  #30 Faire la peau                              → Roman jeunesse / Jeunesse / Arts / Musique  [ISBN retrouvé : 9786131530418]
+  #31 Debout dans tes rêves                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782260057970]
+  #32 C'était ça ou mourir                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782246847069]
+  #33 Halte au feu                               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782493569110]
+  #34 La Solidarité des ébranlés                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782260057161]
+  #35 Sauf la frontière                          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782889076437]
+  #36 Spectres                                   → À classer / Tout public / À préciser
+  #37 Les Carnivores                             → Manga / Adolescent / Historique / Vie quotidienne  [ISBN retrouvé : 9782369741794]
+  #38 Ce qui se joue                             → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782849740804]
+  #39 Les Habitants                              → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782707357205]
+  #40 Submersion                                 → Roman jeunesse / Jeunesse / Science-fiction / Amour / Romance  [ISBN retrouvé : 9782226503503]
+  #41 Oroppa                                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221283684]
+  #42 Racontez-moi tout                          → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782080496652]
+  #43 Aladdin et moi                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782283042847]
+  #44 Ce qui nous frôle sous la surface          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782714499707]
+  #45 Les Noms de Feliza                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782021599527]
+  #46 Eisen                                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9783836594875]
+  #47 Baignade interdite                         → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782849491768]
+  #48 L'Histoire, la vraie, de Raja le candide ( → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782386980107]
+  #49 À cœur ouvert                              → Roman jeunesse / Jeunesse / Amour / Romance / Vie quotidienne  [ISBN retrouvé : 9782266292207]
+  #50 Lázár                                      → Roman / Tout public / À préciser
+  #51 Les Fils d'Otmar                           → Roman jeunesse / Jeunesse / Aventure / Vie quotidienne  [ISBN retrouvé : 9782330216528]
+  #53 La Couleur qui vous plaira                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782413095842]
+  #54 Inventaire de ce qu'il reste après que la  → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9782370555144]
+  #55 Le Clan des feuilles mortes                → Roman jeunesse / Jeunesse / Historique  [ISBN retrouvé : 9782351783887]
+  #56 Dernier spécimen connu                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782487600485]
+  #57 Ligne de feu                               → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9781408763131]
+  #58 Chronique d'un royaume perdu               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782246846949]
+  #59 Ici, maintenant                            → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782253256410]
+  #60 Grand Prince                               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080511256]
+  #61 L'Art du ricochet                          → Documentaire / Jeunesse / Arts / Musique / Humour  [ISBN retrouvé : 9782709676267]
+  #62 Protocoles                                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080436542]
+  #63 Les Enfants gâtés de Butare                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782709676151]
+  #64 Hanoi Stories                              → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782226510174]
+  #65 Kolkhoze                                   → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782818061985]
+  #66 Le Secret des Secrets                      → Roman jeunesse / Jeunesse / Nature / Animaux / Policier / Mystère  [ISBN retrouvé : 9782709668385]
+  #67 L'Adolescence du perroquet                 → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782226513045]
+  #68 L'Heure violette                           → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782413089407]
+  #69 Le Livre des souterrains                   → Roman jeunesse / Jeunesse / Policier / Mystère / Vie quotidienne  [ISBN retrouvé : 9782017240310]
+  #70 JE                                         → Roman jeunesse / Jeunesse / Humour / Vie quotidienne  [ISBN retrouvé : 9782073152985]
+  #71 Clément                                    → Roman / Tout public / À préciser
+  #72 L'Inconnue du quai de Javel                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080490896]
+  #73 Notre-Dame-des-Anges                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782016173299]
+  #74 Une histoire d'amours                      → Roman jeunesse / Jeunesse / Amour / Romance / Historique  [ISBN retrouvé : 9782264088055]
+  #75 Heures sauvages                            → Roman jeunesse / Jeunesse / Historique / Vie quotidienne  [ISBN retrouvé : 9782958583606]
+  #76 Disgraceland                               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782752915825]
+  #77 Faire la peau                              → Roman jeunesse / Jeunesse / Arts / Musique  [ISBN retrouvé : 9786131530418]
+  #78 Vorace                                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782889831661]
+  #79 La Guérisseuse de Catane                   → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791022615075]
+  #80 L'adolescence du perroquet                 → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782226513045]
+  #81 JE                                         → Roman jeunesse / Jeunesse / Humour / Vie quotidienne  [ISBN retrouvé : 9782073152985]
+  #82 L'inconnue du quai de Javel                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080490896]
+  #83 Une histoire d'amours                      → Roman jeunesse / Jeunesse / Amour / Romance / Historique  [ISBN retrouvé : 9782264088055]
+  #84 Le Palais                                  → Roman jeunesse / Jeunesse / Policier / Mystère  [ISBN retrouvé : 9791041420414]
+  #85 Le fabuleux piano                          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221286807]
+  #86 La hantise                                 → Documentaire / Jeunesse / Frissons / Fantastique  [ISBN retrouvé : 9782367164137]
+  #87 C'était ça ou mourir                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782246847069]
+  #88 Notre-Dame-des-Anges                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782818066072]
+  #89 Heures sauvages                            → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782487819450]
+  #90 Baignade interdite                         → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782849491768]
+  #91 Ligne de feu                               → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9781408763131]
+  #92 Lázár                                      → À classer / Tout public / À préciser
+  #93 Ce qui nous frôle sous la surface          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782714499707]
+  #94 Eisen                                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9783836594875]
+  #95 L'histoire, la vraie, de Raja le candide ( → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782386980107]
+  #96 Le clan des feuilles mortes                → Roman jeunesse / Jeunesse / Historique  [ISBN retrouvé : 9782351783887]
+  #97 Racontez-moi tout                          → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782080496652]
+  #98 Aladdin et moi                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782283042847]
+  #99 Les noms de Feliza                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782021599527]
+  #100 Oroppa                                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221283684]
+  #101 L'adolescence du perroquet                 → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782226513045]
+  #102 JE                                         → Roman jeunesse / Jeunesse / Humour / Vie quotidienne  [ISBN retrouvé : 9782073152985]
+  #103 L'inconnue du quai de Javel                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080490896]
+  #104 Une histoire d'amours                      → Roman jeunesse / Jeunesse / Amour / Romance / Historique  [ISBN retrouvé : 9782264088055]
+  #105 Le palais                                  → Roman jeunesse / Jeunesse / Policier / Mystère  [ISBN retrouvé : 9791041420414]
+  #106 Mon imam                                   → Roman jeunesse / Jeunesse / Amour / Romance  [ISBN retrouvé : 9782493631039]
+  #107 La hantise                                 → Documentaire / Jeunesse / Frissons / Fantastique  [ISBN retrouvé : 9782367164137]
+  #108 Le fabuleux piano                          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221286807]
+  #109 L'architecte de Notre-Dame                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782330224400]
+  #110 La première phrase du premier livre        → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782260057680]
+  #111 C'était ça ou mourir                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782246847069]
+  #112 Ne cherche pas le chaos                    → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782226471017]
+  #113 Debout dans tes rêves                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782260057970]
+  #114 La solitude des professeurs est infinie    → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782073161925]
+  #115 Rochebrune                                 → Conte / Poésie / Tout public / À préciser
+  #116 De l'autre côté du lac                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782732039954]
+  #117 Le pays des étés                           → Roman jeunesse / Jeunesse / Géographie / Voyage  [ISBN retrouvé : 9782073140920]
+  #118 Darya & Dounya                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782021630909]
+  #119 La part absente                            → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782234098374]
+  #120 Vagabondes                                 → Roman / Tout public / À préciser
+  #121 Oroppa                                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782221283684]
+  #122 Spectres                                   → À classer / Tout public / À préciser
+  #123 Ce qui se joue                             → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782849740804]
+  #124 Sauf la frontière                          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782889076437]
+  #125 La dernière des Wilberforce                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782378805944]
+  #127 Le septième siffleur                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782021624960]
+  #128 Les géantes                                → BD / Jeunesse / Nature / Animaux / Aventure  [ISBN retrouvé : 9782344039403]
+  #129 Ton cadavre exquis                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782818065570]
+  #130 Nourrices                                  → Conte / Poésie / Jeunesse / Nature / Animaux / Fantastique  [ISBN retrouvé : 9782487600461]
+  #131 Racontez-moi tout                          → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782080496652]
+  #132 Aladdin et moi                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782283042847]
+  #133 Ce qui nous frôle sous la surface          → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782714499707]
+  #134 Lázár                                      → À classer / Tout public / À préciser
+  #135 Baignade interdite                         → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782849491768]
+  #136 Les noms de Feliza                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782021599527]
+  #137 Le clan des feuilles mortes                → Roman jeunesse / Jeunesse / Historique  [ISBN retrouvé : 9782351783887]
+  #138 L'histoire, la vraie, de Raja le candide ( → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782386980107]
+  #139 Inventaire de ce qu'il reste après que la  → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9782370555144]
+  #140 La couleur qui vous plaira                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782413095842]
+  #141 Ici, maintenant                            → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782253256410]
+  #142 Dernier spécimen connu                     → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782487600485]
+  #143 À cœur ouvert                              → Roman jeunesse / Jeunesse / Amour / Romance / Vie quotidienne  [ISBN retrouvé : 9782266292207]
+  #144 Allumettes                                 → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782226499790]
+  #145 Les Habitants                              → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782707357205]
+  #146 Des enfants uniques                        → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080490490]
+  #147 Disgraceland                               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782752915825]
+  #148 En attendant Marky Moon                    → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782752915313]
+  #149 Les fils d'Otmar                           → Roman jeunesse / Jeunesse / Aventure / Vie quotidienne  [ISBN retrouvé : 9782330216528]
+  #170 Maman les petits bateaux                   → Conte / Poésie / Jeunesse / Conte / Mythe
+  #172 Le rocher de Roger                         → Roman jeunesse / Jeunesse / Aventure
+  #174 #DRCL midnight children - tome 1           → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032718032]
+  #175 & (And) - tome 1                           → Roman jeunesse / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782075187541]
+  #176 @Ellie #jen'aipasdepetitami - tome 1       → Manga / Adolescent / Amour / Romance / Nature / Animaux  [ISBN retrouvé : 9782505072607]
+  #177 A quoi tu joues, Ayumu ?! - tomes 5 et 6   → Manga / Jeunesse / Aventure  [ISBN retrouvé : 9782373496499]
+  #178 A sign of affection - tome 11              → Manga / Adolescent / Amour / Romance  [ISBN retrouvé : 9782385314286]
+  #179 Assassination classroom - tome 8           → Manga / Adolescent / Aventure  [ISBN retrouvé : 9782505063216]
+  #180 Atrail - tome 4                            → BD / Jeunesse / Aventure  [ISBN retrouvé : 9782818968451]
+  #181 Blue Box - tomes 9 et 10                   → Manga / Adolescent / Sport / Amour / Romance  [ISBN retrouvé : 9782413083535]
+  #182 Coco, l'île magique - tome 1               → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032710333]
+  #183 Creepy Cat - tome 3                        → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782379502026]
+  #184 Dandadan - tome 22                         → Manga / Adolescent / Aventure  [ISBN retrouvé : 9782820354372]
+  #185 Echoes - tome 7                            → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032710210]
+  #186 Isabella Bird : femme exploratrice - tomes → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032701669]
+  #187 Kamisama School - tome 9                   → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032719824]
+  #188 Ken'en - tome 2                            → BD / Jeunesse / Nature / Animaux / Policier / Mystère  [ISBN retrouvé : 9782818945247]
+  #189 Komi cherche ses mots - tomes 10, 15, 16 e → Manga / Adolescent / Amour / Romance / Vie quotidienne  [ISBN retrouvé : 9782811698751]
+  #190 Kuroko's basket - tomes 8 et 9             → Manga / Adolescent / Sport  [ISBN retrouvé : 9782820306791]
+  #191 L'Amour est dans le Thé - tome 11          → BD / Jeunesse / Amour / Romance  [ISBN retrouvé : 9782344071434]
+  #192 L'atelier des sorciers - tomes 5 et 6      → Manga / Adolescent / Fantastique / Géographie / Voyage  [ISBN retrouvé : 9782811652227]
+  #193 Le palais des assassins - tome 6           → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032719756]
+  #194 Les Héros de la Galaxie - tomes 25 et 26   → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791042018559]
+  #195 Magus of the library - tome 7              → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032716328]
+  #196 Mashle - tomes 12 et 16                    → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9791034757459]
+  #197 Moi, quand je me réincarne en Slime - tome → Manga / Adolescent / Nature / Animaux / Géographie / Voyage  [ISBN retrouvé : 9791042014384]
+  #198 My hero academia - tomes 32 et 33          → Manga / Adolescent / Aventure  [ISBN retrouvé : 9791032711446]
+  #199 Nijika actrice de rêve - tomes 1 et 2      → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782723493505]
+  #200 Noragami - tomes 22 et 23                  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782258077034]
+  #201 One-punch man - tomes 26, 27 et 28         → Manga / Adolescent / Aventure  [ISBN retrouvé : 9782380715491]
+  #202 Orange - tomes 1 et 2                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782354310035]
+  #203 Parmi eux - HanaKimi - tomes 3 et 5        → Manga / Adolescent / Amour / Romance  [ISBN retrouvé : 9782759505555]
+  #204 Pink diary - tomes 2, 4 et 6               → Manga / Adolescent / Amour / Romance / Vie quotidienne  [ISBN retrouvé : 9782413010500]
+  #205 Quatre frères pour moi ! - tomes 8, 9 et 1 → Manga / Adolescent / Sport  [ISBN retrouvé : 9782505132783]
+  #206 Ranma 1-2 - tome 12                        → BD / Jeunesse / Vie quotidienne / Géographie / Voyage  [ISBN retrouvé : 9782344033791]
+  #207 Ron Kamonohashi - tomes 9, 10 et 11        → Documentaire / Jeunesse / Sciences  [ISBN retrouvé : 9791033301349]
+  #208 Sakamoto days - tomes 18 et 19             → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782344064887]
+  #209 Shangri-La Frontier - tomes 12 à 18        → BD / Jeunesse / Aventure  [ISBN retrouvé : 9782344068366]
+  #210 Toilet-bound : Hanako-kun - tomes 6 et 7   → Manga / Adolescent / Vie quotidienne / Cuisine / Activités  [ISBN retrouvé : 9782811664251]
+  #211 Poil de carotte                            → Roman jeunesse / Jeunesse / Aventure
+  #212 La Guerre des Clans T1 : Retour à l'état s → Roman jeunesse / Jeunesse / Aventure
+  #213 Les Frontières écarlates T1 : Les Empereur → Roman jeunesse / Jeunesse / Historique  [ISBN retrouvé : 9782362666711]
+  #214 Trône de verre T1                          → À classer / Adolescent / Fantastique
+  #215 Une cour de givre et d'étoiles T1          → Conte / Poésie / Jeunesse / Nature / Animaux / Science-fiction  [ISBN retrouvé : 9782385751449]
+  #217 La Petite fille grise                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782371451292]
+  #219 Chainsaw Man T1                            → Manga / Adolescent / Aventure  [ISBN retrouvé : 9782820337825]
+  #220 Spirou et Fantasio T1 — premiers tomes Fra → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782800100036]
+  #221 Max et les Maximonstres                    → Roman jeunesse / Jeunesse / Aventure
+  #222 La chenille qui fait des trous             → Roman jeunesse / Jeunesse / Aventure
+  #223 Bonne nuit Lune                            → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9789465051055]
+  #224 Tout sur le corps humain                   → Roman jeunesse / Jeunesse / Aventure
+  #225 Atlas des grands explorateurs              → Roman jeunesse / Jeunesse / Aventure
+  #277 Deux petits chats alsaciens : Deux petits  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782322838752]
+  #278 J'ai le droit !                            → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782494230194]
+  #279 Le domaine des roses                       → Roman jeunesse / Jeunesse / Policier / Mystère / Humour  [ISBN retrouvé : 9782849214961]
+  #280 Mon arbre des souvenirs : Un doux voyage p → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9782896676620]
+  #281 Nous sommes la montagne !                  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782494230200]
+  #282 GROGNE DRAGONNE !                          → Première lecture / Jeunesse / Aventure  [ISBN retrouvé : 9782493290946]
+  #283 Les pizzas, les supernovas et moi !        → Documentaire / Jeunesse / Sciences  [ISBN retrouvé : 9782493290922]
+  #284 PATRICK LA FEUILLE FAIT DU CAMPING         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782493290939]
+  #285 Dessins et coloriages trop mignons - dès 3 → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9782508054174]
+  #286 Les engins de chantier - Autocollants Usbo → À classer / Jeunesse / À préciser
+  #287 Voitures, trains et avions - Premiers auto → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9782753023727]
+  #288 Les reptiles - Mes super autocollants - dè → Livre-jeu / Activités / Jeunesse / Aventure / Géographie / Voyage  [ISBN retrouvé : 9782215180418]
+  #289 La jungle - Mon grand livre d'activités -  → À classer / Jeunesse / À préciser
+  #290 J'habille mes amies K-pop - dès 5 ans      → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9781806071487]
+  #291 Le parc animalier - Premiers autocollants  → Livre-jeu / Activités / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9782753023727]
+  #292 Le Cycle de la Liberté                     → Roman jeunesse / Jeunesse / Philo / Société  [ISBN retrouvé : 9782385916268]
+  #293 J'ai finiii !                              → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782380581508]
+  #294 À la mode des princesses                   → Documentaire / Jeunesse / Sciences  [ISBN retrouvé : 9782075217996]
+  #295 L'Odyssée : les aventures d'Ulysse         → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782355048265]
+  #296 Billie la petite banshee                   → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782211346689]
+  #297 Brioche et Tartine (T. 4). Pâté, présent,  → Roman jeunesse / Jeunesse / Science-fiction  [ISBN retrouvé : 9782889860739]
+  #298 Le tigre rouge                             → Roman jeunesse / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782330217723]
+  #299 Gomi et ses ami·es                         → Roman jeunesse / Jeunesse / Cuisine / Activités  [ISBN retrouvé : 9791040808077]
+  #300 Dix petites souris s'en vont à la plage    → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782889860722]
+  #301 Loupiotes                                  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782361938314]
+  #302 Mon tout petit cauchemar                   → Roman jeunesse / Jeunesse / Frissons  [ISBN retrouvé : 9782378625320]
+  #303 Un pont sur la Seine                       → Roman jeunesse / Jeunesse / Aventure
+  #304 Suissexe                                   → Roman jeunesse / Jeunesse / Aventure
+  #305 La Bossue                                  → Roman jeunesse / Jeunesse / Aventure
+  #306 Ce qui luit dans les ténèbres : Souvenirs  → Roman jeunesse / Jeunesse / Aventure
+  #307 Détruire tout                              → Roman jeunesse / Jeunesse / Aventure
+  #308 Les hommes à leurs heures perdues          → Conte / Poésie / Jeunesse / Historique / Philo / Société
+  #309 Les Irresponsables : Qui a porté Hitler au → Roman jeunesse / Jeunesse / Nature / Animaux / Philo / Société
+  #310 Des amis de longue date                    → Roman jeunesse / Jeunesse / Aventure
+  #311 Qui tombe des étoiles                      → Roman jeunesse / Jeunesse / Aventure
+  #312 On m'a jeté l'oeil                         → Roman jeunesse / Jeunesse / Aventure
+  #313 Les Projectiles                            → Roman jeunesse / Jeunesse / Aventure
+  #314 Doppelgänger                               → Roman jeunesse / Jeunesse / Aventure
+  #315 Emmenez-moi                                → Conte / Poésie / Jeunesse / Nature / Animaux
+  #316 L'adieu au visage                          → Roman jeunesse / Jeunesse / Frissons / Historique
+  #317 Un clown dans un champ de maïs             → Roman jeunesse / Jeunesse / Frissons
+  #318 Pas les mères                              → Roman jeunesse / Jeunesse / Aventure
+  #319 Barry Lyndon                               → Roman jeunesse / Jeunesse / Aventure
+  #320 Le tatouage et autres récits               → Roman jeunesse / Jeunesse / Aventure
+  #321 Un vendredi dingue dingue dingue           → Roman jeunesse / Jeunesse / Aventure
+  #322 Increvable                                 → Roman jeunesse / Jeunesse / Aventure
+  #323 La Guerre des Rose                         → Roman jeunesse / Jeunesse / Historique
+  #324 Trop de mains dans le sac                  → Roman jeunesse / Jeunesse / Aventure
+  #325 Diva                                       → Roman jeunesse / Jeunesse / Aventure
+  #326 Dent de dinosaure                          → Roman jeunesse / Jeunesse / Nature / Animaux / Aventure
+  #327 Jurassic Park                              → Roman jeunesse / Jeunesse / Arts / Musique / Science-fiction
+  #328 I know what you did last summer            → Roman ado / YA / Adolescent / Aventure
+  #330 Dracula                                    → Roman jeunesse / Jeunesse / Aventure
+  #331 Nous sommes les 4 Fantastiques             → Roman jeunesse / Jeunesse / Aventure
+  #332 Les Schtroumpfs, le film : Le Schtroumpf S → Roman jeunesse / Jeunesse / Aventure
+  #333 Renard et Lapine : Les couleurs de renard  → Roman jeunesse / Jeunesse / Aventure
+  #334 Que la bête meure                          → Roman jeunesse / Jeunesse / Aventure
+  #335 Apportez-moi la tête de John Huston        → Roman jeunesse / Jeunesse / Arts / Musique
+  #336 The african queen                          → Roman jeunesse / Jeunesse / Aventure
+  #337 L'odyssée de l'African Queen               → Roman jeunesse / Jeunesse / Aventure
+  #338 Lettres de mon moulin                      → Conte / Poésie / Jeunesse / Conte / Mythe
+  #339 Quatre lettres de mon moulin               → Roman jeunesse / Jeunesse / Amour / Romance
+  #340 Le répondeur                               → Roman jeunesse / Jeunesse / Arts / Musique
+  #341 Harold et les dragons Tome 1 : Comment dre → Conte / Poésie / Jeunesse / Fantastique
+  #342 Si ça saigne                               → Conte / Poésie / Jeunesse / Policier / Mystère / Arts / Musique
+  #343 Le dîner                                   → Roman jeunesse / Jeunesse / Aventure
+  #344 Odyssée                                    → Roman jeunesse / Jeunesse / Aventure
+  #345 Métaphysique des tubes                     → Roman jeunesse / Jeunesse / Aventure
+  #346 Amélie et la métaphysique des tubes : L'al → Roman jeunesse / Jeunesse / Aventure
+  #347 Les amis                                   → Roman jeunesse / Jeunesse / Aventure
+  #348 Le chemin du serpent                       → Roman jeunesse / Jeunesse / Aventure
+  #349 L'abominable homme de Säffle               → Roman jeunesse / Jeunesse / Policier / Mystère
+  #350 Les chevaux de feu                         → Roman jeunesse / Jeunesse / Aventure
+  #351 La soif du mal                             → Roman jeunesse / Jeunesse / Aventure
+  #352 De mauvaise foi                            → Roman jeunesse / Jeunesse / Aventure
+  #353 Toute personne qui tombe a des ailes       → Conte / Poésie / Jeunesse / Conte / Mythe
+  #354 Le dicible et l'indicible                  → Roman jeunesse / Jeunesse / Sciences
+  #355 Trois sentiers vers le lac                 → Roman jeunesse / Jeunesse / Aventure
+  #356 Malina                                     → Roman jeunesse / Jeunesse / Aventure
+  #357 Le temps du coeur : Correspondance         → Roman jeunesse / Jeunesse / Amour / Romance
+  #358 La trentième année                         → Roman jeunesse / Jeunesse / Aventure
+  #359 Lettres à Felician                         → Roman jeunesse / Jeunesse / Aventure
+  #360 La Forteresse noire                        → Roman jeunesse / Jeunesse / Fantastique / Science-fiction
+  #361 L'effacement                               → Roman jeunesse / Jeunesse / Aventure
+  #362 Le Journal de Samuel                       → BD / Jeunesse / Aventure / Humour
+  #363 Allons voir la nuit. Un livre à animer ens → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9782385071004]
+  #364 L'imagier des objets et des matières       → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782361937522]
+  #365 Printemps                                  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782080510655]
+  #366 Raouf                                      → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782490015313]
+  #367 La chasse aux rainettes                    → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791035208479]
+  #368 L'été de Mamie                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782386690273]
+  #369 La Grande Cradolasse. Princesse du Pays de → Roman jeunesse / Jeunesse / Géographie / Voyage  [ISBN retrouvé : 9782211345507]
+  #370 Droméo et Chuliette                        → Roman jeunesse / Jeunesse / Amour / Romance / Vie quotidienne  [ISBN retrouvé : 9782812627422]
+  #371 Une histoire de rien du tout               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791023521887]
+  #372 Oskar et moi. Et tous nos petits endroits  → Roman jeunesse / Jeunesse / Humour  [ISBN retrouvé : 9791035208813]
+  #373 La petite fille au fusil. L'histoire d'une → BD / Jeunesse / Vie quotidienne / Sciences  [ISBN retrouvé : 9782352634836]
+  #374 Les Adelphides                             → Roman jeunesse / Jeunesse / Aventure / Fantastique  [ISBN retrouvé : 9782330200565]
+  #375 L'archipel de béton                        → Roman jeunesse / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9791040807605]
+  #376 Finding Phoebe                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791023520774]
+  #377 Boucle d'Or. En chemin                     → Roman jeunesse / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9782330183912]
+  #378 La cité des lettres                        → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782355048081]
+  #379 Dia de Muertos                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782361938079]
+  #380 Le tambour                                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782757884935]
+  #381 Histoire de l'information                  → Documentaire / Jeunesse / Sciences / Géographie / Voyage  [ISBN retrouvé : 9791035209131]
+  #382 Une île est née                            → Documentaire / Jeunesse / Sciences  [ISBN retrouvé : 9782378013264]
+  #383 Tout le monde se parle ! Petite encyclopéd → Documentaire / Jeunesse / Géographie / Voyage / Sciences  [ISBN retrouvé : 9782355047985]
+  #384 L'univers de Pi. Le nombre mystérieux qui  → Documentaire / Jeunesse / Géographie / Voyage / Sciences  [ISBN retrouvé : 9782889770335]
+  #385 Voir et savoir. Dans l'intimité du monde v → Documentaire / Jeunesse / Géographie / Voyage / Sciences  [ISBN retrouvé : 9782361936884]
+  #386 Coricoco !                                 → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782378625313]
+  #387 Rien du tout !                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791023521887]
+  #388 Opération Escargot                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782362901690]
+  #389 Les apPAPArences                           → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782807702110]
+  #390 Je choisis                                 → BD / Jeunesse / Vie quotidienne / Géographie / Voyage  [ISBN retrouvé : 9791041103331]
+  #391 Toto                                       → Conte / Poésie / Jeunesse / Nature / Animaux / Conte / Mythe  [ISBN retrouvé : 9782075211369]
+  #392 Et si la baleine me croque ?               → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782371651296]
+  #393 Notre lac                                  → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782278131013]
+  #394 Un sari vert et bleu                       → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782075173612]
+  #395 Le prince et le grand chêne                → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782011001030]
+  #396 La Ballade magique de Baumerire            → BD / Jeunesse / Géographie / Voyage / Aventure  [ISBN retrouvé : 9782344065143]
+  #397 Le Goût du Cresson                         → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782355582233]
+  #398 Peur à peur                                → Roman jeunesse / Jeunesse / Frissons  [ISBN retrouvé : 9782372731232]
+  #399 Le cadeau sauvage                          → Documentaire / Jeunesse / Nature / Animaux / Policier / Mystère  [ISBN retrouvé : 9782226491398]
+  #400 Je n'ai pas de frontière                   → Conte / Poésie / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782494230064]
+  #401 Les cils du loup                           → Conte / Poésie / Jeunesse / Conte / Mythe  [ISBN retrouvé : 9791095456544]
+  #402 Omar tisserand d'art                       → Roman jeunesse / Jeunesse / Arts / Musique  [ISBN retrouvé : 9782352841999]
+  #403 Ombreline                                  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782408054199]
+  #404 Quelque chose sur le cœur                  → Roman jeunesse / Jeunesse / Amour / Romance  [ISBN retrouvé : 9782748538397]
+  #405 Wesh la fée !                              → Roman jeunesse / Jeunesse / Fantastique / Humour  [ISBN retrouvé : 9791036364877]
+  #406 Envers et contre ma sœur                   → Album / Jeunesse / Vie quotidienne  [ISBN retrouvé : 9782278131969]
+  #407 Chercheurs d'os                            → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782020484916]
+  #408 Le maillot des Hercules                    → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791035208363]
+  #409 L'évadé de Belle-Ile                       → Documentaire / Jeunesse / Sciences  [ISBN retrouvé : 9782372731621]
+  #410 Tomber les murs                            → Roman jeunesse / Jeunesse / Vie quotidienne / Sciences  [ISBN retrouvé : 9782266346023]
+  #411 Comment rester invisible                   → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9791023521207]
+  #412 1096 jours                                 → Conte / Poésie / Adolescent / Vie quotidienne  [ISBN retrouvé : 9782748538915]
+  #413 Où que tu sois                             → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782897771201]
+  #414 La mélancolie des sauterelles              → Album / Jeunesse / Géographie / Voyage  [ISBN retrouvé : 9782278128648]
+  #415 Vivre sans attendre                        → Roman jeunesse / Jeunesse / Frissons  [ISBN retrouvé : 9782700282597]
+  #416 Une trace dans la nuit                     → Roman ado / YA / Adolescent / Historique  [ISBN retrouvé : 9782362667329]
+  #417 La vie en rose de Wil                      → Roman jeunesse / Jeunesse / Amour / Romance / Vie quotidienne
+  #418 Pénélope, la femme aux mille ruses         → Conte / Poésie / Jeunesse / Conte / Mythe
+  #419 La courbe de tes yeux                      → Roman jeunesse / Adolescent / Aventure
+  #420 Alecto : l'oeuf de l'immortel              → Conte / Poésie / Jeunesse / Aventure / Fantastique
+  #421 Le paradis, c'est les autres               → Roman jeunesse / Jeunesse / Aventure
+  #422 Le mendiant et l'antilope                  → Roman jeunesse / Jeunesse / Aventure
+  #423 L'orage                                    → Roman jeunesse / Jeunesse / Aventure
+  #424 Vibraton                                   → Roman jeunesse / Jeunesse / Policier / Mystère / Sciences
+  #425 Le voisin                                  → Roman jeunesse / Jeunesse / Aventure
+  #426 C'est l'histoire...                        → Roman jeunesse / Jeunesse / Aventure
+  #427 Thoulathiyat ; haïkus arabes               → Conte / Poésie / Jeunesse / Conte / Mythe
+  #428 Dodo !                                     → Roman jeunesse / Jeunesse / Aventure
+  #429 Polly                                      → Roman jeunesse / Jeunesse / Aventure
+  #430 Le grand vide                              → Roman jeunesse / Jeunesse / Aventure
+  #431 Miettes (humour décalé)                    → Roman jeunesse / Jeunesse / Humour
+  #432 Les hirondelles se sont envolées avant nou → Roman jeunesse / Jeunesse / Aventure
+  #433 J'ai ferme mes maisons                     → Roman jeunesse / Jeunesse / Aventure
+  #434 Annie au milieu                            → Roman jeunesse / Jeunesse / Aventure
+  #435 Les sept chamouraïs                        → Roman jeunesse / Jeunesse / Conte / Mythe
+  #436 Un ouragan dans la barbe                   → Roman jeunesse / Jeunesse / Aventure
+  #437 à propos des lémuriens : petit traité d'hi → Roman jeunesse / Jeunesse / Sciences
+  #438 Les aventures du jeune Lupin Tome 1 : à la → Roman jeunesse / Jeunesse / Policier / Mystère / Humour
+  #439 Kô                                         → Roman jeunesse / Jeunesse / Amour / Romance
+  #440 Que fait mon île quand vient la nuit ?     → Roman jeunesse / Jeunesse / Aventure
+  #441 Le dégât des eaux                          → Roman jeunesse / Jeunesse / Aventure
+  #443 Histoire d'une baleine blanche             → Roman jeunesse / Jeunesse / Aventure
+  #444 L'enfant océan                             → Roman jeunesse / Jeunesse / Aventure
+  #445 Le drakkar éternel                         → Conte / Poésie / Adolescent / Historique / Nature / Animaux
+  #446 Le cri du homard                           → BD / Jeunesse / Nature / Animaux
+  #447 La vie sous la mer                         → Roman jeunesse / Jeunesse / Nature / Animaux / Géographie / Voyage
+  #448 Moby Dick                                  → Roman jeunesse / Jeunesse / Arts / Musique
+  #449 Quitter la baie                            → Roman jeunesse / Jeunesse / Aventure
+  #450 Paul dans la tempête                       → Roman jeunesse / Jeunesse / Aventure / Nature / Animaux
+  #451 Bus 83                                     → Conte / Poésie / Jeunesse / Conte / Mythe
+  #453 La belle équipée                           → Roman jeunesse / Jeunesse / Aventure
+  #454 Les roches rouges                          → Roman jeunesse / Jeunesse / Amour / Romance
+  #455 L'incroyable histoire du homard qui sauva  → Roman jeunesse / Jeunesse / Aventure
+  #456 Le petit secret                            → Roman jeunesse / Jeunesse / Aventure
+  #457 Perdu en mer                               → Roman jeunesse / Jeunesse / Nature / Animaux
+  #458 Nuit                                       → Roman jeunesse / Jeunesse / Aventure
+  #459 Le navire des enfants                      → Roman jeunesse / Jeunesse / Aventure
+  #460 Saison des roses                           → Roman jeunesse / Jeunesse / Aventure
+  #461 La ligue des super féministes              → Documentaire / Jeunesse / Sciences
+  #462 Sans foi ni loi                            → Roman jeunesse / Adolescent / Amour / Romance / Vie quotidienne
+  #463 Histoire(s) de femmes ; 150 ans de lutte p → Conte / Poésie / Jeunesse / Philo / Société / Humour
+  #464 Au nom de Catherine                        → Roman jeunesse / Jeunesse / Aventure
+  #465 Combien de pas jusqu'à la lune ?           → Roman jeunesse / Jeunesse / Aventure
+  #466 Femmes peintres ; elles ont marqué l'histo → Documentaire / Jeunesse / Arts / Musique / Philo / Société
+  #467 L'égalité filles-garçons pas bête          → Documentaire / Jeunesse / Vie quotidienne / Nature / Animaux
+  #468 Le feuilleton d'Artemis ; la mythologie gr → Conte / Poésie / Jeunesse / Amour / Romance / Conte / Mythe
+  #469 Les inventrices et leurs inventions        → Documentaire / Jeunesse / Sciences
+  #470 Les mots pour combattre le sexisme         → Documentaire / Jeunesse / Sciences
+  #471 Les reines de France ; parce que l'histoir → BD / Jeunesse / Sciences
+  #472 Liberty Bessie Tome 1 : un pilote de l'Ala → BD / Jeunesse / Aventure / Historique
+  #473 Non c'est non ! contre le harcèlement sexu → Roman jeunesse / Jeunesse / Vie quotidienne / Sciences
+  #474 Rosa Bonheur, l'audacieuse                 → Roman jeunesse / Jeunesse / Aventure
+  #475 Sophie Germain, la femme cachée des mathém → Documentaire / Jeunesse / Sciences
+  #476 Sam et le Martotal                         → Roman jeunesse / Jeunesse / Aventure
+  #477 Retour à Tomioka                           → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782822234214]
+  #478 Foudroyants - Tome 1 : L'armée de Neptune  → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782487663138]
+  #479 Super A - Tome 1 : Les Pouvoirs animaux    → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9782226501271]
+  #480 Plantasia                                  → Roman jeunesse / Jeunesse / Nature / Animaux  [ISBN retrouvé : 9791040809203]
+  #481 Mi-mouche - Tome 1                         → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782808504348]
+  #482 Les enfants de Microscopia - Tome 1        → BD / Jeunesse / Aventure / Humour  [ISBN retrouvé : 9782205214826]
+  #483 Luminous                                   → Roman jeunesse / Jeunesse / Aventure  [ISBN retrouvé : 9782357960619]
+
+✓ Terminé : 125 via ISBN, 249 via recherche titre+auteur, 5 via mots-clés, 2 via la source. Restent indéterminées : celles marquées « À classer ».

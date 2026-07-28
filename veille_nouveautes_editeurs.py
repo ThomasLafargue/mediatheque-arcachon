@@ -193,6 +193,20 @@ def enregistrer_suggestions(absents, source_label):
             conn.execute("SELECT titre FROM suggestion_acquisition").fetchall() if l[0]
         }
 
+        # Outillage de qualification IMMÉDIATE (demande de Thomas,
+        # 2026-07-28) : chaque suggestion doit entrer en base déjà
+        # complète — catégorie, public, genre, ISBN — pour ne plus jamais
+        # dépendre d'un rattrapage. Le coût est faible ici : une veille
+        # n'ajoute que quelques dizaines de titres par semaine.
+        try:
+            from moteur_recherche import chercher_isbn as _chercher_isbn
+        except Exception:
+            _chercher_isbn = None
+        try:
+            from retrouver_ean_manquants import chercher_ean as _chercher_ean
+        except Exception:
+            _chercher_ean = None
+
         ajoutes = 0
         ignores_doublon = 0
         for n in absents:
@@ -200,6 +214,34 @@ def enregistrer_suggestions(absents, source_label):
             if norm in deja_suggeres:
                 ignores_doublon += 1
                 continue
+
+            # Qualification à la source : si catégorie ou genre manquent,
+            # on interroge le moteur complet MAINTENANT (ISBN direct, ou
+            # fiche retrouvée par titre) plutôt que d'insérer un trou.
+            if not (n.get("categorie") and n.get("genre")) and _chercher_isbn:
+                import time as _t
+                isbn_q = (str(n.get("isbn") or "").replace("-", "").strip()
+                          or None)
+                if not isbn_q and _chercher_ean and n.get("titre"):
+                    try:
+                        isbn_q, _, _ = _chercher_ean(
+                            n["titre"], (n.get("auteur") or "").split(",")[0])
+                        if isbn_q:
+                            n["isbn"] = isbn_q
+                    except Exception:
+                        isbn_q = None
+                if isbn_q:
+                    try:
+                        res = _chercher_isbn(isbn_q)
+                        if res and res.get("statut") in ("trouvé", "trouve"):
+                            n["categorie"] = (n.get("categorie")
+                                              or res.get("type"))
+                            n["public_vise"] = (n.get("public_vise")
+                                                or res.get("public"))
+                            n["genre"] = n.get("genre") or res.get("genre")
+                    except Exception:
+                        pass
+                _t.sleep(0.5)
             # Motif fourni par l'appelant (ex. veille des prix littéraires :
             # "Prix Sorcières 2026 — catégorie ...") sinon motif par défaut
             # pour une nouveauté éditeur.
@@ -224,7 +266,8 @@ def enregistrer_suggestions(absents, source_label):
                  or ("Jeunesse" if any(mot in source_label.lower()
                                        for mot in ("jeunesse", "ricochet"))
                      else "Tout public"),
-                 n.get("genre") or "À préciser"),
+                 (__import__("proposer_fusion_genres").proposer(n["genre"])[0]
+                  if n.get("genre") else "À préciser")),
             )
             deja_suggeres.add(norm)
             ajoutes += 1
