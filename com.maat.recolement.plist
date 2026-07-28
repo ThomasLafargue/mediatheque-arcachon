@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- Récolement hebdomadaire : verse les scans de recolement_scans.txt
+         et régénère Recolement_etat.xlsx. Lundi 7h30, avant la veille (8h).
+         Sans nouveau scan, il ne fait que rafraîchir le rapport contre le
+         stock du dernier import : inoffensif et rapide. -->
+    <key>Label</key>
+    <string>com.maat.recolement</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/python3</string>
+        <string>comparer_recolement.py</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>/Users/thomaslafargue/Desktop/inventaire_isbn</string>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key><integer>1</integer>
+        <key>Hour</key><integer>7</integer>
+        <key>Minute</key><integer>30</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/journal_recolement.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/journal_recolement.log</string>
+</dict>
+</plist>

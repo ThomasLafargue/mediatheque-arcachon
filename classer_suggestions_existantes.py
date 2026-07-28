@@ -82,12 +82,14 @@ def deduire_depuis_source(source):
     return None
 
 
-# Étage 4, le filet : demandé par Thomas le 2026-07-27 — TOUTES les
-# suggestions doivent avoir un public, le panneau de tri ne doit plus
-# afficher de « — ». « Tout public » est l'aveu honnête qu'on ne sait pas
-# trancher : mieux vaut ça qu'un « Adulte » deviné à tort, et la suggestion
-# reste visible dans tous les filtres.
+# Étage 4, le filet : demandé par Thomas les 2026-07-27 et 28 — TOUTES les
+# suggestions doivent avoir un public, une catégorie ET un genre ; le
+# panneau de tri ne doit plus afficher de « — ». Les valeurs par défaut
+# sont des aveux honnêtes qu'on ne sait pas trancher : mieux vaut ça qu'une
+# valeur devinée à tort, et la suggestion reste visible dans les filtres.
 PUBLIC_PAR_DEFAUT = "Tout public"
+CATEGORIE_PAR_DEFAUT = "Livre"        # la veille ne suggère que des livres
+GENRE_PAR_DEFAUT = "À préciser"       # à affiner par le bibliothécaire
 
 
 def main():
@@ -115,7 +117,8 @@ def main():
         lignes = conn.execute(
             "SELECT id, titre, isbn, motif, source FROM suggestion_acquisition "
             "WHERE (categorie IS NULL OR categorie = '') "
-            "   OR (public_vise IS NULL OR public_vise = '')"
+            "   OR (public_vise IS NULL OR public_vise = '') "
+            "   OR (genre IS NULL OR genre = '')"
         ).fetchall()
 
         if not lignes:
@@ -160,11 +163,17 @@ def main():
             if not public:
                 public = PUBLIC_PAR_DEFAUT
                 par_defaut += 1
+            if not categorie:
+                categorie = CATEGORIE_PAR_DEFAUT
+            if not genre:
+                genre = GENRE_PAR_DEFAUT
 
             # normalisation systématique (les sources web renvoient parfois
-            # « Jeune », « Ado (12+) »...)
+            # « Jeune », « Ado (12+) », « Romance » seul...)
             from public_vise import normaliser as _norm
+            from proposer_fusion_genres import proposer as _canon
             public = _norm(public)
+            genre = _canon(genre)[0] if genre != GENRE_PAR_DEFAUT else genre
 
             conn.execute(
                 "UPDATE suggestion_acquisition SET "

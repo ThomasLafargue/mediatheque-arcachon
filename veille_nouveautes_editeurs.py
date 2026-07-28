@@ -215,16 +215,16 @@ def enregistrer_suggestions(absents, source_label):
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (n["titre"], DEMANDEUR_VEILLE, n.get("auteur"), n.get("editeur"),
                  n.get("isbn"), motif, source_label,
-                 n.get("categorie"),
-                 # même règle que le catalogue : 4 valeurs canoniques
-                 # (public_vise.py), et JAMAIS de public vide (demande de
-                 # Thomas, 2026-07-27) : à défaut, la source décide
-                 # (veille jeunesse -> Jeunesse), sinon « Tout public »
+                 # catégorie, public et genre JAMAIS vides (demande de
+                 # Thomas, 2026-07-27/28) : le panneau de tri et le chat
+                 # doivent toujours pouvoir filtrer. Les défauts sont des
+                 # aveux (« Livre », « À préciser »), pas des inventions.
+                 n.get("categorie") or "Livre",
                  normaliser_public(n.get("public_vise"))
                  or ("Jeunesse" if any(mot in source_label.lower()
                                        for mot in ("jeunesse", "ricochet"))
                      else "Tout public"),
-                 n.get("genre")),
+                 n.get("genre") or "À préciser"),
             )
             deja_suggeres.add(norm)
             ajoutes += 1
