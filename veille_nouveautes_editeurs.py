@@ -219,7 +219,7 @@ def enregistrer_suggestions(absents, source_label):
                  # Thomas, 2026-07-27/28) : le panneau de tri et le chat
                  # doivent toujours pouvoir filtrer. Les défauts sont des
                  # aveux (« Livre », « À préciser »), pas des inventions.
-                 n.get("categorie") or "Livre",
+                 n.get("categorie") or "À classer",
                  normaliser_public(n.get("public_vise"))
                  or ("Jeunesse" if any(mot in source_label.lower()
                                        for mot in ("jeunesse", "ricochet"))

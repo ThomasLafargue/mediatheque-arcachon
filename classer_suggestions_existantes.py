@@ -45,14 +45,23 @@ def deduire_depuis_texte(titre, motif):
     texte = f"{titre or ''} {motif or ''}".lower()
     categorie = public = genre = None
 
-    if any(m in texte for m in ("manga", "shonen", "shojo", "seinen")):
+    if any(m in texte for m in ("manga", "shonen", "shôlen", "shojo", "shôjo",
+                                "seinen", "webtoon")):
         categorie = "Manga"
-    elif any(m in texte for m in ("bd", "bande dessinée", "comics", "roman graphique")):
+    elif any(m in texte for m in ("bd", "bande dessinée", "bandes dessinées",
+                                  "comics", "roman graphique")):
         categorie = "BD"
-    elif "album" in texte:
+    elif any(m in texte for m in ("album", "tout-carton", "imagier",
+                                  "livre illustré")):
         categorie = "Album"
-    elif any(m in texte for m in ("documentaire", "essai", "encyclopéd")):
+    elif any(m in texte for m in ("documentaire", "essai", "encyclopéd",
+                                  "atlas", "guide")):
         categorie = "Documentaire"
+    elif any(m in texte for m in ("conte", "comptine", "poésie", "poèmes")):
+        categorie = "Conte / Poésie"
+    elif any(m in texte for m in ("première lecture", "premières lectures",
+                                  "lecteur débutant")):
+        categorie = "Première lecture"
     elif "roman" in texte:
         categorie = "Roman"
 
@@ -88,7 +97,10 @@ def deduire_depuis_source(source):
 # sont des aveux honnêtes qu'on ne sait pas trancher : mieux vaut ça qu'une
 # valeur devinée à tort, et la suggestion reste visible dans les filtres.
 PUBLIC_PAR_DEFAUT = "Tout public"
-CATEGORIE_PAR_DEFAUT = "Livre"        # la veille ne suggère que des livres
+# « Livre » avait été choisi le 2026-07-28 et aussitôt retoqué par Thomas :
+# tout est un livre, ça n'aide personne. « À classer » dit ce que c'est —
+# une catégorie à trancher par un humain — sans polluer Roman/BD/Manga.
+CATEGORIE_PAR_DEFAUT = "À classer"
 GENRE_PAR_DEFAUT = "À préciser"       # à affiner par le bibliothécaire
 
 
@@ -114,6 +126,13 @@ def main():
             except Exception:
                 pass
 
+        # Rattrapage du faux pas « Livre » (2026-07-28) : on remet ces
+        # catégories à zéro pour que la vraie détermination (ISBN, puis
+        # mots-clés) soit retentée. Sans effet dès la seconde exécution.
+        conn.execute("UPDATE suggestion_acquisition SET categorie = NULL "
+                     "WHERE categorie IN ('Livre', 'À classer')")
+        conn.commit()
+
         lignes = conn.execute(
             "SELECT id, titre, isbn, motif, source FROM suggestion_acquisition "
             "WHERE (categorie IS NULL OR categorie = '') "
@@ -134,10 +153,18 @@ def main():
         except Exception:
             m = None
 
-        classees_isbn = classees_texte = classees_source = par_defaut = 0
+        try:
+            from retrouver_ean_manquants import chercher_ean
+        except Exception:
+            chercher_ean = None
+
+        classees_isbn = classees_titre = classees_texte = 0
+        classees_source = par_defaut = 0
         for sid, titre, isbn, motif, source in lignes:
             categorie = public = genre = None
+            isbn_trouve = None
 
+            # Étage 1 : l'ISBN mène directement à la fiche
             if isbn and m:
                 try:
                     res = m.placedeslibraires_lookup(str(isbn).replace("-", "").strip())
@@ -151,6 +178,27 @@ def main():
                         classees_isbn += 1
                 time.sleep(0.4)
 
+            # Étage 2 (2026-07-28, exigence de Thomas : « c'est facile de
+            # savoir ce que c'est ») : sans ISBN — ou fiche muette — on
+            # RETROUVE la fiche par titre + auteur, comme pour les EAN
+            # manquants. La fiche donne catégorie/public/genre, et on
+            # garde l'ISBN au passage : la suggestion en sort complète.
+            if not categorie and titre and m and chercher_ean:
+                try:
+                    isbn_trouve, _, _ = chercher_ean(titre, None)
+                    if isbn_trouve:
+                        res = m.placedeslibraires_lookup(isbn_trouve)
+                        if res:
+                            categorie = categorie or res.get("type") or None
+                            public = public or res.get("public") or None
+                            genre = genre or res.get("genre") or None
+                            if categorie:
+                                classees_titre += 1
+                except Exception:
+                    pass
+                time.sleep(0.4)
+
+            # Étage 3 : mots-clés du titre et du motif
             if not (categorie or public):
                 categorie, public, genre = deduire_depuis_texte(titre, motif)
                 if categorie or public:
@@ -179,17 +227,21 @@ def main():
                 "UPDATE suggestion_acquisition SET "
                 "  categorie = COALESCE(NULLIF(categorie,''), ?), "
                 "  public_vise = COALESCE(NULLIF(public_vise,''), ?), "
-                "  genre = COALESCE(NULLIF(genre,''), ?) "
+                "  genre = COALESCE(NULLIF(genre,''), ?), "
+                "  isbn = COALESCE(NULLIF(isbn,''), ?) "
                 "WHERE id = ?",
-                (categorie, public, genre, sid),
+                (categorie, public, genre, isbn_trouve, sid),
             )
             print(f"  #{sid} {str(titre)[:42]:42} → "
-                  f"{categorie or '—'} / {public or '—'} / {genre or '—'}")
+                  f"{categorie or '—'} / {public or '—'} / {genre or '—'}"
+                  + (f"  [ISBN retrouvé : {isbn_trouve}]" if isbn_trouve else ""))
 
         conn.commit()
-        print(f"\n✓ Terminé : {classees_isbn} classée(s) via ISBN, "
+        print(f"\n✓ Terminé : {classees_isbn} via ISBN, "
+              f"{classees_titre} via recherche titre+auteur, "
               f"{classees_texte} via mots-clés, {classees_source} via la "
-              f"source, {par_defaut} en « {PUBLIC_PAR_DEFAUT} » (indéterminé).")
+              f"source. Restent indéterminées : celles marquées "
+              f"« {CATEGORIE_PAR_DEFAUT} ».")
     finally:
         conn.close()
 
