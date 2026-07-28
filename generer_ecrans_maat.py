@@ -51,6 +51,8 @@ DOSSIER = os.path.dirname(os.path.abspath(__file__))
 DOSSIER_ECRANS = os.path.join(DOSSIER, "ecrans maat")
 FICHIER_MOSAIQUE = os.path.join(DOSSIER_ECRANS, "mediatheque-cobas-mosaique.html")
 FICHIER_DIAPORAMA = os.path.join(DOSSIER_ECRANS, "mediatheque-diaporama-jeunesse.html")
+# Visuels d'information de la ville, intercalés dans le diaporama jeunesse
+DOSSIER_DIAPOS_VILLE = os.path.join(DOSSIER, "diapos_ville")
 
 
 def _charger_dotenv():
@@ -481,10 +483,37 @@ def main():
     )
     _log(f"Diaporama jeunesse régénéré : {len(nouveautes_diaporama)} titres.")
 
+    # ── Diapos d'information de la ville (2026-07-28) ────────────────────
+    # Tout fichier image déposé dans diapos_ville/ est intercalé dans le
+    # diaporama (une diapo ville toutes les 4 diapos catalogue, en rotation)
+    # et téléversé sur OVH à côté du HTML. Pour ajouter un visuel au fil de
+    # l'année : le déposer dans le dossier ; pour le retirer : le supprimer.
+    # Prise en compte au prochain import hebdo (ou en relançant ce script).
+    fichiers_ville = []
+    if os.path.isdir(DOSSIER_DIAPOS_VILLE):
+        fichiers_ville = sorted(
+            f for f in os.listdir(DOSSIER_DIAPOS_VILLE)
+            if f.lower().endswith((".jpg", ".jpeg", ".png"))
+        )
+    # copie à côté du HTML : le diaporama les référence en relatif, l'aperçu
+    # local fonctionne donc comme la version en ligne
+    import shutil
+    for f in fichiers_ville:
+        shutil.copy2(os.path.join(DOSSIER_DIAPOS_VILLE, f),
+                     os.path.join(DOSSIER_ECRANS, f))
+    regenerer_fichier(
+        FICHIER_DIAPORAMA, "DIAPOS_VILLE",
+        [f'  "{nom}",' for nom in fichiers_ville],
+    )
+    _log(f"Diapos ville : {len(fichiers_ville)} visuel(s) "
+         f"({', '.join(fichiers_ville) or 'aucun'}).")
+
     if sans_upload:
         _log("--sans-upload : envoi OVH ignoré.")
         return
-    televerser_sftp([FICHIER_MOSAIQUE, FICHIER_DIAPORAMA])
+    televerser_sftp(
+        [FICHIER_MOSAIQUE, FICHIER_DIAPORAMA]
+        + [os.path.join(DOSSIER_ECRANS, f) for f in fichiers_ville])
     _log("Terminé.")
 
 
