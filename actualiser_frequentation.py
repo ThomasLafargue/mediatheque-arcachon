@@ -78,19 +78,40 @@ def main():
         )
     """)
 
-    # Table journalière
-    for date, total in par_jour.items():
-        cur.execute("""
-            INSERT INTO frequentation (date, nb_entrees) VALUES (?, ?)
-            ON CONFLICT(date) DO UPDATE SET nb_entrees = excluded.nb_entrees
-        """, (date, total))
+    # Écriture PAR PAQUETS (2026-07-28) : ligne à ligne, chaque INSERT
+    # faisait un aller-retour réseau vers Turso -- ~27 000 allers-retours,
+    # 30 à 60 minutes. En groupant 400 lignes par requête, on tombe à
+    # quelques dizaines de requêtes : moins d'une minute.
+    TAILLE_PAQUET = 400
 
-    # Table horaire
-    for (date, heure), total in par_heure.items():
-        cur.execute("""
-            INSERT INTO frequentation_horaire (date, heure, nb_entrees) VALUES (?, ?, ?)
-            ON CONFLICT(date, heure) DO UPDATE SET nb_entrees = excluded.nb_entrees
-        """, (date, heure, total))
+    lignes_jour = list(par_jour.items())
+    for i in range(0, len(lignes_jour), TAILLE_PAQUET):
+        paquet = lignes_jour[i:i + TAILLE_PAQUET]
+        valeurs = ", ".join(["(?, ?)"] * len(paquet))
+        params = [x for ligne in paquet for x in ligne]
+        cur.execute(
+            f"INSERT INTO frequentation (date, nb_entrees) VALUES {valeurs} "
+            "ON CONFLICT(date) DO UPDATE SET nb_entrees = excluded.nb_entrees",
+            params)
+        print(f"  ... jours : {min(i + TAILLE_PAQUET, len(lignes_jour))}"
+              f"/{len(lignes_jour)}", end="\r", flush=True)
+    print()
+
+    lignes_heure = [(d, h, t) for (d, h), t in par_heure.items()]
+    for i in range(0, len(lignes_heure), TAILLE_PAQUET):
+        paquet = lignes_heure[i:i + TAILLE_PAQUET]
+        valeurs = ", ".join(["(?, ?, ?)"] * len(paquet))
+        params = [x for ligne in paquet for x in ligne]
+        cur.execute(
+            f"INSERT INTO frequentation_horaire (date, heure, nb_entrees) "
+            f"VALUES {valeurs} "
+            "ON CONFLICT(date, heure) DO UPDATE SET "
+            "nb_entrees = excluded.nb_entrees",
+            params)
+        print(f"  ... tranches horaires : "
+              f"{min(i + TAILLE_PAQUET, len(lignes_heure))}"
+              f"/{len(lignes_heure)}", end="\r", flush=True)
+    print()
 
     conn.commit()
 
