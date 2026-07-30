@@ -169,7 +169,16 @@ OUTIL_SQL = {
         "'faible' (vérifier en rayon). Les agents saisissent l'isbn_trouve dans "
         "Decalog puis peuvent demander à marquer statut_saisie='saisie'. "
         "Question type : « quels EAN en confiance élevée reste-t-il à saisir ? » "
-        "(WHERE confiance='élevée' AND statut_saisie='à faire'). "
+        "(WHERE confiance='élevée' AND statut_saisie='à faire') ; "
+        "support_a_corriger (code_barres, identifiant, cote_actuelle, titre, "
+        "auteur_realisateur, editeur, action, verification, statut_saisie) -- "
+        "anomalies de SUPPORT trouvées par l'audit DVD du 30/07/2026 et vérifiées "
+        "une à une sur internet : 11 LIVRES (albums, BD, romans dont gros "
+        "caractères) saisis à tort en support DVD dans Decalog + 1 DVD à recoter. "
+        "action = quoi faire dans Decalog ; verification = preuve/source. "
+        "statut_saisie 'à faire'/'saisie' comme ean_retrouve. Question type : "
+        "« quels supports reste-t-il à corriger ? » (WHERE statut_saisie='à "
+        "faire') -- et generer_export_excel pour donner le fichier. "
         "Toujours préférer nb_prets_cet_exemplaire pour des questions sur le fonds "
         "d'Arcachon spécifiquement.\n"
         "⚠️ LIMITE DE 500 LIGNES PAR REQUÊTE — RÈGLE ABSOLUE : le résultat est "
@@ -665,6 +674,64 @@ OUTIL_SUPPRESSION_MISE_EN_AVANT = {
     "name": "supprimer_suggestion_mise_en_avant",
     "description": "Supprime UNE suggestion de mise en avant par son id.",
     "input_schema": {"type": "object", "properties": {"id": {"type": "integer"}}, "required": ["id"]},
+}
+
+
+# ─────────────────────── SAISIES DECALOG (suivi) ──────────────────────────────
+
+TABLES_SAISIE = {  # table de travail -> sa clé primaire
+    "ean_retrouve": "identifiant_actuel",
+    "support_a_corriger": "code_barres",
+}
+
+
+def marquer_statut_saisie(table, identifiant, statut="saisie"):
+    """Marque une ligne d'une TABLE DE TRAVAIL (ean_retrouve ou
+    support_a_corriger) comme « saisie » dans Decalog, ou la remet « à faire ».
+    Strictement limité à ces deux tables : jamais le catalogue."""
+    if table not in TABLES_SAISIE:
+        return json.dumps({"erreur": f"Table non autorisée. Tables possibles : {', '.join(TABLES_SAISIE)}."})
+    if statut not in ("saisie", "à faire"):
+        return json.dumps({"erreur": "Statut non autorisé ('saisie' ou 'à faire')."})
+    jeton_ecriture = st.secrets.get("TURSO_AUTH_TOKEN_ECRITURE", "")
+    if not jeton_ecriture:
+        return json.dumps({"erreur": "TURSO_AUTH_TOKEN_ECRITURE manquant."})
+    cle = TABLES_SAISIE[table]
+    try:
+        conn = db.connect_avec_jeton(db.TURSO_URL, jeton_ecriture) if db.MODE_EN_LIGNE else db.connect(FICHIER_DB)
+        cur = conn.cursor()
+        cur.execute(f"SELECT titre FROM {table} WHERE {cle} = ?", (identifiant,))
+        ligne = cur.fetchone()
+        if not ligne:
+            conn.close()
+            return json.dumps({"erreur": f"Aucune ligne {cle} = {identifiant} dans {table}."})
+        conn.execute(f"UPDATE {table} SET statut_saisie = ? WHERE {cle} = ?", (statut, identifiant))
+        conn.commit(); conn.close()
+        return json.dumps({"statut": "ok", "info": f"« {ligne[0]} » ({identifiant}) → statut_saisie « {statut} » dans {table}."})
+    except Exception as e:
+        return json.dumps({"erreur": f"{type(e).__name__}: {e}"})
+
+
+OUTIL_MARQUER_SAISIE = {
+    "name": "marquer_statut_saisie",
+    "description": (
+        "Marque une ligne d'une table de travail comme SAISIE dans Decalog "
+        "(ou la remet 'à faire'). Deux tables seulement : 'ean_retrouve' "
+        "(clé = identifiant_actuel, le CB:xxxx) et 'support_a_corriger' "
+        "(clé = code_barres). À utiliser quand un agent dit avoir corrigé "
+        "une ligne dans Decalog. Trouve d'abord la clé exacte via "
+        "executer_requete_sql ; ne devine jamais. Plusieurs lignes = un appel "
+        "par clé."
+    ),
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "table": {"type": "string", "enum": ["ean_retrouve", "support_a_corriger"]},
+            "identifiant": {"type": "string", "description": "La clé exacte de la ligne (identifiant_actuel ou code_barres)"},
+            "statut": {"type": "string", "enum": ["saisie", "à faire"], "description": "Défaut : 'saisie'"},
+        },
+        "required": ["table", "identifiant"],
+    },
 }
 
 
@@ -1704,7 +1771,7 @@ def repondre(historique_existant, question, cle_api):
         OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
-        OUTIL_ANALYSE_ACQUISITION,
+        OUTIL_ANALYSE_ACQUISITION, OUTIL_MARQUER_SAISIE,
         # cache_control sur le DERNIER outil de la liste : Anthropic met en
         # cache tout le préfixe jusqu'à ce marqueur (tous les outils +, avec
         # le marqueur système ci-dessous, le prompt système complet). Ajouté
@@ -1800,6 +1867,9 @@ def repondre(historique_existant, question, cle_api):
                     resultat = supprimer_desherbage_effectue(**bloc.input)
                 elif bloc.name == "lancer_analyse_acquisition":
                     resultat = lancer_analyse_acquisition()
+                elif bloc.name == "marquer_statut_saisie":
+                    a_modifie_suggestions = True
+                    resultat = marquer_statut_saisie(**bloc.input)
                 else:
                     resultat = json.dumps({"erreur": "outil inconnu"})
                 resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
@@ -1830,7 +1900,7 @@ def repondre_flux(historique_existant, question, cle_api, resultat_out):
         OUTIL_DESHERBAGE, OUTIL_SUPPRESSION_DESHERBAGE,
         OUTIL_MISE_EN_AVANT, OUTIL_SUPPRESSION_MISE_EN_AVANT,
         OUTIL_DESHERBAGE_EFFECTUE, OUTIL_SUPPRESSION_DESHERBAGE_EFFECTUE,
-        OUTIL_ANALYSE_ACQUISITION,
+        OUTIL_ANALYSE_ACQUISITION, OUTIL_MARQUER_SAISIE,
         {
             "type": "web_search_20250305", "name": "web_search", "max_uses": 10,
             "cache_control": {"type": "ephemeral"},
@@ -1918,6 +1988,9 @@ def repondre_flux(historique_existant, question, cle_api, resultat_out):
                     resultat = supprimer_desherbage_effectue(**bloc.input)
                 elif bloc.name == "lancer_analyse_acquisition":
                     resultat = lancer_analyse_acquisition()
+                elif bloc.name == "marquer_statut_saisie":
+                    a_modifie_suggestions = True
+                    resultat = marquer_statut_saisie(**bloc.input)
                 else:
                     resultat = json.dumps({"erreur": "outil inconnu"})
                 resultats_outils.append({"type": "tool_result", "tool_use_id": bloc.id, "content": resultat})
