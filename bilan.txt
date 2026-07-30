@@ -1,0 +1,14 @@
+Notices : 44324  (dont 32378 livres)
+
+CE QUI RESTE À COMBLER (notre base) :
+      441  BD/Manga sans série
+      583  BD/Manga avec série mais sans tome
+     2135  Livres sans catégorie
+     2350  Livres sans genre
+     6307  Livres sans résumé
+    14309  Livres sans image de couverture
+      989  Sans EAN (identifiant CB:), livres depuis 2000
+        0  Jamais passées par l'enrichissement
+
+CE QUE NOTRE MOTEUR A DÉDUIT ET QUE DECALOG N'A PAS (à recopier dans Decalog) :
+     8016  notices concernées (cf. Corrections_Decalog_*.xlsx)

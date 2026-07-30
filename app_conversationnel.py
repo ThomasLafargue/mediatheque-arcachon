@@ -161,7 +161,15 @@ OUTIL_SQL = {
         "historique des retraits réellement effectués (distinct des suggestions) ; "
         "journal_requetes (id, date_requete, question, sql_executees, nb_recherches_web, "
         "a_genere_export, a_modifie_suggestions, erreur) -- historique de toutes les "
-        "questions posées, utile pour analyser l'usage de l'outil lui-même. "
+        "questions posées, utile pour analyser l'usage de l'outil lui-même ; "
+        "ean_retrouve (identifiant_actuel, cote, titre, auteur, annee, editeur, "
+        "isbn_trouve, titre_trouve, auteur_trouve, confiance, statut_saisie) -- "
+        "EAN/ISBN retrouvés automatiquement (Place des Libraires) pour les notices "
+        "sans EAN dans Decalog. confiance = 'élevée' (saisie directe), 'moyenne', "
+        "'faible' (vérifier en rayon). Les agents saisissent l'isbn_trouve dans "
+        "Decalog puis peuvent demander à marquer statut_saisie='saisie'. "
+        "Question type : « quels EAN en confiance élevée reste-t-il à saisir ? » "
+        "(WHERE confiance='élevée' AND statut_saisie='à faire'). "
         "Toujours préférer nb_prets_cet_exemplaire pour des questions sur le fonds "
         "d'Arcachon spécifiquement.\n"
         "⚠️ LIMITE DE 500 LIGNES PAR REQUÊTE — RÈGLE ABSOLUE : le résultat est "
@@ -1210,13 +1218,25 @@ code-barres obligatoire avant toute décision d'achat."
 Signaler proactivement dans les réponses :
 • Série trouvée en deux orthographes (accent/sans accent) → doublon Decalog
 • Tome présent sans exemplaire (cote/code-barres null) → notice incomplète
-• ISBN commençant par CB: → EAN absent dans Decalog, à corriger
+• ISBN commençant par CB: → EAN absent dans Decalog, à corriger.
+  NE PAS s'arrêter au constat : joindre l'EAN retrouvé automatiquement
+  quand il existe (table ean_retrouve, jointure sur identifiant_actuel),
+  avec son indice de confiance — l'agent n'a plus qu'à saisir.
 • Statut_exemplaire NULL → statut non renseigné dans Decalog
 • champs_a_verifier_decalog NOT NULL → notre moteur (BnF + sites web) a
   déduit une valeur (typiquement serie/tome) que Decalog n'avait pas
   fournie. On ne réécrit jamais les notices Decalog elles-mêmes -- ce champ
   reste donc à corriger manuellement là-bas.
 Ces signalements aident à améliorer la qualité des données à la source.
+
+RÈGLE D'EXCLUSION (2026-07-30) : pour TOUTE question sur les notices
+Decalog à corriger (EAN manquants, statuts vides, notices incomplètes),
+EXCLURE type_document = 'REVUE' : un périodique n'a légitimement ni ISBN
+ni statut, le signaler serait du bruit. Exclure aussi les livres
+antérieurs à 2000 pour les questions d'EAN (fonds local patrimonial,
+antérieur à l'ISBN). Ajouter systématiquement :
+  AND type_document != 'REVUE'
+  [pour l'EAN : AND CAST(SUBSTR(date_publication,1,4) AS INTEGER) >= 2000]
 
 ── "QU'EST-CE QUI EST MAL RENSEIGNÉ DANS DECALOG ?" ────
 Question fréquente et légitime : le bibliothécaire veut la liste précise
