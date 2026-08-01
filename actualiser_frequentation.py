@@ -7,23 +7,50 @@ Alimente deux tables :
   - frequentation_horaire : détail par tranche horaire (date, heure, nb_entrees)
     → permet d'analyser les heures de pointe, les pics de fréquentation, etc.
 
+RÈGLE (Thomas, 2026-08-01) : SEULES les heures d'ouverture au public
+comptent. Juillet-août : lundi-samedi 10h-19h ; reste de l'année :
+mardi-samedi 10h-18h. Tout passage hors fenêtre (équipe le matin,
+ménage, jours fermés — dimanches compris, même événementiels) est
+IGNORÉ au chargement. Le compteur Nedap enregistrait ~3 % de passages
+hors ouverture qui faussaient les statistiques du chat.
+
 Usage :
     python3 actualiser_frequentation.py "Donnees_Comptage.csv"
+    python3 actualiser_frequentation.py "Donnees_Comptage.csv" --recharger-tout
+        → vide d'abord les deux tables (à utiliser quand le CSV couvre tout
+          l'historique, ex. après un changement de règle de filtrage).
 """
 
 import sys
 import os
 import csv
 import argparse
+import datetime
 import db
 from collections import defaultdict
 
 FICHIER_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "inventaire.db")
 
 
+def est_ouvert(date_iso, heure_hm):
+    """Le MAAT est-il ouvert au public à ce moment-là ?
+    date_iso = 'AAAA-MM-JJ', heure_hm = 'HH:MM' (zéro-paddée)."""
+    try:
+        jour_semaine = datetime.date.fromisoformat(date_iso).weekday()  # 0 = lundi
+    except ValueError:
+        return False
+    ete = date_iso[5:7] in ("07", "08")
+    if ete:
+        return jour_semaine <= 5 and "10:00" <= heure_hm < "19:00"
+    return 1 <= jour_semaine <= 5 and "10:00" <= heure_hm < "18:00"
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("fichier_csv")
+    parser.add_argument("--recharger-tout", action="store_true",
+                        help="Vide les deux tables avant chargement "
+                             "(CSV historique complet uniquement)")
     args = parser.parse_args()
 
     with open(args.fichier_csv, encoding="utf-8", errors="replace") as f:
@@ -45,6 +72,7 @@ def main():
     par_jour = defaultdict(int)
     par_heure = defaultdict(int)  # clé : (date, heure_arrondie)
 
+    hors_ouverture = 0
     for r in rows:
         if not r.get(col_entree) or not r.get(col_date):
             continue
@@ -53,16 +81,22 @@ def main():
             if entrees <= 0:
                 continue
             date = r[col_date]
-            par_jour[date] += entrees
 
-            # Heure arrondie à l'heure (ex: "14:25" → "14:00")
             heure_brute = r.get(col_heure, '')
-            if heure_brute and ':' in heure_brute:
-                h = heure_brute.split(':')[0].zfill(2)
-                heure = f"{h}:00"
-                par_heure[(date, heure)] += entrees
+            if not heure_brute or ':' not in heure_brute:
+                continue  # sans heure, impossible de filtrer : on écarte
+            h, m = heure_brute.split(':')[0].zfill(2), heure_brute.split(':')[1][:2].zfill(2)
+
+            # RÈGLE : seules les heures d'ouverture au public comptent.
+            if not est_ouvert(date, f"{h}:{m}"):
+                hors_ouverture += entrees
+                continue
+
+            par_jour[date] += entrees
+            par_heure[(date, f"{h}:00")] += entrees  # arrondi à l'heure
         except (ValueError, KeyError):
             pass
+    print(f"Passages hors ouverture ignorés : {hors_ouverture}")
 
     conn = db.connect(FICHIER_DB)
     cur = conn.cursor()
@@ -77,6 +111,11 @@ def main():
             UNIQUE(date, heure)
         )
     """)
+
+    if args.recharger_tout:
+        print("Rechargement complet : vidage des deux tables...")
+        cur.execute("DELETE FROM frequentation")
+        cur.execute("DELETE FROM frequentation_horaire")
 
     # Écriture PAR PAQUETS (2026-07-28) : ligne à ligne, chaque INSERT
     # faisait un aller-retour réseau vers Turso -- ~27 000 allers-retours,
