@@ -7,12 +7,14 @@ Alimente deux tables :
   - frequentation_horaire : détail par tranche horaire (date, heure, nb_entrees)
     → permet d'analyser les heures de pointe, les pics de fréquentation, etc.
 
-RÈGLE (Thomas, 2026-08-01) : SEULES les heures d'ouverture au public
-comptent. Juillet-août : lundi-samedi 10h-19h ; reste de l'année :
-mardi-samedi 10h-18h. Tout passage hors fenêtre (équipe le matin,
-ménage, jours fermés — dimanches compris, même événementiels) est
-IGNORÉ au chargement. Le compteur Nedap enregistrait ~3 % de passages
-hors ouverture qui faussaient les statistiques du chat.
+DEUX SÉRIES (Thomas, 2026-08-02) :
+  - frequentation / frequentation_horaire : SEULES les heures d'ouverture
+    au public (juillet-août lundi-samedi 10h-19h ; reste de l'année
+    mardi-samedi 10h-18h). C'est la mesure « publique » propre.
+  - frequentation_brute / frequentation_horaire_brute : la JOURNÉE ENTIÈRE
+    sans filtre (tous jours, toutes heures) — comparable aux chiffres que
+    l'équipe suit depuis des années (l'historique a toujours été compté
+    ainsi). L'écart entre les deux est d'environ 8 à 15 %.
 
 Usage :
     python3 actualiser_frequentation.py "Donnees_Comptage.csv"
@@ -72,6 +74,8 @@ def main():
     par_jour = defaultdict(int)
     par_heure = defaultdict(int)  # clé : (date, heure_arrondie)
 
+    par_jour_brut = defaultdict(int)
+    par_heure_brut = defaultdict(int)
     hors_ouverture = 0
     for r in rows:
         if not r.get(col_entree) or not r.get(col_date):
@@ -84,19 +88,22 @@ def main():
 
             heure_brute = r.get(col_heure, '')
             if not heure_brute or ':' not in heure_brute:
-                continue  # sans heure, impossible de filtrer : on écarte
+                continue  # sans heure, impossible de classer : on écarte
             h, m = heure_brute.split(':')[0].zfill(2), heure_brute.split(':')[1][:2].zfill(2)
 
-            # RÈGLE : seules les heures d'ouverture au public comptent.
+            # série BRUTE : tout, toujours
+            par_jour_brut[date] += entrees
+            par_heure_brut[(date, f"{h}:00")] += entrees
+
+            # série OUVERTURE : seules les heures d'ouverture au public
             if not est_ouvert(date, f"{h}:{m}"):
                 hors_ouverture += entrees
                 continue
-
             par_jour[date] += entrees
             par_heure[(date, f"{h}:00")] += entrees  # arrondi à l'heure
         except (ValueError, KeyError):
             pass
-    print(f"Passages hors ouverture ignorés : {hors_ouverture}")
+    print(f"Passages hors ouverture (dans la série brute seulement) : {hors_ouverture}")
 
     conn = db.connect(FICHIER_DB)
     cur = conn.cursor()
@@ -112,10 +119,28 @@ def main():
         )
     """)
 
+    # Tables de la série BRUTE (journée entière), mêmes structures
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS frequentation_brute (
+            date TEXT PRIMARY KEY,
+            nb_entrees INTEGER NOT NULL
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS frequentation_horaire_brute (
+            id      INTEGER PRIMARY KEY AUTOINCREMENT,
+            date    TEXT NOT NULL,
+            heure   TEXT NOT NULL,
+            nb_entrees INTEGER NOT NULL,
+            UNIQUE(date, heure)
+        )
+    """)
+
     if args.recharger_tout:
-        print("Rechargement complet : vidage des deux tables...")
-        cur.execute("DELETE FROM frequentation")
-        cur.execute("DELETE FROM frequentation_horaire")
+        print("Rechargement complet : vidage des quatre tables...")
+        for t in ("frequentation", "frequentation_horaire",
+                  "frequentation_brute", "frequentation_horaire_brute"):
+            cur.execute(f"DELETE FROM {t}")
 
     # Écriture PAR PAQUETS (2026-07-28) : ligne à ligne, chaque INSERT
     # faisait un aller-retour réseau vers Turso -- ~27 000 allers-retours,
@@ -123,34 +148,40 @@ def main():
     # quelques dizaines de requêtes : moins d'une minute.
     TAILLE_PAQUET = 400
 
-    lignes_jour = list(par_jour.items())
-    for i in range(0, len(lignes_jour), TAILLE_PAQUET):
-        paquet = lignes_jour[i:i + TAILLE_PAQUET]
-        valeurs = ", ".join(["(?, ?)"] * len(paquet))
-        params = [x for ligne in paquet for x in ligne]
-        cur.execute(
-            f"INSERT INTO frequentation (date, nb_entrees) VALUES {valeurs} "
-            "ON CONFLICT(date) DO UPDATE SET nb_entrees = excluded.nb_entrees",
-            params)
-        print(f"  ... jours : {min(i + TAILLE_PAQUET, len(lignes_jour))}"
-              f"/{len(lignes_jour)}", end="\r", flush=True)
-    print()
+    def upsert_jours(table, donnees, libelle):
+        lignes_ = list(donnees.items())
+        for i in range(0, len(lignes_), TAILLE_PAQUET):
+            paquet = lignes_[i:i + TAILLE_PAQUET]
+            valeurs = ", ".join(["(?, ?)"] * len(paquet))
+            params = [x for ligne in paquet for x in ligne]
+            cur.execute(
+                f"INSERT INTO {table} (date, nb_entrees) VALUES {valeurs} "
+                "ON CONFLICT(date) DO UPDATE SET nb_entrees = excluded.nb_entrees",
+                params)
+            print(f"  ... {libelle} : {min(i + TAILLE_PAQUET, len(lignes_))}"
+                  f"/{len(lignes_)}", end="\r", flush=True)
+        print()
 
-    lignes_heure = [(d, h, t) for (d, h), t in par_heure.items()]
-    for i in range(0, len(lignes_heure), TAILLE_PAQUET):
-        paquet = lignes_heure[i:i + TAILLE_PAQUET]
-        valeurs = ", ".join(["(?, ?, ?)"] * len(paquet))
-        params = [x for ligne in paquet for x in ligne]
-        cur.execute(
-            f"INSERT INTO frequentation_horaire (date, heure, nb_entrees) "
-            f"VALUES {valeurs} "
-            "ON CONFLICT(date, heure) DO UPDATE SET "
-            "nb_entrees = excluded.nb_entrees",
-            params)
-        print(f"  ... tranches horaires : "
-              f"{min(i + TAILLE_PAQUET, len(lignes_heure))}"
-              f"/{len(lignes_heure)}", end="\r", flush=True)
-    print()
+    def upsert_heures(table, donnees, libelle):
+        lignes_ = [(d, h, t) for (d, h), t in donnees.items()]
+        for i in range(0, len(lignes_), TAILLE_PAQUET):
+            paquet = lignes_[i:i + TAILLE_PAQUET]
+            valeurs = ", ".join(["(?, ?, ?)"] * len(paquet))
+            params = [x for ligne in paquet for x in ligne]
+            cur.execute(
+                f"INSERT INTO {table} (date, heure, nb_entrees) "
+                f"VALUES {valeurs} "
+                "ON CONFLICT(date, heure) DO UPDATE SET "
+                "nb_entrees = excluded.nb_entrees",
+                params)
+            print(f"  ... {libelle} : {min(i + TAILLE_PAQUET, len(lignes_))}"
+                  f"/{len(lignes_)}", end="\r", flush=True)
+        print()
+
+    upsert_jours("frequentation", par_jour, "jours (ouverture)")
+    upsert_heures("frequentation_horaire", par_heure, "tranches (ouverture)")
+    upsert_jours("frequentation_brute", par_jour_brut, "jours (brut)")
+    upsert_heures("frequentation_horaire_brute", par_heure_brut, "tranches (brut)")
 
     conn.commit()
 
@@ -160,9 +191,10 @@ def main():
     total_h = cur.fetchone()[0]
     conn.close()
 
-    print(f"Jours mis à jour cette exécution : {len(par_jour)}")
-    print(f"Total en base : {total_j} jours, du {mini} au {maxi}")
-    print(f"Données horaires : {total_h} jours avec détail par heure")
+    print(f"Jours mis à jour cette exécution : {len(par_jour)} (ouverture), "
+          f"{len(par_jour_brut)} (brut)")
+    print(f"Total en base (ouverture) : {total_j} jours, du {mini} au {maxi}")
+    print(f"Données horaires (ouverture) : {total_h} jours avec détail par heure")
 
 
 if __name__ == "__main__":
