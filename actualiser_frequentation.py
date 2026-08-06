@@ -3,12 +3,12 @@
 Actualisation de la fréquentation depuis un export Nedap/LibNet.
 
 Alimente deux tables :
-  - frequentation         : total journalier (date, nb_entrees)
-  - frequentation_horaire : détail par tranche horaire (date, heure, nb_entrees)
+  - frequentation_ouverture : total journalier (date, nb_entrees)
+  - frequentation_horaire_ouverture : détail par tranche horaire
     → permet d'analyser les heures de pointe, les pics de fréquentation, etc.
 
 DEUX SÉRIES (Thomas, 2026-08-02) :
-  - frequentation / frequentation_horaire : SEULES les heures d'ouverture
+  - frequentation_ouverture / frequentation_horaire_ouverture : les heures d'ouverture
     au public (juillet-août lundi-samedi 10h-19h ; reste de l'année
     mardi-samedi 10h-18h). C'est la mesure « publique » propre.
   - frequentation_brute / frequentation_horaire_brute : la JOURNÉE ENTIÈRE
@@ -110,7 +110,7 @@ def main():
 
     # Créer la table horaire si elle n'existe pas encore
     cur.execute("""
-        CREATE TABLE IF NOT EXISTS frequentation_horaire (
+        CREATE TABLE IF NOT EXISTS frequentation_horaire_ouverture (
             id      INTEGER PRIMARY KEY AUTOINCREMENT,
             date    TEXT NOT NULL,
             heure   TEXT NOT NULL,
@@ -138,7 +138,7 @@ def main():
 
     if args.recharger_tout:
         print("Rechargement complet : vidage des quatre tables...")
-        for t in ("frequentation", "frequentation_horaire",
+        for t in ("frequentation_ouverture", "frequentation_horaire_ouverture",
                   "frequentation_brute", "frequentation_horaire_brute"):
             cur.execute(f"DELETE FROM {t}")
 
@@ -178,16 +178,16 @@ def main():
                   f"/{len(lignes_)}", end="\r", flush=True)
         print()
 
-    upsert_jours("frequentation", par_jour, "jours (ouverture)")
-    upsert_heures("frequentation_horaire", par_heure, "tranches (ouverture)")
+    upsert_jours("frequentation_ouverture", par_jour, "jours (ouverture)")
+    upsert_heures("frequentation_horaire_ouverture", par_heure, "tranches (ouverture)")
     upsert_jours("frequentation_brute", par_jour_brut, "jours (brut)")
     upsert_heures("frequentation_horaire_brute", par_heure_brut, "tranches (brut)")
 
     conn.commit()
 
-    cur.execute("SELECT COUNT(*), MIN(date), MAX(date) FROM frequentation")
+    cur.execute("SELECT COUNT(*), MIN(date), MAX(date) FROM frequentation_ouverture")
     total_j, mini, maxi = cur.fetchone()
-    cur.execute("SELECT COUNT(DISTINCT date) FROM frequentation_horaire")
+    cur.execute("SELECT COUNT(DISTINCT date) FROM frequentation_horaire_ouverture")
     total_h = cur.fetchone()[0]
     conn.close()
 

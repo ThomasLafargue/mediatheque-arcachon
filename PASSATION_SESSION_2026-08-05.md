@@ -209,12 +209,18 @@ règle FJ DIS ne vise que l'animation/jeunesse Disney, resserrer
   `proposer_desherbage.py` écrit (candidats par formules âge/usage par
   rayon, Excel pour examen en rayon + délibération municipale). Premier
   run à faire/valider ; volumes à contrôler avant diffusion équipe.
-- **Statuts .mrc** : « Prêt fonctionnel », « En équipement Arcachon »,
-  « Pilon », « Non prêtable » ABSENTS de l'export du 25/07 — vérifier
-  leur présence dans le .mrc du 05/08 après l'import hebdo.
-- **Import hebdo du 05/08** : CSV comptage + EPPK prêts, .mrc en cours de
-  téléchargement au moment de la passation — `bash import_hebdomadaire.sh`
-  à lancer (écrans + push + reboot Streamlit inclus).
+- **Statuts .mrc — TRANCHÉ le 06/08** : « Prêt fonctionnel »,
+  « En équipement Arcachon », « Pilon », « Non prêtable » absents AUSSI de
+  l'export du 05/08 → Decalog n'exporte pas les « situations », seulement
+  les statuts (A - Prêtable, A - Réserve...). Parade : fichiers de scans
+  `a cataloguer*.txt` / `exclusions_*.txt` (intégrés au dédoublonnage des
+  commandes). À demander à Decalog (dossier API en cours) : ajouter la
+  situation des exemplaires à l'export hebdo.
+- **Import hebdo du 05/08 : FAIT le 06/08** (catalogue 44 365 notices,
+  EPPK, fréquentation jusqu'au 05/08 dans les 4 tables, écrans OVH, push).
+  Piège corrigé dans `import_hebdomadaire.sh` : détection des fichiers
+  par date de modification (`ls -t`) — l'ancien tri alphabétique prenait
+  « Donnees_Comptage(3).csv » avant le fichier daté.
 - Crédits API du chat rechargés (panne du 31/07 = crédits épuisés, pas un bug).
 
 ## Consommation Claude (contexte du changement de conversation)
