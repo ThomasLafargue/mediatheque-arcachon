@@ -16,9 +16,12 @@ echo "════════════════════════�
 # (motif "Liste des notices - " avec le tiret : exclut volontairement les
 # éventuels exports "Liste des notices mosaique - ...", qui sont un fichier
 # distinct et ne doivent pas être pris pour une ancienne version à supprimer)
-MRC=$(ls "Liste des notices - "*.mrc 2>/dev/null | sort | tail -1)
-EPPK=$(ls "export-eppk"*.xlsx 2>/dev/null | sort | tail -1)
-CSV=$(ls "Donnees_Comptage"*.csv 2>/dev/null | sort | tail -1)
+# ls -t = le plus récemment modifié d'abord (corrigé le 2026-08-06 : le tri
+# alphabétique prenait « Donnees_Comptage(3).csv » — vieux téléchargement —
+# avant « Donnees_Comptage_2026-08-05.csv »).
+MRC=$(ls -t "Liste des notices - "*.mrc 2>/dev/null | head -1)
+EPPK=$(ls -t "export-eppk"*.xlsx 2>/dev/null | head -1)
+CSV=$(ls -t "Donnees_Comptage"*.csv 2>/dev/null | head -1)
 
 echo ""
 echo "Fichiers détectés :"
