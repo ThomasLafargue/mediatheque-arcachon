@@ -166,7 +166,47 @@ règle FJ DIS ne vise que l'animation/jeunesse Disney, resserrer
      annuelle (la prescription bibliothécaire jeunesse de référence) ;
   4. **Hygiène** : 57 suggestions avec source « None » — renseigner une
      source (« chat/manuel ») pour garder les statistiques fiables.
-- **Réponses attendues** : Nedap (RFID), Decalog (API), ORB (API).
+- **RÉPONSES REÇUES le 06/08** :
+  - **Nedap (Sylvain Duret, sylvain.duret@nedap.fr, 06.33.04.15.70)** :
+    puces **HF 13,56 MHz ISO 15693** (PAS UHF !) — Zebra RFD8500/Chainway R5
+    inutilisables, abandonner cette piste. Leur lecteur d'inventaire
+    **PRH200** fait le récolement (codes-barres + RCR → LibNet, zones de
+    récolement, mode recherche, antivol en masse). → DEMANDER DEVIS PRH200
+    (achat/location) vs scanette 0 €. Le PRH200 = FEIG ISC.PRH200-BW
+    (2 000-3 500 € HT constatés, sur devis). Test smartphone NFC fait le
+    07/08 : les puces répondent mais portée ~2 cm → inutilisable en rayon ;
+    la valeur du PRH200 est son antenne (30-40 cm à travers les dos).
+    Verdict Thomas : scanette codes-barres conservée pour la rentrée.
+    Comptage : horaires LibNet réglés
+    8h-20h (confirme l'écart écran) ; option affichage « ignorer les
+    horaires » possible → à demander pour recoller à la série historique.
+  - **ORB = Decitre (Catherine Galliot, cgalliot@decitre.fr — vacances
+    jusqu'à fin août ; relais nboyer@/ncentazzo@/chargeclientele@decitre.fr)** :
+    API Search très complète MAIS 150 € + 500 €/an + **18 480 € HT
+    d'initialisation 44 000 notices** + 0,49 €/notice ensuite → sans
+    intérêt, l'enrichissement est déjà fait gratuitement via PdL. À saisir
+    gratuitement : test API (doc.api.base-orb.fr, comptes démo) et offre de
+    **taux de correspondance** (leur envoyer nos EAN). Leur équipe technique
+    veut une **présentation du cas d'usage IA en bibliothèque** — carte à jouer.
+    **PERCÉE du 07/08 — accents cassés des imports ORB→Decalog RÉSOLUS** :
+    l'export .not des bons de commande ORB est en ISO 5426 (leur défaut
+    documenté `unimarc_encoding`), lu de travers par Decalog. Remède local :
+    `convertir_orb_utf8.py` (reconstruit l'ISO 2709 en UTF-8, zone 100 mise
+    à jour ; testé sur « Commande 4-2026 » : 322/322 notices propres, import
+    Decalog à valider par Thomas). Remède définitif À DEMANDER à Decitre :
+    passer le compte en `unimarc_encoding = utf8` (paramètre standard).
+    L'automatisation complète (supprimer export/import) = endpoint /orders
+    de leur API, à négocier. `orb_test_api.py` prêt pour le compte démo.
+  - **Tite Live contacté le 06/08** (mail « réseau de 4 médiathèques
+    COBAS, >100 000 documents ») : proposition API Mediabase + paniers +
+    commande Librairie Générale + export UNIMARC. Réponse attendue. La
+    Librairie Générale a déjà un site de réservation sur la plateforme
+    Tite Live (librairiegeneralearcachon.fr, 1 M+ titres) — le circuit
+    existe à moitié.
+  - **Sélection officielle des Incorruptibles** à ajouter en source de
+    veille : https://prix.lesincos.com/la-selection (liste par niveau).
+- **Réponse toujours attendue** : Decalog (API + situations d'exemplaires
+  dans l'export).
 - **Diapos ville** : 4 visuels dans `diapos_ville/` intercalés toutes les
   4 diapos du diaporama (mécanisme : déposer/supprimer un fichier image
   dans ce dossier suffit). Demander les originaux au service com de la
