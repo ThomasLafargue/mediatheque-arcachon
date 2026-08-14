@@ -21,6 +21,7 @@ diagnostic.txt
 _stock_initial_complet.txt
 export-eppk*
 Fonds Arcachon*
+*.not
 exportDecaScore*
 _sans_serie.txt
 _lot_series_en_cours.txt
