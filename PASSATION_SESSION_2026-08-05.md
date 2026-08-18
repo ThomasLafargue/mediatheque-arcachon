@@ -1,8 +1,10 @@
-# Passation de session — 30 juillet 2026 (mis à jour en soirée)
+# Passation de session — 30 juillet 2026 (mis à jour le 13/08)
 
 Document de reprise pour une nouvelle conversation Claude. Tout l'état du
 projet MAAT (Médiathèque d'Arcachon) au 30/07/2026 au soir, après la
-session « audit DVD » du soir même (voir section Chantier DVD).
+session « audit DVD » du soir même (voir section Chantier DVD). Voir en
+bas de fichier la section « Session du 10-13/08 » pour les tout derniers
+événements (appel Tite Live, remontée COBAS, scénarios comparatifs).
 
 ## Le projet en une phrase
 
@@ -262,6 +264,123 @@ règle FJ DIS ne vise que l'animation/jeunesse Disney, resserrer
   par date de modification (`ls -t`) — l'ancien tri alphabétique prenait
   « Donnees_Comptage(3).csv » avant le fichier daté.
 - Crédits API du chat rechargés (panne du 31/07 = crédits épuisés, pas un bug).
+
+## Session du 10-13/08 (résumé)
+
+- **Import hebdo du 10/08 : FAIT** (catalogue 44 185 notices/44 777
+  exemplaires, EPPK `export-eppk 2026-08-10.xlsx`, fréquentation à jour
+  au 10/08 dans les 4 tables — 1 666 jours ouverture, 1 940 jours brut).
+  Écrans OVH régénérés (728 titres mosaïque, 359 diaporama jeunesse),
+  push GitHub OK. Un premier lancement interrompu au Ctrl+C en pleine
+  écriture SQL — sans dégât, le script détecte le ré-import (même date)
+  et relance proprement de bout en bout. Toujours 7 024 notices sans EAN
+  Decalog (id substitut CB:) — connu, pas un bug.
+- **Tite Live — appel du 12/08 avec Giuseppe Salza** (Directeur commercial
+  & éditorial des bases de données), 20 min, très positif : nos 3 demandes
+  (webservice Mediabase, paniers/commande vers la Librairie Générale,
+  export UNIMARC vers Decalog) confirmées **réalisables techniquement**.
+  Aucun tarif communiqué à ce stade (viendra dans un second temps) ;
+  points techniques encore à clarifier avec leur équipe technique.
+  Tite Live commence tout juste à s'intéresser au marché des médiathèques
+  et connaît bien les limites d'ORB.
+- **Debrief remonté jusqu'à la COBAS** : Thomas → Marie (responsable) →
+  mail de Marie le 13/08 aux décisionnaires COBAS (Pauline, Sylvie),
+  avant que les choix de remplacement d'ORB ne soient arrêtés. Reprend :
+  richesse multi-supports de Mediabase, l'API comme point structurant
+  (fin des export/import manuels), l'ancrage Place des Libraires/Librairie
+  Générale d'Arcachon, le positionnement stratégique de site pilote, et
+  la piste d'une couche IA développée avec leurs équipes techniques.
+  **Point nouveau non confirmé officiellement** : Tite Live développerait
+  un module logiciel qui pourrait un jour remplacer Decalog (mentionné
+  par Marie dans son mail — à vérifier/creuser).
+- **Analyse comparative marché** (à la demande de Thomas, avant d'aller
+  plus loin avec Tite Live) : Electre (Cercle de la Librairie, réseau
+  Carel) fait déjà l'essentiel côté acquisition — sélection multi-supports,
+  commande directe aux fournisseurs, export SIGB — mais n'est PAS un SIGB,
+  c'est un module qui se branche sur l'existant, comme Mediabase. Orphée
+  (C3RB, 3 500+ établissements) est un vrai SIGB avec budgets/fournisseurs/
+  commandes intégrés, mais sans base bibliographique propre aussi riche
+  que Mediabase/Electre (connexion à des bases externes). Conclusion :
+  la combinaison « SIGB + base bibliographique riche multi-supports +
+  acquisition, en un seul outil du même éditeur » n'existe encore nulle
+  part — c'est l'intérêt du pari Tite Live, mais un pari plus long/risqué
+  qu'un Decalog simplement doté d'une API (chantier de plusieurs années
+  pour bâtir un SIGB complet : circulation, adhérents, RGPD, statistiques
+  réglementaires).
+- **Nouveau document** : `documentation_projet/Scenarios_comparatifs_
+  circuit_document_2026-08.docx` — deux scénarios détaillés étape par
+  étape sur le même exemple concret (tome manquant d'une série BD
+  jeunesse à forte demande) : Scénario A (Mediabase + Place des Libraires
+  + Decalog doté d'une API + MAAT) et Scénario B (même chose avec un
+  hypothétique SIGB Tite Live tout intégré). Complété par des exemples de
+  questions agent → MAAT interne (recherche, suggestions d'acquisition,
+  désherbage, statistiques/fréquentation, rapports de gestion) et
+  usager → MAAT public (disponibilité/réservation, recommandations,
+  infos pratiques, suivi personnel authentifié). **Corrections métier de
+  Thomas intégrées** : (1) à l'étape « constitution du panier », deux cas
+  distingués — si un exemplaire du même titre est déjà au fonds, la
+  notice existe déjà dans Decalog (pas de nouvelle dérivation) ; si le
+  titre est inédit, la notice est dérivée depuis Mediabase à partir de
+  l'ISBN ; (2) à l'étape « réception et équipement », distinction
+  explicite ISBN (identifie le titre, chez l'éditeur) / code-barres
+  (identifie l'exemplaire physique, attribué par le réseau, comme la
+  cote et la puce RFID), plus l'étape d'encodage reliant le code-barres
+  à la puce RFID, absente de la première version du document.
+- **Mail de suivi envoyé à Giuseppe Salza (13/08)** : information sur la
+  remontée en interne/COBAS, puis suggestion prudente (« vous y avez
+  sans doute déjà réfléchi ») qu'un SIGB développé par Tite Live serait
+  une offre inédite sur le marché des médiathèques, qu'une couche IA
+  associée en ferait l'outil idéal du bibliothécaire, et positionnement
+  discret du réseau comme interlocuteur privilégié si cette piste avance.
+- **En attente** : réponse Tite Live à ce mail ; décision/retour de la
+  COBAS suite au mail de Marie ; Decitre/ORB (retour attendu fin août —
+  bascule `unimarc_encoding = utf8`, identifiants API démo, taux de
+  correspondance EAN) ; devis PRH200 et réglage horaires Nedap ; devis
+  comparatif Bibliotheca DLA InventoryWand (pas encore demandé) ; dossier
+  API + rapport d'amélioration Decalog (pas encore rédigé) ; dump mémoire
+  RFID complet (Android TagInfo « Full scan ») pour trancher lecteur
+  générique vs PRH200.
+- **RÉPONSE DECALOG SUR L'API — NÉGATIVE (14/08)**, de Demba Thiam (chef
+  de projets Decalog). Point par point : (1) pas d'historique des
+  exemplaires disponible via l'API ; (2) pas de statistiques — module
+  séparé payant « Saikuu » ; (3) l'API donne accès aux notices par
+  différents critères de recherche + services abonnés, utilisée par des
+  structures qui ne prennent pas leur portail (remarque à éclaircir :
+  bridage éventuel pour les clients portail comme nous, ou simple
+  constat) ; (4) confirmé disponible (point non détaillé côté nous, à
+  vérifier lequel de nos points originaux) ; (5) recherche multi-dates
+  possible (capture d'écran fournie) ; (6) **pas de mode Push** — ni
+  confirmé ni infirmé formellement mais « pas l'impression ». Conclusion
+  de Decalog lui-même : « aucune API Decalog ne permettra de répondre à
+  l'ensemble de vos attentes », une période d'essai serait « vaine ».
+  Reste ouvert à discuter avec Cécile. **Conséquence directe** : le
+  scénario A (Decalog + API) du document `Scenarios_comparatifs_
+  circuit_document_2026-08.docx` est affaibli sur 3 points clés (pas de
+  pré-notice en temps réel sans push, pas d'historique exemplaire pour
+  le récolement/désherbage par API, stats à payer en plus) — argument
+  factuel désormais utilisé pour pousser la piste scénario B (SIGB Tite
+  Live) lors du rendez-vous du 19/08.
+- **RDV visio Tite Live confirmé mercredi 19/08 après-midi**, avec
+  Giuseppe Salza + un responsable technique. Suite à la réponse Decalog
+  ci-dessus, Thomas penche pour la solution tout intégrée (scénario B).
+  Trame de réunion créée et mise à jour : `documentation_projet/
+  Trame_visio_TiteLive_2026-08.docx` — fil rouge « expérience
+  utilisateur » façon Apple (simplicité maximale agents + public, IA
+  capable de répondre à toute question), encart sur la réponse Decalog
+  à utiliser dès le début comme argument factuel, question sur les
+  ambitions SIGB de Tite Live remontée en position 2 (plus en question
+  de clôture), questions détaillées par thème (webservice, paniers/
+  commandes, export UNIMARC, conditions), réflexes de fin de réunion
+  (pas de négociation tarifaire en séance, repartir avec contact
+  technique + date + accès test si possible).
+- **Token GitHub « Claude MAAT » régénéré (14/08)**, sans usage identifié
+  (ni connecteur Claude, ni `git push` du Mac mini qui passe par le
+  Trousseau macOS) — à surveiller quelques jours puis supprimer sur
+  GitHub si rien ne casse. Fichiers `Commande 4-2026.not` et
+  `Commande 4-2026 (utf8).not` retirés du dépôt public (`git rm
+  --cached`, commit `2890cb9`) suite à leur commit accidentel lors de
+  l'import du 10/08 ; `*.not` ajouté au `.gitignore`. Fichiers toujours
+  présents en local, juste plus sur GitHub.
 
 ## Consommation Claude (contexte du changement de conversation)
 
