@@ -28,23 +28,68 @@ intercommunaux.
 **Nom** : HAL
 **Sous-titre** : Hub d'Accès à la Lecture
 **Référence** : HAL 9000, 2001 : L'Odyssée de l'espace (Kubrick, 1968)
-**Esprit** : omniscient, calme, précis — mais cette fois au service des bibliothécaires
+**Esprit** : omniscient, calme, précis — au service des bibliothécaires
 **Logo** : œil rouge HAL 9000, stylisé minimaliste
 **Couleurs** : noir profond, blanc, rouge HAL (#FF3B30)
-**Typographie** : SF Pro (Apple) ou Inter
+**Typographie** : Inter (open source, qualité Apple)
+
+---
+
+## ANALYSE DU MARCHÉ (juillet 2026)
+
+### Le marché en chiffres
+- **15 500 bibliothèques publiques** en France (Ministère de la Culture, 2024)
+- **94 millions d'entrées** déclarées en 2024
+- **37% des Français** fréquentent une bibliothèque — en hausse (+7 pts vs 2023)
+- Marché des logiciels SIGB **en stagnation** selon Archimag (mai 2026)
+
+### Les concurrents
+
+| Solution | Type | Part marché FR | Forces | Faiblesses |
+|----------|------|---------------|--------|-----------|
+| **Decalog** | Propriétaire | ~30% lecture publique | 30 ans d'expérience, support FR | Interface 2000s, cher, fermé |
+| **Koha** | Open source | Fort en universitaire | Mondial, gratuit, MARC complet | Installation complexe, UI datée |
+| **PMB** | Open source | ~20% lecture publique | Francophone, modulaire | Maintenance aléatoire |
+| **BibLibre/Pikoloco** | Service Koha | Petites biblio | Clé en main, abordable | Dépendance prestataire |
+| **Ex Libris Alma** | SaaS premium | Universités | Très complet | Très cher, complexe |
+
+### La faille du marché
+
+Aucune solution ne combine :
+1. UX moderne pensée pour les agents (pas pour les informaticiens)
+2. IA native (catalogage, acquisitions, désherbage automatisés)
+3. Open source et installation simple
+4. Recherche conversationnelle pour les lecteurs
+5. Rapport qualité/prix adapté aux petites et moyennes bibliothèques
+
+**C'est exactement ce que HAL adresse.**
+
+### Taille du marché adressable
+
+- France : 15 500 bibliothèques publiques
+- Francophonie : +30 000 établissements (Belgique, Suisse, Canada, Afrique)
+- Prix cible : 1 500 à 8 000 €/an selon la taille (vs 5 000 à 25 000 € pour Decalog)
+- Potentiel : 10% du marché FR = 1 550 bibliothèques × 3 000 €/an = **4,6 M€/an**
+
+### Modèle économique (open source / freemium)
+
+- **Gratuit** : code source, auto-hébergement, communauté
+- **HAL Cloud** : hébergement géré, mises à jour auto — à partir de 99 €/mois
+- **HAL Pro** : support prioritaire, onboarding, formation — à partir de 199 €/mois
+- **HAL Réseau** : déploiement multi-sites (intercommunal) — sur devis
 
 ---
 
 ## PROBLÈME À RÉSOUDRE
 
-Les SIGB existants (Koha, PMB, Decalog, Evergreen) ont été conçus dans les années
-2000 pour des informaticiens. Ils sont puissants mais :
-- Interfaces datées et complexes, nécessitant des formations longues
-- Aucune IA native — tout est manuel (catalogage, acquisitions, désherbage)
-- Propriétaires ou mal maintenus
+Les SIGB existants ont été conçus dans les années 2000 pour des informaticiens.
+Ils sont puissants mais :
+- Interfaces datées, formations longues, résistance au changement
+- Aucune IA native — tout est saisi manuellement
+- Propriétaires (Decalog) ou mal maintenus (PMB)
 - Aucune vision "expérience lecteur"
 
-Aucun ne répond à la question : *et si on recommençait depuis zéro en 2026 ?*
+La question que personne ne s'est posée : *et si on recommençait depuis zéro en 2026 ?*
 
 ---
 
@@ -63,144 +108,111 @@ Aucun ne répond à la question : *et si on recommençait depuis zéro en 2026 ?
 ## MODULES
 
 ### 1. CATALOGUE (base existante à 80%)
-Gestion des notices bibliographiques. Enrichissement automatique.
-
 - Import UNIMARC/MARC21 depuis n'importe quel export Decalog/Koha
 - Enrichissement automatique : BnF SRU, Sudoc, Google Books, OpenLibrary
 - Base bibliographique intégrée : 15M+ notices françaises agrégées
-- Couvertures, résumés, genres, séries, classement Dewey automatique
-- Détection des doublons, erreurs de catalogage, séries incomplètes
-- IA : suggestion de descripteurs, normalisation auteurs/éditeurs
+- Couvertures, résumés, genres, séries, Dewey automatique
+- Détection doublons, erreurs de catalogage, séries incomplètes
+- IA : normalisation auteurs/éditeurs, suggestion de descripteurs
 
-### 2. OPAC PUBLIC — HAL Search (premier module à construire)
+### 2. OPAC PUBLIC — HAL Search ⭐ PREMIER MODULE
 Interface de recherche pour les lecteurs. Double rôle :
-- **Production** : catalogue en ligne de MAAT Arcachon
+- **Production** : catalogue en ligne de MAAT Arcachon dès la V1
 - **Vitrine** : démo publique de HAL pour toutes les bibliothèques
 
-Fonctionnalités :
+Fonctionnalités V1 :
+- Recherche par mot-clé + filtres (genre, public, support, disponibilité)
 - Recherche conversationnelle : "j'ai 8 ans et j'aime les dragons"
 - Disponibilité en temps réel par site
-- Réservation en ligne
-- Recommandations personnalisées
-- Multi-support : livres, DVD, jeux, périodiques
-- Accessible RGAA
-- Responsive — parfait sur mobile
+- Couvertures + résumé + infos pratiques
+- 100% responsive — parfait sur mobile
 
 ### 3. CIRCULATION — HAL Desk
-Prêts, retours, réservations.
-
-- Scan code-barres ou RFID
-- Prêt en 1 geste sur tablette ou smartphone
-- Gestion des retards, relances automatiques (email/SMS)
-- Réservations et files d'attente
-- Statistiques de circulation en temps réel
+- Scan code-barres ou RFID sur tablette/smartphone
+- Prêt en 1 geste
+- Gestion des retards, relances automatiques
+- Réservations depuis HAL Search
 - Prêt entre sites du réseau
 
 ### 4. ACQUISITIONS — HAL Buy (base existante à 70%)
-Suggestions et commandes de nouveaux documents.
-
-- Suggestions IA basées sur rotation, prix littéraires, météo, démographie
-- Veille automatique : Ricochet-jeunes, BeDeTh-que, Booknode, Babelio
-- Vérification d'absence dans le fonds avant suggestion
-- Export commande ORB/Electre/fournisseur (CSV/EDI)
-- ROI par acquisition : combien de prêts générés
+- Suggestions IA : rotation, prix littéraires, météo, démographie
+- Veille : Ricochet-jeunes, BeDeTh-que, Booknode, Babelio
+- Vérification d'absence avant suggestion
+- Export commande ORB/Electre (CSV/EDI)
+- ROI par acquisition
 
 ### 5. DÉSHERBAGE — HAL Weed
-Aide à la décision pour retirer les documents obsolètes.
-
 - Score IOUPI automatique
 - Liste priorisée avec justification IA
-- Comparaison avec d'autres bibliothèques du réseau
-- Historique des retraits
+- Comparaison réseau
 
 ### 6. STATISTIQUES — HAL Stats
-Tableaux de bord pour direction et équipes.
-
 - Fréquentation vs météo, saisonnalité
-- Taux de rotation par genre, support, public
-- Rapport annuel auto-généré (format Ministère de la Culture)
-- Comparaison inter-sites du réseau
-- Export Excel/PDF en un clic
+- Rapport annuel format Ministère de la Culture
+- Export Excel/PDF en 1 clic
 
 ### 7. ADMINISTRATION — HAL Admin
-Gestion des adhérents, paramétrage.
-
-- Fichier adhérents (RGPD-compliant)
-- Paramétrage durées de prêt, tarifs, quotas
-- Gestion des utilisateurs staff (admin, bibliothécaire, bénévole)
-- Multi-sites avec droits différenciés
+- Adhérents (RGPD-compliant)
+- Paramétrage durées prêt, tarifs, quotas
+- Rôles : admin, bibliothécaire, bénévole
 
 ---
 
 ## STACK TECHNIQUE
 
 ### Backend
-- **Python + FastAPI** — API REST, async, documentation auto
+- **Python + FastAPI** — API REST, async, doc auto (Thomas maîtrise Python)
 - **PostgreSQL** (Supabase) — base principale, temps réel, auth intégrée
-- **Redis** — cache, sessions, files d'attente
+- **Turso/libsql** — mode offline et migration depuis l'existant
 
 ### Frontend
-- **Next.js 14** (App Router) — SSR pour OPAC (SEO), performance
-- **Tailwind CSS + shadcn/ui** — design system cohérent, accessible
-- **Framer Motion** — animations fluides
-- **PWA** — installable sur mobile comme app native
+- **Next.js 14** (App Router) — SSR pour SEO, performance
+- **Tailwind CSS + shadcn/ui** — design system accessible
+- **Framer Motion** — animations fluides (esprit Apple)
+- **PWA** — installable sur mobile
 
 ### IA
-- **Claude API** (Anthropic) — chat, suggestions, enrichissement
-- **Embeddings** — recherche sémantique dans le catalogue
+- **Claude API** — chat, suggestions, enrichissement
+- **Embeddings** — recherche sémantique
 - **BnF SRU / Sudoc / Google Books** — données bibliographiques
 
 ### Infrastructure
-- **Vercel** — frontend, CDN mondial
+- **Vercel** — frontend, CDN mondial, gratuit pour open source
 - **Railway ou Fly.io** — backend FastAPI
-- **GitHub Actions** — CI/CD, imports hebdomadaires automatiques
-- **Supabase** — PostgreSQL + Auth + Storage
-
-### Base bibliographique intégrée
-- Agrégation BnF (15M notices), Sudoc, Open Library
-- Mise à jour hebdomadaire automatique
-- API publique réutilisable par d'autres bibliothèques
+- **GitHub Actions** — CI/CD, imports automatiques
+- **Supabase** — PostgreSQL + Auth + Storage (plan gratuit généreux)
 
 ---
 
 ## ROADMAP
 
-### Phase 0 — Fondations MAAT (en cours)
-Stabiliser l'existant Arcachon :
+### Phase 0 — Fondations MAAT ✅ En cours
 - ✅ Base Turso 44K notices enrichies
 - ✅ Moteur d'acquisition IA
 - ✅ Connexion GitHub directe depuis Claude
-- ⬜ GitHub Actions import hebdomadaire
-- ⬜ Tests automatisés requêtes SQL critiques
+- ✅ Workflow GitHub Actions prêt (à activer)
+- ⬜ Secrets GitHub à configurer (TURSO_DATABASE_URL + TURSO_AUTH_TOKEN_ECRITURE)
+- ⬜ Dossier `imports/` à créer dans le repo
 
-### Phase 1 — HAL Search V1 (mois 1-4)
-OPAC public pour MAAT + vitrine HAL :
+### Phase 1 — HAL Search V1 (mois 1-3)
 - Interface recherche responsive (mobile first)
-- Recherche conversationnelle avec Claude
-- Disponibilité temps réel depuis base Turso
-- URL publique : hal.maat-arcachon.fr (ou similaire)
-- Page vitrine : hal.library (domaine à réserver)
+- Recherche conversationnelle Claude
+- Disponibilité temps réel Turso
+- URL : hal-search.vercel.app (démo) + intégration MAAT
 
 ### Phase 2 — HAL Desk V1 (mois 3-8)
-Circulation :
-- Prêt/retour sur tablette (scan code-barres)
-- Gestion des adhérents (RGPD)
+- Prêt/retour tablette
+- Adhérents RGPD
 - Réservations depuis HAL Search
-- Intégration avec la base notices existante
 
-### Phase 3 — Multi-sites COBAS (mois 6-12)
-Déploiement sur 4 sites du réseau COBAS :
-- Arcachon, La Teste, Gujan-Mestras, Le Teich
+### Phase 3 — COBAS (mois 6-12)
+- 4 sites : Arcachon, La Teste, Gujan-Mestras, Le Teich
 - Instance partagée, données séparées par site
-- Statistiques consolidées réseau
 
-### Phase 4 — HAL Open Source V1 (mois 12-18)
-Ouverture à toutes les bibliothèques :
-- Documentation complète
-- Script d'installation en 5 minutes
-- Migration depuis Koha/PMB/Decalog
-- Site communautaire GitHub
-- Conférence BBF (Bibliothèques Bibliothécaires Francophones)
+### Phase 4 — Open Source V1 (mois 12-18)
+- Documentation + installation 5 minutes
+- Migration Koha/PMB/Decalog
+- Conférence BBF + GitHub communauté
 
 ---
 
@@ -209,26 +221,41 @@ Ouverture à toutes les bibliothèques :
 | Composant | État | Module HAL |
 |-----------|------|-----------|
 | Base 44K notices enrichies | ✅ Production | Catalogue |
-| Moteur enrichissement BnF/Google | ✅ Production | Catalogue |
+| Enrichissement BnF/Google | ✅ Production | Catalogue |
 | Moteur acquisition IA | ✅ Production | HAL Buy |
-| Corrélation météo/fréquentation | ✅ Validé | HAL Stats |
+| Corrélation météo/fréquentation | ✅ Validé (+15.4% pluie) | HAL Stats |
 | Chat conversationnel Claude | ✅ Production | HAL Search |
 | Export ORB | ✅ Production | HAL Buy |
-| Connexion GitHub depuis Claude | ✅ Opérationnel | Infra |
+| GitHub direct depuis Claude | ✅ Opérationnel | Infra |
+| Workflow GitHub Actions | ✅ Prêt | Infra |
 
 ---
 
-## DIFFÉRENCIANTS
+## DIFFÉRENCIANTS HAL vs CONCURRENTS
 
-Ce qu'aucun SIGB existant ne propose :
-
-1. **Recherche conversationnelle** — "je cherche un roman pour ma fille de 10 ans qui adore les chevaux"
-2. **Suggestions d'acquisition IA** — basées sur les vrais prêts, la météo, la démographie
-3. **Installation en 5 minutes** — un `docker compose up` suffit
-4. **Interface 2026** — pas une interface de 2003 avec un thème moderne
-5. **Open source natif IA** — pas un plugin, l'IA est dans l'architecture
+| Fonctionnalité | HAL | Decalog | Koha | PMB |
+|----------------|-----|---------|------|-----|
+| Recherche conversationnelle | ✅ | ❌ | ❌ | ❌ |
+| IA native | ✅ | ❌ | ❌ | ❌ |
+| Installation < 10 min | ✅ | ❌ | ❌ | ⚠️ |
+| Interface mobile first | ✅ | ⚠️ | ⚠️ | ❌ |
+| Open source | ✅ | ❌ | ✅ | ✅ |
+| Suggestions acquisition IA | ✅ | ❌ | ❌ | ❌ |
+| Corrélation météo/données | ✅ | ❌ | ❌ | ❌ |
+| Rapport annuel auto | ✅ | ⚠️ | ⚠️ | ⚠️ |
 
 ---
 
-*Ce document est vivant. Il évolue à chaque session de travail.*
-*Dernière mise à jour : 2026-07-22*
+## POUR ACTIVER LE WORKFLOW D'IMPORT (GitHub Actions)
+
+1. github.com → repo → **Settings** → **Secrets and variables** → **Actions**
+2. Ajouter :
+   - `TURSO_DATABASE_URL` = `libsql://mediatheque-arcachon-thomaslafargue.aws-eu-west-1.turso.io`
+   - `TURSO_AUTH_TOKEN_ECRITURE` = (token écriture dans .env)
+3. Renommer `import_hebdomadaire_workflow.yml` → `.github/workflows/import_hebdomadaire.yml`
+4. Créer un dossier `imports/` dans le repo
+5. Dès qu'un fichier `.mrc`, `.xlsx` ou `.csv` est pushé dans `imports/` → import automatique
+
+---
+
+*Ce document est vivant. Dernière mise à jour : 2026-07-22*
