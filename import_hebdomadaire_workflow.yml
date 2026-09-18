@@ -1,0 +1,53 @@
+# NE PAS COMMITTER CE FICHIER DIRECTEMENT
+# Renommer en .github/workflows/import_hebdomadaire.yml
+
+name: Import hebdomadaire MAAT
+
+on:
+  push:
+    paths:
+      - 'imports/**'
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Dependances
+        run: pip install libsql-client openpyxl requests beautifulsoup4 lxml
+
+      - name: Import fichiers depuis imports/
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN_ECRITURE }}
+        run: |
+          echo "Fichiers a importer :"
+          ls imports/ 2>/dev/null || echo "(aucun)"
+          for f in imports/*.mrc imports/*.xlsx imports/*.xls imports/*.csv; do
+            [ -f "$f" ] || continue
+            echo "=== Import : $f ==="
+            python3 traiter_fichier.py "$f" && echo "OK" || echo "ERREUR"
+          done
+
+      - name: Etat base apres import
+        env:
+          TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+          TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN_ECRITURE }}
+        run: |
+          python3 -c "
+          import db
+          c = db.connect()
+          n = c.execute('SELECT COUNT(*) FROM notice').fetchone()[0]
+          e = c.execute('SELECT COUNT(*) FROM exemplaire').fetchone()[0]
+          m = c.execute('SELECT MAX(date_maj) FROM exemplaire').fetchone()[0]
+          print(f'Notices: {n}  Exemplaires: {e}  MAJ: {m}')
+          "
