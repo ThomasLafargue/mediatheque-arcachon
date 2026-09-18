@@ -1,383 +1,364 @@
 # HAL — Spécifications Techniques Complètes
-> Capture des exigences fonctionnelles détaillées — 2026-07-22
+> Mise à jour : 2026-07-22
+
+---
+
+## ANALYSE CONCURRENTS (juillet 2026)
+
+### CoLibris (colibris.net) — Logiq Systèmes, Aix-en-Provence
+- 350 établissements clients
+- Gamme Découverte (gratuit) → Intégral → Lynx-Libris
+- **Points forts** : bien établi, support français, rapport annuel 1 clic, Magic-Barres
+- **Faiblesses critiques** :
+  - Windows uniquement ("Installation PC Windows en 1 clic") — pas de PWA, pas de tablette
+  - IA superficielle (assistant conversationnel basique)
+  - Interface 2000s malgré les mises à jour
+  - Pas de workflow acquisitions intégré type e-commerce
+  - Pas de RFID natif
+- **Ce que HAL fait différemment** : 100% web/PWA, IA native profonde, acquisitions type Place des Libraires, RFID standard sans prestataire, open source
+
+### Decalog — déjà analysé
+- SIGB propriétaire dominant en lecture publique FR
+- Fermé, cher, interface datée
+- API non documentée publiquement
 
 ---
 
 ## HARDWARE CIBLE
 
 ### Tablettes (postes agents)
-- Tablettes Android ou iPad avec **lecteur RFID intégré** (NFC/HF 13.56 MHz ISO 15693)
-- Clavier Bluetooth pour les tâches administratives (catalogage, commandes)
-- Recommandations : Samsung Galaxy Tab S9, Zebra ET60, Honeywell RT10A
-- Interface HAL : PWA installable, fonctionne en mode offline
+- **Android** avec NFC ISO 15693 intégré ← standard universel
+- Clavier Bluetooth pour les tâches de bureau
+- HAL tourne en PWA — installable comme une app native
+- Recommandations : Samsung Galaxy Tab S9 FE, Lenovo Tab P12
 
 ### Scannettes sans fil
-- Code-barres 1D/2D sans fil (Bluetooth ou USB)
-- Utilisées pour : réception de commandes, prêts/retours, inventaire
-- Compatible avec n'importe quelle scannette standard (Zebra, Honeywell, Socket)
+- Code-barres 1D/2D Bluetooth — compatible toutes marques
+- Usage : réception commandes, prêts/retours, inventaire, récolement
 
-### RFID — Nedap
-- Standard : HF 13.56 MHz ISO 15693 (bibliothèques)
-- Encodage via : tablette NFC intégrée OU encodeur USB Nedap (Web Serial API)
-- Tags : Tectus (Nedap) ou compatibles ISO 15693
-- Données encodées : identifiant document + site + sécurité antivol (AFI)
+### RFID — Solution standard sans prestataire
+- Standard : **ISO 15693 HF 13.56 MHz** (universel bibliothèques)
+- **Encodage sur tablette Android** via Web NFC API (Chrome Android)
+  - Tags ISO 15693 standards (~0.30€/tag)
+  - Écriture directe depuis HAL dans le navigateur Chrome
+- **Alternative USB** : lecteur/encodeur ACR1252U (~50€) via Web Serial API
+  - Fonctionne sur tout OS (Mac, Windows, Linux)
+  - Format : CSV/JSON → commande en ligne
+- **Données encodées** : identifiant HAL + site + bit de sécurité (AFI standard)
+- Aucun prestataire, aucun abonnement, aucun SDK propriétaire
 
 ---
 
 ## SCHÉMA DES NOTICES — CHAMPS OBLIGATOIRES
 
-Tout document dans HAL doit avoir ces champs. L'IA complète automatiquement
-depuis BnF/Sudoc/Google Books au moment de la commande.
+L'IA enrichit automatiquement depuis BnF/Sudoc/Google Books.
 
 ### Identification
 ```
-identifiant      — EAN13/ISBN (obligatoire) ou CB: si pas d'EAN
-type_document    — LIVRE | BD | MANGA | DVD | JEU | PERIODIQUE | CD
+identifiant       EAN13/ISBN (obligatoire) ou CB:xxx si pas d'EAN
+type_document     LIVRE | BD | MANGA | DVD | JEU | PERIODIQUE | CD
 ```
 
-### Description bibliographique
+### Bibliographie
 ```
-titre            — titre principal (obligatoire)
-sous_titre       — sous-titre
-serie            — nom de la série
-tome             — numéro dans la série (TEXT pour gérer "HS", "0", etc.)
-collection       — collection éditeur
-createurs        — auteur(s) principal/e(s) (obligatoire)
-createurs_secondaires — illustrateur, traducteur...
-editeur          — éditeur (obligatoire)
-date_publication — YYYY ou YYYY-MM-DD (obligatoire)
-pays_edition     — FR, BE, CH...
-langue           — fra, eng...
-description_physique — "245 p. ; 24 cm" ou "1 DVD (90 min)"
+titre             obligatoire
+sous_titre
+serie
+tome              TEXT ("1", "2", "HS", "0"...)
+collection
+createurs         auteur(s) principal/e(s) — obligatoire
+createurs_secondaires
+editeur           obligatoire
+date_publication  YYYY ou YYYY-MM-DD — obligatoire
+pays_edition      FR, BE, CH...
+langue            fra, eng...
+description_physique  "245 p. ; 24 cm"
 ```
 
 ### Classification
 ```
-dewey            — indice Dewey (obligatoire pour documentaires)
-dewey_libelle    — libellé associé ("Informatique", "Histoire de France"...)
-genre            — Roman | Policier | SF | Fantasy | BD | Manga | Album | Documentaire...
-public_vise      — Bébé (0-3) | Enfant (3-6) | Jeune (6-9) | Ado (9-15) | Adulte
-age_recommande   — "8 ans et +" (TEXT)
-pegi             — pour les jeux : 3 | 7 | 12 | 16 | 18
+dewey             obligatoire pour documentaires
+dewey_libelle     "Informatique", "Histoire de France"...
+genre             Roman | Policier | SF | BD | Manga | Album | Documentaire...
+public_vise       Bébé (0-3) | Enfant (3-6) | Jeune (6-9) | Ado (9-15) | Adulte
+age_recommande    "8 ans et +" (TEXT)
+pegi              3 | 7 | 12 | 16 | 18 (jeux)
 ```
 
 ### Enrichissement IA
 ```
-resume           — résumé (auto BnF/Google ou saisi)
-image_url        — couverture (auto Google Books)
-mots_cles        — tags thématiques
-score_confiance  — 0 à 1 : qualité de l'enrichissement automatique
-date_enrichissement — date du dernier enrichissement
-nb_sources_consultees — combien de sources ont répondu
-```
-
-### Statistiques de prêt (sync Decalog/HAL)
-```
-nb_prets_total
-nb_prets_annee_courante
-nb_prets_n1, n2, n3
-date_dernier_pret
+resume            auto BnF/Google Books
+image_url         couverture auto
+mots_cles         tags thématiques
+score_confiance   0 à 1
+date_enrichissement
+nb_sources_consultees
 ```
 
 ---
 
 ## RÈGLES DE COTE — CONFIGURABLES PAR MÉDIATHÈQUE
 
-La cote est générée automatiquement selon des règles configurables.
-Chaque médiathèque peut définir ses propres règles.
-
-### Format général
-```
-[TYPE]/[AUTEUR 3 lettres]/[TOME ou TITRE 3 lettres]
-```
+Variables : `{TYPE}` `{AUTEUR_3}` `{TITRE_3}` `{DEWEY}` `{TOME}` `{SERIE_3}`
 
 ### Exemples MAAT Arcachon
 ```
-Roman jeunesse     → MJ/HAR        (Harry Potter)
-Album 0-3 ans      → ALB/BEA       (Boucle d'Or)
-BD jeunesse        → BDJ/AST/1     (Astérix T.1)
-Manga              → MAN/ONE/1     (One Piece T.1)
-Roman adulte       → ROM/BEA       (Beauvoir)
-BD adulte          → BD/MOE/2      (Moebius)
-Documentaire       → DOC/590       (Dewey pour animaux)
-DVD                → DVD/AVA       (Avatar)
-Jeu                → JEU/CAT       (Catane)
+Roman jeunesse   MJ/HAR         Harry Potter à l'école des sorciers
+Album 0-3 ans    ALB/BEA        Boucle d'Or
+BD jeunesse      BDJ/AST/1      Astérix T.1
+Manga            MAN/ONE/1      One Piece T.1
+Roman adulte     ROM/BEA        Beauvoir
+BD adulte        BD/MOE/2       Moebius
+Documentaire     DOC/590        (Dewey animaux)
+DVD              DVD/AVA        Avatar
+Jeu              JEU/CAT        Catane
 ```
-
-### Interface de configuration
-- Chaque type de document → règle de cote (modèle avec variables)
-- Variables disponibles : {TYPE}, {AUTEUR_3}, {TITRE_3}, {DEWEY}, {TOME}, {SERIE_3}
-- Prévisualisation en temps réel lors du paramétrage
 
 ---
 
-## MODULE ACQUISITIONS — WORKFLOW COMPLET
+## MODULE ACQUISITIONS — HAL Buy
 
-### Vue d'ensemble
+### Inspiration : Place des Libraires
+L'interface de commande doit ressembler à une librairie en ligne :
+- Navigation par rayon (Manga, BD, Roman Ado, Albums...)
+- Recherche ISBN ou titre → fiche complète avec couverture
+- [Ajouter au panier] en un geste
+- Suivi budget visible en permanence
+- Envoi commande et réception intégrés
+
+### Workflow complet
 ```
-Suggestion → Panier → Validation budget → Bon de commande → 
-Envoi fournisseur → Réception → Création exemplaire → OPAC
-```
-
-### 1. SUGGESTION / RECHERCHE
-
-Depuis n'importe quel écran :
-- Scan ISBN → notice récupérée instantanément (BnF/Google Books)
-- Recherche titre/auteur → sélection dans les résultats
-- Suggestion depuis HAL Buy (IA) ou HAL Search (demande lecteur)
-
-À ce stade : notice complète disponible, pas encore d'exemplaire.
-
-### 2. PANIER D'ACQUISITION
-
-Chaque item de panier contient :
-```
-notice         → identifiant + titre + auteur + éditeur + prix
-quantite       → nombre d'exemplaires à commander
-rayon          → Roman Ado | BD Jeunesse | Manga | Albums | Documentaires...
-site           → Arcachon | La Teste | Gujan-Mestras | Le Teich
-responsable    → qui a fait la suggestion
-note           → justification ("demandé par 3 lecteurs", "prix Sorcières 2026")
-prix_unitaire  → prix catalogue (auto depuis BnF/libraire)
-```
-
-Paniers **par rayon** et **par responsable** — vues combinables :
-- "Toutes les suggestions BD de Thomas ce mois"
-- "Budget Manga — Arcachon — juillet 2026"
-- "Commande Mollat en attente"
-
-### 3. SUIVI BUDGET
-
-```
-Par rayon × site × période :
-  Budget alloué    : 2 500 € (défini en début d'année)
-  Engagé           : 1 840 € (commandes passées)
-  Dépensé          : 1 240 € (commandes reçues)
-  Disponible       : 660 €
-  
-Alertes :
-  ⚠ BD Jeunesse Arcachon — 94% du budget consommé
-  ✓ Manga — 67% — en ordre
+Découverte (HAL Buy / scan ISBN / suggestion lecteur)
+       ↓
+Notice auto-enrichie BnF + couverture Google
+       ↓
+[+ Panier] → choisir rayon + site + quantité + note
+       ↓
+Vue panier → budget disponible affiché
+       ↓
+[Valider] → regroupement automatique par fournisseur
+       ↓
+Bon de commande généré (PDF + CSV ORB)
+       ↓
+[Envoyer à Mollat / ORB] par email direct
+       ↓
+Réception : scan code-barres → rapprochement auto
+       ↓
+[Créer exemplaire] → cote auto + code-barres + RFID
+       ↓
+[Imprimer étiquette] → Zebra / Brother / Dymo
+       ↓
+[Encoder RFID] → approcher tag de la tablette
+       ↓
+Document disponible dans l'OPAC
 ```
 
-### 4. BON DE COMMANDE
-
-Depuis le panier validé :
-- Regroupement par **fournisseur** (chaque item a un fournisseur préféré ou auto)
-- Génération du bon de commande :
-  - **PDF imprimable** (format standard libraire)
-  - **CSV/Excel** (format ORB, Electre)
-  - **Email direct** avec PDF en pièce jointe
-  - **EDI ONIX** pour les fournisseurs qui le supportent
-
-### 5. FOURNISSEURS
-
-Chaque fournisseur paramétré dans HAL :
+### Vue panier — inspirée e-commerce
 ```
-nom          → "Mollat Bordeaux", "Fnac Pro", "ORB Decitre"
-email        → cgalliot@decitre.fr
-format       → ORB | CSV | PDF_email | EDI
-remise       → 9% (remise habituelle)
-delai_livraison → 5 jours ouvrés
-compte_client → ref compte
+┌─────────────────────────────────────────────────────────┐
+│ 🛒 Panier BD Jeunesse — Arcachon                        │
+│ Budget : ████████░░ 1 840 € / 2 500 € — 660 € restants  │
+│                                                          │
+│ ┌──────────────────────────────────────────────────────┐ │
+│ │ [Cover] Astérix T.40           Goscinny / Uderzo    │ │
+│ │         Hachette — 13,95 €     BD Jeunesse · Arcach.│ │
+│ │         Note : prix Fauve 2026   Qté : [1] ×  13,95│ │
+│ │         ✓ Pas dans le fonds    [Supprimer]          │ │
+│ └──────────────────────────────────────────────────────┘ │
+│                                                          │
+│ [Valider et commander chez Mollat — 3 titres — 41,85 €] │
+└─────────────────────────────────────────────────────────┘
 ```
 
-### 6. RÉCEPTION
+### Gestion multi-paniers
+- Par **rayon** : Manga, BD Jeunesse, Roman Ado, Albums, Documentaires...
+- Par **responsable** : Thomas, Marie, Direction...
+- Par **fournisseur** : Mollat, ORB, Fnac Pro...
+- Vue consolidée ou par critère
+- **Partage de panier** : un agent suggère, un autre valide
 
-Scan du code-barres à l'arrivée du colis :
+### Suivi budget
+```sql
+SELECT
+  rayon, site, annee,
+  montant_alloue AS budget,
+  SUM(CASE WHEN p.statut='commandé' THEN pi.quantite*pi.prix_unitaire ELSE 0 END) AS engage,
+  SUM(CASE WHEN p.statut='reçu' THEN pi.quantite*pi.prix_unitaire ELSE 0 END) AS depense,
+  montant_alloue
+    - SUM(pi.quantite*pi.prix_unitaire) AS disponible
+FROM budget b
+LEFT JOIN panier p USING (rayon, site)
+LEFT JOIN panier_item pi ON pi.panier_id = p.id
+GROUP BY rayon, site
 ```
-[SCAN ISBN]
-↓
-HAL trouve la notice ET le bon de commande associé
-↓
-Affiche : titre / qté commandée / qté déjà reçue
-↓
-[VALIDER RÉCEPTION]
-↓
-Statut bon de commande mis à jour
-Budget : engagé → dépensé
+
+### Bon de commande — formats supportés
+- **PDF** : format standard libraire, logo médiathèque, conditions
+- **CSV ORB** : `EAN;Titre;Auteur;Editeur;Prix;Quantité`
+- **Email direct** : sujet + corps + PDF en pièce jointe
+- **EDI ONIX** : pour les fournisseurs qui le supportent (futur)
+
+### Réception
+```
+Scan ISBN livre reçu
+→ HAL affiche : [titre] commandé le [date] chez [fournisseur]
+               Qté commandée : 2 | Qté déjà reçue : 0
+→ [Réceptionner 1] ou [Réceptionner tout]
+→ Budget : engagé → dépensé
+→ [Créer exemplaire(s)]
 ```
 
-### 7. CRÉATION EXEMPLAIRE (1 bouton)
+### Si notice déjà en fonds
+```
+"Harry Potter T.1 est déjà dans le fonds.
+ 2 exemplaires actuels — 47 prêts au total.
+ [Ajouter un nouvel exemplaire] [Annuler]"
+```
 
-Depuis la fiche de réception :
+---
+
+## CRÉATION EXEMPLAIRE — WORKFLOW TABLETTE
+
 ```
 [CRÉER L'EXEMPLAIRE]
-↓
+        ↓
 HAL génère automatiquement :
-  cote         → selon règles du site (BDJ/AST/1)
-  code_barres  → prochain disponible dans la séquence
-  site         → celui du panier
-  statut       → "En traitement"
-  date_acq     → aujourd'hui
-  prix         → prix de commande
-↓
-IMPRESSION ÉTIQUETTE :
-  • Étiquette dos : cote + code-barres
-  • Étiquette couverture : code-barres
-  • Format : compatible imprimante Zebra, Brother, Dymo
-↓
-ENCODAGE RFID :
-  • HAL ouvre le dialogue d'encodage
-  • Approcher le tag RFID de la tablette
-  • Données encodées : ID document + site + AFI
-  • Confirmation visuelle + sonore
-↓
-[DOCUMENT PRÊT] → apparaît dans l'OPAC, disponible au prêt
-```
-
-Si une notice existe déjà avec des exemplaires :
-```
-"Ce titre est déjà dans le fonds (2 exemplaires — 23 prêts)"
-[AJOUTER UN EXEMPLAIRE] ou [ANNULER]
+  cote          BDJ/AST/1  (règle configurée pour ce site)
+  code_barres   300042      (prochain dans la séquence)
+  site          Arcachon
+  statut        En traitement
+  date_acq      2026-07-22
+  prix          13.95 €
+        ↓
+[🖨 IMPRIMER ÉTIQUETTE]
+  Imprimante Zebra ZD421 / Brother QL / Dymo LabelWriter
+  Format : étiquette dos (cote) + étiquette couverture (code-barres)
+  Génération PDF ou ZPL directement depuis le navigateur
+        ↓
+[📡 ENCODER RFID]
+  "Approchez le tag RFID de la tablette"
+  Écriture via Web NFC (Chrome Android) :
+    - Bloc 0 : identifiant HAL (ISBN/EAN)
+    - Bloc 1 : code site (ARC/TES/GUJ/TEI)
+    - AFI : 0x07 (sécurité activée)
+  ✓ Tag encodé — confirmation visuelle + son
+        ↓
+[✅ DOCUMENT PRÊT]
+  Statut → Disponible
+  Visible dans HAL Search immédiatement
 ```
 
 ---
 
-## BASE DE DONNÉES — SCHÉMA MODULE ACQUISITIONS
+## SCHÉMA BASE DE DONNÉES — ACQUISITIONS
 
 ```sql
--- Panier d'acquisition
-CREATE TABLE panier (
-  id              INTEGER PRIMARY KEY,
-  nom             TEXT,
-  responsable     TEXT,
-  rayon           TEXT,     -- 'Manga', 'BD Jeunesse', 'Roman Ado'...
-  site            TEXT,
-  fournisseur_id  INTEGER REFERENCES fournisseur(id),
-  budget_alloue   REAL,
-  statut          TEXT,     -- 'brouillon' | 'validé' | 'commandé' | 'reçu'
-  date_creation   TEXT,
-  date_commande   TEXT,
-  date_reception  TEXT,
-  notes           TEXT
-);
-
--- Items du panier
-CREATE TABLE panier_item (
-  id              INTEGER PRIMARY KEY,
-  panier_id       INTEGER REFERENCES panier(id),
-  identifiant     TEXT REFERENCES notice(identifiant),
-  quantite        INTEGER DEFAULT 1,
-  prix_unitaire   REAL,
-  statut          TEXT,     -- 'en attente' | 'commandé' | 'reçu' | 'annulé'
-  qte_recue       INTEGER DEFAULT 0,
-  date_reception  TEXT,
-  note            TEXT
-);
-
--- Fournisseurs
 CREATE TABLE fournisseur (
   id              INTEGER PRIMARY KEY,
-  nom             TEXT,
+  nom             TEXT NOT NULL,
   email           TEXT,
-  format_commande TEXT,     -- 'ORB' | 'CSV' | 'PDF' | 'EDI'
-  remise          REAL,
+  format_commande TEXT DEFAULT 'PDF',  -- PDF | ORB | CSV | EDI
+  remise          REAL DEFAULT 0,
   delai_livraison INTEGER,
   compte_client   TEXT,
   actif           BOOLEAN DEFAULT TRUE
 );
 
--- Budgets par rayon × site × année
 CREATE TABLE budget (
   id              INTEGER PRIMARY KEY,
+  rayon           TEXT NOT NULL,
+  site            TEXT NOT NULL,
+  annee           INTEGER NOT NULL,
+  montant_alloue  REAL NOT NULL,
+  notes           TEXT,
+  UNIQUE(rayon, site, annee)
+);
+
+CREATE TABLE panier (
+  id              INTEGER PRIMARY KEY,
+  nom             TEXT,
+  responsable     TEXT NOT NULL,
   rayon           TEXT,
   site            TEXT,
-  annee           INTEGER,
-  montant_alloue  REAL,
+  fournisseur_id  INTEGER REFERENCES fournisseur(id),
+  statut          TEXT DEFAULT 'brouillon',
+  -- brouillon | validé | commandé | partiellement_reçu | reçu | annulé
+  date_creation   TEXT NOT NULL,
+  date_commande   TEXT,
+  date_reception  TEXT,
   notes           TEXT
 );
 
--- Exemplaires (enrichi vs schéma actuel)
-CREATE TABLE exemplaire (
-  id                    INTEGER PRIMARY KEY,
-  identifiant           TEXT REFERENCES notice(identifiant),
-  cote                  TEXT,
-  code_barre            TEXT UNIQUE,
-  rfid_uid              TEXT,     -- UID du tag RFID Nedap
-  rfid_encode_le        TEXT,     -- date d'encodage RFID
-  date_acquisition      TEXT,
-  prix                  REAL,
-  fournisseur_id        INTEGER REFERENCES fournisseur(id),
-  panier_item_id        INTEGER REFERENCES panier_item(id),
-  statut                TEXT,     -- 'En traitement' | 'Disponible' | 'En prêt'...
-  site                  TEXT,
-  localisation          TEXT,     -- 'Rayon A3' | 'Réserve'...
-  support               TEXT,
-  nb_prets_total        INTEGER DEFAULT 0,
-  date_dernier_pret     TEXT,
-  date_maj              TEXT
+CREATE TABLE panier_item (
+  id              INTEGER PRIMARY KEY,
+  panier_id       INTEGER NOT NULL REFERENCES panier(id),
+  identifiant     TEXT NOT NULL REFERENCES notice(identifiant),
+  quantite        INTEGER NOT NULL DEFAULT 1,
+  prix_unitaire   REAL,
+  statut          TEXT DEFAULT 'en attente',
+  -- en attente | commandé | reçu | partiellement_reçu | annulé
+  qte_recue       INTEGER DEFAULT 0,
+  date_reception  TEXT,
+  note            TEXT
 );
 
--- Règles de cote par médiathèque
+CREATE TABLE exemplaire (
+  id                INTEGER PRIMARY KEY,
+  identifiant       TEXT NOT NULL REFERENCES notice(identifiant),
+  cote              TEXT,
+  code_barre        TEXT UNIQUE,
+  rfid_uid          TEXT,           -- UID lu depuis le tag
+  rfid_encode_le    TEXT,
+  date_acquisition  TEXT,
+  prix              REAL,
+  fournisseur_id    INTEGER REFERENCES fournisseur(id),
+  panier_item_id    INTEGER REFERENCES panier_item(id),
+  statut            TEXT DEFAULT 'En traitement',
+  site              TEXT,
+  localisation      TEXT,
+  support           TEXT,
+  nb_prets_total    INTEGER DEFAULT 0,
+  date_dernier_pret TEXT,
+  date_maj          TEXT DEFAULT (datetime('now'))
+);
+
 CREATE TABLE regle_cote (
   id              INTEGER PRIMARY KEY,
-  site            TEXT,
+  site            TEXT NOT NULL,
   type_document   TEXT,
   genre           TEXT,
   public_vise     TEXT,
-  modele          TEXT,     -- '{TYPE}/{AUTEUR_3}/{TOME}'
+  modele          TEXT NOT NULL,    -- '{TYPE}/{AUTEUR_3}/{TOME}'
   exemple         TEXT,
-  priorite        INTEGER
+  priorite        INTEGER DEFAULT 10
 );
 ```
 
 ---
 
-## INTERFACE ACQUISITIONS — ÉCRANS
+## FOURNISSEURS CIBLES
 
-### Écran 1 : Recherche & Ajout au panier
-- Barre de scan ISBN ou recherche texte
-- Résultat : notice complète + couverture + prix + disponibilité dans le fonds
-- Bouton "Ajouter au panier" → choisir rayon + site + quantité
-
-### Écran 2 : Mon panier / Tous les paniers
-- Vue par rayon et par responsable
-- Total panier + budget disponible
-- Filtres : rayon, site, fournisseur, statut
-- Actions : valider, supprimer, déplacer vers autre fournisseur
-
-### Écran 3 : Bon de commande
-- Récapitulatif par fournisseur
-- Remise automatique appliquée
-- Total HT + TVA + TTC
-- [Envoyer par email] [Exporter CSV/ORB] [Imprimer PDF]
-
-### Écran 4 : Réception
-- Scan des codes-barres à l'arrivée
-- Comparaison commandé / reçu
-- Signalement des manquants ou erreurs
-- [Créer les exemplaires] en lot
-
-### Écran 5 : Création exemplaire + RFID
-- Cote générée (modifiable)
-- Code-barres attribué
-- [Imprimer étiquettes]
-- [Encoder RFID] → dialogue NFC/tablette
-- [Document prêt]
+| Fournisseur | Format | Contact | Notes |
+|-------------|--------|---------|-------|
+| Mollat Bordeaux | PDF email | - | Libraire local, ~9% remise |
+| ORB / Decitre | CSV ORB | cgalliot@decitre.fr | Déjà utilisé, API en cours |
+| Fnac Pro | CSV | - | Délais courts |
+| Electre | API | - | Base bibliographique (négociation) |
 
 ---
 
-## INTÉGRATIONS EXTERNES
+## HAL vs CONCURRENTS
 
-### Mollat (libraire local — Bordeaux)
-- Format commande : email + PDF ou CSV
-- Remise habituelle : à négocier (~9%)
-- Livraison : 3-5 jours
-
-### ORB / Decitre
-- Format : CSV ORB (EAN;Titre;Auteur;Editeur;Prix;Quantité)
-- Contact : cgalliot@decitre.fr
-- API en négociation
-
-### Electre (base bibliographique)
-- API données bibliographiques (en cours de négociation)
-- Remplacerait partiellement BnF + Google Books
-
-### Decalog (SIGB actuel COBAS)
-- Export EPPK (statistiques prêts) → HAL Stats
-- Export UNIMARC (.mrc) → HAL Catalogue
-- Pas d'API native — contournement par exports hebdomadaires
+| Fonctionnalité | HAL | CoLibris | Decalog | Koha |
+|----------------|-----|----------|---------|------|
+| PWA / tablette native | ✅ | ❌ Windows only | ❌ | ⚠️ |
+| IA native profonde | ✅ | ⚠️ basique | ❌ | ❌ |
+| Acquisitions type e-commerce | ✅ | ⚠️ formulaires | ⚠️ | ⚠️ |
+| RFID sans prestataire | ✅ ISO standard | ❌ | ❌ | ❌ |
+| Open source | ✅ | ❌ | ❌ | ✅ |
+| Recherche conversationnelle | ✅ | ❌ | ❌ | ❌ |
+| Installation < 10 min | ✅ | ⚠️ | ❌ | ❌ |
+| Multi-sites natif | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
